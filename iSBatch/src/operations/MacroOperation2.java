@@ -1,9 +1,6 @@
 package operations;
 
-import java.io.File;
-
 import gui.newDialog;
-import ij.IJ;
 
 import javax.swing.JFrame;
 

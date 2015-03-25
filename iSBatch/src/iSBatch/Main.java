@@ -1,4 +1,4 @@
-package main;
+package iSBatch;
 
 import gui.DatabaseDialog;
 import gui.DatabaseTreeCellRenderer;
@@ -59,7 +59,6 @@ public class Main implements TreeSelectionListener {
 	private JList<Node> list = new JList<Node>(listModel);
 	private JFrame frame = new JFrame("iSBTools");
 	private JPanel treeButtonspanel = new JPanel();
-	private JPopupMenu popup;
 	
 	public static void main(String[] args) {
 
