@@ -22,6 +22,11 @@ TODO: Write usage instructions
 If you are in the list of collaborators, follow this video:
 https://www.youtube.com/watch?v=VL3PKLHuWtk
 
+To solve issues:
+https://www.youtube.com/watch?v=KfeqnernMmE
+
+https://www.youtube.com/watch?v=r5C6yXNaSGo
+
 
 ## History
 
