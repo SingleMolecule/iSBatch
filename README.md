@@ -18,6 +18,11 @@ TODO: Write usage instructions
 4. Push to the branch: `git push origin my-new-feature`
 5. Submit a pull request :D
 
+
+If you are in the list of collaborators, follow this video:
+https://www.youtube.com/watch?v=VL3PKLHuWtk
+
+
 ## History
 
 TODO: Write history
