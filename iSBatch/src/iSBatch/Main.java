@@ -70,7 +70,7 @@ public class Main implements TreeSelectionListener {
 	}
 
 	public Main() throws SqlJetException {
-		System.out.println("Im here.");
+		System.out.println("Im here. =D");
 		DatabaseDialog dialog = new DatabaseDialog(frame);
 		database = dialog.getDatabase();
 
