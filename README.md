@@ -19,13 +19,18 @@ TODO: Write usage instructions
 5. Submit a pull request :D
 
 
-If you are in the list of collaborators, follow this video:
+ - If you are in the list of collaborators, follow this video:
 https://www.youtube.com/watch?v=VL3PKLHuWtk
+  The video teachs you how to proper inport the code and develop into Eclipse.
 
 To solve issues:
-https://www.youtube.com/watch?v=KfeqnernMmE
 
-https://www.youtube.com/watch?v=r5C6yXNaSGo
+ - https://www.youtube.com/watch?v=KfeqnernMmE
+
+ - https://www.youtube.com/watch?v=r5C6yXNaSGo
+
+Those two movies are a bit redudant but are two points of view. It teaches you how to commit and merge properly.
+
 
 
 ## History
