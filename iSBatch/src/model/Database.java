@@ -11,48 +11,50 @@ import org.tmatesoft.sqljet.core.table.SqlJetDb;
 
 public class Database {
 	
-	private SqlJetDb database;
 	
+	private SqlJetDb database;
+	private SqlJetDb customDB = new SqlJetDb(new File("emptyDB"), true);
 	public Database(File file) throws SqlJetException {
 		
 		if (!file.exists()) {
-			database = SqlJetDb.open(file, true);
-			createTables();
+			//Load a default/empty database.
+			database = customDB;
+			
 		} else
 			database = SqlJetDb.open(file, true);
 		
 	}
 	
-	public void createTables() throws SqlJetException {
-		
-		database.getOptions().setAutovacuum(true);
-		database.beginTransaction(SqlJetTransactionMode.WRITE);
-		database.getOptions().setUserVersion(1);
-		
-		String sql = "create table nodes ( "
-				+ "parent integer, "
-				+ "type text)";
-		
-		database.createTable(sql);
-		
-		sql = "create index parent_index on nodes(parent)";
-		
-		database.createIndex(sql);
-		
-		sql = "create table node_properties ( "
-				+ "node integer, "
-				+ "name text, "
-				+ "value text)";
-		
-		database.createTable(sql);
-		
-		sql = "create index node_index on node_properties(node)";
-		
-		database.createIndex(sql);
-		database.commit();
-		
-		
-	}
+//	public void createTables() throws SqlJetException {
+//		
+//		database.getOptions().setAutovacuum(true);
+//		database.beginTransaction(SqlJetTransactionMode.WRITE);
+//		database.getOptions().setUserVersion(1);
+//		
+//		String sql = "create table nodes ( "
+//				+ "parent integer, "
+//				+ "type text)";
+//		
+//		database.createTable(sql);
+//		
+//		sql = "create index parent_index on nodes(parent)";
+//		
+//		database.createIndex(sql);
+//		
+//		sql = "create table node_properties ( "
+//				+ "node integer, "
+//				+ "name text, "
+//				+ "value text)";
+//		
+//		database.createTable(sql);
+//		
+//		sql = "create index node_index on node_properties(node)";
+//		
+//		database.createIndex(sql);
+//		database.commit();
+//		
+//		
+//	}
 
 	public void write(Node root) throws SqlJetException {
 		database.beginTransaction(SqlJetTransactionMode.WRITE);
