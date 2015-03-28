@@ -1,6 +1,11 @@
 package model;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Map.Entry;
 
 import org.tmatesoft.sqljet.core.SqlJetException;
@@ -9,52 +14,99 @@ import org.tmatesoft.sqljet.core.table.ISqlJetCursor;
 import org.tmatesoft.sqljet.core.table.ISqlJetTable;
 import org.tmatesoft.sqljet.core.table.SqlJetDb;
 
+import utils.SQLReader;
+import utils.myFile;
+
 public class Database {
 	
 	
 	private SqlJetDb database;
-	private SqlJetDb customDB = new SqlJetDb(new File("emptyDB"), true);
+//	private static File defaultdb = new File("src//model//template.db");
 	public Database(File file) throws SqlJetException {
 		
 		if (!file.exists()) {
-			//Load a default/empty database.
-			database = customDB;
-			
+			database = SqlJetDb.open(file, true);
+			createTablesFromFile();
+
 		} else
+			System.out.println("Database exist!");
 			database = SqlJetDb.open(file, true);
 		
 	}
 	
-//	public void createTables() throws SqlJetException {
-//		
-//		database.getOptions().setAutovacuum(true);
-//		database.beginTransaction(SqlJetTransactionMode.WRITE);
-//		database.getOptions().setUserVersion(1);
-//		
-//		String sql = "create table nodes ( "
-//				+ "parent integer, "
-//				+ "type text)";
-//		
-//		database.createTable(sql);
-//		
-//		sql = "create index parent_index on nodes(parent)";
-//		
-//		database.createIndex(sql);
-//		
-//		sql = "create table node_properties ( "
-//				+ "node integer, "
-//				+ "name text, "
-//				+ "value text)";
-//		
-//		database.createTable(sql);
-//		
-//		sql = "create index node_index on node_properties(node)";
-//		
-//		database.createIndex(sql);
-//		database.commit();
-//		
-//		
-//	}
+	private void createTablesFromFile() throws SqlJetException {
+
+		database.getOptions().setAutovacuum(true);
+		database.beginTransaction(SqlJetTransactionMode.WRITE);
+		database.getOptions().setUserVersion(1);
+		File test = new File("src//model//template.sql");
+
+		SQLReader reader = new SQLReader();
+		ArrayList<String> listOfQueries = reader.createQueries(test
+				.getAbsolutePath());
+
+		for (String string : listOfQueries) {
+			
+			if (string.contains("CREATE TABLE")) {
+				System.out.println("Creating table");
+				database.createTable(string);
+				
+				
+			}
+			if (string.contains("CREATE INDEX")) {
+				System.out.println("Creating index");
+				database.createIndex(string);
+				
+				
+			}
+			else{
+				System.out.println(string);
+			}
+			
+		}
+		database.commit();
+		
+
+	}
+
+	public static void main(String[] args) {
+		String pathToResource = null;
+				
+
+		
+		
+	}
+	
+	public void createTables() throws SqlJetException {
+		
+		database.getOptions().setAutovacuum(true);
+		database.beginTransaction(SqlJetTransactionMode.WRITE);
+		database.getOptions().setUserVersion(1);
+		
+		String sql = "create table nodes ( "
+				+ "parent integer, "
+				+ "type text)";
+		
+		database.createTable(sql);
+		
+		sql = "create index parent_index on nodes(parent)";
+		
+		database.createIndex(sql);
+		
+		sql = "create table node_properties ( "
+				+ "node integer, "
+				+ "name text, "
+				+ "value text)";
+		
+		database.createTable(sql);
+		
+		sql = "create index node_index on node_properties(node)";
+		
+		database.createIndex(sql);
+		database.commit();
+		
+		
+	}
 
 	public void write(Node root) throws SqlJetException {
 		database.beginTransaction(SqlJetTransactionMode.WRITE);
@@ -147,5 +199,7 @@ public class Database {
 		
 		return null;
 	}
+	
+	
 	
 }
