@@ -21,6 +21,8 @@ import java.awt.event.MouseMotionAdapter;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -59,6 +61,32 @@ public class Main implements TreeSelectionListener {
 	private JList<Node> list = new JList<Node>(listModel);
 	private JFrame frame = new JFrame("iSBTools");
 	private JPanel treeButtonspanel = new JPanel();
+	
+	private JMenu menu, preferences, about;
+
+	/** The menu bar. */
+	private JMenuBar menuBar;
+
+	/** The Newt menu item. */
+	private JMenuItem NewtMenuItem;
+
+	/** The Loadt menu item. */
+	private JMenuItem LoadtMenuItem;
+
+	/** The save menu item. */
+	private JMenuItem saveMenuItem;
+
+	/** The save as menu item. */
+	private JMenuItem saveAsMenuItem;
+
+	/** The prefs menu item. */
+	private JMenuItem prefsMenuItem;
+
+	/** The help menu item. */
+	private JMenuItem helpMenuItem;
+
+	/** The about menu item. */
+	private JMenuItem aboutMenuItem;
 	
 	public static void main(String[] args) {
 
@@ -126,6 +154,7 @@ public class Main implements TreeSelectionListener {
 
 	private void layoutPanels(JPanel treePanel, JPanel operationsPanel,
 			JPanel listPanel) {
+		createMenus();
 		frame.setLayout(new BorderLayout());
 		frame.add(treePanel, BorderLayout.WEST);
 		frame.add(new JScrollPane(operationsPanel), BorderLayout.EAST);
@@ -134,6 +163,99 @@ public class Main implements TreeSelectionListener {
 		frame.setSize(800, 500);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setVisible(true);
+		
+	}
+	private void createMenus() {
+		menuBar = new JMenuBar();
+
+		// Add menus to "Menu"
+		menu = new JMenu("Menu");
+		preferences = new JMenu("Preferences");
+		about = new JMenu("About");
+
+		NewtMenuItem = new JMenuItem("New Database");
+		menu.add(NewtMenuItem);
+		NewtMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(final ActionEvent event) {
+				System.out.println("New database");
+				LogPanel.log("New database");
+			}
+		});
+
+		LoadtMenuItem = new JMenuItem("Load Database");
+		menu.add(LoadtMenuItem);
+		LoadtMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(final ActionEvent event) {
+				LogPanel.log("Load database");
+			}
+		});
+		saveMenuItem = new JMenuItem("Save");
+		menu.add(saveMenuItem);
+		saveMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(final ActionEvent event) {
+				LogPanel.log("Save database");
+			}
+		});
+		saveAsMenuItem = new JMenuItem("Save as...");
+		menu.add(saveAsMenuItem);
+		saveAsMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(final ActionEvent event) {
+				LogPanel.log("Save as database");
+			}
+		});
+
+		JMenuItem exit = new JMenuItem("Quit");
+		exit.addActionListener(new ActionListener() {
+			public void actionPerformed(final ActionEvent event) {
+				System.exit(0);
+			}
+		});
+
+		// add Menu Preferences
+		prefsMenuItem = new JMenuItem("Preferences");
+		preferences.add(prefsMenuItem);
+		prefsMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(final ActionEvent event) {
+				LogPanel.log("Set Preferences");
+			}
+		});
+
+		// add Menu about
+		helpMenuItem = new JMenuItem("Help");
+		about.add(helpMenuItem);
+		helpMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(final ActionEvent event) {
+				showHelp();
+			}
+
+		});
+
+		aboutMenuItem = new JMenuItem("About");
+		about.add(aboutMenuItem);
+		aboutMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(final ActionEvent event) {
+				showAbout();
+			}
+
+		});
+
+		menu.add(exit);
+		menuBar.add(menu);
+		menuBar.add(preferences);
+		menuBar.add(about);
+
+		frame.setJMenuBar(menuBar);
+
+	}
+
+
+	protected void showHelp() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	protected void showAbout() {
+		// TODO Auto-generated method stub
 		
 	}
 
