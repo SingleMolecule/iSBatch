@@ -109,8 +109,31 @@ public class Main implements TreeSelectionListener {
 		if (database == null)
 			return;
 
-		treeModel = new DatabaseModel(database.read());
+		setTree();
+
+		display(tree);
+		
+	}
+
+	private void reload(){
+		DatabaseDialog dialog = new DatabaseDialog(frame);
+		database = dialog.getDatabase();
+		
+		
+		setTree();
+
+		display(tree);
+	}
+	
+	private void setTree() {
+		try {
+			treeModel = new DatabaseModel(database.read());
+		} catch (SqlJetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		tree = new JTree(treeModel);
+		
 		tree.addTreeSelectionListener(this);
 
 //		TreePopup popupMenu = new TreePopup(tree);
@@ -120,11 +143,10 @@ public class Main implements TreeSelectionListener {
 		tree.addMouseMotionListener(getMouseMotionAdapter());
 		
 		tree.setCellRenderer(new DatabaseTreeCellRenderer());
+		
+	}
 
-		// add hand selection . Not intentioned, but who care.s
-
-		// create tree panel
-
+	private void display(JTree tree) {
 		JPanel treePanel = createTreePanel();
 		// create operations panel
 
@@ -175,6 +197,7 @@ public class Main implements TreeSelectionListener {
 		LoadtMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent event) {
 				LogPanel.log("Load database");
+				reload();
 			}
 		});
 		saveMenuItem = new JMenuItem("Save");
