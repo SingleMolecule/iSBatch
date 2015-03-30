@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
+import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
 public class DatabaseModel implements TreeModel {
@@ -86,6 +87,11 @@ public class DatabaseModel implements TreeModel {
 			nodes.add(0, node);
 		
 		return nodes.toArray();
+	}
+
+	public void nodeChanged(TreeNode lastPathComponent) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

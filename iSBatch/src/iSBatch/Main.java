@@ -6,6 +6,7 @@ import gui.LogPanel;
 import gui.OperationButton;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -31,6 +32,7 @@ import javax.swing.JTree;
 import javax.swing.SwingUtilities;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
 import org.tmatesoft.sqljet.core.SqlJetException;
@@ -87,6 +89,8 @@ public class Main implements TreeSelectionListener {
 
 	/** The about menu item. */
 	private JMenuItem aboutMenuItem;
+	protected TreePath currentSelected;
+	protected Object oldSelectedPath;
 	
 	public static void main(String[] args) {
 
@@ -113,25 +117,11 @@ public class Main implements TreeSelectionListener {
 		
 		tree.setComponentPopupMenu(getPopUpMenu());
 		tree.addMouseListener(getMouseListener());
-
+		tree.addMouseMotionListener(getMouseMotionAdapter());
+		
 		tree.setCellRenderer(new DatabaseTreeCellRenderer());
 
 		// add hand selection . Not intentioned, but who care.s
-
-		tree.addMouseMotionListener(new MouseMotionAdapter() {
-			@Override
-			public void mouseMoved(MouseEvent e) {
-				int x = (int) e.getPoint().getX();
-				int y = (int) e.getPoint().getY();
-				TreePath path = tree.getPathForLocation(x, y);
-				if (path == null) {
-					tree.setCursor(Cursor.getDefaultCursor());
-				} else {
-					tree.setCursor(Cursor
-							.getPredefinedCursor(Cursor.HAND_CURSOR));
-				}
-			}
-		});
 
 		// create tree panel
 
@@ -139,9 +129,7 @@ public class Main implements TreeSelectionListener {
 		// create operations panel
 
 		JPanel operationsPanel = createOperationsPanel();
-
 		JPanel listPanel = createListPanel();
-		
 		layoutPanels(treePanel,operationsPanel,listPanel);
 		
 		SwingUtilities.invokeLater(new Runnable() {
@@ -248,12 +236,10 @@ public class Main implements TreeSelectionListener {
 
 	}
 
-
 	protected void showHelp() {
 		// TODO Auto-generated method stub
 		
 	}
-
 	protected void showAbout() {
 		// TODO Auto-generated method stub
 		
@@ -321,6 +307,32 @@ public class Main implements TreeSelectionListener {
 		};
 	}
 
+	private MouseMotionAdapter getMouseMotionAdapter(){
+		return new MouseMotionAdapter() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				int selRow = tree.getRowForLocation(e.getX(), e.getY());
+				TreePath path = tree.getPathForLocation(e.getX(), e.getY());
+				
+				if (path == null || selRow < 0 ) {
+					tree.setCursor(Cursor.getDefaultCursor());
+                   
+				} else {
+					if(selRow >0){
+					path = 	tree.getPathForLocation(e.getX(), e.getY());
+						
+						
+					}
+				}
+				
+				tree.repaint();
+				
+				
+				
+			}
+		};
+		
+	}
 	private JPopupMenu getPopUpMenu() {
 		
 		JPopupMenu menu = new JPopupMenu();
