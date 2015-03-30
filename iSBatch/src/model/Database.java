@@ -1,10 +1,6 @@
 package model;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Map.Entry;
 
@@ -15,7 +11,6 @@ import org.tmatesoft.sqljet.core.table.ISqlJetTable;
 import org.tmatesoft.sqljet.core.table.SqlJetDb;
 
 import utils.SQLReader;
-import utils.myFile;
 
 public class Database {
 	
@@ -39,7 +34,7 @@ public class Database {
 		database.getOptions().setAutovacuum(true);
 		database.beginTransaction(SqlJetTransactionMode.WRITE);
 		database.getOptions().setUserVersion(1);
-		File test = new File("src//model//template.sql");
+		File test = new File("src//model//template");
 
 		SQLReader reader = new SQLReader();
 		ArrayList<String> listOfQueries = reader.createQueries(test
