@@ -37,7 +37,7 @@ public class SQLReader {
 	 * @param args the arguments
 	 */
 	public static void main(final String[] args) {
-		File test = new File("src//model//template.sql");
+		File test = new File("src//model//template");
 		System.out.println(test.exists());
 		SQLReader reader = new SQLReader();
 		listOfQueries = reader.createQueries(test.getAbsolutePath());
