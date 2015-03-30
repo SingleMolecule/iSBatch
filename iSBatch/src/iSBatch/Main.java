@@ -182,6 +182,8 @@ public class Main implements TreeSelectionListener {
 		saveMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent event) {
 				LogPanel.log("Save database");
+				new SaveDatabaseOperation(database, treeModel.getRoot());
+				System.out.println("Saved.");
 			}
 		});
 		saveAsMenuItem = new JMenuItem("Save as...");
