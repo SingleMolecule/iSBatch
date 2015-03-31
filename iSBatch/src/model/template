@@ -10,3 +10,4 @@
 CREATE TABLE nodes (parent integeR, type text);
 CREATE INDEX parent_index on nodes(parent);
 CREATE TABLE node_properties ( node integer, name text,value text);
+CREATE INDEX node_index on node_properties(node);
