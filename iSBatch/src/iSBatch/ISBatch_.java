@@ -52,7 +52,7 @@ import operations.MacroOperation2;
 import operations.Operation;
 import operations.SaveDatabaseOperation;
 
-public class iSBatch_ implements TreeSelectionListener {
+public class ISBatch_ implements TreeSelectionListener {
 
 	private Database database;
 	private DatabaseModel treeModel;
@@ -98,13 +98,13 @@ public class iSBatch_ implements TreeSelectionListener {
 	public static void main(String[] args) {
 
 		try {
-			new iSBatch_();
+			new ISBatch_();
 		} catch (SqlJetException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public iSBatch_() throws SqlJetException {
+	public ISBatch_() throws SqlJetException {
 		System.out.println("Im here. =D");
 		DatabaseDialog dialog = new DatabaseDialog(frame);
 		database = dialog.getDatabase();
