@@ -1,0 +1,45 @@
+<project name="ISBatch" default="" basedir=".">
+	<description>
+    	iSBTools_ build file
+    </description>
+	<property name="debuglevel" value="source,lines,vars" />
+		<property name="target" value="1.6" />
+		<property name="source" value="1.6" />
+	
+	
+	<property name="src" location="src" />
+	<property name="build" location="bin" />
+	<property name="dist"  location="dist" />
+	<property name="jars"  location="lib" />
+
+	<property name="pluginsDir"  location="$basedir/../../IJ/plugins/" />
+
+	<property name="user.name" value="Victor Caldas" />
+
+			
+	<target name="main" depends="compress" description="Main target">
+		<echo>
+		Building the .jar file.
+	</echo>
+	</target>
+
+	<target name="compress" depends="" description="generate the distribution">
+		<jar jarfile="deps.jar">
+			<zipgroupfileset dir="${jars}">
+				<include name="**/*.jar" />
+			</zipgroupfileset>
+		</jar>
+		<sleep seconds="1" />
+		<jar jarfile="ISBatch.jar">
+			<fileset dir="." includes="plugins.config" />
+			<fileset dir="${build}" includes="**/*.*" />
+			<zipfileset src="deps.jar" excludes="META-INF/*.SF" />
+			<manifest>
+				<attribute name="Built-By" value="${user.name}"/>
+				<attribute name="Main-Class" value="main.ISBTools_" />
+			</manifest>
+		</jar>
+		<copy file="ISBatch.jar" toDir="${pluginsDir}" />
+	</target>
+
+</project>

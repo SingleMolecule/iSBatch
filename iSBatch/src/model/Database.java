@@ -231,22 +231,44 @@ public class Database {
 	 * @param type the type
 	 * @return the node
 	 */
+//Java 1.7+ version
+//	public Node createNode(Node parent, String type) {
+//
+//		switch (type) {
+//		case Root.type:
+//			return new Root(database.getFile().getParent());
+//		case Experiment.type:
+//			return new Experiment((Root) parent);
+//		case Sample.type:
+//			return new Sample((Experiment) parent);
+//		case FieldOfView.type:
+//			return new FieldOfView((Sample) parent);
+//		case FileNode.type:
+//			return new FileNode(parent);
+//		}
+//
+//		return null;
+//	}
+//	
+	
 	public Node createNode(Node parent, String type) {
-
-		switch (type) {
-		case Root.type:
-			return new Root(database.getFile().getParent());
-		case Experiment.type:
-			return new Experiment((Root) parent);
-		case Sample.type:
-			return new Sample((Experiment) parent);
-		case FieldOfView.type:
-			return new FieldOfView((Sample) parent);
-		case FileNode.type:
+		if(type.equalsIgnoreCase(Root.type)) {
+			return new Root(database.getFile().getParent());}
+		
+		else if(type.equalsIgnoreCase(Experiment.type)) {
+			return new Experiment((Root) parent);}
+		
+		else if(type.equalsIgnoreCase(Sample.type)) {
+			return new Sample((Experiment) parent);}
+		
+		else if(type.equalsIgnoreCase(FieldOfView.type))	{
+			return new FieldOfView((Sample) parent);}
+		else if(type.equalsIgnoreCase(FileNode.type))	{
 			return new FileNode(parent);
 		}
 
 		return null;
 	}
+	
 
 }

@@ -20,8 +20,8 @@ public class LogPanel extends JPanel implements ActionListener {
 	
 	private static LogPanel instance;
 	
-	private DefaultListModel<String> listModel = new DefaultListModel<>();
-	private JList<String> list = new JList<>(listModel);
+	private DefaultListModel<String> listModel = new DefaultListModel<String>();
+	private JList<String> list = new JList<String>(listModel);
 	
 	private JButton clearButton = new JButton("Clear");
 	private JButton saveButton = new JButton("Save");
