@@ -33,6 +33,7 @@ public class Database {
 		if (!file.exists()) {
 			database = SqlJetDb.open(file, true);
 			createTablesFromFile();
+//			createTables();
 
 		} else
 			System.out.println("Database exist!");
