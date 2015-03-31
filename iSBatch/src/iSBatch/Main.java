@@ -8,6 +8,7 @@ import gui.OperationButton;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -18,6 +19,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
+import java.net.URL;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
@@ -72,8 +74,8 @@ public class Main implements TreeSelectionListener {
 	/** The Newt menu item. */
 	private JMenuItem NewtMenuItem;
 
-	/** The Loadt menu item. */
-	private JMenuItem LoadtMenuItem;
+	/** The Loat menu item. */
+	private JMenuItem LoadMenuItem;
 
 	/** The save menu item. */
 	private JMenuItem saveMenuItem;
@@ -91,6 +93,7 @@ public class Main implements TreeSelectionListener {
 	private JMenuItem aboutMenuItem;
 	protected TreePath currentSelected;
 	protected Object oldSelectedPath;
+	private JMenuItem sourceMenuItem;
 	
 	public static void main(String[] args) {
 
@@ -161,6 +164,7 @@ public class Main implements TreeSelectionListener {
 		});
 		
 	}
+	
 
 	private void layoutPanels(JPanel treePanel, JPanel operationsPanel,
 			JPanel listPanel) {
@@ -173,7 +177,6 @@ public class Main implements TreeSelectionListener {
 		frame.setSize(800, 500);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setVisible(true);
-		
 	}
 	private void createMenus() {
 		menuBar = new JMenuBar();
@@ -192,9 +195,9 @@ public class Main implements TreeSelectionListener {
 			}
 		});
 
-		LoadtMenuItem = new JMenuItem("Load Database");
-		menu.add(LoadtMenuItem);
-		LoadtMenuItem.addActionListener(new ActionListener() {
+		LoadMenuItem = new JMenuItem("Load Database");
+		menu.add(LoadMenuItem);
+		LoadMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent event) {
 				LogPanel.log("Load database");
 				reload();
@@ -251,18 +254,43 @@ public class Main implements TreeSelectionListener {
 			}
 
 		});
+		
+		sourceMenuItem = new JMenuItem("About");
+		about.add(sourceMenuItem);
+		sourceMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(final ActionEvent event) {
+				goToSourceCode();
+			}
+
+		});
+		
+		
+		
 
 		menu.add(exit);
 		menuBar.add(menu);
 		menuBar.add(preferences);
 		menuBar.add(about);
-
+		menuBar.add(sourceMenuItem);
 		frame.setJMenuBar(menuBar);
 
 	}
 
+	protected void goToSourceCode() {
+		  try 
+	        {
+	            Desktop.getDesktop().browse(new URL("http://vcaldas.github.io/iSBTools_/").toURI());
+	        }           
+	        catch (Exception e) {}
+		
+	}
+
 	protected void showHelp() {
-		// TODO Auto-generated method stub
+        try 
+        {
+            Desktop.getDesktop().browse(new URL("http://www.google.com").toURI());
+        }           
+        catch (Exception e) {}
 		
 	}
 	protected void showAbout() {
