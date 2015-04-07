@@ -293,10 +293,10 @@ public class ISBatch_ implements TreeSelectionListener {
 	}
 	protected void showAbout() {
 		JFrame AboutFrame = new JFrame("About iSBatch");
-		JPanel AboutPanel = new AboutPanel();
+		//JPanel AboutPanel = new AboutPanel();
 		
 		AboutFrame.setLayout(new BorderLayout());
-		AboutFrame.add(AboutPanel, BorderLayout.WEST);
+		//AboutFrame.add(AboutPanel, BorderLayout.WEST);
 		
 
 		

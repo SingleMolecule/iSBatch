@@ -117,19 +117,19 @@ public class CodeTextPane extends JComponent implements DocumentListener, Runnab
 	
 	@Override
 	public void changedUpdate(DocumentEvent e) {
-		System.out.println("changed update");
+		//System.out.println("changed update");
 	}
 
 	@Override
 	public void insertUpdate(DocumentEvent e) {
-		System.out.println("insert update");
+		//System.out.println("insert update");
 		
 		SwingUtilities.invokeLater(this);
 	}
 
 	@Override
 	public void removeUpdate(DocumentEvent e) {
-		System.out.println("remove update");
+		//System.out.println("remove update");
 		
 		SwingUtilities.invokeLater(this);
 	}
