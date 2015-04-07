@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package operations;
 
 import java.io.File;
@@ -21,10 +24,16 @@ import model.NodeFilter;
 import model.Root;
 import model.Sample;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class FlattenOperation.
+ */
 public class FlattenOperation implements Operation {
 
+	/** The importer. */
 	private Importer importer;
 	
+	/** The channels. */
 	private String[] channels = new String[] {
 			"acquisition",
 			"bf",
@@ -33,12 +42,22 @@ public class FlattenOperation implements Operation {
 			"blue",
 	};
 			
+	/** The channel. */
 	private String channel;
+	
+	/** The electronic offset. */
 	private double electronicOffset = 3300;
+	
+	/** The use electronic offset image. */
 	private boolean useElectronicOffsetImage = false;
+	
+	/** The electronic offset image. */
 	private ImagePlus electronicOffsetImage;
+	
+	/** The background image. */
 	private ImagePlus backgroundImage;
 	
+	/** The image file node filter. */
 	private NodeFilter imageFileNodeFilter = new NodeFilter() {
 		
 		@Override
@@ -64,20 +83,34 @@ public class FlattenOperation implements Operation {
 	};
 	
 	
+	/**
+	 * Instantiates a new flatten operation.
+	 *
+	 * @param model the model
+	 */
 	public FlattenOperation(DatabaseModel model) {
 		this.importer = new Importer(model);
 	}
 	
+	/* (non-Javadoc)
+	 * @see context.ContextElement#getContext()
+	 */
 	@Override
 	public String[] getContext() {
 		return new String[]{"Experiment", "Sample", "FieldOfView"};
 	}
 
+	/* (non-Javadoc)
+	 * @see operations.Operation#getName()
+	 */
 	@Override
 	public String getName() {
 		return "Flatten";
 	}
 
+	/* (non-Javadoc)
+	 * @see operations.Operation#setup(model.Node)
+	 */
 	@Override
 	public boolean setup(Node node) {
 		
@@ -126,16 +159,25 @@ public class FlattenOperation implements Operation {
 		return false;
 	}
 
+	/* (non-Javadoc)
+	 * @see operations.Operation#finalize(model.Node)
+	 */
 	@Override
 	public void finalize(Node node) {
 		// TODO Auto-generated method stub
 
 	}
 
+	/* (non-Javadoc)
+	 * @see operations.Operation#visit(model.Root)
+	 */
 	@Override
 	public void visit(Root root) {
 	}
 
+	/* (non-Javadoc)
+	 * @see operations.Operation#visit(model.Experiment)
+	 */
 	@Override
 	public void visit(Experiment experiment) {
 		
@@ -145,6 +187,9 @@ public class FlattenOperation implements Operation {
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see operations.Operation#visit(model.Sample)
+	 */
 	@Override
 	public void visit(Sample sample) {
 		
@@ -154,6 +199,9 @@ public class FlattenOperation implements Operation {
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see operations.Operation#visit(model.FieldOfView)
+	 */
 	@Override
 	public void visit(FieldOfView fieldOfView) {
 		
@@ -163,6 +211,9 @@ public class FlattenOperation implements Operation {
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see operations.Operation#visit(model.FileNode)
+	 */
 	@Override
 	public void visit(FileNode fileNode) {
 		
@@ -185,21 +236,11 @@ public class FlattenOperation implements Operation {
 		ImageConverter converter = new ImageConverter(imp);
 		converter.convertToGray32();
 		
-		ImageProcessor backgroundIp = backgroundImage.getProcessor();
+		ImageProcessor backgroundIp =  backgroundImage.getProcessor();
 		
 		// determine maximum pixel value
-		double maximumPixelValue = backgroundIp.getf(0, 0);
+		double maximumPixelValue = backgroundIp.getMax(); 
 		
-		for (int y = 0; y < backgroundIp.getHeight(); y++) {
-			for (int x = 0; x < backgroundIp.getWidth(); x++) {
-				
-				double value = backgroundIp.getf(x, y);
-				
-				if (value > maximumPixelValue)
-					maximumPixelValue = value;
-				
-			}
-		}
 		
 		ImageProcessor electronicOffsetIp = null;
 		
@@ -243,6 +284,21 @@ public class FlattenOperation implements Operation {
 		// add it to the tree
 		LogPanel.log("adding to tree");
 		importer.importFile(fileNode.getParent(), outputFile);
+	}
+
+	private double getMaxPixelValue(ImageProcessor backgroundIp) {
+		double maxValue = backgroundIp.getf(0, 0);
+		
+		for (int y = 0; y < backgroundIp.getHeight(); y++) {
+			for (int x = 0; x < backgroundIp.getWidth(); x++) {
+				
+				double value = backgroundIp.getf(x, y);
+				
+				if (value > maxValue)
+					maxValue = value;
+			}
+		}
+		return maxValue;
 	}
 
 }
