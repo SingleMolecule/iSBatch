@@ -63,7 +63,7 @@ public class ISBatch_ implements TreeSelectionListener {
 	private JTree tree;
 	private DefaultListModel<Node> listModel = new DefaultListModel<Node>();
 	private JList<Node> list = new JList<Node>(listModel);
-	private JFrame frame = new JFrame("iSBTools");
+	private JFrame frame = new JFrame("iSBatch");
 	private JPanel treeButtonspanel = new JPanel();
 	
 	private JMenu menu, preferences, about;
