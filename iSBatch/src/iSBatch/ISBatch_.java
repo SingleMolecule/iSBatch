@@ -6,7 +6,6 @@ import gui.LogPanel;
 import gui.OperationButton;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Desktop;
 import java.awt.Dimension;
@@ -34,7 +33,6 @@ import javax.swing.JTree;
 import javax.swing.SwingUtilities;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
-import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
 import org.tmatesoft.sqljet.core.SqlJetException;
@@ -46,6 +44,7 @@ import model.Node;
 import model.NodeFilter;
 import context.ContextHandler;
 import operations.AddOperation;
+import operations.CreateMTInputOperation;
 import operations.FlattenOperation;
 import operations.MacroOperation;
 import operations.MacroOperation2;
@@ -416,6 +415,7 @@ public class ISBatch_ implements TreeSelectionListener {
 				new MacroOperation(frame, treeModel),
 				new MacroOperation2(frame, treeModel),
 				new FlattenOperation(treeModel),
+				new CreateMTInputOperation(treeModel),
 				 };
 	}
 	
