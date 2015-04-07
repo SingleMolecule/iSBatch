@@ -81,6 +81,7 @@ public class TestDialog implements ActionListener {
 		
 		dialog.pack();	// make sure the dialog is big enough so that all components are visible
 		dialog.setVisible(true);
+		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		
 	}
 
