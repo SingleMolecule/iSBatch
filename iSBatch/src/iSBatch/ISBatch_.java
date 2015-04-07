@@ -255,7 +255,7 @@ public class ISBatch_ implements TreeSelectionListener {
 
 		});
 		
-		sourceMenuItem = new JMenuItem("About");
+		sourceMenuItem = new JMenuItem("Source Code");
 		about.add(sourceMenuItem);
 		sourceMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent event) {
@@ -271,7 +271,6 @@ public class ISBatch_ implements TreeSelectionListener {
 		menuBar.add(menu);
 		menuBar.add(preferences);
 		menuBar.add(about);
-		menuBar.add(sourceMenuItem);
 		frame.setJMenuBar(menuBar);
 
 	}
@@ -294,7 +293,13 @@ public class ISBatch_ implements TreeSelectionListener {
 		
 	}
 	protected void showAbout() {
-		// TODO Auto-generated method stub
+		JFrame AboutFrame = new JFrame("About iSBatch");
+		JPanel AboutPanel = new AboutPanel();
+		
+		AboutFrame.setLayout(new BorderLayout());
+		AboutFrame.add(AboutPanel, BorderLayout.WEST);
+		
+
 		
 	}
 
