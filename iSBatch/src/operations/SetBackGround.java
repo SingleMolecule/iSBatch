@@ -256,7 +256,13 @@ public class SetBackGround implements Operation,  ActionListener {
 			}
 		}
 		else if(e.getSource() == loadButton){
-			System.out.println("Settin path and exiting.");
+			if(filePath == null || filePath.equals("")){
+				System.out.println("No file selecting. Choose one or click Cancel");
+			}
+			else{
+				System.out.println("Settin path and exiting.");
+
+			}
 		}
 		else if (e.getSource() == channelComboBox) {
 			channel = channels[channelComboBox.getSelectedIndex()];
