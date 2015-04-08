@@ -18,12 +18,19 @@ public class TestDialog implements ActionListener {
 	private JButton cancelButton = new JButton("Cancel");
 	private JButton loadButton = new JButton("Load");
 	private JButton createButton = new JButton("Create");
-	
+	private String channel, method;
+	private JComboBox<String> channelComboBox;
+	private JComboBox<String> methodComboBox;
+	private String[] methods = new String[] { "Average Images", "Flatten Images" };
+	private String[] channels = new String[] { "Red", "Green", "Blue" };
+	/**
+	 * @wbp.parser.entryPoint
+	 */
 	public void showDialog() {
 		
 		JDialog dialog = new JDialog();
 		dialog.setTitle("Test Dialog");
-		dialog.setLayout(new GridBagLayout());
+		dialog.getContentPane().setLayout(new GridBagLayout());
 		
 		GridBagConstraints gbc = new GridBagConstraints();
 		
@@ -34,30 +41,33 @@ public class TestDialog implements ActionListener {
 		gbc.gridy = 0;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		
-		dialog.add(new JLabel("Channel"), gbc);
+		dialog.getContentPane().add(new JLabel("Channel"), gbc);
 		
-		String[] channels = new String[] { "Red", "Green", "Blue" };
-		JComboBox<String> channelComboBox = new JComboBox<String>(channels);
+		
+		channelComboBox = new JComboBox<String>(channels);
+		channelComboBox.addActionListener (this);
+		
 		
 		gbc.gridx = 1;
 		gbc.gridy = 0;
 		
-		dialog.add(channelComboBox, gbc);
+		dialog.getContentPane().add(channelComboBox, gbc);
 		
 		// create second row
 		
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		
-		dialog.add(new JLabel("Method"), gbc);
+		dialog.getContentPane().add(new JLabel("Method"), gbc);
 		
-		String[] methods = new String[] { "Average Images", "Flatten Images" };
-		JComboBox<String> methodComboBox = new JComboBox<String>(methods);
 		
+		methodComboBox = new JComboBox<String>(methods);
+		methodComboBox.addActionListener (this);
+
 		gbc.gridx = 1;
 		gbc.gridy = 1;
 		
-		dialog.add(methodComboBox, gbc);
+		dialog.getContentPane().add(methodComboBox, gbc);
 		
 		// third row
 		
@@ -77,7 +87,7 @@ public class TestDialog implements ActionListener {
 		gbc.gridy = 2;
 		gbc.gridwidth = 2;	// two columns wide
 
-		dialog.add(buttonPanel, gbc);
+		dialog.getContentPane().add(buttonPanel, gbc);
 		
 		dialog.pack();	// make sure the dialog is big enough so that all components are visible
 		dialog.setVisible(true);
@@ -97,14 +107,43 @@ public class TestDialog implements ActionListener {
 		else if (e.getSource() == createButton) {
 			JOptionPane.showMessageDialog(null, "Create");
 		}
+		else if (e.getSource() == channelComboBox) {
+			setChannel(channels[channelComboBox.getSelectedIndex()]);
+	    	System.out.println(getChannel());
+		}
+		else if (e.getSource() == methodComboBox){
+			setMethod(methods[methodComboBox.getSelectedIndex()]);
+	    	System.out.println(getMethod());
+		}
 		
 	}
 	
 	
 	public static void main(String[] args) {
 		
-		new TestDialog().showDialog();
+		TestDialog gui = new TestDialog();
+		gui.showDialog();
+		System.out.println(gui.getChannel() + gui.getMethod());
+	}
 
+
+	public String getChannel() {
+		return channel;
+	}
+
+
+	public void setChannel(String channel) {
+		this.channel = channel;
+	}
+
+
+	public String getMethod() {
+		return method;
+	}
+
+
+	public void setMethod(String method) {
+		this.method = method;
 	}
 
 }
