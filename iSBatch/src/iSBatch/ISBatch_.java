@@ -44,12 +44,19 @@ import model.Node;
 import model.NodeFilter;
 import context.ContextHandler;
 import operations.AddOperation;
-import operations.CreateMTInputOperation;
+import operations.CellIntensityOperation;
+import operations.CorrelationOperation;
+import operations.CreateSetFlat;
+import operations.FindPeaksOperation;
+import operations.FitPeaksOperation;
 import operations.FlattenOperation;
+import operations.LocationMapsOperation;
 import operations.MacroOperation;
 import operations.MacroOperation2;
+import operations.MicrobeTrackerIOOperation;
 import operations.Operation;
 import operations.SaveDatabaseOperation;
+import operations.SetBackGround;
 
 public class ISBatch_ implements TreeSelectionListener {
 
@@ -414,8 +421,16 @@ public class ISBatch_ implements TreeSelectionListener {
 		return new Operation[] {
 				new MacroOperation(frame, treeModel),
 				new MacroOperation2(frame, treeModel),
+				
+				new SetBackGround(treeModel),
 				new FlattenOperation(treeModel),
-				new CreateMTInputOperation(treeModel),
+				new FindPeaksOperation(treeModel),
+				new FitPeaksOperation(treeModel),
+				new MicrobeTrackerIOOperation(treeModel),
+				new CorrelationOperation(treeModel),
+				new LocationMapsOperation(treeModel),
+				new CellIntensityOperation(treeModel),
+				new CellOutlines(treeModel),
 				 };
 	}
 	
