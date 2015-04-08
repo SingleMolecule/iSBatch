@@ -3,7 +3,6 @@
  */
 package operations;
 
-import javax.swing.JDialog;
 
 import model.DatabaseModel;
 import model.Experiment;
@@ -12,14 +11,14 @@ import model.FileNode;
 import model.Node;
 import model.Root;
 import model.Sample;
-import operation.gui.FlatOperationGui;
+import operation.gui.SetBackgroundGui;
 
 /**
  * @author VictorCaldas
  *
  */
 public class SetBackGround implements Operation {
-	FlatOperationGui dialog;
+	SetBackgroundGui dialog;
 	
 	private String channel;
 	private String method;
@@ -48,11 +47,10 @@ public class SetBackGround implements Operation {
 	 */
 	@Override
 	public boolean setup(Node node) {
-		dialog = new FlatOperationGui(node);
+		dialog = new SetBackgroundGui(node);
 		if (dialog.isCanceled())
 			return false;
-		channel = dialog.getChannel();
-		method = dialog.getMethod();
+		getParameters();
 		return true;
 	}
 
@@ -61,7 +59,7 @@ public class SetBackGround implements Operation {
 	 */
 	@Override
 	public void finalize(Node node) {
-		// TODO Auto-generated method stub
+		System.out.println("Operation finalized");
 
 	}
 
@@ -80,7 +78,6 @@ public class SetBackGround implements Operation {
 	public void visit(Experiment experiment) {
 		run(experiment);
 		
-		
 	}
 
 	private void getParameters() {
@@ -90,7 +87,7 @@ public class SetBackGround implements Operation {
 	}
 
 	private void run(Node node) {
-		System.out.println(channel);
+		System.out.println("Run class: " + channel + " using the method " + method);
 		
 	}
 

@@ -3,20 +3,8 @@
  */
 package operations;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-
-import test.TestDialog;
+import operation.gui.FindPeaksGui;
 import model.DatabaseModel;
 import model.Experiment;
 import model.FieldOfView;
@@ -29,15 +17,18 @@ import model.Sample;
  * @author VictorCaldas
  *
  */
-public class FindPeaksOperation implements Operation,  ActionListener {
-	private JButton cancelButton = new JButton("Cancel");
-	private JButton loadButton = new JButton("Load");
-	private JButton createButton = new JButton("Create");
-	private String channel, method;
-	private JComboBox<String> channelComboBox;
-	private JComboBox<String> methodComboBox;
-	private String[] methods = new String[] { "Average Images", "Flatten Images" };
-	private String[] channels = new String[] { "Red", "Green", "Blue" };
+public class FindPeaksOperation implements Operation {
+	private FindPeaksGui dialog;
+	private String channel;
+	private String method;
+	private double innerRadius;
+	private double outerRadius;
+	private double threshold;
+	private double SNRthreshold;
+	private double minDistance;
+	private double selectionRadius;
+	private boolean useCells;
+	private boolean useDiscoidal;
 	public FindPeaksOperation(DatabaseModel treeModel) {
 		// TODO Auto-generated constructor stub
 	}
@@ -63,8 +54,27 @@ public class FindPeaksOperation implements Operation,  ActionListener {
 	 */
 	@Override
 	public boolean setup(Node node) {
-		// TODO Auto-generated method stub
-		return false;
+		// String to parse:
+
+		 dialog = new FindPeaksGui(node);
+		if (dialog.isCanceled())
+			return false;
+		getParameters();
+		return true;
+	}
+
+	private void getParameters() {
+		this.innerRadius = dialog.getInnerRadius();
+		this.outerRadius = dialog.getOuterRadius();
+		this.threshold = dialog.getThreshold();
+		this.SNRthreshold = dialog.getSNRThreshold();
+		this.minDistance = dialog.getMinDistance();
+		this.selectionRadius = dialog.getSelectionRadius();
+		this.useCells = dialog.useCells;
+		this.useDiscoidal = dialog.useDiscoidal;
+		this.channel = dialog.getChannel();
+		this.method = dialog.getMethod();
+		
 	}
 
 	/* (non-Javadoc)
@@ -82,130 +92,47 @@ public class FindPeaksOperation implements Operation,  ActionListener {
 
 	@Override
 	public void visit(Root root) {
-		showDialog();
+		run(root);
+	}
+
+	private void run(Node node) {
+		System.out.println(innerRadius);
+		System.out.println(outerRadius);
+		System.out.println(threshold);
+		System.out.println(SNRthreshold);
+		System.out.println(minDistance);
+		System.out.println(selectionRadius);
+		System.out.println(useCells);
+		System.out.println(useDiscoidal);
+		System.out.println(channel);
+		System.out.println(method);
+		
+
 	}
 
 	@Override
 	public void visit(Experiment experiment) {
-		showDialog();
+		run(experiment);
 	}
 
 	@Override
 	public void visit(Sample sample) {
-		showDialog();
+		run(sample);
 	}
 
 	@Override
 	public void visit(FieldOfView fieldOfView) {
-		showDialog();
+		run(fieldOfView);
 	}
 
 	
 	@Override
 	public void visit(FileNode fileNode) {
-		showDialog();
+		run(fileNode);
 	}
 
-	public void showDialog() {
-		
-		JDialog dialog = new JDialog();
-		dialog.setTitle("Find Peaks");
-		dialog.getContentPane().setLayout(new GridBagLayout());
-		
-		GridBagConstraints gbc = new GridBagConstraints();
-		
-		// create first row
-		
-		gbc.insets = new Insets(5, 5, 5, 5);
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		
-		dialog.getContentPane().add(new JLabel("Channel"), gbc);
-		
-		
-		channelComboBox = new JComboBox<String>(channels);
-		channelComboBox.setEditable(true);
-		channelComboBox.addActionListener (this);
-		
-		
-		gbc.gridx = 1;
-		gbc.gridy = 0;
-		
-		dialog.getContentPane().add(channelComboBox, gbc);
-		
-		// create second row
-		
-		gbc.gridx = 0;
-		gbc.gridy = 1;
-		
-		dialog.getContentPane().add(new JLabel("Method"), gbc);
-		
-		
-		methodComboBox = new JComboBox<String>(methods);
-		methodComboBox.addActionListener (this);
-
-		gbc.gridx = 1;
-		gbc.gridy = 1;
-		
-		dialog.getContentPane().add(methodComboBox, gbc);
-		
-		// third row
-		
-		// buttons show be next to each other so we can use a JPanel with the standard flow layout
-		
-		JPanel buttonPanel = new JPanel();	// by default a JPanel has the flow layout
-		
-		cancelButton.addActionListener(this);
-		loadButton.addActionListener(this);
-		createButton.addActionListener(this);
-		
-		buttonPanel.add(cancelButton);
-		buttonPanel.add(loadButton);
-		buttonPanel.add(createButton);
-		
-		gbc.gridx = 0;
-		gbc.gridy = 2;
-		gbc.gridwidth = 2;	// two columns wide
-
-		dialog.getContentPane().add(buttonPanel, gbc);
-		
-		dialog.pack();	// make sure the dialog is big enough so that all components are visible
-		dialog.setVisible(true);
-		
-	}
-
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-
-		if (e.getSource() == cancelButton) {
-			JOptionPane.showMessageDialog(null, "Cancel");
-		}
-		else if (e.getSource() == loadButton) {
-			JOptionPane.showMessageDialog(null, "Load");
-		}
-		else if (e.getSource() == createButton) {
-			JOptionPane.showMessageDialog(null, "Create");
-		}
-		else if (e.getSource() == channelComboBox) {
-			
-			channel = channels[channelComboBox.getSelectedIndex()];
-	    	System.out.println(channel);
-		}
-		else if (e.getSource() == methodComboBox){
-			method = methods[methodComboBox.getSelectedIndex()];
-	    	System.out.println(method);
-		}
-		
-	}
-	
 	
 	public static void main(String[] args) {
-		
-		FindPeaksOperation gui = new FindPeaksOperation(null);
-		gui.showDialog();
-		System.out.println(gui.channel + gui.method);
 	}
 
 }
