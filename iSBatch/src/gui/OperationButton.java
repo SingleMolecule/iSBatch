@@ -47,9 +47,10 @@ public class OperationButton extends JButton implements ContextListener, ActionL
 
 		Node node = (Node)contextElement;
 		
-		operation.setup(node);
-		node.accept(operation);
-		operation.finalize(node);
+		if (operation.setup(node)) {
+			node.accept(operation);
+			operation.finalize(node);
+		}
 	}
 	
 }
