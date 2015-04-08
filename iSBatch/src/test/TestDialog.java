@@ -18,14 +18,7 @@ public class TestDialog implements ActionListener {
 	private JButton cancelButton = new JButton("Cancel");
 	private JButton loadButton = new JButton("Load");
 	private JButton createButton = new JButton("Create");
-	private String channel, method;
-	private JComboBox<String> channelComboBox;
-	private JComboBox<String> methodComboBox;
-	private String[] methods = new String[] { "Average Images", "Flatten Images" };
-	private String[] channels = new String[] { "Red", "Green", "Blue" };
-	/**
-	 * @wbp.parser.entryPoint
-	 */
+	
 	public void showDialog() {
 		
 		JDialog dialog = new JDialog();
