@@ -75,6 +75,7 @@ public class FlatOperationGui extends JDialog implements ActionListener {
 	private String Selectedchannel = "All";
 
 	public FlatOperationGui(Node node) {
+		setModal(true);
 		setTitle("Set Background Image");
 		frame = new JFrame("Set Backgroung Image");
 		this.node = node;
@@ -210,15 +211,16 @@ public class FlatOperationGui extends JDialog implements ActionListener {
 
 		pack();
 
+		
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setVisible(true);
 
 	}
 
 	private void run() {
-	
-		// get array of Images
-		ArrayList<Node> images = node.getDescendents(imageFileNodeFilter);
+//	
+//		// get array of Images
+//		ArrayList<Node> images = node.getDescendents(imageFileNodeFilter);
 
 		System.out.println("Run this baby");
 		System.out.println("Parameters will be: " + channel + " , " + imageType +  " , " +  method);
