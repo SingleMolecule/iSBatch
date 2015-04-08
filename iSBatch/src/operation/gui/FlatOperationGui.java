@@ -67,7 +67,7 @@ public class FlatOperationGui extends JDialog implements ActionListener {
 
 	static JFrame frame;
 	private Node node;
-	private String channel, method, imageType;
+	private String channel, method, imagePath;
 
 	/*
 	 * Filter variables
@@ -182,7 +182,7 @@ public class FlatOperationGui extends JDialog implements ActionListener {
 				pathToImage.addKeyListener(new KeyAdapter() {
 					@Override
 					public void keyTyped(KeyEvent e) {
-					imageType = pathToImage.getText();	
+					imagePath = pathToImage.getText();	
 					}
 				});
 				
@@ -223,7 +223,7 @@ public class FlatOperationGui extends JDialog implements ActionListener {
 //		ArrayList<Node> images = node.getDescendents(imageFileNodeFilter);
 
 		System.out.println("Run this baby");
-		System.out.println("Parameters will be: " + channel + " , " + imageType +  " , " +  method);
+		System.out.println("Parameters will be: " + channel + " , " + imagePath +  " , " +  method);
 	}
 
 	
@@ -294,6 +294,7 @@ public class FlatOperationGui extends JDialog implements ActionListener {
 			return true;
 		};
 	};
+	private String imageType;
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -326,4 +327,7 @@ public class FlatOperationGui extends JDialog implements ActionListener {
 
 	public String getMethod() {
 		return method;
-	}}
+	}
+
+	public String getImagePath() {
+		return imagePath;	}}
