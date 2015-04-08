@@ -1,4 +1,4 @@
-package operation.FlatImages;
+package operation.flatImages;
 
 import ij.IJ;
 

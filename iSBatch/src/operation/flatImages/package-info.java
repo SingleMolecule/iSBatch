@@ -5,4 +5,4 @@
  * @author VictorCaldas
  *
  */
-package operation.FlatImages;
+package operation.flatImages;

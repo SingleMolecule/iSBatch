@@ -1,7 +1,7 @@
 /**
  * 
  */
-package operation.FlatImages;
+package operation.flatImages;
 
 
 import model.DatabaseModel;
