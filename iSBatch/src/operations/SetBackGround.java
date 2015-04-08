@@ -48,6 +48,7 @@ public class SetBackGround implements Operation,  ActionListener {
 	private String[] types = new String[] {"Raw"};
 	private String channel = channels[0];
 	private String method = methods[0];
+	JDialog dialog;
 	
 	private String imageType = types[0];
 	private JTextField filePathField;
@@ -122,10 +123,9 @@ public class SetBackGround implements Operation,  ActionListener {
 
 	public void showDialog() {
 		
-		JDialog dialog = new JDialog();
+		dialog = new JDialog();
 		dialog.setTitle("Set BackGround");
 		dialog.getContentPane().setLayout(new GridBagLayout());
-		
 		GridBagConstraints gbc = new GridBagConstraints();
 		
 		// create first row
@@ -261,8 +261,10 @@ public class SetBackGround implements Operation,  ActionListener {
 			}
 			else{
 				System.out.println("Settin path and exiting.");
-
+				dialog.dispose();
 			}
+			
+			
 		}
 		else if (e.getSource() == channelComboBox) {
 			channel = channels[channelComboBox.getSelectedIndex()];
