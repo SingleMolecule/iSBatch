@@ -4,11 +4,15 @@
 package operations.microbeTrackerIO;
 
 
+import java.util.ArrayList;
+
+import filters.NodeFilter;
 import model.DatabaseModel;
 import model.Experiment;
 import model.FieldOfView;
 import model.FileNode;
 import model.Node;
+import model.OperationNode;
 import model.Root;
 import model.Sample;
 import operations.Operation;
@@ -33,7 +37,7 @@ public class MicrobeTrackerIO implements Operation {
 	 */
 	@Override
 	public String[] getContext() {
-		return new String[]{"All"};	
+		return new String[]{"Experiment", "Sample", "FieldOfView"};	
 	}
 
 	/* (non-Javadoc)
@@ -71,9 +75,7 @@ public class MicrobeTrackerIO implements Operation {
 
 	@Override
 	public void visit(Root root) {
-		
-		run(root);
-		
+			
 	}
 
 	@Override
@@ -97,6 +99,16 @@ public class MicrobeTrackerIO implements Operation {
 		System.out.println(matFilePath);
 		
 		
+		ArrayList<Node> nodes = node.getDescendents(new NodeFilter(channel));
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 
 	@Override
@@ -115,6 +127,12 @@ public class MicrobeTrackerIO implements Operation {
 	}
 	
 	public static void main(String[] args) {
+		
+	}
+
+	@Override
+	public void visit(OperationNode operationNode) {
+		// TODO Auto-generated method stub
 		
 	}
 
