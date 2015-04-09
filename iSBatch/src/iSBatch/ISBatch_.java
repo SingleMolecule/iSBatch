@@ -44,12 +44,12 @@ import model.Node;
 import model.NodeFilter;
 import context.ContextHandler;
 import opearation.peakFinder.FindPeaksOperation;
-import operation.FlatImages.FlattenOperation;
-import operation.FlatImages.SetBackGround;
+import operation.correlation.CorrelationOperation;
+import operation.flatImages.FlattenOperation;
+import operation.flatImages.SetBackGround;
 import operation.peakFitter.FitPeaksOperation;
 import operations.AddOperation;
 import operations.CellIntensityOperation;
-import operations.CorrelationOperation;
 import operations.LocationMapsOperation;
 import operations.MacroOperation;
 import operations.MacroOperation2;
@@ -425,10 +425,10 @@ public class ISBatch_ implements TreeSelectionListener {
 				new FlattenOperation(treeModel),
 				new FindPeaksOperation(treeModel),
 				new FitPeaksOperation(treeModel),
-				new MicrobeTrackerIOOperation(treeModel),
+//				new MicrobeTrackerIOOperation(treeModel),
 				new CorrelationOperation(treeModel),
-				new LocationMapsOperation(treeModel),
-				new CellIntensityOperation(treeModel),
+//				new LocationMapsOperation(treeModel),
+//				new CellIntensityOperation(treeModel),
 				new CellOutlines(treeModel),
 				 };
 	}
