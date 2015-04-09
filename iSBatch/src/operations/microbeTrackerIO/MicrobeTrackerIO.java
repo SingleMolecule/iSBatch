@@ -4,6 +4,8 @@
 package operations.microbeTrackerIO;
 
 
+import java.util.HashMap;
+
 import model.DatabaseModel;
 import model.Experiment;
 import model.FieldOfView;
@@ -53,7 +55,10 @@ public class MicrobeTrackerIO implements Operation {
 		dialog = new MicrobeTrackerIOGui(node);
 		if (dialog.isCanceled())
 			return false;
-		getParameters();
+		this.channel = dialog.getChannel();
+		this.method = dialog.getMethod();
+		this.customFilter = dialog.getCustomFilter();
+		this.matFilePath = dialog.getMatFilePath();
 		return true;
 	}
 
@@ -81,13 +86,6 @@ public class MicrobeTrackerIO implements Operation {
 	public void visit(Experiment experiment) {
 		run(experiment);
 		
-	}
-
-	private void getParameters() {
-		this.channel = dialog.getChannel();
-		this.method = dialog.getMethod();
-		this.customFilter = dialog.getCustomFilter();
-		this.matFilePath = dialog.getMatFilePath();
 	}
 
 	private void run(Node node) {
@@ -123,6 +121,18 @@ public class MicrobeTrackerIO implements Operation {
 	public void visit(OperationNode operationNode) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Node[] getCreatedNodes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public HashMap<String, String> getParameters() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

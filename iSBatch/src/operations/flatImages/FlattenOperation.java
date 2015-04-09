@@ -4,6 +4,7 @@
 package operations.flatImages;
 
 import java.io.File;
+import java.util.HashMap;
 
 import javax.swing.JFileChooser;
 
@@ -292,6 +293,18 @@ public class FlattenOperation implements Operation {
 	public void visit(OperationNode operationNode) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Node[] getCreatedNodes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public HashMap<String, String> getParameters() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

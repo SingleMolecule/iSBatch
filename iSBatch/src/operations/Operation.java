@@ -1,5 +1,7 @@
 package operations;
 
+import java.util.HashMap;
+
 import context.ContextElement;
 import model.Experiment;
 import model.FieldOfView;
@@ -15,6 +17,8 @@ public interface Operation extends ContextElement {
 	public String getName();
 	public boolean setup(Node node);
 	public void finalize(Node node);
+	public Node[] getCreatedNodes();
+	public HashMap<String, String> getParameters();
 	
 	public void visit(Root root);
 	public void visit(Experiment experiment);

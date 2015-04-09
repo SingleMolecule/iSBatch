@@ -265,6 +265,10 @@ public class Database {
 		else if(type.equalsIgnoreCase(FileNode.type))	{
 			return new FileNode(parent);
 		}
+		else if (type.equalsIgnoreCase(OperationNode.type)) {
+			return new OperationNode(parent);
+		}
+		
 
 		return null;
 	}

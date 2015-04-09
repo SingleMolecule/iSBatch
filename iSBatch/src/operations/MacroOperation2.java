@@ -1,5 +1,7 @@
 package operations;
 
+import java.util.HashMap;
+
 import gui.newDialog;
 
 import javax.swing.JFrame;
@@ -126,5 +128,17 @@ public class MacroOperation2 implements Operation {
 	public void visit(OperationNode operationNode) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Node[] getCreatedNodes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public HashMap<String, String> getParameters() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

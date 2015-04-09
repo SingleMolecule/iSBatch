@@ -4,6 +4,8 @@
 package operations.correlation;
 
 
+import java.util.HashMap;
+
 import model.DatabaseModel;
 import model.Experiment;
 import model.FieldOfView;
@@ -64,7 +66,16 @@ public class CorrelationOperation implements Operation {
 		dialog = new CorrelationOperationGui(node);
 		if (dialog.isCanceled())
 			return false;
-		getParameters();
+		
+		this.channel1 = dialog.getChannel1();
+		this.channel2 = dialog.getChannel2();
+		this.filter1 = dialog.getFilter1();
+		this.filter2 = dialog.getFilter2();
+		this.type1 = dialog.gettype1();
+		this.type2 = dialog.gettype2();
+		this.projectX = dialog.requireXProjection();
+		this.projectY = dialog.requireYProjection();
+		
 		return true;
 	}
 
@@ -91,20 +102,6 @@ public class CorrelationOperation implements Operation {
 	@Override
 	public void visit(Experiment experiment) {
 		run(experiment);
-		
-	}
-
-	private void getParameters() {
-		this.channel1 = dialog.getChannel1();
-		this.channel2 = dialog.getChannel2();
-		this.filter1 = dialog.getFilter1();
-		this.filter2 = dialog.getFilter2();
-		this.type1 = dialog.gettype1();
-		this.type2 = dialog.gettype2();
-		this.projectX = dialog.requireXProjection();
-		this.projectY = dialog.requireYProjection();
-		
-		
 		
 	}
 
@@ -143,6 +140,18 @@ public class CorrelationOperation implements Operation {
 	public void visit(OperationNode operationNode) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Node[] getCreatedNodes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public HashMap<String, String> getParameters() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
