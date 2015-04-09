@@ -14,5 +14,9 @@ public class FieldOfView extends Node {
 	public void accept(Operation operation) {
 		operation.visit(this);
 	}
+	
+	public String getExperimentType(){
+		return this.getParent().getParent().getProperty("type");
+	}
 
 }
