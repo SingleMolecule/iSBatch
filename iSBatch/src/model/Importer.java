@@ -179,7 +179,7 @@ public class Importer {
 		if (name.matches(acqRegEx))
 			channel = "acquisition";
 		else if (name.matches(bfRegEx))
-			channel = "bf";
+			channel = "Bright Field";
 		else if (name.matches(redRegEx))
 			channel = "red";
 		else if (name.matches(greenRegEx))
