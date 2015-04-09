@@ -47,6 +47,7 @@ import operations.*;
 import operations.correlation.CorrelationOperation;
 import operations.flatImages.FlattenOperation;
 import operations.flatImages.SetBackGround;
+import operations.microbeTrackerIO.MicrobeTrackerIO;
 import operations.peakFinder.FindPeaksOperation;
 import operations.peakFitter.FitPeaksOperation;
 
@@ -418,7 +419,7 @@ public class ISBatch_ implements TreeSelectionListener {
 				new FlattenOperation(treeModel),
 				new FindPeaksOperation(treeModel),
 				new FitPeaksOperation(treeModel),
-//				new MicrobeTrackerIOOperation(treeModel),
+				new MicrobeTrackerIO(treeModel),
 				new CorrelationOperation(treeModel),
 //				new LocationMapsOperation(treeModel),
 //				new CellIntensityOperation(treeModel),
