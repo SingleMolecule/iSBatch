@@ -16,6 +16,7 @@ import model.FieldOfView;
 import model.FileNode;
 import model.Importer;
 import model.Node;
+import model.OperationNode;
 import model.Root;
 import model.Sample;
 
@@ -150,6 +151,12 @@ public class AddOperation implements Operation {
 
 	@Override
 	public void finalize(Node node) {
+		
+	}
+
+	@Override
+	public void visit(OperationNode operationNode) {
+		// TODO Auto-generated method stub
 		
 	}
 	

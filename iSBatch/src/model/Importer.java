@@ -5,11 +5,11 @@ import java.util.ArrayList;
 
 /**
  * The importer class takes care of importing measurement data. Depending on the
- * directory structure and filenames it deduces what is an experiment, a sample,
+ * directory structure and filename it deduces what is an experiment, a sample,
  * a field of view or a file.
  * 
  * The level of a directory determines if it refers to an experiment, sample or
- * field of view. Filenames determine the channel.
+ * field of view. For each file the channel is determined by its filename.
  * 
  * Channels are (by default) determined by the following conditions:
  * <dl>
@@ -67,14 +67,14 @@ public class Importer {
 	 * @param folder the folder from which all samples are imported
 	 * @param isTimeSampling determines if this experiment is time lapse or not
 	 */
-	public void importExperiment(Root root, File folder, boolean isTimeSampling) {
+	public void importExperiment(File folder, boolean isTimeSampling) {
 
-		Experiment experiment = new Experiment(root);
+		Experiment experiment = new Experiment((Root)model.getRoot());
 		experiment.setProperty("name", folder.getName());
 		experiment.setProperty("folder", folder.getPath());
 		experiment.setProperty("type", isTimeSampling ? "Time Sampling"
 				: "Time Lapse");
-		model.addNode(root, experiment);
+		model.addNode((Root)model.getRoot(), experiment);
 
 		importSamples(experiment);
 	}
@@ -168,7 +168,6 @@ public class Importer {
 		}
 
 	}
-
 	
 	public void importFile(Node node, File file) {
 		
@@ -194,6 +193,5 @@ public class Importer {
 
 		model.addNode(node, fileNode);
 	}
-	
 	
 }

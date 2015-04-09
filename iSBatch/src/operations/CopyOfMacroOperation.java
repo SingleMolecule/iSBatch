@@ -13,6 +13,7 @@ import model.FieldOfView;
 import model.FileNode;
 import model.Node;
 import model.NodeFilter;
+import model.OperationNode;
 import model.Root;
 import model.Sample;
 
@@ -121,5 +122,11 @@ public class CopyOfMacroOperation implements Operation {
 	@Override
 	public void finalize(Node node) {
 		macroFile = null;
+	}
+
+	@Override
+	public void visit(OperationNode operationNode) {
+		// TODO Auto-generated method stub
+		
 	}
 }
