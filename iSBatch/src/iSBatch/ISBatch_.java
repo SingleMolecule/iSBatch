@@ -33,7 +33,6 @@ import javax.swing.JTree;
 import javax.swing.SwingUtilities;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
-import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
 import org.tmatesoft.sqljet.core.SqlJetException;
@@ -44,12 +43,13 @@ import model.FileNode;
 import model.Node;
 import model.NodeFilter;
 import context.ContextHandler;
-import operations.AddOperation;
-import operations.FlattenOperation;
-import operations.MacroOperation;
-import operations.MacroOperation2;
-import operations.Operation;
-import operations.SaveDatabaseOperation;
+import operations.*;
+import operations.correlation.CorrelationOperation;
+import operations.flatImages.FlattenOperation;
+import operations.flatImages.SetBackGround;
+import operations.microbeTrackerIO.MicrobeTrackerIO;
+import operations.peakFinder.FindPeaksOperation;
+import operations.peakFitter.FitPeaksOperation;
 
 public class ISBatch_ implements TreeSelectionListener {
 
@@ -420,7 +420,16 @@ public class ISBatch_ implements TreeSelectionListener {
 		return new Operation[] {
 				new MacroOperation(frame, treeModel),
 				new MacroOperation2(frame, treeModel),
+				
+				new SetBackGround(treeModel),
 				new FlattenOperation(treeModel),
+				new FindPeaksOperation(treeModel),
+				new FitPeaksOperation(treeModel),
+				new MicrobeTrackerIO(treeModel),
+				new CorrelationOperation(treeModel),
+//				new LocationMapsOperation(treeModel),
+//				new CellIntensityOperation(treeModel),
+				new CellOutlines(treeModel),
 				 };
 	}
 	

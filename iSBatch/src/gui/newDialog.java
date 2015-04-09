@@ -11,32 +11,20 @@ import ij.macro.Interpreter;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-
 import java.awt.GridBagLayout;
-
 import javax.swing.JButton;
-
 import java.awt.GridBagConstraints;
-
 import javax.swing.JTextField;
-
 import java.awt.Insets;
-
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
 import model.FileNode;
 import model.Node;
 import model.NodeFilter;
-
-import java.awt.Component;
-
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
-
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 import java.io.File;
@@ -44,10 +32,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
-
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
