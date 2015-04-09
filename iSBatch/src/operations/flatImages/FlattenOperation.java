@@ -287,19 +287,4 @@ public class FlattenOperation implements Operation {
 		importer.importFile(fileNode.getParent(), outputFile);
 	}
 
-	private double getMaxPixelValue(ImageProcessor backgroundIp) {
-		double maxValue = backgroundIp.getf(0, 0);
-		
-		for (int y = 0; y < backgroundIp.getHeight(); y++) {
-			for (int x = 0; x < backgroundIp.getWidth(); x++) {
-				
-				double value = backgroundIp.getf(x, y);
-				
-				if (value > maxValue)
-					maxValue = value;
-			}
-		}
-		return maxValue;
-	}
-
 }

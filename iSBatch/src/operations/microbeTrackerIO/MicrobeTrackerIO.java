@@ -41,7 +41,7 @@ public class MicrobeTrackerIO implements Operation {
 	 */
 	@Override
 	public String getName() {
-		return "Set BackGround";
+		return "MicrobeTracker I/O";
 	}
 
 	/* (non-Javadoc)
