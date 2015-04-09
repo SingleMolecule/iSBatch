@@ -6,7 +6,6 @@ import gui.LogPanel;
 import gui.OperationButton;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Desktop;
 import java.awt.Dimension;
@@ -339,6 +338,12 @@ public class ISBatch_ implements TreeSelectionListener {
 			operationsPanel.add(opButton, gbc);
 
 		}
+		
+		// add all the operations that are specified as macros
+		//
+		
+		
+		
 		return operationsPanel;
 		
 	}
