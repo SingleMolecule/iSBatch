@@ -4,6 +4,8 @@
 package operations.peakFinder;
 
 
+import java.util.HashMap;
+
 import operations.Operation;
 import model.DatabaseModel;
 import model.Experiment;
@@ -60,11 +62,6 @@ public class FindPeaksOperation implements Operation {
 		 dialog = new FindPeaksGui(node);
 		if (dialog.isCanceled())
 			return false;
-		getParameters();
-		return true;
-	}
-
-	private void getParameters() {
 		this.innerRadius = dialog.getInnerRadius();
 		this.outerRadius = dialog.getOuterRadius();
 		this.threshold = dialog.getThreshold();
@@ -75,7 +72,7 @@ public class FindPeaksOperation implements Operation {
 		this.useDiscoidal = dialog.useDiscoidal;
 		this.channel = dialog.getChannel();
 		this.method = dialog.getMethod();
-		
+		return true;
 	}
 
 	/* (non-Javadoc)
@@ -140,6 +137,18 @@ public class FindPeaksOperation implements Operation {
 	public void visit(OperationNode operationNode) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Node[] getCreatedNodes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public HashMap<String, String> getParameters() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

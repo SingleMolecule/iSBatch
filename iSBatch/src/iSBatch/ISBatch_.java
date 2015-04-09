@@ -27,6 +27,7 @@ import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
@@ -53,6 +54,8 @@ import operations.peakFitter.FitPeaksOperation;
 
 public class ISBatch_ implements TreeSelectionListener {
 
+	private static ISBatch_ instance;
+	
 	private Database database;
 	private DatabaseModel treeModel;
 	private ContextHandler contextHandler = new ContextHandler();
@@ -95,15 +98,10 @@ public class ISBatch_ implements TreeSelectionListener {
 	private JMenuItem sourceMenuItem;
 	
 	public static void main(String[] args) {
-
-		try {
-			new ISBatch_();
-		} catch (SqlJetException e) {
-			e.printStackTrace();
-		}
+		getInstance();
 	}
 
-	public ISBatch_() throws SqlJetException {
+	protected ISBatch_() throws SqlJetException {
 		System.out.println("Im here. =D");
 		DatabaseDialog dialog = new DatabaseDialog(frame);
 		database = dialog.getDatabase();
@@ -115,6 +113,19 @@ public class ISBatch_ implements TreeSelectionListener {
 
 		display(tree);
 		
+	}
+	
+	public static ISBatch_ getInstance() {
+		
+		if (instance == null) {
+			try {
+				instance = new ISBatch_();
+			}
+			catch (SqlJetException e) {
+				JOptionPane.showMessageDialog(null, "Could not open database : " + e.getMessage(), "Database error", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+		return instance;
 	}
 
 	private void reload(){
@@ -311,7 +322,7 @@ public class ISBatch_ implements TreeSelectionListener {
 	private JPanel createTreePanel() {
 		JPanel treePanel = new JPanel(new BorderLayout());
 		for (Operation operation : getTreeOperations()) {
-			OperationButton button = new OperationButton(operation);
+			OperationButton button = new OperationButton(treeModel, operation);
 			contextHandler.getListeners().add(button);
 			treeButtonspanel.add(button);
 		}
@@ -331,7 +342,7 @@ public class ISBatch_ implements TreeSelectionListener {
 
 		for (Operation operation : getOperations()) {
 
-			OperationButton opButton = new OperationButton(operation);
+			OperationButton opButton = new OperationButton(treeModel, operation);
 			contextHandler.getListeners().add(opButton);
 
 			gbc.gridy++;
@@ -410,13 +421,13 @@ public class ISBatch_ implements TreeSelectionListener {
 		return menu;
 	}
 
-	private Operation[] getTreeOperations() {
+	public Operation[] getTreeOperations() {
 		return new Operation[] { 
 				new AddOperation(frame, treeModel),
 				new SaveDatabaseOperation(database, treeModel.getRoot()), };
 	}
 
-	private Operation[] getOperations() {
+	public Operation[] getOperations() {
 		return new Operation[] {
 				new MacroOperation(frame, treeModel),
 				new MacroOperation2(frame, treeModel),

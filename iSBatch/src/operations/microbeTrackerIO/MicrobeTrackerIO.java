@@ -4,12 +4,17 @@
 package operations.microbeTrackerIO;
 
 
+<<<<<<< HEAD
 import java.awt.image.ImageFilter;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import filters.NodeFilter;
 import filters.NodeFilterInterface;
+=======
+import java.util.HashMap;
+
+>>>>>>> refs/heads/Michiel
 import model.DatabaseModel;
 import model.Experiment;
 import model.FieldOfView;
@@ -41,7 +46,7 @@ public class MicrobeTrackerIO implements Operation {
 	 */
 	@Override
 	public String[] getContext() {
-		return new String[]{"Experiment", "Sample", "FieldOfView"};	
+		return new String[]{"All"};	
 	}
 
 	/* (non-Javadoc)
@@ -60,7 +65,10 @@ public class MicrobeTrackerIO implements Operation {
 		dialog = new MicrobeTrackerIOGui(node);
 		if (dialog.isCanceled())
 			return false;
-		getParameters();
+		this.channel = dialog.getChannel();
+		this.method = dialog.getMethod();
+		this.customFilter = dialog.getCustomFilter();
+		this.matFilePath = dialog.getMatFilePath();
 		return true;
 	}
 
@@ -86,13 +94,6 @@ public class MicrobeTrackerIO implements Operation {
 	public void visit(Experiment experiment) {
 		run(experiment);
 		
-	}
-
-	private void getParameters() {
-		this.channel = dialog.getChannel();
-		this.method = dialog.getMethod();
-		this.customFilter = dialog.getCustomFilter();
-		this.matFilePath = dialog.getMatFilePath();
 	}
 
 	private void run(Node node) {
@@ -217,5 +218,17 @@ public class MicrobeTrackerIO implements Operation {
 	
 	
 	
+
+	@Override
+	public Node[] getCreatedNodes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public HashMap<String, String> getParameters() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

@@ -6,6 +6,7 @@ import gui.FileDialog;
 import gui.SampleDialog;
 
 import java.io.File;
+import java.util.HashMap;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -158,6 +159,18 @@ public class AddOperation implements Operation {
 	public void visit(OperationNode operationNode) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Node[] getCreatedNodes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public HashMap<String, String> getParameters() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

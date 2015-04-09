@@ -1,6 +1,7 @@
 package operations;
 
 import java.io.File;
+import java.util.HashMap;
 
 import filters.NodeFilterInterface;
 import gui.MacroDialog;
@@ -128,5 +129,17 @@ public class MacroOperation implements Operation {
 	public void visit(OperationNode operationNode) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Node[] getCreatedNodes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public HashMap<String, String> getParameters() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

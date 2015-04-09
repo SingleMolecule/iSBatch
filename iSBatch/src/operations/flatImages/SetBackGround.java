@@ -4,6 +4,8 @@
 package operations.flatImages;
 
 
+import java.util.HashMap;
+
 import model.DatabaseModel;
 import model.Experiment;
 import model.FieldOfView;
@@ -51,7 +53,8 @@ public class SetBackGround implements Operation {
 		dialog = new SetBackgroundGui(node);
 		if (dialog.isCanceled())
 			return false;
-		getParameters();
+		this.channel = dialog.getChannel();
+		this.method = dialog.getMethod();
 		return true;
 	}
 
@@ -78,12 +81,6 @@ public class SetBackGround implements Operation {
 	@Override
 	public void visit(Experiment experiment) {
 		run(experiment);
-		
-	}
-
-	private void getParameters() {
-		this.channel = dialog.getChannel();
-		this.method = dialog.getMethod();
 		
 	}
 
@@ -115,6 +112,18 @@ public class SetBackGround implements Operation {
 	public void visit(OperationNode operationNode) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Node[] getCreatedNodes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public HashMap<String, String> getParameters() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -1,6 +1,8 @@
 package operations;
 
 
+import java.util.HashMap;
+
 import gui.LogPanel;
 
 import javax.swing.JOptionPane;
@@ -86,6 +88,18 @@ public class SaveDatabaseOperation implements Operation {
 	public void visit(OperationNode operationNode) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Node[] getCreatedNodes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public HashMap<String, String> getParameters() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

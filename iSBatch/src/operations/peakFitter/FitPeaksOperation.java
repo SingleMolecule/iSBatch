@@ -3,6 +3,8 @@
  */
 package operations.peakFitter;
 
+import java.util.HashMap;
+
 import operations.Operation;
 import model.DatabaseModel;
 import model.Experiment;
@@ -74,11 +76,6 @@ public class FitPeaksOperation implements Operation {
 		dialog = new PeakFitterGui(node);
 		if (dialog.isCanceled())
 			return false;
-		getParameters();
-		return true;
-	}
-
-	private void getParameters() {
 		this.innerRadius = dialog.getInnerRadius();
 		this.outerRadius = dialog.getOuterRadius();
 		this.threshold = dialog.getThreshold();
@@ -98,8 +95,9 @@ public class FitPeaksOperation implements Operation {
 		this.errorX = dialog.getErrorX();
 		this.errorHeight = dialog.getErrorHeight();
 		this.errorBaseline = dialog.getErrorBaseline();
+		return true;
 	}
-
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -170,6 +168,18 @@ public class FitPeaksOperation implements Operation {
 	public void visit(OperationNode operationNode) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Node[] getCreatedNodes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public HashMap<String, String> getParameters() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

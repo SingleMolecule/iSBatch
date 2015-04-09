@@ -1,6 +1,5 @@
 package operations;
 
-import filters.NodeFilterInterface;
 import gui.newDialog;
 
 import javax.swing.JFrame;
@@ -10,6 +9,7 @@ import model.Experiment;
 import model.FieldOfView;
 import model.FileNode;
 import model.Node;
+import model.NodeFilter;
 import model.OperationNode;
 import model.Root;
 import model.Sample;
@@ -126,5 +126,17 @@ public class MacroOperation2 implements Operation {
 	public void visit(OperationNode operationNode) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Node[] getCreatedNodes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public HashMap<String, String> getParameters() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

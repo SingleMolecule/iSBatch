@@ -1,5 +1,7 @@
 package iSBatch;
 
+import java.util.HashMap;
+
 import model.DatabaseModel;
 import model.Experiment;
 import model.FieldOfView;
@@ -72,6 +74,18 @@ public class CellOutlines implements Operation {
 	public void visit(OperationNode operationNode) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Node[] getCreatedNodes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public HashMap<String, String> getParameters() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
