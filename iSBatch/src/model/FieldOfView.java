@@ -18,5 +18,4 @@ public class FieldOfView extends Node {
 	public String getExperimentType(){
 		return this.getParent().getParent().getProperty("type");
 	}
-
 }

@@ -15,4 +15,10 @@ public class Sample extends Node {
 		operation.visit(this);
 	}
 	
+	public String getExperimentType(){
+		return this.getParent().getProperty("type");
+	}
+
+
+	
 }
