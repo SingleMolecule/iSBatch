@@ -22,6 +22,8 @@ import model.FieldOfView;
 import model.FileNode;
 import model.Importer;
 import model.Node;
+import model.NodeFilter;
+import model.OperationNode;
 import model.Root;
 import model.Sample;
 
@@ -286,5 +288,9 @@ public class FlattenOperation implements Operation {
 		LogPanel.log("adding to tree");
 		importer.importFile(fileNode.getParent(), outputFile);
 	}
-
+	@Override
+	public void visit(OperationNode operationNode) {
+		// TODO Auto-generated method stub
+		
+	}
 }

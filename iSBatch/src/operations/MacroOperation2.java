@@ -10,6 +10,7 @@ import model.Experiment;
 import model.FieldOfView;
 import model.FileNode;
 import model.Node;
+import model.NodeFilter;
 import model.OperationNode;
 import model.Root;
 import model.Sample;

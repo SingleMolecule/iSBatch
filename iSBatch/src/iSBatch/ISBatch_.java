@@ -338,6 +338,12 @@ public class ISBatch_ implements TreeSelectionListener {
 			operationsPanel.add(opButton, gbc);
 
 		}
+		
+		// add all the operations that are specified as macros
+		//
+		
+		
+		
 		return operationsPanel;
 		
 	}

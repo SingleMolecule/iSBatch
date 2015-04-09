@@ -83,7 +83,6 @@ public class Database {
 	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
-		String pathToResource = null;
 
 	}
 

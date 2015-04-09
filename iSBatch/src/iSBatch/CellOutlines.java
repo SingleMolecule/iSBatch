@@ -5,6 +5,7 @@ import model.Experiment;
 import model.FieldOfView;
 import model.FileNode;
 import model.Node;
+import model.OperationNode;
 import model.Root;
 import model.Sample;
 import operations.Operation;
@@ -65,6 +66,12 @@ public class CellOutlines implements Operation {
 	public void visit(FileNode fileNode) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void visit(OperationNode operationNode) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
