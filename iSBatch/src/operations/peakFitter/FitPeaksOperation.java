@@ -1,8 +1,7 @@
 /**
  * 
  */
-package opearation.peakFinder;
-
+package operations.peakFitter;
 
 import operations.Operation;
 import model.DatabaseModel;
@@ -17,8 +16,8 @@ import model.Sample;
  * @author VictorCaldas
  *
  */
-public class FindPeaksOperation implements Operation {
-	private FindPeaksGui dialog;
+public class FitPeaksOperation implements Operation {
+	private PeakFitterGui dialog;
 	private String channel;
 	private String method;
 	private double innerRadius;
@@ -29,34 +28,49 @@ public class FindPeaksOperation implements Operation {
 	private double selectionRadius;
 	private boolean useCells;
 	private boolean useDiscoidal;
-	public FindPeaksOperation(DatabaseModel treeModel) {
-		// TODO Auto-generated constructor stub
+	private double zScale;
+	private double errorSigmaY;
+	private double errorSigmaX;
+	private double errorY;
+	private double errorX;
+	private double errorHeight;
+	private double errorBaseline;
+	private DatabaseModel model;
+
+	public FitPeaksOperation(DatabaseModel treeModel) {
+		this.model = treeModel;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see context.ContextElement#getContext()
 	 */
 	@Override
 	public String[] getContext() {
-		return new String[]{"All"};	
+		return new String[] { "All" };
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see operations.Operation#getName()
 	 */
 	@Override
 	public String getName() {
-		return "Find Peaks";
+		return "Fit Peaks";
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see operations.Operation#setup(model.Node)
 	 */
 	@Override
 	public boolean setup(Node node) {
 		// String to parse:
 
-		 dialog = new FindPeaksGui(node);
+		dialog = new PeakFitterGui(node);
 		if (dialog.isCanceled())
 			return false;
 		getParameters();
@@ -74,10 +88,20 @@ public class FindPeaksOperation implements Operation {
 		this.useDiscoidal = dialog.useDiscoidal;
 		this.channel = dialog.getChannel();
 		this.method = dialog.getMethod();
-		
+
+		this.zScale = dialog.getZScale();
+
+		this.errorSigmaY = dialog.getErrorSigmaY();
+		this.errorSigmaX = dialog.getErrorSigmaX();
+		this.errorY = dialog.getErrorY();
+		this.errorX = dialog.getErrorX();
+		this.errorHeight = dialog.getErrorHeight();
+		this.errorBaseline = dialog.getErrorBaseline();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see operations.Operation#finalize(model.Node)
 	 */
 	@Override
@@ -86,7 +110,9 @@ public class FindPeaksOperation implements Operation {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see operations.Operation#visit(model.Root)
 	 */
 
@@ -106,8 +132,14 @@ public class FindPeaksOperation implements Operation {
 		System.out.println(useDiscoidal);
 		System.out.println(channel);
 		System.out.println(method);
-		
 
+		System.out.println(zScale);
+		System.out.println(errorSigmaY);
+		System.out.println(errorSigmaX);
+		System.out.println(errorY);
+		System.out.println(errorX);
+		System.out.println(errorHeight);
+		System.out.println(errorBaseline);
 	}
 
 	@Override
@@ -125,13 +157,11 @@ public class FindPeaksOperation implements Operation {
 		run(fieldOfView);
 	}
 
-	
 	@Override
 	public void visit(FileNode fileNode) {
 		run(fileNode);
 	}
 
-	
 	public static void main(String[] args) {
 	}
 

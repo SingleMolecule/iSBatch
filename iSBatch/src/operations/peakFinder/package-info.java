@@ -5,4 +5,4 @@
  * @author VictorCaldas
  *
  */
-package operation.gui;
+package operations.peakFinder;

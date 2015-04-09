@@ -1,5 +1,4 @@
-package operation.peakFitter;
-
+package operations.peakFinder;
 
 import ij.IJ;
 
@@ -36,9 +35,7 @@ import javax.swing.JPanel;
 import javax.swing.JCheckBox;
 import javax.swing.border.TitledBorder;
 
-import opearation.peakFinder.FindPeaksGui;
-
-public class PeakFitterGui extends JDialog implements ActionListener {
+public class FindPeaksGui extends JDialog implements ActionListener {
 	/**
 	 * 
 	 */
@@ -135,57 +132,14 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 	private String channel, method, imagePath;
 	public boolean useDiscoidal;
 	public boolean useCells;
-	private JPanel PeakFitterPanel;
-	private JTextField ErrorBaselinetextField;
-	private JTextField errorHeightextField;
-	private JTextField errorXtextField;
-	private JTextField errorYtextField;
-	private JTextField errorSigmaXtextField;
-	private JTextField errorSigmaYtextField;
-	private JTextField ZscaletxtField;
-	private JLabel lblNewLabel;
-	private JLabel lblNewLabel_1;
-	private JLabel lblNewLabel_2;
-	private JLabel lblNewLabel_3;
-	private JLabel lblNewLabel_4;
-	private JLabel lblNewLabel_5;
-	private JLabel lblNewLabel_6;
-	protected String zScale;
-	public double getZScale(){
-		return parseDouble(zScale);
-	}
-	protected String errorSigmaY;
-	public double getErrorSigmaY(){
-		return parseDouble(errorSigmaY);
-	}
-	protected String errorSigmaX;
-	public double getErrorSigmaX(){
-		return parseDouble(errorSigmaX);
-	}
-	protected String errorY;
-	public double getErrorY(){
-		return parseDouble(errorY);
-	}
-	protected String errorX;
-	public double getErrorX(){
-		return parseDouble(errorX);
-	}
-	protected String errorHeight;
-	public double getErrorHeight(){
-		return parseDouble(errorHeight);
-	}
-	protected String errorBaseline;
-	public double getErrorBaseline(){
-		return parseDouble(errorBaseline);
-	}
 
 	/*
 	 * Filter variables
 	 */
 
-	public PeakFitterGui(Node node) {
+	public FindPeaksGui(Node node) {
 		setModal(true);
-		setTitle("Fit Peaks");
+		setTitle("Find Peaks");
 		frame = new JFrame("Find Peaks");
 		this.node = node;
 
@@ -202,10 +156,10 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 60, 115, 60, 0 };
-		gridBagLayout.rowHeights = new int[] { 14, 23, 0, 0, 103, 203, 0, 0 };
+		gridBagLayout.rowHeights = new int[] { 14, 23, 0, 0, 103, 0, 0 };
 		gridBagLayout.columnWeights = new double[] { 1.0, 1.0, 1.0,
 				Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0,
+		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 1.0, 1.0, 0.0,
 				Double.MIN_VALUE };
 		getContentPane().setLayout(gridBagLayout);
 
@@ -526,193 +480,15 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 
 		chckbxInsideCells = new JCheckBox("Inside Cells");
 		chckbxInsideCells.addActionListener(this);
-		
-		PeakFitterPanel = new JPanel();
-		PeakFitterPanel.setBorder(new TitledBorder(null, "Peak Fitter Parameters", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		GridBagConstraints gbc_PeakFitterPanel = new GridBagConstraints();
-		gbc_PeakFitterPanel.fill = GridBagConstraints.BOTH;
-		gbc_PeakFitterPanel.gridwidth = 3;
-		gbc_PeakFitterPanel.insets = new Insets(0, 0, 5, 5);
-		gbc_PeakFitterPanel.gridx = 0;
-		gbc_PeakFitterPanel.gridy = 5;
-		getContentPane().add(PeakFitterPanel, gbc_PeakFitterPanel);
-		GridBagLayout gbl_PeakFitterPanel = new GridBagLayout();
-		gbl_PeakFitterPanel.columnWidths = new int[]{0, 0, 0, 0, 0};
-		gbl_PeakFitterPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_PeakFitterPanel.columnWeights = new double[]{1.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
-		gbl_PeakFitterPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		PeakFitterPanel.setLayout(gbl_PeakFitterPanel);
-		
-		lblNewLabel = new JLabel("Max Error Baseline");
-		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
-		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel.gridx = 0;
-		gbc_lblNewLabel.gridy = 0;
-		PeakFitterPanel.add(lblNewLabel, gbc_lblNewLabel);
-		
-		ErrorBaselinetextField = new JTextField();
-		GridBagConstraints gbc_ErrorBaselinetextField = new GridBagConstraints();
-		gbc_ErrorBaselinetextField.insets = new Insets(0, 0, 5, 5);
-		gbc_ErrorBaselinetextField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_ErrorBaselinetextField.gridx = 1;
-		gbc_ErrorBaselinetextField.gridy = 0;
-		PeakFitterPanel.add(ErrorBaselinetextField, gbc_ErrorBaselinetextField);
-		ErrorBaselinetextField.setColumns(10);
-		ErrorBaselinetextField.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				errorBaseline = ErrorBaselinetextField.getText();
-			}
-		});
-		
-		
-		lblNewLabel_6 = new JLabel("Max Error height");
-		GridBagConstraints gbc_lblNewLabel_6 = new GridBagConstraints();
-		gbc_lblNewLabel_6.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_6.gridx = 0;
-		gbc_lblNewLabel_6.gridy = 1;
-		PeakFitterPanel.add(lblNewLabel_6, gbc_lblNewLabel_6);
-		
-		errorHeightextField = new JTextField();
-		GridBagConstraints gbc_errorHeightextField = new GridBagConstraints();
-		gbc_errorHeightextField.insets = new Insets(0, 0, 5, 5);
-		gbc_errorHeightextField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_errorHeightextField.gridx = 1;
-		gbc_errorHeightextField.gridy = 1;
-		PeakFitterPanel.add(errorHeightextField, gbc_errorHeightextField);
-		errorHeightextField.setColumns(10);
-		errorHeightextField.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				errorHeight = errorHeightextField.getText();
-			}
-		});
-		
-		lblNewLabel_1 = new JLabel("Max Error X");
-		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
-		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_1.gridx = 0;
-		gbc_lblNewLabel_1.gridy = 2;
-		PeakFitterPanel.add(lblNewLabel_1, gbc_lblNewLabel_1);
-		
-		errorXtextField = new JTextField();
-		GridBagConstraints gbc_errorXtextField = new GridBagConstraints();
-		gbc_errorXtextField.insets = new Insets(0, 0, 5, 5);
-		gbc_errorXtextField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_errorXtextField.gridx = 1;
-		gbc_errorXtextField.gridy = 2;
-		PeakFitterPanel.add(errorXtextField, gbc_errorXtextField);
-		errorXtextField.setColumns(10);
-		errorXtextField.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				errorX = errorXtextField.getText();
-			}
-		});
-		
-		lblNewLabel_2 = new JLabel("Max Error Y");
-		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
-		gbc_lblNewLabel_2.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_2.gridx = 0;
-		gbc_lblNewLabel_2.gridy = 3;
-		PeakFitterPanel.add(lblNewLabel_2, gbc_lblNewLabel_2);
-		
-		errorYtextField = new JTextField();
-		errorYtextField.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				errorY = errorYtextField.getText();
-			}
-		});
-		GridBagConstraints gbc_errorYtextField = new GridBagConstraints();
-		gbc_errorYtextField.insets = new Insets(0, 0, 5, 5);
-		gbc_errorYtextField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_errorYtextField.gridx = 1;
-		gbc_errorYtextField.gridy = 3;
-		PeakFitterPanel.add(errorYtextField, gbc_errorYtextField);
-		errorYtextField.setColumns(10);
-		errorYtextField.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				errorSigmaY = errorYtextField.getText();
-			}
-		});
-		
-		lblNewLabel_3 = new JLabel("Max error sigma X");
-		GridBagConstraints gbc_lblNewLabel_3 = new GridBagConstraints();
-		gbc_lblNewLabel_3.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_3.gridx = 0;
-		gbc_lblNewLabel_3.gridy = 4;
-		PeakFitterPanel.add(lblNewLabel_3, gbc_lblNewLabel_3);
-		
-		errorSigmaXtextField = new JTextField();
-		errorSigmaXtextField.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				errorSigmaX = errorSigmaXtextField.getText();
-			}
-		});
-		GridBagConstraints gbc_errorSigmaXtextField = new GridBagConstraints();
-		gbc_errorSigmaXtextField.insets = new Insets(0, 0, 5, 5);
-		gbc_errorSigmaXtextField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_errorSigmaXtextField.gridx = 1;
-		gbc_errorSigmaXtextField.gridy = 4;
-		PeakFitterPanel.add(errorSigmaXtextField, gbc_errorSigmaXtextField);
-		errorSigmaXtextField.setColumns(10);
-		
-		lblNewLabel_4 = new JLabel("Max Error sigma Y");
-		GridBagConstraints gbc_lblNewLabel_4 = new GridBagConstraints();
-		gbc_lblNewLabel_4.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_4.gridx = 0;
-		gbc_lblNewLabel_4.gridy = 5;
-		PeakFitterPanel.add(lblNewLabel_4, gbc_lblNewLabel_4);
-		
-		errorSigmaYtextField = new JTextField();
-		errorSigmaYtextField.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				errorSigmaY = errorSigmaYtextField.getText();
-			}
-		});
-		GridBagConstraints gbc_errorSigmaYtextField = new GridBagConstraints();
-		gbc_errorSigmaYtextField.insets = new Insets(0, 0, 5, 5);
-		gbc_errorSigmaYtextField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_errorSigmaYtextField.gridx = 1;
-		gbc_errorSigmaYtextField.gridy = 5;
-		PeakFitterPanel.add(errorSigmaYtextField, gbc_errorSigmaYtextField);
-		errorSigmaYtextField.setColumns(10);
-		
-		lblNewLabel_5 = new JLabel("Z scale (nm)");
-		GridBagConstraints gbc_lblNewLabel_5 = new GridBagConstraints();
-		gbc_lblNewLabel_5.insets = new Insets(0, 0, 0, 5);
-		gbc_lblNewLabel_5.gridx = 0;
-		gbc_lblNewLabel_5.gridy = 6;
-		PeakFitterPanel.add(lblNewLabel_5, gbc_lblNewLabel_5);
-		
-		ZscaletxtField = new JTextField();
-		ZscaletxtField.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				zScale = ZscaletxtField.getText();
-			}
-		});
-	
-		GridBagConstraints gbc_ZscaletxtField = new GridBagConstraints();
-		gbc_ZscaletxtField.insets = new Insets(0, 0, 0, 5);
-		gbc_ZscaletxtField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_ZscaletxtField.gridx = 1;
-		gbc_ZscaletxtField.gridy = 6;
-		PeakFitterPanel.add(ZscaletxtField, gbc_ZscaletxtField);
-		ZscaletxtField.setColumns(10);
 		GridBagConstraints gbc_chckbxInsideCells = new GridBagConstraints();
 		gbc_chckbxInsideCells.insets = new Insets(0, 0, 0, 5);
 		gbc_chckbxInsideCells.gridx = 0;
-		gbc_chckbxInsideCells.gridy = 6;
+		gbc_chckbxInsideCells.gridy = 5;
 		getContentPane().add(chckbxInsideCells, gbc_chckbxInsideCells);
 		GridBagConstraints gbc_btnProcess = new GridBagConstraints();
 		gbc_btnProcess.insets = new Insets(0, 0, 0, 5);
 		gbc_btnProcess.gridx = 1;
-		gbc_btnProcess.gridy = 6;
+		gbc_btnProcess.gridy = 5;
 		getContentPane().add(btnProcess, gbc_btnProcess);
 
 		btnCancel = new JButton("Cancel");
@@ -720,7 +496,7 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 
 		GridBagConstraints gbc_btnCancel = new GridBagConstraints();
 		gbc_btnCancel.gridx = 2;
-		gbc_btnCancel.gridy = 6;
+		gbc_btnCancel.gridy = 5;
 		getContentPane().add(btnCancel, gbc_btnCancel);
 
 		pack();
@@ -767,14 +543,6 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 			threshold = IntensityTxt.getText();
 			SNRThreshold = SNRTxt.getText();
 			outerRadius = outerRadiusTxt.getText();
-			zScale = ZscaletxtField.getText();
-			
-			errorSigmaY = errorSigmaYtextField.getText();
-			errorSigmaX = errorSigmaXtextField.getText();
-			errorY = errorYtextField.getText();
-			errorX = errorXtextField.getText();
-			errorHeight = errorHeightextField.getText();
-			errorBaseline = ErrorBaselinetextField.getText();
 			run();
 			dispose();
 		} else if (e.getSource() == channelComboBox) {
@@ -835,5 +603,4 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 	public double getSelectionRadius() {
 		return parseDouble(selectionRadius);
 	}
-
 }

@@ -1,4 +1,4 @@
-package operation.correlation;
+package operations.correlation;
 
 import ij.IJ;
 

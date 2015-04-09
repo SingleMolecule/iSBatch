@@ -5,4 +5,4 @@
  * @author VictorCaldas
  *
  */
-package opearation.peakFinder;
+package operations.correlation;

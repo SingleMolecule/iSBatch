@@ -1,4 +1,4 @@
-package operation.gui;
+package operations.flatImages;
 
 import ij.IJ;
 

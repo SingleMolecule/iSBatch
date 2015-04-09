@@ -43,19 +43,12 @@ import model.FileNode;
 import model.Node;
 import model.NodeFilter;
 import context.ContextHandler;
-import opearation.peakFinder.FindPeaksOperation;
-import operation.correlation.CorrelationOperation;
-import operation.flatImages.FlattenOperation;
-import operation.flatImages.SetBackGround;
-import operation.peakFitter.FitPeaksOperation;
-import operations.AddOperation;
-import operations.CellIntensityOperation;
-import operations.LocationMapsOperation;
-import operations.MacroOperation;
-import operations.MacroOperation2;
-import operations.MicrobeTrackerIOOperation;
-import operations.Operation;
-import operations.SaveDatabaseOperation;
+import operations.*;
+import operations.correlation.CorrelationOperation;
+import operations.flatImages.FlattenOperation;
+import operations.flatImages.SetBackGround;
+import operations.peakFinder.FindPeaksOperation;
+import operations.peakFitter.FitPeaksOperation;
 
 public class ISBatch_ implements TreeSelectionListener {
 

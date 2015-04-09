@@ -1,7 +1,7 @@
 /*
  * 
  */
-package operation.flatImages;
+package operations.flatImages;
 
 import java.io.File;
 

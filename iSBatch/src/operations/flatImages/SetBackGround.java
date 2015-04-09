@@ -1,7 +1,7 @@
 /**
  * 
  */
-package operation.correlation;
+package operations.flatImages;
 
 
 import model.DatabaseModel;
@@ -17,26 +17,13 @@ import operations.Operation;
  * @author VictorCaldas
  *
  */
-public class CorrelationOperation implements Operation {
-	CorrelationOperationGui dialog;
+public class SetBackGround implements Operation {
+	SetBackgroundGui dialog;
 	
-
-	private String channel1,filter1;
-	private String channel2,filter2;
-
-
-	private String type1;
-
-
-	private String type2;
-
-
-	private boolean projectX;
-
-
-	private boolean projectY;
+	private String channel;
+	private String method;
 	
-	public CorrelationOperation(DatabaseModel treeModel) {
+	public SetBackGround(DatabaseModel treeModel) {
 	}
 
 	/* (non-Javadoc)
@@ -60,7 +47,7 @@ public class CorrelationOperation implements Operation {
 	 */
 	@Override
 	public boolean setup(Node node) {
-		dialog = new CorrelationOperationGui(node);
+		dialog = new SetBackgroundGui(node);
 		if (dialog.isCanceled())
 			return false;
 		getParameters();
@@ -94,29 +81,14 @@ public class CorrelationOperation implements Operation {
 	}
 
 	private void getParameters() {
-		this.channel1 = dialog.getChannel1();
-		this.channel2 = dialog.getChannel2();
-		this.filter1 = dialog.getFilter1();
-		this.filter2 = dialog.getFilter2();
-		this.type1 = dialog.gettype1();
-		this.type2 = dialog.gettype2();
-		this.projectX = dialog.requireXProjection();
-		this.projectY = dialog.requireYProjection();
-		
-		
+		this.channel = dialog.getChannel();
+		this.method = dialog.getMethod();
 		
 	}
 
 	private void run(Node node) {
-		System.out.println(channel1);
-		System.out.println(channel2);
-		System.out.println(filter1);
-		System.out.println(filter2);
-		System.out.println(type1);
-		System.out.println(type2);
-		System.out.println( "Done");
-		System.out.println(projectX);
-		System.out.println(projectY);
+		System.out.println("Run class: " + channel + " using the method " + method);
+		
 	}
 
 	@Override
