@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import context.ContextElement;
+import filters.NodeFilterInterface;
 import operations.OperationElement;
 
 public abstract class Node implements OperationElement, ContextElement {
@@ -57,7 +58,7 @@ public abstract class Node implements OperationElement, ContextElement {
 		return new String[]{ type, "All" };
 	}
 	
-	public ArrayList<Node> getChildren(NodeFilter filter) {
+	public ArrayList<Node> getChildren(NodeFilterInterface filter) {
 		
 		ArrayList<Node> filteredChildren = new ArrayList<Node>();
 		
@@ -70,7 +71,7 @@ public abstract class Node implements OperationElement, ContextElement {
 		
 	}
 	
-	public ArrayList<Node> getDescendents(NodeFilter filter) {
+	public ArrayList<Node> getDescendents(NodeFilterInterface filter) {
 		
 		ArrayList<Node> descendents = getChildren(filter);
 		

@@ -1,5 +1,6 @@
 package gui;
 
+import filters.NodeFilterInterface;
 import ij.IJ;
 import ij.Macro;
 import ij.macro.Interpreter;
@@ -28,7 +29,6 @@ import model.Experiment;
 import model.FieldOfView;
 import model.FileNode;
 import model.Node;
-import model.NodeFilter;
 import model.Root;
 import model.Sample;
 
@@ -211,7 +211,7 @@ public class RunMacroDialog extends JDialog implements ActionListener, Runnable 
 		
 		String userMacro = macroTextPane.getText();
 		
-		NodeFilter filter = new NodeFilter() {
+		NodeFilterInterface filter = new NodeFilterInterface() {
 			
 			@Override
 			public boolean accept(Node node) {
@@ -221,7 +221,7 @@ public class RunMacroDialog extends JDialog implements ActionListener, Runnable 
 			
 		};
 		
-		NodeFilter fileFilter = new NodeFilter() {
+		NodeFilterInterface fileFilter = new NodeFilterInterface() {
 			
 			@Override
 			public boolean accept(Node node) {

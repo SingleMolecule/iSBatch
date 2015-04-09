@@ -13,10 +13,7 @@ import model.Experiment;
 import model.FieldOfView;
 import model.FileNode;
 import model.Node;
-<<<<<<< HEAD
-=======
-import model.NodeFilter;
->>>>>>> refs/remotes/origin/master
+
 import model.OperationNode;
 import model.Root;
 import model.Sample;
