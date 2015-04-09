@@ -64,10 +64,11 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 	 * Filter variables
 	 */
 
+	
 	public MicrobeTrackerIOGui(Node node) {
 		setModal(true);
-		setTitle("Set Background Image");
-		frame = new JFrame("Set Backgroung Image");
+		setTitle("MicrobeTracker I/O");
+		frame = new JFrame("MicrobeTracker I/O");
 		this.node = node;
 
 		setup();
@@ -145,6 +146,7 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 		panel.setLayout(gbl_panel);
 		
 		channelComboBox = new JComboBox<String>(new DefaultComboBoxModel<String>(channels));
+		channelComboBox.addActionListener(this);
 		GridBagConstraints gbc_channelComboBox = new GridBagConstraints();
 		gbc_channelComboBox.insets = new Insets(0, 0, 0, 5);
 		gbc_channelComboBox.fill = GridBagConstraints.HORIZONTAL;
@@ -153,6 +155,7 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 		panel.add(channelComboBox, gbc_channelComboBox);
 		
 		fileTypeComboBox = new JComboBox<String>(new DefaultComboBoxModel<String>(types));
+		fileTypeComboBox.addActionListener(this);
 		GridBagConstraints gbc_fileTypeComboBox = new GridBagConstraints();
 		gbc_fileTypeComboBox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_fileTypeComboBox.gridx = 1;

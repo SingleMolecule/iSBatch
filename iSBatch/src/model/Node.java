@@ -63,8 +63,15 @@ public abstract class Node implements OperationElement, ContextElement {
 		ArrayList<Node> filteredChildren = new ArrayList<Node>();
 		
 		for (Node child: getChildren()) {
-			if (filter.accept(child))
-				filteredChildren.add(child);
+			try{
+				if (filter.accept(child))	
+					filteredChildren.add(child);
+			}
+			catch(NullPointerException e){
+//				Do nothing
+//				System.out.println("Node ignored");
+			}
+				
 		}
 		
 		return filteredChildren;

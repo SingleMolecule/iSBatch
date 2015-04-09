@@ -4,9 +4,12 @@
 package operations.microbeTrackerIO;
 
 
+import java.awt.image.ImageFilter;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import filters.NodeFilter;
+import filters.NodeFilterInterface;
 import model.DatabaseModel;
 import model.Experiment;
 import model.FieldOfView;
@@ -28,6 +31,7 @@ public class MicrobeTrackerIO implements Operation {
 	private String method;
 	private String customFilter;
 	private String matFilePath;
+	
 	
 	public MicrobeTrackerIO(DatabaseModel treeModel) {
 	}
@@ -99,14 +103,88 @@ public class MicrobeTrackerIO implements Operation {
 		System.out.println(matFilePath);
 		
 		
-		ArrayList<Node> nodes = node.getDescendents(new NodeFilter(channel));
+		ArrayList<Node> nodes = node.getDescendents(filter(channel));
+		
+		
+		for(Node thisNode : nodes){
+			System.out.println(thisNode.getProperty("path"));
+		}
+		
+		System.out.println("-------");
 		
 		
 		
 		
+	}
+
+	private NodeFilterInterface filter(String channel) {
+		final String selectedChannel = channel;
+		String[] channels = {"Acquisition", "Bright Field", "Red", "Green",
+				"Blue", };
+		NodeFilterInterface imageFileNodeFilter = null;
+		// Create Filters
+		if(channel == null || channel.equals("") || channel.equalsIgnoreCase("All")){
+			 imageFileNodeFilter = new NodeFilterInterface() {
+
+					@Override
+					public boolean accept(Node node) {
+
+						String path = node.getProperty("path");
+
+						// check if this file is an image
+						if (path == null
+								|| !(path.toLowerCase().endsWith(".tiff") || path
+										.toLowerCase().endsWith(".tif")))
+							return false;
+
+						// Get custom string and remove spaces in the begin and end. Not in
+						// the middle.
+
+						return true;
+					};
+				};
+		}
+		else if(Arrays.asList(channels).contains(channel)) {
+			imageFileNodeFilter = new NodeFilterInterface() {
+
+				public boolean accept(Node node) {
+					String ch = null;
+//					try{
+						 ch = node.getProperty("channel");
+//					} 
+						 System.out.println("the channel is : " + ch);
+//					catch(NullPointerException e){
+//						System.out.println(e.getMessage());
+//						System.out.println("This is not a File node");
+//						return false;
+//					}
+//					
+//					System.out.println(ch);
+						// check the channel of this file
+						if (ch == null || !ch.equalsIgnoreCase(selectedChannel))
+							return false;
+
+					
+					String path = node.getProperty("path");
+
+					// check if this file is an image
+					if (path == null
+							|| !(path.toLowerCase().endsWith(".tiff") || path
+									.toLowerCase().endsWith(".tif")))
+						return false;
+
+					// Get custom string and remove spaces in the begin and end. Not in
+					// the middle.
+
+					
+					return true;
+				};
+			};
+			
+			
+		}
 		
-		
-		
+		return imageFileNodeFilter;
 		
 		
 	}
@@ -135,5 +213,9 @@ public class MicrobeTrackerIO implements Operation {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	
+	
+	
 
 }
