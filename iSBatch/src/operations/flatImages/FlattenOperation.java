@@ -8,6 +8,7 @@ import java.io.File;
 import javax.swing.JFileChooser;
 
 import operations.Operation;
+import filters.NodeFilterInterface;
 import gui.LogPanel;
 import ij.IJ;
 import ij.ImagePlus;
@@ -21,7 +22,6 @@ import model.FieldOfView;
 import model.FileNode;
 import model.Importer;
 import model.Node;
-import model.NodeFilter;
 import model.Root;
 import model.Sample;
 
@@ -59,7 +59,7 @@ public class FlattenOperation implements Operation {
 	private ImagePlus backgroundImage;
 	
 	/** The image file node filter. */
-	private NodeFilter imageFileNodeFilter = new NodeFilter() {
+	private NodeFilterInterface imageFileNodeFilter = new NodeFilterInterface() {
 		
 		@Override
 		public boolean accept(Node node) {

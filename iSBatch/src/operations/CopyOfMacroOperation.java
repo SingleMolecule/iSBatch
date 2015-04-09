@@ -2,6 +2,7 @@ package operations;
 
 import java.io.File;
 
+import filters.NodeFilterInterface;
 import gui.MacroDialog;
 import ij.IJ;
 
@@ -12,14 +13,13 @@ import model.Experiment;
 import model.FieldOfView;
 import model.FileNode;
 import model.Node;
-import model.NodeFilter;
 import model.Root;
 import model.Sample;
 
 public class CopyOfMacroOperation implements Operation {
 
 	private String macroFile;
-	private NodeFilter filter;
+	private NodeFilterInterface filter;
 	private JFrame frame;
 	private DatabaseModel model;
 	
@@ -103,7 +103,7 @@ public class CopyOfMacroOperation implements Operation {
 		
 		final String channel = dialog.getChannel();
 		
-		filter = new NodeFilter() {
+		filter = new NodeFilterInterface() {
 			
 			@Override
 			public boolean accept(Node node) {

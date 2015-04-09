@@ -1,5 +1,6 @@
 package operations;
 
+import filters.NodeFilterInterface;
 import gui.newDialog;
 
 import javax.swing.JFrame;
@@ -9,14 +10,13 @@ import model.Experiment;
 import model.FieldOfView;
 import model.FileNode;
 import model.Node;
-import model.NodeFilter;
 import model.Root;
 import model.Sample;
 
 public class MacroOperation2 implements Operation {
 	
 	private String macroFile = "";
-	private NodeFilter filter;
+	private NodeFilterInterface filter;
 	private JFrame frame;
 	private DatabaseModel model;
 	
