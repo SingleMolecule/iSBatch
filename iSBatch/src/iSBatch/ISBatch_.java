@@ -1,5 +1,6 @@
 package iSBatch;
 
+import filters.NodeFilterInterface;
 import gui.DatabaseDialog;
 import gui.DatabaseTreeCellRenderer;
 import gui.LogPanel;
@@ -41,7 +42,6 @@ import model.Database;
 import model.DatabaseModel;
 import model.FileNode;
 import model.Node;
-import model.NodeFilter;
 import context.ContextHandler;
 import operations.*;
 import operations.correlation.CorrelationOperation;
@@ -445,7 +445,7 @@ public class ISBatch_ implements TreeSelectionListener {
 		contextHandler.setContext(node);
 		listModel.clear();
 
-		NodeFilter fileNodesFilter = new NodeFilter() {
+		NodeFilterInterface fileNodesFilter = new NodeFilterInterface() {
 
 			@Override
 			public boolean accept(Node node) {
