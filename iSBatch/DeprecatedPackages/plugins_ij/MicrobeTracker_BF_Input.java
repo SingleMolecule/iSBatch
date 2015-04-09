@@ -220,7 +220,7 @@ public class MicrobeTracker_BF_Input implements PlugIn{
 	
 
 	private List<String> getSubFileList(ResultsTable resultstable, String colNameToCheckMatch, String stringToMatch, String colNameGetValuesFrom) {
-		List<String> list = new ArrayList<>();
+		List<String> list = new ArrayList<String>();
 		
 		for (int row = 0; row<resultstable.getCounter(); row++){
 			if(resultstable.getStringValue(colNameToCheckMatch, row).equalsIgnoreCase(stringToMatch)){
@@ -263,9 +263,6 @@ public class MicrobeTracker_BF_Input implements PlugIn{
 		return offset;
 	}
 
-
-	
-	
 	private static int askDarkCount() {
 		Object[] options2 = {"Load DarkCount Image", "Create DarkCount Image", "Ignore DarkCount"};
         Component frame2 = null;
