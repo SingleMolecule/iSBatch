@@ -293,8 +293,6 @@ public class FlattenOperation implements Operation {
 		// TODO Auto-generated method stub
 		
 	}
-<<<<<<< HEAD
-=======
 
 	@Override
 	public Node[] getCreatedNodes() {
@@ -308,5 +306,4 @@ public class FlattenOperation implements Operation {
 		return null;
 	}
 
->>>>>>> refs/heads/Michiel
 }
