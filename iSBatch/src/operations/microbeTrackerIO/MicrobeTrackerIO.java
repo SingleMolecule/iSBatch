@@ -4,7 +4,6 @@
 package operations.microbeTrackerIO;
 
 
-<<<<<<< HEAD
 import ij.IJ;
 import ij.ImagePlus;
 import ij.ImageStack;
@@ -15,10 +14,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import filters.NodeFilterInterface;
-=======
 import java.util.HashMap;
 
->>>>>>> refs/heads/Michiel
 import model.DatabaseModel;
 import model.Experiment;
 import model.FieldOfView;
