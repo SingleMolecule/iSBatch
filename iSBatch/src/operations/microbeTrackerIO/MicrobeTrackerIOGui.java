@@ -341,4 +341,8 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 	public String getMatFilePath() {
 		return matFilePath;
 	}
+
+	public String getImageType() {
+		return imageType;
+	}
 }

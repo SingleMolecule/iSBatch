@@ -37,6 +37,8 @@ public class MicrobeTrackerIO implements Operation {
 	private String method;
 	private String customFilter;
 	private String matFilePath;
+
+	private Object imageType;
 	
 	
 	public MicrobeTrackerIO(DatabaseModel treeModel) {
@@ -70,6 +72,7 @@ public class MicrobeTrackerIO implements Operation {
 		this.method = dialog.getMethod();
 		this.customFilter = dialog.getCustomFilter();
 		this.matFilePath = dialog.getMatFilePath();
+		this.imageType = dialog.getImageType();
 		return true;
 	}
 
@@ -109,10 +112,15 @@ public class MicrobeTrackerIO implements Operation {
 		ArrayList<Node> nodes = node.getDescendents(filter(channel));
 		
 		ImagePlus imp = getStack(nodes);
+		System.out.println("Filters to use");
+		System.out.println("Channel: "+ channel);
+		System.out.println("Type: " + imageType);
+		System.out.println("Custom filter" + customFilter);
+		
 		
 		//save Image
 		System.out.println(node.getFolder()+ File.separator + imp.getTitle());
-		IJ.saveAsTiff(imp, node.getFolder()+ File.separator + imp.getTitle());
+//		IJ.saveAsTiff(imp, node.getFolder()+ File.separator + imp.getTitle());
 		
 		//Now, finally get this list of files and create a combined
 		System.out.println("--- End ----");
