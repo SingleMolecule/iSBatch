@@ -32,7 +32,6 @@ public abstract class Node implements OperationElement, ContextElement {
 	public String getType() {
 		return type;
 	}
-
 	public void setType(String type) {
 		this.type = type;
 	}
@@ -123,6 +122,34 @@ public abstract class Node implements OperationElement, ContextElement {
 	@Override
 	public String toString() {
 		return getProperty("name");
+	}
+
+	
+//
+//	public String getPath() {
+//		String path = null;
+//		if(!this.getClass().toString().equalsIgnoreCase("model.FileNode")){
+//			path =  this.getProperty("path");
+//			System.out.println("this is a file Node");
+//			System.out.println(path);
+//		}
+//		else {
+//			path = this.getProperty("folder");
+//			System.out.println("This will return folder");
+//			System.out.println(path);
+//		}
+//		return path;
+//	}
+//	
+	
+	public String getFolder(){
+		return this.getProperty("folder");
+	}
+	public String getPath(){
+		return this.getProperty("path");
+	}
+	public String getName(){
+		return this.getProperty("name");
 	}
 	
 }

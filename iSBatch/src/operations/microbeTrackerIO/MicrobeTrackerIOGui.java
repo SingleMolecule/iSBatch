@@ -260,13 +260,7 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 	}
 
 	private void run() {
-		//
-		// // get array of Images
-		// ArrayList<Node> images = node.getDescendents(imageFileNodeFilter);
 
-		System.out.println("Run this baby");
-		System.out.println("Parameters will be: " + channel + " , " + imagePath
-				+ " , " + method);
 	}
 
 	public static void main(String[] args) {
@@ -304,7 +298,7 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 		} else if (e.getSource() == btnProcess) {
 			matFilePath = mathPathTextField.getText();
 			customFiter = customFilterTextField.getText();
-			run();
+//			run();
 			dispose();
 		} else if (e.getSource() == channelComboBox) {
 			this.channel = channels[channelComboBox.getSelectedIndex()];
@@ -346,5 +340,9 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 
 	public String getMatFilePath() {
 		return matFilePath;
+	}
+
+	public String getImageType() {
+		return imageType;
 	}
 }
