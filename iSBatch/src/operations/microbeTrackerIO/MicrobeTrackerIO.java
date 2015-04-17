@@ -4,17 +4,13 @@
 package operations.microbeTrackerIO;
 
 
-<<<<<<< HEAD
 import java.awt.image.ImageFilter;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import filters.NodeFilter;
 import filters.NodeFilterInterface;
-=======
 import java.util.HashMap;
 
->>>>>>> refs/heads/Michiel
 import model.DatabaseModel;
 import model.Experiment;
 import model.FieldOfView;
