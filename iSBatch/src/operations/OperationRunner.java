@@ -40,13 +40,15 @@ public class OperationRunner implements Runnable {
 		// create an operation node
 		OperationNode operationNode = new OperationNode(node);
 		operationNode.setProperty("name", operation.getName());
-		for (Entry<String, String> entry: operation.getParameters().entrySet())
-			operationNode.setProperty(entry.getKey(), entry.getValue());
+		System.out.println(operation.getName());
+//		System.out.println(operation.getParameters().toString());
+//		for (Entry<String, String> entry: operation.getParameters().entrySet())
+//			operationNode.setProperty(entry.getKey(), entry.getValue());
 		
-		model.addNode(node, operationNode);
-		
-		for (Node child: operation.getCreatedNodes())
-			model.addNode(operationNode, child);
+//		model.addNode(node, operationNode);
+//		
+//		for (Node child: operation.getCreatedNodes())
+//			model.addNode(operationNode, child);
 		
 		dialog.setVisible(false);
 		dialog.dispose();
