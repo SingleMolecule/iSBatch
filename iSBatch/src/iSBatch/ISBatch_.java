@@ -139,7 +139,7 @@ public class ISBatch_ implements TreeSelectionListener {
 	
 	private void setTree() {
 		try {
-			treeModel = new DatabaseModel(database.read());
+			treeModel = new DatabaseModel(database.getRoot());
 		} catch (SqlJetException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
