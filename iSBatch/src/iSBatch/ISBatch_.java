@@ -102,7 +102,6 @@ public class ISBatch_ implements TreeSelectionListener {
 	}
 
 	protected ISBatch_() throws SqlJetException {
-		System.out.println("Im here. =D");
 		DatabaseDialog dialog = new DatabaseDialog(frame);
 		database = dialog.getDatabase();
 
