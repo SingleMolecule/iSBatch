@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 import operations.Operation;
 
 public class FieldOfView extends Node {
@@ -18,4 +20,12 @@ public class FieldOfView extends Node {
 	public String getExperimentType(){
 		return this.getParent().getParent().getProperty("type");
 	}
+
+	public  ArrayList<Node> getImages() {
+		return this.getChildren();
+	}
+	
+	
+	
+	
 }
