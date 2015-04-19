@@ -84,14 +84,16 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 
 	private double parseDouble(String str) throws NumberFormatException {
 		double toReturn = 0;
-		System.out.println(str);
+//		System.out.println(str);
 		if(!str.equalsIgnoreCase("") || !str.equals(null))
 		{	
 		try {
 			toReturn = Double.parseDouble(str);
-			System.out.println("Value parsed :" + toReturn);
+//			System.out.println("Value parsed :" + toReturn);
 		} catch (NumberFormatException ex) {
+			System.out.println("---- Debug --- ");
 			System.err.println("Ilegal input");
+			System.out.println("Illegal string: " + str+".|||");
 			toReturn = 0;
 			// Discard input or request new input ...
 			// clean up if necessary
@@ -748,8 +750,8 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 		// ArrayList<Node> images = node.getDescendents(imageFileNodeFilter);
 
 		System.out.println("Run this baby");
-		System.out.println("Parameters will be: " + channel + " , " + imagePath
-				+ " , " + method);
+//		System.out.println("Parameters will be: " + channel + " , " + imagePath
+//				+ " , " + method);
 	}
 
 	public static void main(String[] args) {
@@ -791,13 +793,13 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 			dispose();
 		} else if (e.getSource() == channelComboBox) {
 			this.channel = channels[channelComboBox.getSelectedIndex()];
-			System.out.println(channel);
+//			System.out.println(channel);
 		} else if (e.getSource() == methodComboBox) {
 			this.method = (String) methodComboBox.getSelectedItem();
-			System.out.println(method);
+//			System.out.println(method);
 		} else if (e.getSource() == fileTypeComboBox) {
 			this.imageType = (String) fileTypeComboBox.getSelectedItem();
-			System.out.println(imageType);
+//			System.out.println(imageType);
 
 		} else if (e.getSource() == useDiscoidalFilterChk) {
 			boolean isSelected = useDiscoidalFilterChk.isSelected();
