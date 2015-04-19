@@ -121,29 +121,37 @@ public class FitPeaksOperation implements Operation {
 	}
 
 	private void run(Node node) {
-		System.out.println(innerRadius);
-		System.out.println(outerRadius);
-		System.out.println(threshold);
-		System.out.println(SNRthreshold);
-		System.out.println(minDistance);
-		System.out.println(selectionRadius);
-		System.out.println(useCells);
-		System.out.println(useDiscoidal);
-		System.out.println(channel);
-		System.out.println(method);
-
-		System.out.println(zScale);
-		System.out.println(errorSigmaY);
-		System.out.println(errorSigmaX);
-		System.out.println(errorY);
-		System.out.println(errorX);
-		System.out.println(errorHeight);
-		System.out.println(errorBaseline);
+//		System.out.println(innerRadius);
+//		System.out.println(outerRadius);
+//		System.out.println(threshold);
+//		System.out.println(SNRthreshold);
+//		System.out.println(minDistance);
+//		System.out.println(selectionRadius);
+//		System.out.println(useCells);
+//		System.out.println(useDiscoidal);
+//		System.out.println(channel);
+//		System.out.println(method);
+//
+//		System.out.println(zScale);
+//		System.out.println(errorSigmaY);
+//		System.out.println(errorSigmaX);
+//		System.out.println(errorY);
+//		System.out.println(errorX);
+//		System.out.println(errorHeight);
+//		System.out.println(errorBaseline);
+		
+		System.out.println("Running on node : " + node.getProperty("name"));
+			
+		
+		
 	}
 
 	@Override
 	public void visit(Experiment experiment) {
-		run(experiment);
+		for(Node sample : experiment.getSamples()){
+			System.out.println(sample.getProperty("name"));
+			
+		}
 	}
 
 	@Override
