@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 import operations.Operation;
 
 /**
@@ -25,6 +27,10 @@ public class Experiment extends Node {
 	@Override
 	public void accept(Operation operation) {
 		operation.visit(this);
+	}
+
+	public  ArrayList<Node> getSamples() {
+		return this.getChildren();
 	}
 	
 }
