@@ -422,7 +422,7 @@ public class ISBatch_ implements TreeSelectionListener {
 
 	public Operation[] getTreeOperations() {
 		return new Operation[] { 
-				new AddOperation(frame, treeModel),
+				new AddNodeOperation(frame, treeModel),
 				new SaveDatabaseOperation(database, treeModel.getRoot()), };
 	}
 
