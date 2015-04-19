@@ -275,6 +275,7 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 		panel.add(useDiscoidalFilterChk, gbc_useDiscoidalFilterChk);
 
 		innerRadiusTxt = new JFormattedTextField(decimalFormat);
+		innerRadiusTxt.setText("1");
 		innerRadiusTxt.setColumns(15);
 		innerRadiusTxt.addActionListener(this);
 		addKeyListener(new KeyAdapter() {
@@ -295,6 +296,7 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 		innerRadiusTxt.setColumns(10);
 
 		outerRadiusTxt = new JTextField();
+		outerRadiusTxt.setText("3");
 		GridBagConstraints gbc_outerRadiusTxt = new GridBagConstraints();
 		gbc_outerRadiusTxt.insets = new Insets(0, 0, 5, 0);
 		gbc_outerRadiusTxt.anchor = GridBagConstraints.WEST;
@@ -362,6 +364,7 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 		PeakFinderParameters.add(lblThreshold, gbc_lblThreshold);
 
 		SNRTxt = new JTextField();
+		SNRTxt.setText("6");
 		GridBagConstraints gbc_SNRTxt = new GridBagConstraints();
 		gbc_SNRTxt.insets = new Insets(0, 0, 5, 5);
 		gbc_SNRTxt.fill = GridBagConstraints.HORIZONTAL;
@@ -394,6 +397,7 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 		PeakFinderParameters.add(lblThreshold_1, gbc_lblThreshold_1);
 
 		IntensityTxt = new JTextField();
+		IntensityTxt.setText("0");
 		GridBagConstraints gbc_IntensityTxt = new GridBagConstraints();
 		gbc_IntensityTxt.insets = new Insets(0, 0, 5, 5);
 		gbc_IntensityTxt.fill = GridBagConstraints.HORIZONTAL;
@@ -425,6 +429,7 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 		PeakFinderParameters.add(lblSelectionRadius, gbc_lblSelectionRadius);
 
 		SelectionRadiusTxt = new JTextField();
+		SelectionRadiusTxt.setText("4");
 		GridBagConstraints gbc_SelectionRadiusTxt = new GridBagConstraints();
 		gbc_SelectionRadiusTxt.insets = new Insets(0, 0, 5, 5);
 		gbc_SelectionRadiusTxt.fill = GridBagConstraints.HORIZONTAL;
@@ -456,6 +461,7 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 		PeakFinderParameters.add(lblMinDistance, gbc_lblMinDistance);
 
 		minDistanceTxt = new JTextField();
+		minDistanceTxt.setText("8");
 		GridBagConstraints gbc_minDistanceTxt = new GridBagConstraints();
 		gbc_minDistanceTxt.insets = new Insets(0, 0, 0, 5);
 		gbc_minDistanceTxt.fill = GridBagConstraints.HORIZONTAL;
