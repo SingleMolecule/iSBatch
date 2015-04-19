@@ -5,6 +5,7 @@ package operations.peakFitter;
 
 import java.util.HashMap;
 
+import filters.NodeFilterInterface;
 import operations.Operation;
 import model.DatabaseModel;
 import model.Experiment;
@@ -117,7 +118,7 @@ public class FitPeaksOperation implements Operation {
 
 	@Override
 	public void visit(Root root) {
-		run(root);
+		System.out.println("Operation not defined at root level.");
 	}
 
 	private void run(Node node) {
@@ -150,18 +151,25 @@ public class FitPeaksOperation implements Operation {
 	public void visit(Experiment experiment) {
 		for(Node sample : experiment.getSamples()){
 			System.out.println(sample.getProperty("name"));
+			visit((Sample)sample);
 			
 		}
 	}
 
 	@Override
 	public void visit(Sample sample) {
-		run(sample);
+		for(Node fov : sample.getFoVs()){
+			System.out.println(fov.getProperty("name"));
+			visit((FieldOfView)fov);
+		}
 	}
 
 	@Override
 	public void visit(FieldOfView fieldOfView) {
-		run(fieldOfView);
+		for(Node fileNode : fieldOfView.getImages()){
+			System.out.println(fileNode.getProperty("name"));
+			visit((FileNode)fileNode);
+		}
 	}
 
 	@Override
@@ -190,4 +198,28 @@ public class FitPeaksOperation implements Operation {
 		return null;
 	}
 
+	/** The image file node filter. */
+	private NodeFilterInterface imageFileNodeFilter = new NodeFilterInterface() {
+		
+		@Override
+		public boolean accept(Node node) {
+
+			if (!node.getType().equals(FileNode.type))
+				return false;
+			
+			String ch = node.getProperty("channel");
+			
+			// check the channel of this file
+			if (ch == null || !ch.equals(channel))
+				return false;
+			
+			String path = node.getProperty("path");
+			
+			// check if this file is an image
+			if (path == null || !(path.toLowerCase().endsWith(".tiff") || path.toLowerCase().endsWith(".tif")))
+				return false;
+			
+			return true;
+		}
+	};
 }
