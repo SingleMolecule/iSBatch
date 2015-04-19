@@ -11,3 +11,12 @@ CREATE TABLE nodes (parent integeR, type text);
 CREATE INDEX parent_index on nodes(parent);
 CREATE TABLE node_properties ( node integer, name text,value text);
 CREATE INDEX node_index on node_properties(node);
+
+-- tables
+-- Table: ImageTypes
+CREATE TABLE ImageTypes (
+    ID integer NOT NULL PRIMARY KEY,
+    Type text NOT NULL
+);
+
+-- End of file.
