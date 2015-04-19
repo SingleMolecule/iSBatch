@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 import operations.Operation;
 
 public class Sample extends Node {
@@ -17,6 +19,10 @@ public class Sample extends Node {
 	
 	public String getExperimentType(){
 		return this.getParent().getProperty("type");
+	}
+
+	public  ArrayList<Node> getFoVs() {
+		return this.getChildren();
 	}
 
 
