@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
+import filters.NodeFilter;
 import operations.Operation;
 
 /**
@@ -30,7 +31,7 @@ public class Experiment extends Node {
 	}
 
 	public  ArrayList<Node> getSamples() {
-		return this.getChildren();
+		return this.getChildren(new NodeFilter(Sample.type));
 	}
 	
 }
