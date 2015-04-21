@@ -25,8 +25,11 @@ import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
+import java.util.prefs.Preferences;
 
+import model.DatabaseModel;
 import model.Node;
+import model.iSBatchPreferences;
 
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -113,10 +116,10 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 	private JComboBox<String> fileTypeComboBox;
 	private JComboBox<String> channelComboBox;
 	private JComboBox<String> methodComboBox;
-
+	private iSBatchPreferences preferences;
 	private static final long serialVersionUID = 1L;
 	private String[] channels = new String[] {
-
+	
 	"[Select Channel]", "All", "Acquisition", "Bright Field", "Red", "Green",
 			"Blue", };
 
@@ -132,21 +135,25 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 	private String channel, method, imagePath;
 	public boolean useDiscoidal;
 	public boolean useCells;
-
+	
 	/*
 	 * Filter variables
 	 */
 
-	public FindPeaksGui(Node node) {
+	public FindPeaksGui(Node node, iSBatchPreferences preferences) {
 		setModal(true);
 		setTitle("Find Peaks");
 		frame = new JFrame("Find Peaks");
+		this.preferences = preferences;
 		this.node = node;
 
 		setup();
 		display();
 
 	}
+
+	
+
 
 	private void setup() {
 	}
@@ -275,7 +282,7 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 		panel.add(useDiscoidalFilterChk, gbc_useDiscoidalFilterChk);
 
 		innerRadiusTxt = new JFormattedTextField(decimalFormat);
-		innerRadiusTxt.setText("1");
+		innerRadiusTxt.setText(preferences.INNER_RADIUS);
 		innerRadiusTxt.setColumns(15);
 		innerRadiusTxt.addActionListener(this);
 		addKeyListener(new KeyAdapter() {
@@ -296,7 +303,7 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 		innerRadiusTxt.setColumns(10);
 
 		outerRadiusTxt = new JTextField();
-		outerRadiusTxt.setText("3");
+		outerRadiusTxt.setText(preferences.OUTER_RADIUS);
 		GridBagConstraints gbc_outerRadiusTxt = new GridBagConstraints();
 		gbc_outerRadiusTxt.insets = new Insets(0, 0, 5, 0);
 		gbc_outerRadiusTxt.anchor = GridBagConstraints.WEST;
@@ -364,7 +371,7 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 		PeakFinderParameters.add(lblThreshold, gbc_lblThreshold);
 
 		SNRTxt = new JTextField();
-		SNRTxt.setText("6");
+		SNRTxt.setText(preferences.SNR_THRESHOLD);
 		GridBagConstraints gbc_SNRTxt = new GridBagConstraints();
 		gbc_SNRTxt.insets = new Insets(0, 0, 5, 5);
 		gbc_SNRTxt.fill = GridBagConstraints.HORIZONTAL;
@@ -397,7 +404,7 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 		PeakFinderParameters.add(lblThreshold_1, gbc_lblThreshold_1);
 
 		IntensityTxt = new JTextField();
-		IntensityTxt.setText("0");
+		IntensityTxt.setText(preferences.INTENSITY_THRESHOLD);
 		GridBagConstraints gbc_IntensityTxt = new GridBagConstraints();
 		gbc_IntensityTxt.insets = new Insets(0, 0, 5, 5);
 		gbc_IntensityTxt.fill = GridBagConstraints.HORIZONTAL;
@@ -429,7 +436,7 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 		PeakFinderParameters.add(lblSelectionRadius, gbc_lblSelectionRadius);
 
 		SelectionRadiusTxt = new JTextField();
-		SelectionRadiusTxt.setText("4");
+		SelectionRadiusTxt.setText(preferences.SELECTION_RADIUS);
 		GridBagConstraints gbc_SelectionRadiusTxt = new GridBagConstraints();
 		gbc_SelectionRadiusTxt.insets = new Insets(0, 0, 5, 5);
 		gbc_SelectionRadiusTxt.fill = GridBagConstraints.HORIZONTAL;
@@ -461,7 +468,7 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 		PeakFinderParameters.add(lblMinDistance, gbc_lblMinDistance);
 
 		minDistanceTxt = new JTextField();
-		minDistanceTxt.setText("8");
+		minDistanceTxt.setText(preferences.DISTANCE_BETWEEN_PEAKS);
 		GridBagConstraints gbc_minDistanceTxt = new GridBagConstraints();
 		gbc_minDistanceTxt.insets = new Insets(0, 0, 0, 5);
 		gbc_minDistanceTxt.fill = GridBagConstraints.HORIZONTAL;
@@ -525,7 +532,7 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 	public static void main(String[] args) {
 		frame = new JFrame();
 
-		new FindPeaksGui(null);
+		new FindPeaksGui(null, new iSBatchPreferences());
 
 	}
 

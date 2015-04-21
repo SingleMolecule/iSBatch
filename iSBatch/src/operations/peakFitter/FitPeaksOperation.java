@@ -15,6 +15,7 @@ import model.Node;
 import model.OperationNode;
 import model.Root;
 import model.Sample;
+import model.iSBatchPreferences;
 
 /**
  * @author VictorCaldas
@@ -23,26 +24,13 @@ import model.Sample;
 public class FitPeaksOperation implements Operation {
 	private PeakFitterGui dialog;
 	private String channel;
-	private String method;
-	private double innerRadius;
-	private double outerRadius;
-	private double threshold;
-	private double SNRthreshold;
-	private double minDistance;
-	private double selectionRadius;
-	private boolean useCells;
-	private boolean useDiscoidal;
-	private double zScale;
-	private double errorSigmaY;
-	private double errorSigmaX;
-	private double errorY;
-	private double errorX;
-	private double errorHeight;
-	private double errorBaseline;
-	private DatabaseModel model;
 
+	private DatabaseModel model;
+	public iSBatchPreferences preferences;
+	
 	public FitPeaksOperation(DatabaseModel treeModel) {
 		this.model = treeModel;
+		this.preferences = model.preferences;
 	}
 
 	/*
@@ -74,28 +62,10 @@ public class FitPeaksOperation implements Operation {
 	public boolean setup(Node node) {
 		// String to parse:
 
-		dialog = new PeakFitterGui(node);
+		dialog = new PeakFitterGui(node, preferences);
 		if (dialog.isCanceled())
 			return false;
-		this.innerRadius = dialog.getInnerRadius();
-		this.outerRadius = dialog.getOuterRadius();
-		this.threshold = dialog.getThreshold();
-		this.SNRthreshold = dialog.getSNRThreshold();
-		this.minDistance = dialog.getMinDistance();
-		this.selectionRadius = dialog.getSelectionRadius();
-		this.useCells = dialog.useCells;
-		this.useDiscoidal = dialog.useDiscoidal;
-		this.channel = dialog.getChannel();
-		this.method = dialog.getMethod();
 
-		this.zScale = dialog.getZScale();
-
-		this.errorSigmaY = dialog.getErrorSigmaY();
-		this.errorSigmaX = dialog.getErrorSigmaX();
-		this.errorY = dialog.getErrorY();
-		this.errorX = dialog.getErrorX();
-		this.errorHeight = dialog.getErrorHeight();
-		this.errorBaseline = dialog.getErrorBaseline();
 		return true;
 	}
 	
@@ -122,24 +92,7 @@ public class FitPeaksOperation implements Operation {
 	}
 
 	private void run(Node node) {
-//		System.out.println(innerRadius);
-//		System.out.println(outerRadius);
-//		System.out.println(threshold);
-//		System.out.println(SNRthreshold);
-//		System.out.println(minDistance);
-//		System.out.println(selectionRadius);
-//		System.out.println(useCells);
-//		System.out.println(useDiscoidal);
-//		System.out.println(channel);
-//		System.out.println(method);
-//
-//		System.out.println(zScale);
-//		System.out.println(errorSigmaY);
-//		System.out.println(errorSigmaX);
-//		System.out.println(errorY);
-//		System.out.println(errorX);
-//		System.out.println(errorHeight);
-//		System.out.println(errorBaseline);
+
 		
 		System.out.println("Running on node : " + node.getProperty("name"));
 			

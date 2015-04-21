@@ -32,8 +32,10 @@ public class FindPeaksOperation implements Operation {
 	private double selectionRadius;
 	private boolean useCells;
 	private boolean useDiscoidal;
+	private DatabaseModel model;
+	
 	public FindPeaksOperation(DatabaseModel treeModel) {
-		// TODO Auto-generated constructor stub
+		this.model = treeModel;
 	}
 
 	/* (non-Javadoc)
@@ -59,7 +61,7 @@ public class FindPeaksOperation implements Operation {
 	public boolean setup(Node node) {
 		// String to parse:
 
-		 dialog = new FindPeaksGui(node);
+		 dialog = new FindPeaksGui(node, model.preferences);
 		if (dialog.isCanceled())
 			return false;
 		this.innerRadius = dialog.getInnerRadius();

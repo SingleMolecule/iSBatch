@@ -165,7 +165,7 @@ public class Database {
 	 * @return the node
 	 * @throws SqlJetException the sql jet exception
 	 */
-	public Node read() throws SqlJetException {
+	public Node getRoot() throws SqlJetException {
 
 		database.beginTransaction(SqlJetTransactionMode.READ_ONLY);
 

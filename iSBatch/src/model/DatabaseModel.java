@@ -12,6 +12,7 @@ public class DatabaseModel implements TreeModel {
 	
 	private Node root;
 	private ArrayList<TreeModelListener> listeners = new ArrayList<TreeModelListener>();
+	public iSBatchPreferences preferences = new iSBatchPreferences();
 	
 	public DatabaseModel(Node root) {
 		this.root = root;
