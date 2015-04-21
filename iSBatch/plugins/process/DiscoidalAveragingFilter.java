@@ -32,6 +32,13 @@ public class DiscoidalAveragingFilter implements ExtendedPlugInFilter, DialogLis
 		setCircleOffsets(width, innerRadius, outerRadius);
 	}
 	
+	
+	
+	public DiscoidalAveragingFilter(int width, String iNNER_RADIUS,
+			String oUTER_RADIUS) {
+		setCircleOffsets(width, Integer.parseInt(iNNER_RADIUS), Integer.parseInt(oUTER_RADIUS));
+	}
+
 	public void setCircleOffsets(int width, int innerRadius, int outerRadius) {
 		ArrayList<Integer> innerOffsetList = new ArrayList<Integer>();
 		ArrayList<Integer> outerOffsetList = new ArrayList<Integer>();
