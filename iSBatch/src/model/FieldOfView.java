@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
+import filters.ChannelFilter;
 import filters.NodeFilter;
 import operations.Operation;
 
@@ -33,7 +34,21 @@ public class FieldOfView extends Node {
 		return filesNodes;		
 		
 	}
-	
+
+	public  ArrayList<FileNode> getImages(String channel) {
+		ArrayList<Node> nodes = this.getChildren(new ChannelFilter(channel));
+		//convert to sample array
+		ArrayList<FileNode> filesNodes = new ArrayList<FileNode>();
+		for(Node node : nodes){
+			FileNode thisNode = (FileNode)node;
+//			if(thisNode.getChannel().equalsIgnoreCase(channel))
+//			{
+				filesNodes.add(thisNode);
+//			}
+		}
+		return filesNodes;		
+		
+	}
 	
 	
 	

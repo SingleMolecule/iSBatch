@@ -22,7 +22,7 @@ public class Sample extends Node {
 		return this.getParent().getProperty("type");
 	}
 
-	public  ArrayList<FieldOfView> getFoVs() {
+	public  ArrayList<FieldOfView> getFieldOfView() {
 		ArrayList<Node> nodes = this.getChildren(new NodeFilter(FieldOfView.type));
 		
 		//convert to sample array

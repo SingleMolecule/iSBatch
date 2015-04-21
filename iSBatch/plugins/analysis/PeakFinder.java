@@ -37,8 +37,12 @@ public class PeakFinder implements ExtendedPlugInFilter, DialogListener {
 	private RoiManager roiManager;
 	private DiscoidalAveragingFilter filter = new DiscoidalAveragingFilter();
 	
-	private boolean isPreview = true;
+	private boolean isPreview = false;
 	
+	
+	public RoiManager getROIManager(){
+		return roiManager;
+	}
 	public PeakFinder() {
 		
 	}
@@ -51,6 +55,10 @@ public class PeakFinder implements ExtendedPlugInFilter, DialogListener {
 		this.thresholdValue = thresholdValue;
 		this.filter = filter;
 		this.minimumDistance = minimumDistance;
+		
+	}
+	public void run(ImagePlus imp){
+		
 		
 	}
 	
@@ -230,7 +238,8 @@ public class PeakFinder implements ExtendedPlugInFilter, DialogListener {
 			roiManager = new RoiManager();
 		}
 		
-		return IJ.setupDialog(imp, flags);
+//		return IJ.setupDialog(imp, flags);
+		return 1;
 	}
 
 	@Override

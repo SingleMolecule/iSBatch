@@ -20,5 +20,6 @@ public class ImageFilter implements NodeFilterInterface{
 		return true;
 	};
 
+
 	
 }

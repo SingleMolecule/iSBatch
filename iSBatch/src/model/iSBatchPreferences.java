@@ -14,12 +14,12 @@ public class iSBatchPreferences  {
 	public String SELECTION_RADIUS = "4";
 	public String DISTANCE_BETWEEN_PEAKS = "8";
 	public String Z_SCALE = "1.25";
-	public String ERROR_BASELINE;
+	public String ERROR_BASELINE = "5000";
 	public String ERROR_SIGMA_Y = "1";
 	public String ERROR_SIGMA_X = "1" ;
 	public String ERROR_X = "1";
 	public String ERROR_Y = "1";
-	public String ERROR_HEIGHT = "1";
+	public String ERROR_HEIGHT = "5000";
 	
 //	public String INNER_RADIUS = "1";
 //	public String INNER_RADIUS = "1";

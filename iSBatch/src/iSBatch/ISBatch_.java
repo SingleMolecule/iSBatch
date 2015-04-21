@@ -287,7 +287,7 @@ public class ISBatch_ implements TreeSelectionListener {
 	protected void goToSourceCode() {
 		  try 
 	        {
-	            Desktop.getDesktop().browse(new URL("http://vcaldas.github.io/iSBTools_/").toURI());
+	            Desktop.getDesktop().browse(new URL("http://vcaldas.github.io/iSBatch/").toURI());
 	        }           
 	        catch (Exception e) {}
 		

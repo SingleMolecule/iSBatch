@@ -1,11 +1,13 @@
 package model;
 
+import model.types.Channel;
 import operations.Operation;
 
 public class FileNode extends Node {
 	String channel = null;
 	public static final String type = "File";
-
+	Channel channel1 = null;
+	
 	public FileNode(Node parent) {
 		super(parent, type);
 	}
@@ -34,7 +36,9 @@ public class FileNode extends Node {
 	public String getChannel() {
 		if (channel == null) {
 			this.channel = getProperty("channel");
+			this.channel1 = new Channel(getProperty("channel"));
 		}
+		
 		return channel;
 	}
 
