@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
+import filters.NodeFilter;
 import operations.Operation;
 
 public class Sample extends Node {
@@ -21,8 +22,15 @@ public class Sample extends Node {
 		return this.getParent().getProperty("type");
 	}
 
-	public  ArrayList<Node> getFoVs() {
-		return this.getChildren();
+	public  ArrayList<FieldOfView> getFoVs() {
+		ArrayList<Node> nodes = this.getChildren(new NodeFilter(FieldOfView.type));
+		
+		//convert to sample array
+		ArrayList<FieldOfView> fov = new ArrayList<FieldOfView>();
+		for(Node node : nodes){
+			fov.add((FieldOfView) node);
+					}
+		return fov;
 	}
 
 
