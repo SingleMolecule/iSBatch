@@ -586,7 +586,7 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 		PeakFitterPanel.add(lblNewLabel_6, gbc_lblNewLabel_6);
 		
 		errorHeightextField = new JTextField();
-		errorHeightextField.setText("5000");
+		errorHeightextField.setText(preferences.ERROR_HEIGHT);
 		GridBagConstraints gbc_errorHeightextField = new GridBagConstraints();
 		gbc_errorHeightextField.insets = new Insets(0, 0, 5, 5);
 		gbc_errorHeightextField.fill = GridBagConstraints.HORIZONTAL;
@@ -597,7 +597,7 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 		errorHeightextField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				errorHeight = errorHeightextField.getText();
+				preferences.ERROR_HEIGHT = errorHeightextField.getText();
 			}
 		});
 		
