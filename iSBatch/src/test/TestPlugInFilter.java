@@ -121,4 +121,5 @@ public class TestPlugInFilter {
 		IJ.saveAsTiff(imp, "C:\\Users\\p262597\\Desktop\\image.tif");
 		
 	}
+	
 }

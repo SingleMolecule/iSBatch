@@ -6,11 +6,22 @@ package operations.peakFinder;
 
 import ij.IJ;
 import ij.ImagePlus;
+import ij.ImageStack;
+import ij.gui.PointRoi;
+import ij.gui.Roi;
 import ij.io.RoiEncoder;
+import ij.plugin.filter.PlugInFilter;
 import ij.plugin.frame.RoiManager;
+import ij.process.ImageProcessor;
 
+import java.awt.Point;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import filters.NodeFilterInterface;
 import analysis.PeakFinder;
@@ -97,21 +108,24 @@ public class FindPeaksOperation implements Operation {
 
 	private void run(Node node) {
 		//Run Peak Finder
-		
+//		
 		ImagePlus imp = IJ.openImage(node.getPath());
 		peakFinder = new PeakFinder(useDiscoidal, 
 				new DiscoidalAveragingFilter(imp.getWidth(),preferences.INNER_RADIUS , preferences.OUTER_RADIUS), 
 				parseDouble(preferences.SNR_THRESHOLD ), parseDouble(preferences.INTENSITY_THRESHOLD), Integer.parseInt(preferences.DISTANCE_BETWEEN_PEAKS));
 		
-		peakFinder.setup(null, imp);
-		peakFinder.run(imp.getProcessor());
-		String nameToSave = node.getName()+ "_PeakROIs.zip";
+	
+		ArrayList<Roi> rois = findPeaks(peakFinder, imp);
+		String nameToSave = node.getName().replace(".TIF", "")+ "_PeakROIs.zip";
 		System.out.println("Saving peak Rois @ " +  node.getParentFolder() + File.separator + nameToSave );
 		
+		try {
+			saveRoisAsZip(rois, node.getParentFolder() + File.separator + nameToSave);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		node.setProperty("PeakROIs", "node.getParentFolder() + File.separator + nameToSave");
 		
-		
-		roiManager.runCommand("Save", node.getParentFolder() + File.separator + nameToSave);
-		System.out.println("Saving peak Rois @ " + node.getFolder() + File.separator + nameToSave );
 		
 		
 	}
@@ -184,4 +198,52 @@ public class FindPeaksOperation implements Operation {
 		return toReturn;
 	}
 
+public static void runPlugInFilter(PlugInFilter filter, ImagePlus imp) {
+		
+		ImageStack stack = imp.getImageStack();
+		
+		for (int slice = 1; slice <= stack.getSize(); slice++)
+			runPlugInFilter(filter, stack.getProcessor(slice));
+	}
+	
+	public static void runPlugInFilter(PlugInFilter filter, ImageProcessor ip) {
+		filter.run(ip);
+	}
+	public static ArrayList<Roi> findPeaks(PeakFinder finder, ImagePlus imp) {
+		
+		ArrayList<Roi> allPeaks = new ArrayList<Roi>();
+		ImageStack stack = imp.getImageStack();
+		
+		for (int slice = 1; slice <= stack.getSize(); slice++) {
+			ImageProcessor ip = stack.getProcessor(slice);
+			
+			for (Point p: finder.findPeaks(ip)) {
+				PointRoi roi = new PointRoi(p.x, p.y);
+				roi.setPosition(slice);
+				allPeaks.add(roi);
+			}
+			
+		}
+		
+		return allPeaks;
+	}
+	
+	public static void saveRoisAsZip(ArrayList<Roi> rois, String filename) throws IOException {
+		ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(filename));
+		
+		int i = 0;
+		
+		for (Roi roi: rois) {
+			byte[] b = RoiEncoder.saveAsByteArray(roi);
+			zos.putNextEntry(new ZipEntry(i + ".roi"));
+			zos.write(b, 0, b.length);
+			i++;
+		}
+		
+		zos.close();
+		
+	}
+	
+	
+	
 }

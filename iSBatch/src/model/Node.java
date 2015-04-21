@@ -142,7 +142,8 @@ public abstract class Node implements OperationElement, ContextElement {
 //	}
 //	
 	public String getParentFolder(){
-		return this.getParent().getPath();
+		Node parent = this.getParent();
+		return parent.getFolder();
 	}
 	
 	public String getFolder(){
