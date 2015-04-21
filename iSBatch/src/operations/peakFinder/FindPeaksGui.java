@@ -2,6 +2,7 @@ package operations.peakFinder;
 
 import ij.IJ;
 
+import javax.print.attribute.standard.PresentationDirection;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 
@@ -76,7 +77,7 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 	private JButton btnProcess;
 
 	// Parameters
-	public String innerRadius= null;
+	public String innerRadius = null;
 
 	public double getInnerRadius() {
 		return parseDouble(innerRadius);
@@ -84,33 +85,32 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 
 	private double parseDouble(String str) throws NumberFormatException {
 		double toReturn = 0;
-		System.out.println(str);
-		if(!str.equalsIgnoreCase("") || !str.equals(null))
-		{	
-		try {
-			toReturn = Double.parseDouble(str);
-			System.out.println("Value parsed :" + toReturn);
-		} catch (NumberFormatException ex) {
-			System.err.println("Ilegal input");
-			toReturn = 0;
-			// Discard input or request new input ...
-			// clean up if necessary
+		// System.out.println(str);
+		if (!str.equalsIgnoreCase("") || !str.equals(null)) {
+			try {
+				toReturn = Double.parseDouble(str);
+				// System.out.println("Value parsed :" + toReturn);
+			} catch (NumberFormatException ex) {
+				System.err.println("Ilegal input");
+				toReturn = 0;
+				// Discard input or request new input ...
+				// clean up if necessary
+			}
 		}
-		}
-		
+
 		return toReturn;
 	}
 
-	public String outerRadius= null;
+	public String outerRadius = null;
 
 	public double getOuterRadius() {
 		return parseDouble(outerRadius);
 	}
 
 	public String SNRThreshold = null;
-	public String threshold= null;
-	public String minDistance= null;
-	public String selectionRadius= null;
+	public String threshold = null;
+	public String minDistance = null;
+	public String selectionRadius = null;
 
 	// ComboBox
 	private JComboBox<String> fileTypeComboBox;
@@ -119,7 +119,7 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 	private iSBatchPreferences preferences;
 	private static final long serialVersionUID = 1L;
 	private String[] channels = new String[] {
-	
+
 	"[Select Channel]", "All", "Acquisition", "Bright Field", "Red", "Green",
 			"Blue", };
 
@@ -135,7 +135,7 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 	private String channel, method, imagePath;
 	public boolean useDiscoidal;
 	public boolean useCells;
-	
+
 	/*
 	 * Filter variables
 	 */
@@ -151,9 +151,6 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 		display();
 
 	}
-
-	
-
 
 	private void setup() {
 	}
@@ -289,7 +286,7 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				innerRadius = innerRadiusTxt.getText();
-				System.out.println(innerRadius);
+				// System.out.println(innerRadius);
 			}
 		});
 
@@ -524,7 +521,7 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 		// // get array of Images
 		// ArrayList<Node> images = node.getDescendents(imageFileNodeFilter);
 
-		System.out.println("Run this baby");
+		// System.out.println("Run this baby");
 		System.out.println("Parameters will be: " + channel + " , " + imagePath
 				+ " , " + method);
 	}
@@ -550,23 +547,23 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 			canceled = true;
 			dispose();
 		} else if (e.getSource() == btnProcess) {
-			innerRadius = innerRadiusTxt.getText();
-			minDistance = minDistanceTxt.getText();
-			selectionRadius = SelectionRadiusTxt.getText();
-			threshold = IntensityTxt.getText();
-			SNRThreshold = SNRTxt.getText();
-			outerRadius = outerRadiusTxt.getText();
+			preferences.INNER_RADIUS = innerRadiusTxt.getText();
+			preferences.DISTANCE_BETWEEN_PEAKS = minDistanceTxt.getText();
+			preferences.SELECTION_RADIUS = SelectionRadiusTxt.getText();
+			preferences.INTENSITY_THRESHOLD = IntensityTxt.getText();
+			preferences.SNR_THRESHOLD = SNRTxt.getText();
+			preferences.OUTER_RADIUS = outerRadiusTxt.getText();
 			run();
 			dispose();
 		} else if (e.getSource() == channelComboBox) {
 			this.channel = channels[channelComboBox.getSelectedIndex()];
-			System.out.println(channel);
+			// System.out.println(channel);
 		} else if (e.getSource() == methodComboBox) {
 			this.method = (String) methodComboBox.getSelectedItem();
-			System.out.println(method);
+			// System.out.println(method);
 		} else if (e.getSource() == fileTypeComboBox) {
 			this.imageType = (String) fileTypeComboBox.getSelectedItem();
-			System.out.println(imageType);
+			// System.out.println(imageType);
 
 		} else if (e.getSource() == useDiscoidalFilterChk) {
 			boolean isSelected = useDiscoidalFilterChk.isSelected();
@@ -602,18 +599,18 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 	}
 
 	public double getThreshold() {
-		return parseDouble(threshold);
+		return parseDouble(preferences.INTENSITY_THRESHOLD);
 	}
 
 	public double getSNRThreshold() {
-		return parseDouble(SNRThreshold);
+		return parseDouble(preferences.SNR_THRESHOLD);
 	}
 
 	public double getMinDistance() {
-		return parseDouble(minDistance);
+		return parseDouble(preferences.DISTANCE_BETWEEN_PEAKS);
 	}
 
 	public double getSelectionRadius() {
-		return parseDouble(selectionRadius);
+		return parseDouble(preferences.SELECTION_RADIUS);
 	}
 }
