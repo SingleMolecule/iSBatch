@@ -105,13 +105,12 @@ public class FitPeaksOperation implements Operation {
 		for(Node sample : experiment.getSamples()){
 			System.out.println(sample.getProperty("name"));
 			visit((Sample)sample);
-			
 		}
 	}
 
 	@Override
 	public void visit(Sample sample) {
-		for(Node fov : sample.getFoVs()){
+		for(Node fov : sample.getFieldOfView()){
 			System.out.println(fov.getProperty("name"));
 			visit((FieldOfView)fov);
 		}
@@ -120,7 +119,6 @@ public class FitPeaksOperation implements Operation {
 	@Override
 	public void visit(FieldOfView fieldOfView) {
 		for(Node fileNode : fieldOfView.getImages()){
-			System.out.println(fileNode.getProperty("name"));
 			visit((FileNode)fileNode);
 		}
 	}

@@ -6,6 +6,8 @@ package operations.peakFinder;
 
 import java.util.HashMap;
 
+import filters.NodeFilterInterface;
+import analysis.PeakFinder;
 import operations.Operation;
 import model.DatabaseModel;
 import model.Experiment;
@@ -24,15 +26,11 @@ public class FindPeaksOperation implements Operation {
 	private FindPeaksGui dialog;
 	private String channel;
 	private String method;
-	private double innerRadius;
-	private double outerRadius;
-	private double threshold;
-	private double SNRthreshold;
-	private double minDistance;
-	private double selectionRadius;
 	private boolean useCells;
 	private boolean useDiscoidal;
 	private DatabaseModel model;
+	
+	PeakFinder peakFidnder;
 	
 	public FindPeaksOperation(DatabaseModel treeModel) {
 		this.model = treeModel;
@@ -64,12 +62,6 @@ public class FindPeaksOperation implements Operation {
 		 dialog = new FindPeaksGui(node, model.preferences);
 		if (dialog.isCanceled())
 			return false;
-		this.innerRadius = dialog.getInnerRadius();
-		this.outerRadius = dialog.getOuterRadius();
-		this.threshold = dialog.getThreshold();
-		this.SNRthreshold = dialog.getSNRThreshold();
-		this.minDistance = dialog.getMinDistance();
-		this.selectionRadius = dialog.getSelectionRadius();
 		this.useCells = dialog.useCells;
 		this.useDiscoidal = dialog.useDiscoidal;
 		this.channel = dialog.getChannel();
@@ -92,43 +84,40 @@ public class FindPeaksOperation implements Operation {
 
 	@Override
 	public void visit(Root root) {
-		run(root);
+		System.out.println("Not applicable to root. ");
 	}
 
 	private void run(Node node) {
-		System.out.println(innerRadius);
-		System.out.println(outerRadius);
-		System.out.println(threshold);
-		System.out.println(SNRthreshold);
-		System.out.println(minDistance);
-		System.out.println(selectionRadius);
-		System.out.println(useCells);
-		System.out.println(useDiscoidal);
-		System.out.println(channel);
-		System.out.println(method);
-		
 
 	}
 
 	@Override
 	public void visit(Experiment experiment) {
-		run(experiment);
+		for(Sample sample : experiment.getSamples()){
+//			System.out.println(sample.getName());
+			visit(sample);
+		}
 	}
 
 	@Override
 	public void visit(Sample sample) {
-		run(sample);
+		for(FieldOfView fov : sample.getFieldOfView()){
+//			System.out.println(fov.getName());
+			visit(fov);
+		}
 	}
 
 	@Override
 	public void visit(FieldOfView fieldOfView) {
-		run(fieldOfView);
+		for(FileNode fileNode : fieldOfView.getImages(channel)){
+			visit(fileNode);
+		}
 	}
 
 	
 	@Override
 	public void visit(FileNode fileNode) {
-		run(fileNode);
+		System.out.println(fileNode.getProperty("name"));
 	}
 
 	
@@ -152,5 +141,6 @@ public class FindPeaksOperation implements Operation {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 
 }
