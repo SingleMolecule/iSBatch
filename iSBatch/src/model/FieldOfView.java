@@ -49,6 +49,11 @@ public class FieldOfView extends Node {
 		return filesNodes;		
 		
 	}
+
+	@Override
+	public int getNumberOfFoV() {
+		return 1;
+	}
 	
 	
 	

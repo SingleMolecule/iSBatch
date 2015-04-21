@@ -136,8 +136,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="16" language="java" name="operations.MacroOperation2" project="iSBatch" 
-    file="/iSBatch/src/operations/MacroOperation2.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="16" language="java" name="operation.macro.MacroOperation2" project="iSBatch" 
+    file="/iSBatch/src/operation/macro/MacroOperation2.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="2770" y="1869"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -280,8 +280,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="32" language="java" name="gui.newDialog" project="iSBatch" file="/iSBatch/src/gui/newDialog.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
+  <class id="32" language="java" name="operation.macro.MacroOperationGUI" project="iSBatch" 
+    file="/iSBatch/src/operation/macro/MacroOperationGUI.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="2869" y="2742"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -317,7 +317,7 @@
     </display>  
   </class>  
   <association id="36">    
-    <end type="SOURCE" refId="15" navigable="false">      
+    <end type="SOURCE" refId="7" navigable="false">      
       <attribute id="37" name="model">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
@@ -328,121 +328,121 @@
     <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <realization id="39">    
-    <end type="SOURCE" refId="13"/>    
-    <end type="TARGET" refId="12"/>  
-  </realization>  
-  <generalization id="40">    
-    <end type="SOURCE" refId="4"/>    
+  <generalization id="39">    
+    <end type="SOURCE" refId="2"/>    
     <end type="TARGET" refId="8"/>  
   </generalization>  
-  <association id="41">    
-    <end type="SOURCE" refId="19" navigable="false">      
-      <attribute id="42" name="treeModel">        
+  <association id="40">    
+    <end type="SOURCE" refId="35" navigable="false">      
+      <attribute id="41" name="listeners">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="43" minimum="0" maximum="1">        
+      <multiplicity id="42" minimum="0" maximum="2147483647">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
-    <end type="TARGET" refId="1" navigable="true"/>    
+    <end type="TARGET" refId="34" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="44">    
-    <end type="SOURCE" refId="32" navigable="false">      
-      <attribute id="45" name="imageFileNodeFilter">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="46" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="10" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="47">    
-    <end type="SOURCE" refId="19" navigable="false">      
-      <attribute id="48" name="database">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="49" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="5" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="50">    
-    <end type="SOURCE" refId="12"/>    
-    <end type="TARGET" refId="33"/>  
-  </generalization>  
-  <association id="51">    
-    <end type="SOURCE" refId="21" navigable="false">      
-      <attribute id="52" name="sample">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="53" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="3" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="54">    
+  <association id="43">    
     <end type="SOURCE" refId="28" navigable="false">      
-      <attribute id="55" name="database">        
+      <attribute id="44" name="database">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="56" minimum="0" maximum="1">        
+      <multiplicity id="45" minimum="0" maximum="1">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="5" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <realization id="57">    
-    <end type="SOURCE" refId="8"/>    
-    <end type="TARGET" refId="33"/>  
-  </realization>  
-  <association id="58">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="59" name="root">        
+  <association id="46">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="47" name="children">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="60" minimum="0" maximum="1">        
+      <multiplicity id="48" minimum="0" maximum="2147483647">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="8" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="61">    
-    <end type="SOURCE" refId="14" navigable="false">      
-      <attribute id="62" name="importer">        
+  <association id="49">    
+    <end type="SOURCE" refId="25" navigable="false">      
+      <attribute id="50" name="fileNode">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="63" minimum="0" maximum="1">        
+      <multiplicity id="51" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="52">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <association id="53">    
+    <end type="SOURCE" refId="17" navigable="false">      
+      <attribute id="54" name="importer">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="55" minimum="0" maximum="1">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="7" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="64">    
+  <association id="56">    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="57" name="model">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="58" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="59">    
     <end type="SOURCE" refId="19" navigable="false">      
-      <attribute id="65" name="contextHandler">        
+      <attribute id="60" name="database">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="61" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="62">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <realization id="63">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="33"/>  
+  </realization>  
+  <association id="64">    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="65" name="root">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
       <multiplicity id="66" minimum="0" maximum="1">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
-    <end type="TARGET" refId="35" navigable="true"/>    
+    <end type="TARGET" refId="8" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="67">    
-    <end type="SOURCE" refId="15" navigable="false">      
-      <attribute id="68" name="filter">        
+    <end type="SOURCE" refId="17" navigable="false">      
+      <attribute id="68" name="imageFileNodeFilter">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
       <multiplicity id="69" minimum="0" maximum="1">        
@@ -453,259 +453,259 @@
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="70">    
-    <end type="SOURCE" refId="8" navigable="false">      
-      <attribute id="71" name="children">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="72" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="8" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="73">    
-    <end type="SOURCE" refId="35" navigable="false">      
-      <attribute id="74" name="contextElement">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="75" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="33" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="76">    
-    <end type="SOURCE" refId="31" navigable="false">      
-      <attribute id="77" name="operation">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="78" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="12" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <realization id="79">    
-    <end type="SOURCE" refId="17"/>    
-    <end type="TARGET" refId="12"/>  
-  </realization>  
-  <realization id="80">    
-    <end type="SOURCE" refId="15"/>    
-    <end type="TARGET" refId="12"/>  
-  </realization>  
-  <association id="81">    
-    <end type="SOURCE" refId="13" navigable="false">      
-      <attribute id="82" name="root">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="83" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="8" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="84">    
-    <end type="SOURCE" refId="3"/>    
-    <end type="TARGET" refId="8"/>  
-  </generalization>  
-  <association id="85">    
-    <end type="SOURCE" refId="32" navigable="false">      
-      <attribute id="86" name="node">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="87" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="8" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="88">    
-    <end type="SOURCE" refId="9"/>    
-    <end type="TARGET" refId="8"/>  
-  </generalization>  
-  <association id="89">    
-    <end type="SOURCE" refId="17" navigable="false">      
-      <attribute id="90" name="imageFileNodeFilter">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="91" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="10" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="92">    
-    <end type="SOURCE" refId="13" navigable="false">      
-      <attribute id="93" name="database">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="94" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="5" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <realization id="95">    
-    <end type="SOURCE" refId="16"/>    
-    <end type="TARGET" refId="12"/>  
-  </realization>  
-  <association id="96">    
-    <end type="SOURCE" refId="31" navigable="false">      
-      <attribute id="97" name="contextElement">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="98" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="33" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="99">    
-    <end type="SOURCE" refId="35" navigable="false">      
-      <attribute id="100" name="listeners">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="101" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="34" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="102">    
-    <end type="SOURCE" refId="25" navigable="false">      
-      <attribute id="103" name="fileNode">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="104" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="6" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="105">    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="8"/>  
-  </generalization>  
-  <association id="106">    
-    <end type="SOURCE" refId="17" navigable="false">      
-      <attribute id="107" name="importer">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="108" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="7" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <realization id="109">    
-    <end type="SOURCE" refId="31"/>    
-    <end type="TARGET" refId="34"/>  
-  </realization>  
-  <association id="110">    
-    <end type="SOURCE" refId="7" navigable="false">      
-      <attribute id="111" name="model">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="112" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="1" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="113">    
     <end type="SOURCE" refId="29" navigable="false">      
-      <attribute id="114" name="instance">        
+      <attribute id="71" name="instance">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="115" minimum="0" maximum="1">        
+      <multiplicity id="72" minimum="0" maximum="1">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="29" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="116">    
-    <end type="SOURCE" refId="26" navigable="false">      
-      <attribute id="117" name="fieldOfView">        
+  <association id="73">    
+    <end type="SOURCE" refId="15" navigable="false">      
+      <attribute id="74" name="filter">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="118" minimum="0" maximum="1">        
+      <multiplicity id="75" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="76">    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="12"/>  
+  </realization>  
+  <generalization id="77">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <association id="78">    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="79" name="database">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="80" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="81">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="12"/>  
+  </realization>  
+  <realization id="82">    
+    <end type="SOURCE" refId="31"/>    
+    <end type="TARGET" refId="34"/>  
+  </realization>  
+  <association id="83">    
+    <end type="SOURCE" refId="32" navigable="false">      
+      <attribute id="84" name="node">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="85" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="86">    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="12"/>  
+  </realization>  
+  <generalization id="87">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <realization id="88">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="11"/>  
+  </realization>  
+  <association id="89">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="90" name="root">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="91" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="92">    
+    <end type="SOURCE" refId="35" navigable="false">      
+      <attribute id="93" name="contextElement">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="94" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="33" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="95">    
+    <end type="SOURCE" refId="15" navigable="false">      
+      <attribute id="96" name="model">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="97" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="98">    
+    <end type="SOURCE" refId="26" navigable="false">      
+      <attribute id="99" name="fieldOfView">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="100" minimum="0" maximum="1">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="2" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="119">    
-    <end type="SOURCE" refId="8" navigable="false">      
-      <attribute id="120" name="parent">        
+  <association id="101">    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="102" name="importer">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="121" minimum="0" maximum="1">        
+      <multiplicity id="103" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="104">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="105" name="parent">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="106" minimum="0" maximum="1">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="8" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="122">    
-    <end type="SOURCE" refId="20" navigable="false">      
-      <attribute id="123" name="experiment">        
+  <association id="107">    
+    <end type="SOURCE" refId="31" navigable="false">      
+      <attribute id="108" name="operation">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="124" minimum="0" maximum="1">        
+      <multiplicity id="109" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="12" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="110">    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="12"/>  
+  </realization>  
+  <association id="111">    
+    <end type="SOURCE" refId="20" navigable="false">      
+      <attribute id="112" name="experiment">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="113" minimum="0" maximum="1">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <realization id="125">    
-    <end type="SOURCE" refId="14"/>    
-    <end type="TARGET" refId="12"/>  
-  </realization>  
-  <association id="126">    
-    <end type="SOURCE" refId="19" navigable="false">      
-      <attribute id="127" name="selectedNode">        
+  <association id="114">    
+    <end type="SOURCE" refId="21" navigable="false">      
+      <attribute id="115" name="sample">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="128" minimum="0" maximum="1">        
+      <multiplicity id="116" minimum="0" maximum="1">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
-    <end type="TARGET" refId="8" navigable="true"/>    
+    <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="129">    
-    <end type="SOURCE" refId="2"/>    
-    <end type="TARGET" refId="8"/>  
+  <association id="117">    
+    <end type="SOURCE" refId="32" navigable="false">      
+      <attribute id="118" name="imageFileNodeFilter">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="119" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="120">    
+    <end type="SOURCE" refId="31" navigable="false">      
+      <attribute id="121" name="contextElement">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="122" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="33" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="123">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="33"/>  
   </generalization>  
+  <association id="124">    
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="125" name="contextHandler">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="126" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="35" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="127">    
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="128" name="treeModel">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="129" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
   <realization id="130">    
-    <end type="SOURCE" refId="8"/>    
-    <end type="TARGET" refId="11"/>  
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="12"/>  
   </realization>  
   <association id="131">    
-    <end type="SOURCE" refId="14" navigable="false">      
-      <attribute id="132" name="model">        
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="132" name="selectedNode">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
       <multiplicity id="133" minimum="0" maximum="1">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
-    <end type="TARGET" refId="1" navigable="true"/>    
+    <end type="TARGET" refId="8" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 

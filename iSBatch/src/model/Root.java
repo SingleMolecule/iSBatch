@@ -22,7 +22,7 @@ public class Root extends Node {
 	public Root(String outputFolder) {
 		super(null, type);
 		
-		outputFolder += "/database_files";
+		outputFolder += File.separator + "database_files";
 		
 		if (!new File(outputFolder).exists())
 			new File(outputFolder).mkdirs();
@@ -34,6 +34,12 @@ public class Root extends Node {
 	@Override
 	public void accept(Operation operation) {
 		operation.visit(this);
+	}
+
+	@Override
+	public int getNumberOfFoV() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 	

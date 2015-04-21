@@ -46,4 +46,10 @@ public class FileNode extends Node {
 		return this.getParent().getName();
 		
 	}
+
+	@Override
+	public int getNumberOfFoV() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

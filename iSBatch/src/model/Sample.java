@@ -33,6 +33,11 @@ public class Sample extends Node {
 		return fov;
 	}
 
+	@Override
+	public int getNumberOfFoV() {
+		return this.getChildren().size();
+	}
+
 
 	
 }

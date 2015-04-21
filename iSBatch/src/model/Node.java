@@ -8,7 +8,7 @@ import context.ContextElement;
 import filters.NodeFilterInterface;
 import operations.OperationElement;
 
-public abstract class Node implements OperationElement, ContextElement {
+public abstract class Node implements OperationElement, ContextElement, NodeInterface {
 	
 	private Node parent;
 	private String type;
@@ -100,7 +100,7 @@ public abstract class Node implements OperationElement, ContextElement {
 		if (outputFolder == null) {
 			
 			String parentOutputFolder = parent.getOutputFolder();
-			outputFolder = parentOutputFolder + "/" + getProperty("name");
+			outputFolder = parentOutputFolder + File.separator + getProperty("name");
 			
 			if (new File(outputFolder).exists()) {
 				
@@ -158,5 +158,7 @@ public abstract class Node implements OperationElement, ContextElement {
 	public String getChannel(){
 		return this.getProperty("channel");
 	}
+
+	
 	
 }

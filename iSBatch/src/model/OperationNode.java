@@ -15,4 +15,10 @@ public class OperationNode extends Node {
 		operation.visit(this);
 	}
 
+	@Override
+	public int getNumberOfFoV() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

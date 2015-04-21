@@ -41,5 +41,14 @@ public class Experiment extends Node {
 					}
 		return samples;
 	}
+
+	@Override
+	public int getNumberOfFoV() {
+		int total = 0;
+		for(Sample sample : this.getSamples()){
+			total += sample.getNumberOfFoV();
+		}
+		return total;
+	}
 	
 }
