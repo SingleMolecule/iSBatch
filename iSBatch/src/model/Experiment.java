@@ -20,6 +20,7 @@ import operations.Operation;
 public class Experiment extends Node {
 
 	public static final String type = "Experiment";
+
 	
 	public Experiment(Root parent) {
 		super(parent, type);
@@ -30,8 +31,15 @@ public class Experiment extends Node {
 		operation.visit(this);
 	}
 
-	public  ArrayList<Node> getSamples() {
-		return this.getChildren(new NodeFilter(Sample.type));
+	public  ArrayList<Sample> getSamples() {
+		ArrayList<Node> nodes = this.getChildren(new NodeFilter(Sample.type));
+		
+		//convert to sample array
+		ArrayList<Sample> samples = new ArrayList<Sample>();
+		for(Node node : nodes){
+			samples.add((Sample) node);
+					}
+		return samples;
 	}
 	
 }
