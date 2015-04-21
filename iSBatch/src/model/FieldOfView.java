@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
+import filters.NodeFilter;
 import operations.Operation;
 
 public class FieldOfView extends Node {
@@ -21,8 +22,16 @@ public class FieldOfView extends Node {
 		return this.getParent().getParent().getProperty("type");
 	}
 
-	public  ArrayList<Node> getImages() {
-		return this.getChildren();
+	public  ArrayList<FileNode> getImages() {
+		ArrayList<Node> nodes = this.getChildren(new NodeFilter(FieldOfView.type));
+		
+		//convert to sample array
+		ArrayList<FileNode> filesNodes = new ArrayList<FileNode>();
+		for(Node node : nodes){
+			filesNodes.add((FileNode) node);
+					}
+		return filesNodes;		
+		
 	}
 	
 	
