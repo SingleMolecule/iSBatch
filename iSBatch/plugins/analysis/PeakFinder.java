@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 import process.DiscoidalAveragingFilter;
 
-import ij.IJ;
 import ij.ImagePlus;
 import ij.Prefs;
 import ij.gui.DialogListener;
