@@ -26,4 +26,5 @@ public interface Operation extends ContextElement {
 	public void visit(FieldOfView fieldOfView);
 	public void visit(FileNode fileNode);
 	public void visit(OperationNode operationNode);
+	
 }
