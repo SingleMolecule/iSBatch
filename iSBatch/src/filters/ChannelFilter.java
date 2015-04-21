@@ -13,10 +13,10 @@ public class ChannelFilter implements NodeFilterInterface{
 	@Override
 	public boolean accept(Node node) {
 
-		String ch = node.getProperty("channel");
+		String ch = node.getChannel();
 		if (!channel.equalsIgnoreCase("All")) {
 			// check the channel of this file
-			if (ch == null || !ch.equals(channel))
+			if (ch == null || !ch.equalsIgnoreCase(channel))
 				return false;
 		}
 		
@@ -25,8 +25,10 @@ public class ChannelFilter implements NodeFilterInterface{
 		// check if this file is an image
 		if (path == null
 				|| !(path.toLowerCase().endsWith(".tiff") || path
-						.toLowerCase().endsWith(".tif")))
+						.toLowerCase().endsWith(".tif"))){
 			return false;
+		}
+			
 		return true;
 	};
 };
