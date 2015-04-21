@@ -151,5 +151,8 @@ public abstract class Node implements OperationElement, ContextElement {
 	public String getName(){
 		return this.getProperty("name");
 	}
+	public String getChannel(){
+		return this.getProperty("channel");
+	}
 	
 }
