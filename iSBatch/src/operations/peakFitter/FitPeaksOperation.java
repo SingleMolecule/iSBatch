@@ -45,7 +45,7 @@ public class FitPeaksOperation implements Operation {
 	private int currentCount;
 	private int NUMBER_OF_OPERATIONS;
 	RoiManager cellManager;
-
+	ImageStack stack;
 	public FitPeaksOperation(DatabaseModel treeModel) {
 		this.model = treeModel;
 		this.preferences = model.preferences;
@@ -122,18 +122,19 @@ public class FitPeaksOperation implements Operation {
 		imp = fnode.getImage();
 		stack = imp.getImageStack();
 
-		ResultsTable PeakData = getPeaks(stack);
+		ResultsTable PeakData = getPeaksOnStacks();
 
 		imp.close();
 
 		// Save raw table
 		String nameToSave = fnode.getName().replace(".TIF", "")
 				+ "_RawPeakTable.csv";
-		System.out.println("Saving peak Rois @ " + fnode.getOutputFolder()
-				+ File.separator + nameToSave);
-
+		
 		try {
-			PeakData.saveAs(nameToSave);
+			System.out.println("Saving peak Rois @ " + fnode.getOutputFolder()
+					+ File.separator + nameToSave);
+			PeakData.saveAs(fnode.getOutputFolder()
+					+ File.separator + nameToSave);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -204,7 +205,6 @@ public class FitPeaksOperation implements Operation {
 	}
 
 	private ImagePlus imp;
-	private ImageStack stack;
 
 	@Override
 	public Node[] getCreatedNodes() {
@@ -222,21 +222,186 @@ public class FitPeaksOperation implements Operation {
 	public void visit(FileNode fileNode) {
 		System.out.println("Peak Fitter: " + currentCount + " of "
 				+ NUMBER_OF_OPERATIONS+".");
+		
+
+		run(fileNode);
+
 		if (currentCount == NUMBER_OF_OPERATIONS) {
 			System.out.println("Peak Finder finished.");
 		}
 		IJ.showProgress(currentCount, NUMBER_OF_OPERATIONS);
+		
+	}
 
-		run(fileNode);
+	public ResultsTable getPeaksOnStacks() {
+		System.out.println("Start getPeaks");
+		ResultsTable PeakData = new ResultsTable();
+		PeakData = fillData();
+
+		return PeakData;
 
 	}
 
-	public ResultsTable getPeaks(ImageStack stack) {
-		System.out.println("Start getPeaks");
+	private ResultsTable fillData() {
+		ResultsTable data = new ResultsTable();
+		if(iSBatchPreferences.insideCell){
+			data = peaksInsideCells();
+		}
+		else{
+			data = getPeaks();
+		}
+		// TODO Auto-generated method stub
+		return data;
+	}
+
+	private ResultsTable getPeaks() {
 		ResultsTable PeakData = new ResultsTable();
 		int stackSize = stack.getSize();
+		
+		for (int stackPosition = 1; stackPosition <= stackSize; stackPosition++) {
+			ImageProcessor ip = stack.getProcessor(stackPosition);
 
-		PeakData = fillData(stack, iSBatchPreferences.insideCell);
+			
+//			
+//			@SuppressWarnings("unchecked")
+//			Hashtable<String, Roi> table = (Hashtable<String, Roi>) cellManager
+//					.getROIs();
+
+//			for (String label : table.keySet()) {
+				// System.out.println(label);
+
+//				Roi roi = table.get(label);
+
+				ImageProcessor ip2 = imp.getProcessor();
+
+//				ip2.setRoi(roi);
+
+				DiscoidalAveragingFilter filter1 = new DiscoidalAveragingFilter(
+						ip2.getWidth(), iSBatchPreferences.INNER_RADIUS,
+						iSBatchPreferences.OUTER_RADIUS);
+
+				// PeakFinder peakFinder = new PeakFinder(true, filter, 0,
+				// PeakFinderThreshold, 3);
+				// PeakFinder peakFinder2 = new PeakFinder(true, filter1, 0,
+				// PeakFinderThreshold, 3);
+				PeakFinder finder = new PeakFinder(
+						iSBatchPreferences.useDiscoidalFiltering, filter1,
+						iSBatchPreferences.SNR_THRESHOLD,
+						iSBatchPreferences.INTENSITY_THRESHOLD,
+						iSBatchPreferences.DISTANCE_BETWEEN_PEAKS);
+
+				// ArrayList<Point> positions = peakFinder.findPeaks(ip);
+				ArrayList<Point> positions = finder.findPeaks(ip2);
+				// System.out.println("--" + positions.size() + "," +
+				// positions2.size());
+
+				for (int j = 0; j < positions.size(); j++) {
+					// System.out.println("here");
+					// fit peak
+
+					double[] parameters = new double[6];
+					double[] errors = new double[6];
+
+					for (int k = 0; k < parameters.length; k++)
+						parameters[k] = Double.NaN;
+
+					int x = positions.get(j).x;
+					int y = positions.get(j).y;
+					// System.out.println( x+ "," + y + "*");
+
+					parameters[2] = x;
+					parameters[3] = y;
+
+					ip.setRoi(x - 3, y - 3, 7, 7);
+
+					PeakFitter.fitPeak(ip, parameters, errors);
+
+					// Filtering conditions
+
+					for (int k = 0; k < parameters.length; k++) {
+
+						if (Double.isNaN(parameters[k])
+								|| Double.isNaN(errors[k])
+								|| Math.abs(errors[k]) > iSBatchPreferences.maxError[k])
+							continue;
+
+					}
+
+					double position_x = parameters[2];
+
+					if (position_x < 1 || position_x > (ip.getWidth() - 1)
+							|| Double.isNaN(position_x))
+						continue;
+
+					double position_y = parameters[3];
+
+					if (position_y < 1 || position_x > (ip.getHeight() - 1)
+							|| Double.isNaN(position_y))
+						continue;
+
+					double fwhmx = parameters[4] * SIGMA_TO_FWHM;
+
+					if (fwhmx < 1 || fwhmx > 6 || Double.isNaN(fwhmx))
+						continue;
+
+					double fwhmy = parameters[5] * SIGMA_TO_FWHM;
+					if (fwhmy < 1 || fwhmy > 6 || Double.isNaN(fwhmy))
+						continue;
+
+					PeakData.incrementCounter();
+					
+					addDataToTable(PeakData);
+					// PeakData.addValue("BFSlice",Folder);
+					// PeakData.addLabel("Cell",
+					// label.substring(label.lastIndexOf('-') + 1));
+					PeakData.addValue("slice", stackPosition);
+					// PeakData.addValue("ExperimentIndex",
+					// ExperimentIndexNumber);
+					PeakData.addValue("baseline", parameters[0]);
+					PeakData.addValue("height", parameters[1]);
+					PeakData.addValue("x", parameters[2]);
+					PeakData.addValue("y", parameters[3]);
+					PeakData.addValue("sigma_x", parameters[4]);
+					PeakData.addValue("sigma_y", parameters[5]);
+
+					PeakData.addValue("fwhm_x", fwhmx);
+					PeakData.addValue("fwhm_y", fwhmy);
+					PeakData.addValue("fwhm", (fwhmx + fwhmy) / 2);
+
+					PeakData.addValue("error_baseline", errors[0]);
+					PeakData.addValue("error_height", errors[1]);
+					PeakData.addValue("error_x", errors[2]);
+					PeakData.addValue("error_y", errors[3]);
+					PeakData.addValue("error_sigma_x", errors[4]);
+					PeakData.addValue("error_sigma_y", errors[5]);
+
+					double errorFwhmx = errors[4] * SIGMA_TO_FWHM;
+					double errorFwhmy = errors[5] * SIGMA_TO_FWHM;
+
+					PeakData.addValue("error_fwhm_x", errorFwhmx);
+					PeakData.addValue("error_fwhm_y", errorFwhmy);
+					PeakData.addValue(
+							"error_fwhm",
+							Math.sqrt(errorFwhmx * errorFwhmx + errorFwhmy
+									* errorFwhmy) / 2);
+
+					// table.addValue("z", zScale * (fwhmx - fwhmy));
+					// table.addValue("error_z", zScale * Math.sqrt(errorFwhmx *
+					// errorFwhmx + errorFwhmy * errorFwhmy));
+
+					PeakData.addValue("slice", stackPosition);
+
+				}
+
+			}
+
+//		}
+		return PeakData;
+	}
+
+	private ResultsTable peaksInsideCells() {
+		ResultsTable PeakData = new ResultsTable();
+		int stackSize = stack.getSize();
 		
 		for (int stackPosition = 1; stackPosition <= stackSize; stackPosition++) {
 			ImageProcessor ip = stack.getProcessor(stackPosition);
@@ -329,6 +494,8 @@ public class FitPeaksOperation implements Operation {
 						continue;
 
 					PeakData.incrementCounter();
+					
+					addDataToTable(PeakData);
 					// PeakData.addValue("BFSlice",Folder);
 					// PeakData.addLabel("Cell",
 					// label.substring(label.lastIndexOf('-') + 1));
@@ -375,19 +542,11 @@ public class FitPeaksOperation implements Operation {
 
 		}
 		return PeakData;
-
 	}
 
-	private ResultsTable fillData(ImageStack stack2, boolean insideCell) {
-		ResultsTable data = new ResultsTable();
-		if(insideCell){
-			
-		}
-		else{
-			
-		}
+	private void addDataToTable(ResultsTable peakData) {
 		// TODO Auto-generated method stub
-		return null;
+		
 	}
 
 	@Override
