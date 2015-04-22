@@ -810,18 +810,22 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 
 			if (isSelected) {
 				this.useDiscoidal = true;
+				preferences.useDiscoidalFiltering = true;
 
 			} else {
 				this.useDiscoidal = false;
+				preferences.useDiscoidalFiltering = true;
 			}
 		} else if (e.getSource() == chckbxInsideCells) {
 			boolean isSelected = chckbxInsideCells.isSelected();
 
 			if (isSelected) {
 				this.useCells = true;
+				preferences.insideCell = true;
 
 			} else {
 				this.useCells = false;
+				preferences.insideCell = false;
 			}
 		}
 	}
