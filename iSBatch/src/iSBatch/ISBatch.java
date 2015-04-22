@@ -44,6 +44,7 @@ import model.DatabaseModel;
 import model.FileNode;
 import model.Node;
 import context.ContextHandler;
+import operation.macro.MacroOperation2;
 import operations.*;
 import operations.correlation.CorrelationOperation;
 import operations.flatImages.FlattenOperation;
@@ -52,9 +53,9 @@ import operations.microbeTrackerIO.MicrobeTrackerIO;
 import operations.peakFinder.FindPeaksOperation;
 import operations.peakFitter.FitPeaksOperation;
 
-public class ISBatch_ implements TreeSelectionListener {
+public class ISBatch implements TreeSelectionListener {
 
-	private static ISBatch_ instance;
+	private static ISBatch instance;
 	
 	private Database database;
 	private DatabaseModel treeModel;
@@ -101,7 +102,7 @@ public class ISBatch_ implements TreeSelectionListener {
 		getInstance();
 	}
 
-	protected ISBatch_() throws SqlJetException {
+	protected ISBatch() throws SqlJetException {
 		DatabaseDialog dialog = new DatabaseDialog(frame);
 		database = dialog.getDatabase();
 
@@ -114,11 +115,11 @@ public class ISBatch_ implements TreeSelectionListener {
 		
 	}
 	
-	public static ISBatch_ getInstance() {
+	public static ISBatch getInstance() {
 		
 		if (instance == null) {
 			try {
-				instance = new ISBatch_();
+				instance = new ISBatch();
 			}
 			catch (SqlJetException e) {
 				JOptionPane.showMessageDialog(null, "Could not open database : " + e.getMessage(), "Database error", JOptionPane.ERROR_MESSAGE);

@@ -188,6 +188,12 @@ public class MacroOperationTest implements ActionListener, Runnable {
 				@Override
 				public void accept(Operation operation) {
 				}
+
+				@Override
+				public int getNumberOfFoV() {
+					// TODO Auto-generated method stub
+					return 0;
+				}
 			};
 			
 			node.setProperty("name", name);

@@ -7,7 +7,6 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import process.DiscoidalAveragingFilter;
-
 import ij.IJ;
 import ij.ImagePlus;
 import ij.Prefs;
@@ -15,6 +14,7 @@ import ij.gui.DialogListener;
 import ij.gui.GenericDialog;
 import ij.gui.PointRoi;
 import ij.measure.ResultsTable;
+import ij.plugin.ResultsSorter;
 import ij.plugin.filter.Analyzer;
 import ij.plugin.filter.ExtendedPlugInFilter;
 import ij.plugin.filter.PlugInFilterRunner;
@@ -69,7 +69,11 @@ public class PeakFitter implements ExtendedPlugInFilter, DialogListener {
 	private ResultsTable table;
 	private ImagePlus imp;
 	
-	private boolean isPreview = true;
+	public ResultsTable getResults(){
+		return table;
+				
+	}
+	private boolean isPreview = false;
 	
 	@Override
 	public void run(ImageProcessor ip) {
@@ -302,5 +306,6 @@ public class PeakFitter implements ExtendedPlugInFilter, DialogListener {
 		
 		return IJ.setupDialog(imp, flags);
 	}
+	
 	
 }

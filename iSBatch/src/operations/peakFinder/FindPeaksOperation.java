@@ -51,6 +51,8 @@ public class FindPeaksOperation implements Operation {
 	iSBatchPreferences preferences;
 	PeakFinder peakFinder;
 	RoiManager roiManager;
+	int NUMBER_OF_OPERATIONS;
+	int currentCount;
 	public FindPeaksOperation(DatabaseModel treeModel) {
 		this.model = treeModel;
 	}
@@ -77,6 +79,7 @@ public class FindPeaksOperation implements Operation {
 	@Override
 	public boolean setup(Node node) {
 		// String to parse:
+		
 		preferences = model.preferences;
 		 dialog = new FindPeaksGui(node, preferences);
 		if (dialog.isCanceled())
@@ -85,6 +88,8 @@ public class FindPeaksOperation implements Operation {
 		this.useDiscoidal = dialog.useDiscoidal;
 		this.channel = dialog.getChannel();
 		this.method = dialog.getMethod();
+		NUMBER_OF_OPERATIONS = node.getNumberOfFoV();
+		currentCount =0;
 		return true;
 	}
 
@@ -116,17 +121,18 @@ public class FindPeaksOperation implements Operation {
 		
 	
 		ArrayList<Roi> rois = findPeaks(peakFinder, imp);
+		
 		String nameToSave = node.getName().replace(".TIF", "")+ "_PeakROIs.zip";
-		System.out.println("Saving peak Rois @ " +  node.getParentFolder() + File.separator + nameToSave );
+		System.out.println("Saving peak Rois @ " +  node.getOutputFolder() + File.separator + nameToSave );
 		
 		try {
-			saveRoisAsZip(rois, node.getParentFolder() + File.separator + nameToSave);
+			saveRoisAsZip(rois, node.getOutputFolder() + File.separator + nameToSave);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		node.setProperty("PeakROIs", "node.getParentFolder() + File.separator + nameToSave");
 		
-		
+		currentCount++;
 		
 	}
 
@@ -134,6 +140,7 @@ public class FindPeaksOperation implements Operation {
 	public void visit(Experiment experiment) {
 		for(Sample sample : experiment.getSamples()){
 			visit(sample);
+			
 		}
 	}
 
@@ -154,6 +161,11 @@ public class FindPeaksOperation implements Operation {
 	
 	@Override
 	public void visit(FileNode fileNode) {
+		System.out.println("Peak Find: " + currentCount + " of " + NUMBER_OF_OPERATIONS);
+		if(currentCount==NUMBER_OF_OPERATIONS){
+			System.out.println("Peak Finder finished.");
+		}
+		IJ.showProgress(currentCount, NUMBER_OF_OPERATIONS);
 		run(fileNode);
 		
 	}
@@ -243,6 +255,8 @@ public static void runPlugInFilter(PlugInFilter filter, ImagePlus imp) {
 		zos.close();
 		
 	}
+	
+	
 	
 	
 	

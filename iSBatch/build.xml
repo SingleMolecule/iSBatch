@@ -39,9 +39,19 @@
 				<attribute name="Main-Class" value="iSBatch.ISBatch" />
 			</manifest>
 		</jar>
+		<jar jarfile="Nighty-Built-iSBatch_.jar">
+			<fileset dir="." includes="plugins.config" />
+			<fileset dir="${build}" includes="**/*.*" />
+			<zipfileset src="deps.jar" excludes="META-INF/*.SF" />
+			<manifest>
+				<attribute name="Built-By" value="${user.name}"/>
+				<attribute name="Main-Class" value="iSBatch.ISBatch" />
+			</manifest>
+		</jar>
 		<!-- <copy file="ISBatch.jar" toDir="${pluginsDir}" /> -->
 		<copy file="ISBatch_.jar" toDir="C:\Program Files\ImageJ\plugins\jars" />
 		
 	</target>
+	
 
 </project>

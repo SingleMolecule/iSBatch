@@ -7,7 +7,6 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import process.DiscoidalAveragingFilter;
-
 import ij.ImagePlus;
 import ij.Prefs;
 import ij.gui.DialogListener;
@@ -55,6 +54,15 @@ public class PeakFinder implements ExtendedPlugInFilter, DialogListener {
 		this.filter = filter;
 		this.minimumDistance = minimumDistance;
 		
+	}
+	public PeakFinder(boolean b, DiscoidalAveragingFilter filter,
+			String SNR_THRESHOLD, String INTENSITY_THRESHOLD,
+			String DISTANCE_BETWEEN_PEAKS) {
+		this.useDiscoidalAveraging = b;
+		this.threshold = Double.parseDouble(SNR_THRESHOLD);
+		this.thresholdValue = Double.parseDouble(INTENSITY_THRESHOLD);
+		this.filter = filter;
+		this.minimumDistance = Integer.parseInt(DISTANCE_BETWEEN_PEAKS);
 	}
 	public void run(ImagePlus imp){
 		

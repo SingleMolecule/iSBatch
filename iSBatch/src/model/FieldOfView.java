@@ -54,6 +54,11 @@ public class FieldOfView extends Node {
 	public int getNumberOfFoV() {
 		return 1;
 	}
+
+	public String getCellularROIs() {
+	
+		return null;
+	}
 	
 	
 	

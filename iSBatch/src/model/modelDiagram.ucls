@@ -163,7 +163,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="19" language="java" name="iSBatch.ISBatch_" project="iSBatch" file="/iSBatch/src/iSBatch/ISBatch_.java" 
+  <class id="19" language="java" name="iSBatch.ISBatch" project="iSBatch" file="/iSBatch/src/iSBatch/ISBatch.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="190" y="1745"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
