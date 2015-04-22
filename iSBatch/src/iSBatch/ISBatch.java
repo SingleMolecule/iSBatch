@@ -429,8 +429,8 @@ public class ISBatch implements TreeSelectionListener {
 
 	public Operation[] getOperations() {
 		return new Operation[] {
-				new MacroOperation(frame, treeModel),
-				new MacroOperation2(frame, treeModel),
+				//new MacroOperation(frame, treeModel),
+				//new MacroOperation2(frame, treeModel),
 				
 				new SetBackGround(treeModel),
 				new FlattenOperation(treeModel),
@@ -441,6 +441,7 @@ public class ISBatch implements TreeSelectionListener {
 //				new LocationMapsOperation(treeModel),
 //				new CellIntensityOperation(treeModel),
 				new CellOutlines(treeModel),
+				new macros.MacroOperation(),
 				 };
 	}
 	
