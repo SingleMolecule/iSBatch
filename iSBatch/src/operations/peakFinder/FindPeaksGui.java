@@ -2,7 +2,6 @@ package operations.peakFinder;
 
 import ij.IJ;
 
-import javax.print.attribute.standard.PresentationDirection;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 
@@ -26,9 +25,7 @@ import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
-import java.util.prefs.Preferences;
 
-import model.DatabaseModel;
 import model.Node;
 import model.iSBatchPreferences;
 
@@ -47,7 +44,6 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 			.getDefault());
 	DecimalFormat decimalFormat = (DecimalFormat) numberFormat;
 
-	private String imageType;
 	private JPanel panel;
 	private JCheckBox useDiscoidalFilterChk;
 	private JTextField innerRadiusTxt;
@@ -116,7 +112,6 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 	private JComboBox<String> fileTypeComboBox;
 	private JComboBox<String> channelComboBox;
 	private JComboBox<String> methodComboBox;
-	private iSBatchPreferences preferences;
 	private static final long serialVersionUID = 1L;
 	private String[] channels = new String[] {
 
@@ -135,6 +130,8 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 	private String channel, method, imagePath;
 	public boolean useDiscoidal;
 	public boolean useCells;
+	@SuppressWarnings("unused")
+	private String imageType;
 
 	/*
 	 * Filter variables
@@ -144,7 +141,6 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 		setModal(true);
 		setTitle("Find Peaks");
 		frame = new JFrame("Find Peaks");
-		this.preferences = preferences;
 		this.node = node;
 
 		setup();
@@ -279,7 +275,7 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 		panel.add(useDiscoidalFilterChk, gbc_useDiscoidalFilterChk);
 
 		innerRadiusTxt = new JFormattedTextField(decimalFormat);
-		innerRadiusTxt.setText(preferences.INNER_RADIUS);
+		innerRadiusTxt.setText(iSBatchPreferences.INNER_RADIUS);
 		innerRadiusTxt.setColumns(15);
 		innerRadiusTxt.addActionListener(this);
 		addKeyListener(new KeyAdapter() {
@@ -300,7 +296,7 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 		innerRadiusTxt.setColumns(10);
 
 		outerRadiusTxt = new JTextField();
-		outerRadiusTxt.setText(preferences.OUTER_RADIUS);
+		outerRadiusTxt.setText(iSBatchPreferences.OUTER_RADIUS);
 		GridBagConstraints gbc_outerRadiusTxt = new GridBagConstraints();
 		gbc_outerRadiusTxt.insets = new Insets(0, 0, 5, 0);
 		gbc_outerRadiusTxt.anchor = GridBagConstraints.WEST;
@@ -368,7 +364,7 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 		PeakFinderParameters.add(lblThreshold, gbc_lblThreshold);
 
 		SNRTxt = new JTextField();
-		SNRTxt.setText(preferences.SNR_THRESHOLD);
+		SNRTxt.setText(iSBatchPreferences.SNR_THRESHOLD);
 		GridBagConstraints gbc_SNRTxt = new GridBagConstraints();
 		gbc_SNRTxt.insets = new Insets(0, 0, 5, 5);
 		gbc_SNRTxt.fill = GridBagConstraints.HORIZONTAL;
@@ -401,7 +397,7 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 		PeakFinderParameters.add(lblThreshold_1, gbc_lblThreshold_1);
 
 		IntensityTxt = new JTextField();
-		IntensityTxt.setText(preferences.INTENSITY_THRESHOLD);
+		IntensityTxt.setText(iSBatchPreferences.INTENSITY_THRESHOLD);
 		GridBagConstraints gbc_IntensityTxt = new GridBagConstraints();
 		gbc_IntensityTxt.insets = new Insets(0, 0, 5, 5);
 		gbc_IntensityTxt.fill = GridBagConstraints.HORIZONTAL;
@@ -433,7 +429,7 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 		PeakFinderParameters.add(lblSelectionRadius, gbc_lblSelectionRadius);
 
 		SelectionRadiusTxt = new JTextField();
-		SelectionRadiusTxt.setText(preferences.SELECTION_RADIUS);
+		SelectionRadiusTxt.setText(iSBatchPreferences.SELECTION_RADIUS);
 		GridBagConstraints gbc_SelectionRadiusTxt = new GridBagConstraints();
 		gbc_SelectionRadiusTxt.insets = new Insets(0, 0, 5, 5);
 		gbc_SelectionRadiusTxt.fill = GridBagConstraints.HORIZONTAL;
@@ -465,7 +461,7 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 		PeakFinderParameters.add(lblMinDistance, gbc_lblMinDistance);
 
 		minDistanceTxt = new JTextField();
-		minDistanceTxt.setText(preferences.DISTANCE_BETWEEN_PEAKS);
+		minDistanceTxt.setText(iSBatchPreferences.DISTANCE_BETWEEN_PEAKS);
 		GridBagConstraints gbc_minDistanceTxt = new GridBagConstraints();
 		gbc_minDistanceTxt.insets = new Insets(0, 0, 0, 5);
 		gbc_minDistanceTxt.fill = GridBagConstraints.HORIZONTAL;
@@ -547,12 +543,12 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 			canceled = true;
 			dispose();
 		} else if (e.getSource() == btnProcess) {
-			preferences.INNER_RADIUS = innerRadiusTxt.getText();
-			preferences.DISTANCE_BETWEEN_PEAKS = minDistanceTxt.getText();
-			preferences.SELECTION_RADIUS = SelectionRadiusTxt.getText();
-			preferences.INTENSITY_THRESHOLD = IntensityTxt.getText();
-			preferences.SNR_THRESHOLD = SNRTxt.getText();
-			preferences.OUTER_RADIUS = outerRadiusTxt.getText();
+			iSBatchPreferences.INNER_RADIUS = innerRadiusTxt.getText();
+			iSBatchPreferences.DISTANCE_BETWEEN_PEAKS = minDistanceTxt.getText();
+			iSBatchPreferences.SELECTION_RADIUS = SelectionRadiusTxt.getText();
+			iSBatchPreferences.INTENSITY_THRESHOLD = IntensityTxt.getText();
+			iSBatchPreferences.SNR_THRESHOLD = SNRTxt.getText();
+			iSBatchPreferences.OUTER_RADIUS = outerRadiusTxt.getText();
 			run();
 			dispose();
 		} else if (e.getSource() == channelComboBox) {
@@ -599,18 +595,18 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 	}
 
 	public double getThreshold() {
-		return parseDouble(preferences.INTENSITY_THRESHOLD);
+		return parseDouble(iSBatchPreferences.INTENSITY_THRESHOLD);
 	}
 
 	public double getSNRThreshold() {
-		return parseDouble(preferences.SNR_THRESHOLD);
+		return parseDouble(iSBatchPreferences.SNR_THRESHOLD);
 	}
 
 	public double getMinDistance() {
-		return parseDouble(preferences.DISTANCE_BETWEEN_PEAKS);
+		return parseDouble(iSBatchPreferences.DISTANCE_BETWEEN_PEAKS);
 	}
 
 	public double getSelectionRadius() {
-		return parseDouble(preferences.SELECTION_RADIUS);
+		return parseDouble(iSBatchPreferences.SELECTION_RADIUS);
 	}
 }
