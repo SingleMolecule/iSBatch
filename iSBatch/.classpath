@@ -10,5 +10,6 @@
 	<classpathentry kind="lib" path="lib/org-netbeans-swing-outline-RELEASE68.jar"/>
 	<classpathentry kind="lib" path="lib/sqljet-1.1.10.jar"/>
 	<classpathentry kind="lib" path="lib/sqljet-browser-1.1.10.jar"/>
+	<classpathentry kind="lib" path="lib/jmatio.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
