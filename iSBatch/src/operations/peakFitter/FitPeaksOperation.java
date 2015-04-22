@@ -3,25 +3,19 @@
  */
 package operations.peakFitter;
 
-import ij.IJ;
 import ij.ImagePlus;
 import ij.ImageStack;
-import ij.Prefs;
 import ij.gui.Roi;
-import ij.io.RoiDecoder;
 import ij.measure.ResultsTable;
 import ij.plugin.frame.RoiManager;
 import ij.process.ImageProcessor;
 
-import java.awt.List;
 import java.awt.Point;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Hashtable;
-import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 import analysis.PeakFinder;
