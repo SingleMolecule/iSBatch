@@ -22,8 +22,8 @@ public class iSBatchPreferences  {
 	public static String ERROR_Y = "1";
 	public static String ERROR_HEIGHT = "5000";
 
-	public boolean insideCell = false;
-	public boolean useDiscoidalFiltering = false;
+	public static boolean insideCell = false;
+	public static boolean useDiscoidalFiltering = false;
 	
 	public static double[] maxError = new double[] {
 		Double.parseDouble(ERROR_BASELINE),
