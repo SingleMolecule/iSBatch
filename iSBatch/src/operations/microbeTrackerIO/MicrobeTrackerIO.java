@@ -4,17 +4,19 @@
 package operations.microbeTrackerIO;
 
 
-import java.awt.image.ImageFilter;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.ImageStack;
+import ij.plugin.ZProjector;
 import ij.process.ImageProcessor;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import filters.NodeFilterInterface;
+
 import java.util.HashMap;
 
 import model.DatabaseModel;
@@ -103,11 +105,57 @@ public class MicrobeTrackerIO implements Operation {
 	}
 
 	private void run(Node node) {
-//		System.out.println("Run class: " + channel + " using the method " + method);
-//		System.out.println(channel);
-//		System.out.println(method);
-//		System.out.println(customFilter);
-//		System.out.println(matFilePath);
+		File matFile = new File(matFilePath);
+		
+		if(!matFile.exists()){
+				getStackForMT(node);
+			}
+		else{
+			importFiles(node, matFile);
+		}
+		
+		}
+		
+
+	private void importFiles(Node node, File matFile) {
+		//Get the MicrobeTracker Reference Image
+		
+			ImagePlus referenceImp = getReference(node);
+		try {
+			ArrayList<Mesh> meshes = MatlabMeshes.getMeshes(matFile.getAbsolutePath());
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
+		
+		
+		
+		
+		
+		
+		
+		
+	}
+
+	private ImagePlus getReference(Node node) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private void getStackForMT(Node node) {
 		System.out.println("--- Start ----");
 		
 		ArrayList<Node> nodes = node.getDescendents(filter(channel));
@@ -120,14 +168,11 @@ public class MicrobeTrackerIO implements Operation {
 		
 		
 		//save Image
-		System.out.println(node.getFolder()+ File.separator + imp.getTitle());
-//		IJ.saveAsTiff(imp, node.getFolder()+ File.separator + imp.getTitle());
+		System.out.println(node.getOutputFolder()+ File.separator + imp.getTitle());
+		IJ.saveAsTiff(imp, node.getOutputFolder()+ File.separator + imp.getTitle());
 		
 		//Now, finally get this list of files and create a combined
 		System.out.println("--- End ----");
-		
-		
-		
 		
 	}
 
@@ -164,7 +209,7 @@ public class MicrobeTrackerIO implements Operation {
 				public boolean accept(Node node) {
 					String ch = null;
 //					try{
-						 ch = node.getProperty("channel");
+						 ch = node.getChannel();
 //					} 
 //						 System.out.println("the channel is : " + ch);
 //					catch(NullPointerException e){
@@ -179,7 +224,7 @@ public class MicrobeTrackerIO implements Operation {
 							return false;
 
 					
-					String path = node.getProperty("path");
+					String path = node.getPath();
 
 					// check if this file is an image
 					if (path == null
@@ -240,7 +285,10 @@ public class MicrobeTrackerIO implements Operation {
 		for (int i=0; i<nodes.size(); i++){
 			System.out.println(nodes.get(i));
 			ImagePlus imp = IJ.openImage(nodes.get(i).getPath());
-			ImageProcessor ip2 = imp.getProcessor();
+			
+			
+			
+			ImageProcessor ip2 = getSlice(imp);
 			String ImageName = nodes.get(i).getParent().getName();
 			stack.setProcessor(ip2, i+1);			
 			stack.setSliceLabel(ImageName, i+1);
@@ -248,6 +296,22 @@ public class MicrobeTrackerIO implements Operation {
 		return imp2;
 		
 		
+	}
+
+	private ImageProcessor getSlice(ImagePlus imp) {
+		ImageProcessor ip = imp.getProcessor();
+		if(imp.getStack().getSize()!=1){
+			
+			ZProjector projector = new ZProjector(imp);
+			projector.setMethod(ZProjector.AVG_METHOD);
+			projector.doProjection();
+			
+			ip = projector.getProjection().getProcessor();
+				
+		}
+		
+		
+			return ip;
 	}
 
 	private String getChannel() {
