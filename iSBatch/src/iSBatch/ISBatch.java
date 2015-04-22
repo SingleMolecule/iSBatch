@@ -45,9 +45,9 @@ import model.FileNode;
 import model.Node;
 import context.ContextHandler;
 import operations.*;
-import operations.correlation.CorrelationOperation;
 import operations.flatImages.FlattenOperation;
 import operations.flatImages.SetBackGround;
+import operations.locationMaps.LocationMaps;
 import operations.microbeTrackerIO.MicrobeTrackerIO;
 import operations.peakFinder.FindPeaksOperation;
 import operations.peakFitter.FitPeaksOperation;
@@ -430,19 +430,22 @@ public class ISBatch implements TreeSelectionListener {
 
 	public Operation[] getOperations() {
 		return new Operation[] {
-				//new MacroOperation(frame, treeModel),
 				//new MacroOperation2(frame, treeModel),
 				
 				new SetBackGround(treeModel),
 				new FlattenOperation(treeModel),
 				new FindPeaksOperation(treeModel),
 				new FitPeaksOperation(treeModel),
-				new MicrobeTrackerIO(treeModel),
-				new CorrelationOperation(treeModel),
-//				new LocationMapsOperation(treeModel),
-//				new CellIntensityOperation(treeModel),
-				new CellOutlines(treeModel),
 				new macros.MacroOperation(),
+				new MicrobeTrackerIO(treeModel),
+				new CellOutlines(treeModel),
+				new CellularConcentration(treeModel),
+				new CellIntensity(treeModel),
+				new FocusLifetimes(treeModel),
+				new Tracking(treeModel),
+				new LocationMaps(treeModel),
+				new CellOutlines(treeModel),
+				new ChangePoint(treeModel),
 				 };
 	}
 	

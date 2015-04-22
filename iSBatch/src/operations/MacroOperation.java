@@ -111,7 +111,7 @@ public class MacroOperation implements Operation {
 			public boolean accept(Node node) {
 				
 				return node.getType().equals(FileNode.type) &&
-						node.getProperty("channel").equals(channel);
+						node.getChannel().equalsIgnoreCase(channel);
 			}
 		};
 		

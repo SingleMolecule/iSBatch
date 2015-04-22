@@ -37,6 +37,7 @@ public class FieldOfView extends Node {
 
 	public  ArrayList<FileNode> getImages(String channel) {
 		ArrayList<Node> nodes = this.getChildren(new ChannelFilter(channel));
+		System.out.println(nodes.size());
 		//convert to sample array
 		ArrayList<FileNode> filesNodes = new ArrayList<FileNode>();
 		for(Node node : nodes){

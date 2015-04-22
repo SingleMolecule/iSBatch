@@ -1,6 +1,5 @@
 package operations;
 
-import java.util.Map.Entry;
 
 import javax.swing.JDialog;
 import javax.swing.JLabel;

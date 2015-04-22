@@ -259,10 +259,6 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 
 	}
 
-	private void run() {
-
-	}
-
 	public static void main(String[] args) {
 		frame = new JFrame();
 
