@@ -43,4 +43,4 @@ TODO: Write credits
 
 ## License
 
-TODO: Write license
+ http://github.com/SingleMolecule/iSBAtch/licence.txt
