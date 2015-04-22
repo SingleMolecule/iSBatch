@@ -20,10 +20,8 @@ public class ChangePoint implements Operation {
 
 	@Override
 	public String[] getContext() {
-		// TODO Auto-generated method stub
-		return null;
+		return new String[]{"All"};	
 	}
-
 	@Override
 	public String getName() {
 		return "Change-Point";
