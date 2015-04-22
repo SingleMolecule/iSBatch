@@ -202,7 +202,8 @@ public class Database {
 			long id = cursor.getRowId();
 			String type = cursor.getString("type");
 			Node node = createNode(parentNode, type);
-
+			node.setProperty("type", type);
+			
 			// read properties
 			table = database.getTable("node_properties");
 			ISqlJetCursor propertyCursor = table.lookup("node_index", id);
