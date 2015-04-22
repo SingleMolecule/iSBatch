@@ -9,6 +9,11 @@ import com.jgoodies.forms.factories.FormFactory;
 import javax.swing.JButton;
 
 public class AboutPanel extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public AboutPanel() {
 		setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("113px"),

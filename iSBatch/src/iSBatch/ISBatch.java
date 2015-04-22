@@ -44,11 +44,16 @@ import model.DatabaseModel;
 import model.FileNode;
 import model.Node;
 import context.ContextHandler;
-import operation.macro.MacroOperation2;
+import operation.cellIntensity.CellIntensity;
+import operation.cellOutlines.CellOutlines;
+import operation.cellularConcentration.CellularConcentration;
+import operation.changePoint.ChangePoint;
+import operation.focusLifetime.FocusLifetimes;
+import operation.tracking.Tracking;
 import operations.*;
-import operations.correlation.CorrelationOperation;
 import operations.flatImages.FlattenOperation;
 import operations.flatImages.SetBackGround;
+import operations.locationMaps.LocationMaps;
 import operations.microbeTrackerIO.MicrobeTrackerIO;
 import operations.peakFinder.FindPeaksOperation;
 import operations.peakFitter.FitPeaksOperation;
@@ -436,12 +441,20 @@ public class ISBatch implements TreeSelectionListener {
 				new FlattenOperation(treeModel),
 				new FindPeaksOperation(treeModel),
 				new FitPeaksOperation(treeModel),
+				
+				new macros.MacroOperation(),
 				new MicrobeTrackerIO(treeModel),
-				new CorrelationOperation(treeModel),
+				new CellOutlines(treeModel),
+				new CellularConcentration(treeModel),
+				new CellIntensity(treeModel),
+				new FocusLifetimes(treeModel),
+				new Tracking(treeModel),
+				new LocationMaps(treeModel),
+//				new CorrelationOperation(treeModel),
 //				new LocationMapsOperation(treeModel),
 //				new CellIntensityOperation(treeModel),
 				new CellOutlines(treeModel),
-				new macros.MacroOperation(),
+				new ChangePoint(treeModel),
 				 };
 	}
 	
