@@ -43,4 +43,4 @@ TODO: Write credits
 
 ## License
 
- http://github.com/SingleMolecule/iSBAtch/licence.txt
+ https://github.com/SingleMolecule/iSBatch/blob/master/iSBatch/License
