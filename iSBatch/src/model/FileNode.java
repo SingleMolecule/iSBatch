@@ -1,5 +1,7 @@
 package model;
 
+import ij.IJ;
+import ij.ImagePlus;
 import model.types.Channel;
 import operations.Operation;
 
@@ -51,5 +53,9 @@ public class FileNode extends Node {
 	public int getNumberOfFoV() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	public ImagePlus getImage() {
+		return IJ.openImage(this.getPath());
 	}
 }
