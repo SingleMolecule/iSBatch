@@ -23,7 +23,6 @@ import java.util.HashMap;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import filters.NodeFilterInterface;
 import analysis.PeakFinder;
 import operations.Operation;
 import process.DiscoidalAveragingFilter;
@@ -70,7 +69,7 @@ public class FindPeaksOperation implements Operation {
 	 */
 	@Override
 	public String getName() {
-		return "Find Peaks";
+		return "Peak Finder";
 	}
 
 	/* (non-Javadoc)
@@ -89,7 +88,7 @@ public class FindPeaksOperation implements Operation {
 		this.channel = dialog.getChannel();
 		this.method = dialog.getMethod();
 		NUMBER_OF_OPERATIONS = node.getNumberOfFoV();
-		currentCount =0;
+		currentCount =1;
 		return true;
 	}
 
@@ -116,8 +115,8 @@ public class FindPeaksOperation implements Operation {
 //		
 		ImagePlus imp = IJ.openImage(node.getPath());
 		peakFinder = new PeakFinder(useDiscoidal, 
-				new DiscoidalAveragingFilter(imp.getWidth(),preferences.INNER_RADIUS , preferences.OUTER_RADIUS), 
-				parseDouble(preferences.SNR_THRESHOLD ), parseDouble(preferences.INTENSITY_THRESHOLD), Integer.parseInt(preferences.DISTANCE_BETWEEN_PEAKS));
+				new DiscoidalAveragingFilter(imp.getWidth(),iSBatchPreferences.INNER_RADIUS , iSBatchPreferences.OUTER_RADIUS), 
+				parseDouble(iSBatchPreferences.SNR_THRESHOLD ), parseDouble(iSBatchPreferences.INTENSITY_THRESHOLD), Integer.parseInt(iSBatchPreferences.DISTANCE_BETWEEN_PEAKS));
 		
 	
 		ArrayList<Roi> rois = findPeaks(peakFinder, imp);

@@ -55,7 +55,7 @@ public class CorrelationOperation implements Operation {
 	 */
 	@Override
 	public String getName() {
-		return "Set BackGround";
+		return "Correlation";
 	}
 
 	/* (non-Javadoc)

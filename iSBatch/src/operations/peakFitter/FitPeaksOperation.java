@@ -72,7 +72,7 @@ public class FitPeaksOperation implements Operation {
 	 */
 	@Override
 	public String getName() {
-		return "Fit Peaks";
+		return "Peak Fitter";
 	}
 
 	/*
