@@ -23,7 +23,7 @@ public class MacroDialog extends JDialog implements ActionListener {
 	
 	private String[] channels = new String[] {
 		"acquisition",
-		"bf",
+		"Bright Field",
 		"red",
 		"green",
 		"blue",
