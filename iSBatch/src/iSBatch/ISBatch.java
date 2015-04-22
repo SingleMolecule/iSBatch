@@ -44,7 +44,6 @@ import model.DatabaseModel;
 import model.FileNode;
 import model.Node;
 import context.ContextHandler;
-import operation.macro.MacroOperation2;
 import operations.*;
 import operations.correlation.CorrelationOperation;
 import operations.flatImages.FlattenOperation;
@@ -424,7 +423,9 @@ public class ISBatch implements TreeSelectionListener {
 	public Operation[] getTreeOperations() {
 		return new Operation[] { 
 				new AddNodeOperation(frame, treeModel),
-				new SaveDatabaseOperation(database, treeModel.getRoot()), };
+				new SaveDatabaseOperation(database, treeModel.getRoot()),
+				new ImportOperation(treeModel)
+				};
 	}
 
 	public Operation[] getOperations() {
