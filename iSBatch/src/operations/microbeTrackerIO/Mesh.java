@@ -10,12 +10,26 @@ public class Mesh {
 	private int cell;
 	private double area;
 	private double volume;
+	private ArrayList<Point> outline = new ArrayList<Point>();
 	
+	
+	public ArrayList<Point> getOutline(){
+		return outline;
+	}
 	public Mesh(int slice, int cell, double area, double volume) {
 		this.slice = slice;
 		this.cell = cell;
 		this.area = area;
 		this.volume = volume;
+	}
+	
+	public Mesh(int slice, int cell, double area, double volume,  ArrayList<Point> outline ) {
+		this.slice = slice;
+		this.cell = cell;
+		this.area = area;
+		this.volume = volume;
+		this.outline = outline;
+		
 	}
 
 	public void addSegment(Segment s) {

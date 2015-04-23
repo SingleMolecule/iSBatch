@@ -44,8 +44,9 @@ public class MatlabMeshes {
 					//double length = ((MLDouble)struct.getField("length")).get(0);
 					double area = ((MLDouble)struct.getField("area")).get(0);
 					double volume = ((MLDouble)struct.getField("volume")).get(0);
+					ArrayList<Point> outline = getPoints(struct);
 					
-					Mesh cellMesh = new Mesh(slice + 1, cell + 1, area, volume);
+					Mesh cellMesh = new Mesh(slice + 1, cell + 1, area, volume, outline);
 					
 					int m = mesh.getM();	// number of rows
 					ArrayList<Line> lines = new ArrayList<Line>();
@@ -71,6 +72,26 @@ public class MatlabMeshes {
 		}}
 		
 		return meshes;
+	}
+
+	private static ArrayList<Point> getPoints(MLStructure struct) {
+		ArrayList<Point> points = new ArrayList<Point>();
+		
+		@SuppressWarnings("unchecked")
+		MLNumericArray<Double> mesh = (MLNumericArray<Double>)struct.getField("model");
+		int m = mesh.getM();
+		
+		for (int k = 0; k < m; k++) {
+			
+			double x0 = mesh.get(k, 0).doubleValue();
+			double y0 = mesh.get(k, 1).doubleValue();
+			
+			points.add(new Point(x0, y0));
+		}
+		
+		
+		
+		return points;
 	}
 	
 }
