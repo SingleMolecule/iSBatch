@@ -68,6 +68,12 @@ public class FieldOfView extends Node {
 		fovs.add(this);
 		return fovs;
 	}
+
+	@Override
+	public ArrayList<Sample> getSamples() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 	

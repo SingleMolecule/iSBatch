@@ -48,6 +48,13 @@ public class Root extends Node {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public ArrayList<Sample> getSamples() {
+			// TODO Auto-generated method stub
+		
+		return null;
+	}
 	
 	
 }

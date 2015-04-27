@@ -29,4 +29,10 @@ public class OperationNode extends Node {
 		return null;
 	}
 
+	@Override
+	public ArrayList<Sample> getSamples() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

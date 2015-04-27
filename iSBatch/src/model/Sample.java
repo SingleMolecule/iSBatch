@@ -38,6 +38,14 @@ public class Sample extends Node {
 		return this.getChildren().size();
 	}
 
+	@SuppressWarnings("null")
+	@Override
+	public ArrayList<Sample> getSamples() {
+		ArrayList<Sample> samples = null;
+		samples.add(this);
+		return samples;
+	}
+
 
 
 	

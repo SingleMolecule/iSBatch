@@ -66,4 +66,10 @@ public class FileNode extends Node {
 	public ArrayList<FieldOfView> getFieldOfView() {
 				return null;
 	}
+
+	@Override
+	public ArrayList<Sample> getSamples() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
