@@ -14,7 +14,21 @@ public abstract class Node implements OperationElement, ContextElement, NodeInte
 	private String type;
 	private HashMap<String, String> properties = new HashMap<String, String>();
 	private ArrayList<Node> children = new ArrayList<Node>();
+	private String cellROIPath;
 	
+	
+	
+	
+	
+	
+	public String getCellROIPath() {
+		return cellROIPath;
+	}
+
+	public void setCellROIPath(String cellROIPath) {
+		this.cellROIPath = cellROIPath;
+	}
+
 	public Node(Node parent, String type) {
 		super();
 		this.parent = parent;
