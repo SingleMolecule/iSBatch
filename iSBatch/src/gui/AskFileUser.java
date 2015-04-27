@@ -48,6 +48,7 @@ public class AskFileUser extends JPanel
 	 */
 	private static final long serialVersionUID = 1L;
     JFileChooser fc;
+	public String path;
 
     public AskFileUser() {
         fc = new JFileChooser();
@@ -59,9 +60,10 @@ public class AskFileUser extends JPanel
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = fc.getSelectedFile();
             System.out.println(file.getAbsolutePath());
-            
+            this.path = file.getAbsolutePath();
         } else {
         	System.out.println("nothing selected");
+        	this.path = null;
         }
 
     }

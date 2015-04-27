@@ -2,11 +2,9 @@ package test;
 
 import ij.IJ;
 import ij.ImagePlus;
-import ij.gui.OvalRoi;
 import ij.gui.PolygonRoi;
 import ij.gui.Roi;
 import ij.io.RoiEncoder;
-import ij.plugin.PlugIn;
 import ij.plugin.frame.RoiManager;
 
 import java.io.File;
@@ -14,13 +12,10 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import com.jmatio.io.MatFileReader;
-import com.jmatio.types.MLArray;
-import com.jmatio.types.MLCell;
 
 import operations.microbeTrackerIO.MatlabMeshes;
 import operations.microbeTrackerIO.Mesh;
@@ -39,7 +34,7 @@ public class MatFileToROI {
 		manager = new RoiManager(true);
 		MatFileReader reader = new MatFileReader(mat);
 		
-		Map<String, MLArray> content = reader.getContent();
+//		Map<String, MLArray> content = reader.getContent();
 
 		//Create a place to store the list
 		ArrayList<ArrayList<Roi>> placeHolder= new ArrayList<ArrayList<Roi>>();
@@ -56,7 +51,6 @@ public class MatFileToROI {
 				imp.setSlice(stackPosition); // Set slice in the stack
 				
 				if(i==stackPosition){
-					System.out.println("match");
 					Roi roi = getRoi(m);
 					roi.setPosition(stackPosition);
 					currentManager.addRoi(roi);	
