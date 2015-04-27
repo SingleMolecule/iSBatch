@@ -1,12 +1,17 @@
 package test;
 
+import ij.IJ;
+import ij.ImagePlus;
+import ij.gui.OvalRoi;
 import ij.gui.PolygonRoi;
 import ij.gui.Roi;
 import ij.io.RoiEncoder;
+import ij.plugin.PlugIn;
 import ij.plugin.frame.RoiManager;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
@@ -20,92 +25,142 @@ import com.jmatio.types.MLCell;
 import operations.microbeTrackerIO.MatlabMeshes;
 import operations.microbeTrackerIO.Mesh;
 import operations.microbeTrackerIO.Point;
-import operations.microbeTrackerIO.ROIBuilder;
-import operations.microbeTrackerIO.Segment;
 
 public class MatFileToROI {
+	static RoiManager manager;
+	static ArrayList<Roi> rois = new ArrayList<Roi>();
 	
 	public static void main(String[] args) throws IOException {
 		
 		File mat = new File("D:\\TestFolderIsbatch\\DnaQ.mat");
-		ArrayList<Mesh> meshes = MatlabMeshes.getMeshes(mat.getAbsolutePath());
-		RoiManager manager = new RoiManager(true);
+		ImagePlus imp = IJ.openImage("D:\\TestFolderIsbatch\\BFTeste.tif");
+		
+		ArrayList<Mesh> meshes = MatlabMeshes.getMeshes(mat);
+		manager = new RoiManager(true);
 		MatFileReader reader = new MatFileReader(mat);
 		
 		Map<String, MLArray> content = reader.getContent();
-		MLCell cellList = (MLCell)content.get("cellList");
+
+		//Create a place to store the list
+		ArrayList<ArrayList<Roi>> placeHolder= new ArrayList<ArrayList<Roi>>();
+		for (int i=1; i<=imp.getStackSize(); i++){
+			RoiManager currentManager = new RoiManager(true);
+			System.out.println(i);
+
+			for (Mesh m : meshes){
+				int stackPosition = m.getSlice();
+				
+				
+				
+				
+				imp.setSlice(stackPosition); // Set slice in the stack
+				
+				if(i==stackPosition){
+					System.out.println("match");
+					Roi roi = getRoi(m);
+					roi.setPosition(stackPosition);
+					currentManager.addRoi(roi);	
+				}
+				
+			}
+			
+			currentManager.runCommand("Save", "D:\\TestFolderIsbatch\\TesteRoiSaver_"+ i +".zip");
+		
+		}
 //		for (Mesh m : meshes){
+//			System.out.println(m.getSlice());
+//			int stackPosition = m.getSlice();
+//			imp.setSlice(stackPosition); // Set slice in the stack
+//			Roi roi = getRoi(m);
+//			roi.setPosition(stackPosition);
+//			manager.addRoi(roi);
 //			
-//				System.out.println("Slice: " + m.getSlice());// Slice of the cell
-//				System.out.println(m.getCell());// Number of the cell in the slice
-////				System.out.println(m.getSegments());
-//					
+//			placeHolder.get(stackPosition).add(roi);
+//			
+//			
+//			
 //			
 //		}
-		System.out.println("Total cells: "+ meshes.size());
-		Mesh m = meshes.get(0);
-		System.out.println("Slice: "+ m.getSlice());
-		System.out.println("Cell: "+ m.getCell());	
-		System.out.println("Area: " + m.getArea());
+//		
+		
+		System.out.println(placeHolder.size());
+
+//		saveRoisAsZip(rois, "D:\\TestFolderIsbatch\\TesteRoiSaver.zip");
+//		
+//		
+//		File roiz = new File("D:\\TestFolderIsbatch\\TesteRoiSaver2.zip");
+//		if (roiz.exists()){
+//			roiz.delete();
+//		}
+//		
+//		manager.runCommand("Save", "D:\\TestFolderIsbatch\\TesteRoiSaver2.zip");
+////			System.out.println("saveAs(\"Selection\", \"D:\\TestFolderIsbatch\\TesteRoiSaver.roi\"");
+//
+//		System.out.println("Done");
+	}
+
+	private static Roi getRoi(Mesh m) {
 		ArrayList<Point> points = m.getOutline();
-
-		int maxX = 0;
-		int maxY = 0;
 		
-		ArrayList<Integer> tempx = new ArrayList<Integer>();
-		ArrayList<Integer> tempy = new ArrayList<Integer>();
+		int height = points.size();
+		int[] x = new int[height];
+		int[] y = new int[height];
 		
-		for(Point point : points){
-//			System.out.println("X: " + point.x + "|" + point.y);; 
-			if (point.x >= maxX){
-				maxX = (int)Math.round(point.x);
-			}
-			
-			if (point.y >= maxY){
-				maxY = (int)Math.round(point.y);
-			}
-			
-			tempx.add((int) point.x);
-			tempy.add((int) point.y);
-			
-			
+		for (int i=0; i<points.size(); i++) {
+			x[i] = (int)Math.round(points.get(i).x);
+			y[i] = (int)Math.round(points.get(i).y);
 		}
-		int[]x = new int[tempx.size()];
-		tempx.toArray();
 		
-		int[]y = new int[tempy.size()];
-		tempy.toArray();
+		Roi roi = new PolygonRoi(x, y, height, null, Roi.FREEROI);
+		if (roi.getLength()/x.length>10)
+			roi = new PolygonRoi(x, y, height, null, Roi.POLYGON); // use "handles"
 		
-		
-		System.out.println(maxX + " " + maxY);
-		
-		System.out.print(points.size());
-//		ROIBuilder roi = new ROIBuilder(points);
-		ArrayList<Roi> rois = new ArrayList<Roi>();
-		
-		@SuppressWarnings("deprecation")
-		Roi roi  = new PolygonRoi(x, y, points.size(), null, Roi.FREEROI);
-		if (roi.getLength() / x.length > 10)
-			roi = new PolygonRoi(x, y, points.size(), null, Roi.POLYGON); 
-		
-		
-		rois.add(roi);
-		
+		return roi;
+	}
 
+	private static void writeToCsv(ArrayList<Point> points) {
+		 //Delimiter used in CSV file
+		    final String COMMA_DELIMITER = ",";
+		    final String NEW_LINE_SEPARATOR = "\n";
+		    FileWriter fileWriter = null;
+		    try {
+				fileWriter = new FileWriter("D:\\TestFolderIsbatch\\tempROI.csv");
 
-		saveRoisAsZip(rois, "D:\\TestFolderIsbatch\\TesteRoiSaver.zip");
-		
-		
-		
-		
-		
-		
-		
-		
-//		manager.runCommand("saveAs(\"Selection\", \"D:\\TestFolderIsbatch\\TesteRoiSaver.roi");
-//			System.out.println("saveAs(\"Selection\", \"D:\\TestFolderIsbatch\\TesteRoiSaver.roi\"");
+				//Write the CSV file header
+//				fileWriter.append(FILE_HEADER.toString());
+				
+				//Add a new line separator after the header
+//				fileWriter.append(NEW_LINE_SEPARATOR);
+				
+				//Write a new student object list to the CSV file
+				for (Point point : points) {
+					fileWriter.append(String.valueOf(point.x));
+					fileWriter.append(COMMA_DELIMITER);
+					fileWriter.append(String.valueOf(point.y));;
+					fileWriter.append(NEW_LINE_SEPARATOR);
+				}
 
-		System.out.println("Done");
+				
+				
+				System.out.println("CSV file was created successfully !!!");
+				
+			} catch (Exception e) {
+				System.out.println("Error in CsvFileWriter !!!");
+				e.printStackTrace();
+			} finally {
+				
+				try {
+					fileWriter.flush();
+					fileWriter.close();
+				} catch (IOException e) {
+					System.out.println("Error while flushing/closing fileWriter !!!");
+	                e.printStackTrace();
+				}
+				
+			}
+		    
+
+		
 	}
 
 	public static void saveRoisAsZip(ArrayList<Roi> rois, String filename) throws IOException {
@@ -124,4 +179,14 @@ public class MatFileToROI {
 		
 	}
 	
+//	class Run_Macro implements PlugIn {
+//	    @Override
+//	    public void run(final String arg) {
+//	        final String macro =
+//	            "run(\"Clown (14K)\");\n" +
+//	            "run(\"Make Binary\");\n";
+//	        IJ.runMacro(macro);
+//	    }
+//	
+//}
 }
