@@ -14,7 +14,6 @@ public class Mesh {
 	private double area;
 	private double volume;
 	private ArrayList<Point> outline = new ArrayList<Point>();
-	private Roi roi;
 	
 	
 	public ArrayList<Point> getOutline(){
@@ -93,6 +92,7 @@ public class Mesh {
 		return volume;
 	}
 	
+	@SuppressWarnings({ "deprecation", "unused" })
 	private static Roi getRoi(Mesh m) {
 		
 		ArrayList<Point> points = m.getOutline();
