@@ -129,7 +129,7 @@ public class MicrobeTrackerIO implements Operation {
 		//Get the MicrobeTracker Reference Image
 			ImagePlus referenceImp = IJ.openImage(BFFIleInputPath);
 			manager = new RoiManager(true);
-			ArrayList<Node> nodes = node.getDescendents(filter(channel)); 
+			ArrayList<FieldOfView> nodes = node.getFieldOfView(); 
 			
 			// By the way that it acts, get the parent is the folder to Save the ROI. The list of nodes
 			// contain imagePaths based on the filter tag. Sure this has to be improved later, but provides enough control now
@@ -140,25 +140,22 @@ public class MicrobeTrackerIO implements Operation {
 		try {
 			ArrayList<Mesh> meshes = MatlabMeshes.getMeshes(matFile);
 			
-			MatFileReader reader = new MatFileReader(matFile);
-			Map<String, MLArray> content = reader.getContent();	
 			
 			for (int i=1; i<=referenceImp.getStackSize(); i++){
 				RoiManager currentManager = new RoiManager(true);
-				System.out.println(i);
 				for (Mesh m : meshes){
 					int stackPosition = m.getSlice();
 					referenceImp.setSlice(stackPosition); // Set slice in the stack
 					
 					if(i==stackPosition){
-						System.out.println("match");
 						Roi roi = getRoi(m);
 						roi.setPosition(stackPosition);
 						currentManager.addRoi(roi);	
 					}
 					
 				}
-				
+				//Save all Rois in that folder
+				node.setCellROIPath(node.getOutputFolder() + File.separator + "cellRoi.zip");
 				currentManager.runCommand("Save", node.getOutputFolder() + File.separator + "cellRoi.zip");
 			
 			}
