@@ -1,9 +1,11 @@
 package operations.microbeTrackerIO;
 
 
+import gui.AskFileUser;
 import ij.IJ;
 
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
 import java.awt.GridBagLayout;
@@ -29,6 +31,7 @@ import javax.swing.DefaultComboBoxModel;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
 
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
@@ -57,7 +60,7 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 	static JFrame frame;
 	private Node node;
 	private String channel, method, imagePath;
-	protected String matFilePath;
+	protected String matFilePath, BFFIleInputPath;
 	protected String customFiter;
 
 	/*
@@ -83,7 +86,7 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 60, 60, 60, 60, 0 };
-		gridBagLayout.rowHeights = new int[] { 14, 60, 47, 0, 0 };
+		gridBagLayout.rowHeights = new int[] { 14, 60, 85, 0, 0 };
 		gridBagLayout.columnWeights = new double[] { 1.0, 1.0, 1.0,
 				0.0, Double.MIN_VALUE };
 		gridBagLayout.rowWeights = new double[] { 0.0, 1.0, 1.0, 0.0,
@@ -110,16 +113,13 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 		gbc_lblOperation.gridx = 1;
 		gbc_lblOperation.gridy = 0;
 		getContentPane().add(lblOperation, gbc_lblOperation);
-
-		btnProcess = new JButton("Process");
-		btnProcess.addActionListener(this);
 		
 		CreateInputPanel = new JPanel();
 		CreateInputPanel.setBorder(new TitledBorder(null, "Create image stack", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GridBagConstraints gbc_CreateInputPanel = new GridBagConstraints();
 		gbc_CreateInputPanel.fill = GridBagConstraints.BOTH;
 		gbc_CreateInputPanel.gridwidth = 4;
-		gbc_CreateInputPanel.insets = new Insets(0, 0, 5, 5);
+		gbc_CreateInputPanel.insets = new Insets(0, 0, 5, 0);
 		gbc_CreateInputPanel.gridx = 0;
 		gbc_CreateInputPanel.gridy = 1;
 		getContentPane().add(CreateInputPanel, gbc_CreateInputPanel);
@@ -212,15 +212,15 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 		ImportPanel.add(panel_1, gbc_panel_1);
 		GridBagLayout gbl_panel_1 = new GridBagLayout();
 		gbl_panel_1.columnWidths = new int[]{0, 0, 0};
-		gbl_panel_1.rowHeights = new int[]{0, 0};
+		gbl_panel_1.rowHeights = new int[]{0, 0, 0};
 		gbl_panel_1.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gbl_panel_1.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_panel_1.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		panel_1.setLayout(gbl_panel_1);
 		
 		btnLoadmat = new JButton("Load .mat");
 		btnLoadmat.addActionListener(this);
 		GridBagConstraints gbc_btnLoadmat = new GridBagConstraints();
-		gbc_btnLoadmat.insets = new Insets(0, 0, 0, 5);
+		gbc_btnLoadmat.insets = new Insets(0, 0, 5, 5);
 		gbc_btnLoadmat.gridx = 0;
 		gbc_btnLoadmat.gridy = 0;
 		panel_1.add(btnLoadmat, gbc_btnLoadmat);
@@ -233,19 +233,52 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 			}
 		});
 		GridBagConstraints gbc_mathPathTextField = new GridBagConstraints();
+		gbc_mathPathTextField.insets = new Insets(0, 0, 5, 0);
 		gbc_mathPathTextField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_mathPathTextField.gridx = 1;
 		gbc_mathPathTextField.gridy = 0;
 		panel_1.add(mathPathTextField, gbc_mathPathTextField);
 		mathPathTextField.setColumns(10);
-		GridBagConstraints gbc_btnProcess = new GridBagConstraints();
-		gbc_btnProcess.insets = new Insets(0, 0, 0, 5);
-		gbc_btnProcess.gridx = 2;
-		gbc_btnProcess.gridy = 3;
-		getContentPane().add(btnProcess, gbc_btnProcess);
+		
+		btnBfInput = new JButton("BF Input");
+		btnBfInput.addActionListener(this);
+		GridBagConstraints gbc_btnBfInput = new GridBagConstraints();
+		gbc_btnBfInput.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnBfInput.insets = new Insets(0, 0, 0, 5);
+		gbc_btnBfInput.gridx = 0;
+		gbc_btnBfInput.gridy = 1;
+		panel_1.add(btnBfInput, gbc_btnBfInput);
+		
+		BFInput = new JTextField();
+		GridBagConstraints gbc_BFInput = new GridBagConstraints();
+		gbc_BFInput.fill = GridBagConstraints.HORIZONTAL;
+		gbc_BFInput.gridx = 1;
+		gbc_BFInput.gridy = 1;
+		panel_1.add(BFInput, gbc_BFInput);
+		BFInput.setColumns(10);
 
 		btnCancel = new JButton("Cancel");
 		btnCancel.addActionListener(this);
+		
+				btnProcess = new JButton("Process");
+				btnProcess.addActionListener(this);
+				GridBagConstraints gbc_btnProcess = new GridBagConstraints();
+				gbc_btnProcess.anchor = GridBagConstraints.EAST;
+				gbc_btnProcess.insets = new Insets(0, 0, 0, 5);
+				gbc_btnProcess.gridx = 1;
+				gbc_btnProcess.gridy = 3;
+				getContentPane().add(btnProcess, gbc_btnProcess);
+		
+		btnImport = new JButton("Import");
+		btnImport.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		GridBagConstraints gbc_btnImport = new GridBagConstraints();
+		gbc_btnImport.insets = new Insets(0, 0, 0, 5);
+		gbc_btnImport.gridx = 2;
+		gbc_btnImport.gridy = 3;
+		getContentPane().add(btnImport, gbc_btnImport);
 
 		GridBagConstraints gbc_btnCancel = new GridBagConstraints();
 		gbc_btnCancel.gridx = 3;
@@ -285,6 +318,9 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 	private JTextField customFilterTextField;
 	private JButton btnLoadmat;
 	private JTextField mathPathTextField;
+	private JButton btnBfInput;
+	private JTextField BFInput;
+	private JButton btnImport;
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -296,7 +332,15 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 			customFiter = customFilterTextField.getText();
 //			run();
 			dispose();
-		} else if (e.getSource() == channelComboBox) {
+		} 
+		 else if (e.getSource() == btnImport) {
+				matFilePath = mathPathTextField.getText();
+				BFFIleInputPath = BFInput.getText();
+				customFiter = customFilterTextField.getText();
+//				run();
+			dispose();
+			}
+		 else if (e.getSource() == channelComboBox) {
 			this.channel = channels[channelComboBox.getSelectedIndex()];
 			System.out.println(channel);
 //		} 
@@ -310,7 +354,15 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 		}
 		else if(e.getSource() == btnLoadmat){
 			System.out.println("Open dialog to get file");
-			matFilePath = "";
+			AskFileUser ask = new AskFileUser();
+			matFilePath = ask.path;
+			mathPathTextField.setText(matFilePath);
+			}
+		else if(e.getSource() == btnBfInput){
+			System.out.println("Open dialog to get file");
+			AskFileUser ask = new AskFileUser();
+			BFFIleInputPath = ask.path;
+			BFInput.setText(BFFIleInputPath);
 			}
 		}
 
