@@ -1,5 +1,8 @@
 package operations.microbeTrackerIO;
 
+import ij.gui.PolygonRoi;
+import ij.gui.Roi;
+
 import java.util.ArrayList;
 
 public class Mesh {
@@ -11,6 +14,7 @@ public class Mesh {
 	private double area;
 	private double volume;
 	private ArrayList<Point> outline = new ArrayList<Point>();
+	private Roi roi;
 	
 	
 	public ArrayList<Point> getOutline(){
@@ -87,6 +91,26 @@ public class Mesh {
 
 	public double getVolume() {
 		return volume;
+	}
+	
+	private static Roi getRoi(Mesh m) {
+		
+		ArrayList<Point> points = m.getOutline();
+		
+		int height = points.size();
+		int[] x = new int[height];
+		int[] y = new int[height];
+		
+		for (int i=0; i<points.size(); i++) {
+			x[i] = (int)Math.round(points.get(i).x);
+			y[i] = (int)Math.round(points.get(i).y);
+		}
+		
+		Roi roi = new PolygonRoi(x, y, height, null, Roi.FREEROI);
+		if (roi.getLength()/x.length>10)
+			roi = new PolygonRoi(x, y, height, null, Roi.POLYGON); // use "handles"
+		
+		return roi;
 	}
 	
 }
