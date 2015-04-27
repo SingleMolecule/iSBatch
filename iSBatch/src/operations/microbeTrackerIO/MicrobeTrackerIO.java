@@ -7,17 +7,24 @@ package operations.microbeTrackerIO;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.ImageStack;
+import ij.gui.PolygonRoi;
+import ij.gui.Roi;
 import ij.plugin.ZProjector;
+import ij.plugin.frame.RoiManager;
 import ij.process.ImageProcessor;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Map;
 
 import filters.NodeFilterInterface;
 
 import java.util.HashMap;
+
+import com.jmatio.io.MatFileReader;
+import com.jmatio.types.MLArray;
 
 import model.DatabaseModel;
 import model.Experiment;
@@ -35,12 +42,12 @@ import operations.Operation;
  */
 public class MicrobeTrackerIO implements Operation {
 	MicrobeTrackerIOGui dialog;
-	
+	private RoiManager manager;
 	private String channel;
 	private String method;
 	private String customFilter;
 	private String matFilePath;
-
+	private String BFFIleInputPath;
 	private Object imageType;
 	
 	
@@ -76,6 +83,7 @@ public class MicrobeTrackerIO implements Operation {
 		this.customFilter = dialog.getCustomFilter();
 		this.matFilePath = dialog.getMatFilePath();
 		this.imageType = dialog.getImageType();
+		this.BFFIleInputPath = dialog.BFFIleInputPath;
 		return true;
 	}
 
@@ -119,14 +127,65 @@ public class MicrobeTrackerIO implements Operation {
 
 	private void importFiles(Node node, File matFile) {
 		//Get the MicrobeTracker Reference Image
-		
-			ImagePlus referenceImp = getReference(node);
+			ImagePlus referenceImp = IJ.openImage(BFFIleInputPath);
+			manager = new RoiManager(true);
+			ArrayList<Node> nodes = node.getDescendents(filter(channel)); 
+			// By the way that it acts, get the parent is the folder to Save the ROI. The list of nodes
+			// contain imagePaths based on the filter tag. Sure this has to be improved later, but provides enough control now
+			//TODO: Improve the search for file and provide bug free record keep.
+			//This is a temporary solution.
 		try {
-			ArrayList<Mesh> meshes = MatlabMeshes.getMeshes(matFile.getAbsolutePath());
+			ArrayList<Mesh> meshes = MatlabMeshes.getMeshes(matFile);
 			
+			MatFileReader reader = new MatFileReader(matFile);
+			Map<String, MLArray> content = reader.getContent();
+			for (Mesh m : meshes){
+				int stackPosition = m.getSlice();
+				referenceImp.setSlice(stackPosition); // Set slice in the stack
+				Roi roi = getRoi(m);
+				roi.setPosition(stackPosition);
+				//Local Manager - This holds just for that FieldOF View
+				//Check if FoVManager exist
+				String FOVName = referenceImp.getStack().getShortSliceLabel(stackPosition);
+
+				//This manager contain ALL
+				manager.addRoi(roi);
+				
+				System.out.println("Done importing");
+				
+				//LocalManager 
+				// Go to the node with that name
+				//Find the node.
+				for(Node nodePointer : nodes){
+					if(nodePointer.getName() == FOVName){
+						//Then I found the folder for that file and ROI.
+						//Create a local Manager
+						RoiManager local = new RoiManager(true);
+						//check if there is a file with ROIs already 
+						
+						//TODO
+						
+						// if yes : Load the ZIP
+						
+						//TODO
+						// Then ADD ROI
+						
+						//TODO
+						//THEN save
+						//TODO
+						
+						
+						
+						
+						
+						
+					}
+				}
+				
+				
+			}
 			
-			
-			
+			manager.runCommand("Save", node.getOutputFolder() + File.separator + node.getClass().toString()+".zip");
 			
 			
 			
@@ -157,23 +216,35 @@ public class MicrobeTrackerIO implements Operation {
 
 	private void getStackForMT(Node node) {
 		System.out.println("--- Start ----");
-		
 		ArrayList<Node> nodes = node.getDescendents(filter(channel));
 		
-		ImagePlus imp = getStack(nodes);
-		System.out.println("Filters to use");
-		System.out.println("Channel: "+ channel);
-		System.out.println("Type: " + imageType);
-		System.out.println("Custom filter" + customFilter);
-		
-		
-		//save Image
-		System.out.println(node.getOutputFolder()+ File.separator + imp.getTitle());
-		IJ.saveAsTiff(imp, node.getOutputFolder()+ File.separator + imp.getTitle());
-		
-		//Now, finally get this list of files and create a combined
+
+			//Create BF File
+			
+			ImagePlus imp = getStack(nodes);
+			System.out.println("Filters to use");
+			System.out.println("Channel: "+ channel);
+			System.out.println("Type: " + imageType);
+			System.out.println("Custom filter" + customFilter);
+			
+			//save Image
+			System.out.println(node.getOutputFolder()+ File.separator + imp.getTitle());
+			IJ.saveAsTiff(imp, node.getOutputFolder()+ File.separator + imp.getTitle());
+			
+			//Now, finally get this list of files and create a combined
+	
 		System.out.println("--- End ----");
 		
+	}
+
+	private int getStackSize(ArrayList<Mesh> meshes) {
+		int size = 0;
+		for(Mesh mesh : meshes){
+			if(mesh.getSlice()>=size){
+				size= mesh.getCell();
+			}
+		}
+		return size;
 	}
 
 	private NodeFilterInterface filter(String channel) {
@@ -334,6 +405,24 @@ public class MicrobeTrackerIO implements Operation {
 	public HashMap<String, String> getParameters() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	private static Roi getRoi(Mesh m) {
+		ArrayList<Point> points = m.getOutline();
+		
+		int height = points.size();
+		int[] x = new int[height];
+		int[] y = new int[height];
+		
+		for (int i=0; i<points.size(); i++) {
+			x[i] = (int)Math.round(points.get(i).x);
+			y[i] = (int)Math.round(points.get(i).y);
+		}
+		
+		Roi roi = new PolygonRoi(x, y, height, null, Roi.FREEROI);
+		if (roi.getLength()/x.length>10)
+			roi = new PolygonRoi(x, y, height, null, Roi.POLYGON); // use "handles"
+		
+		return roi;
 	}
 
 }
