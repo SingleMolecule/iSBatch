@@ -5,7 +5,6 @@ import gui.AskFileUser;
 import ij.IJ;
 
 import javax.swing.JDialog;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
 import java.awt.GridBagLayout;
@@ -31,7 +30,6 @@ import javax.swing.DefaultComboBoxModel;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.io.File;
 
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
