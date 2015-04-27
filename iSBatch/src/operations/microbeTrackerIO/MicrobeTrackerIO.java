@@ -130,66 +130,38 @@ public class MicrobeTrackerIO implements Operation {
 			ImagePlus referenceImp = IJ.openImage(BFFIleInputPath);
 			manager = new RoiManager(true);
 			ArrayList<Node> nodes = node.getDescendents(filter(channel)); 
+			
 			// By the way that it acts, get the parent is the folder to Save the ROI. The list of nodes
 			// contain imagePaths based on the filter tag. Sure this has to be improved later, but provides enough control now
 			//TODO: Improve the search for file and provide bug free record keep.
 			//This is a temporary solution.
+			
+				
 		try {
 			ArrayList<Mesh> meshes = MatlabMeshes.getMeshes(matFile);
 			
 			MatFileReader reader = new MatFileReader(matFile);
-			Map<String, MLArray> content = reader.getContent();
-			for (Mesh m : meshes){
-				int stackPosition = m.getSlice();
-				referenceImp.setSlice(stackPosition); // Set slice in the stack
-				Roi roi = getRoi(m);
-				roi.setPosition(stackPosition);
-				//Local Manager - This holds just for that FieldOF View
-				//Check if FoVManager exist
-				String FOVName = referenceImp.getStack().getShortSliceLabel(stackPosition);
-
-				//This manager contain ALL
-				manager.addRoi(roi);
-				
-				System.out.println("Done importing");
-				
-				//LocalManager 
-				// Go to the node with that name
-				//Find the node.
-				for(Node nodePointer : nodes){
-					if(nodePointer.getName() == FOVName){
-						//Then I found the folder for that file and ROI.
-						//Create a local Manager
-						RoiManager local = new RoiManager(true);
-						//check if there is a file with ROIs already 
-						
-						//TODO
-						
-						// if yes : Load the ZIP
-						
-						//TODO
-						// Then ADD ROI
-						
-						//TODO
-						//THEN save
-						//TODO
-						
-						
-						
-						
-						
-						
+			Map<String, MLArray> content = reader.getContent();	
+			
+			for (int i=1; i<=referenceImp.getStackSize(); i++){
+				RoiManager currentManager = new RoiManager(true);
+				System.out.println(i);
+				for (Mesh m : meshes){
+					int stackPosition = m.getSlice();
+					referenceImp.setSlice(stackPosition); // Set slice in the stack
+					
+					if(i==stackPosition){
+						System.out.println("match");
+						Roi roi = getRoi(m);
+						roi.setPosition(stackPosition);
+						currentManager.addRoi(roi);	
 					}
+					
 				}
 				
-				
+				currentManager.runCommand("Save", node.getOutputFolder() + File.separator + "cellRoi.zip");
+			
 			}
-			
-			manager.runCommand("Save", node.getOutputFolder() + File.separator + node.getClass().toString()+".zip");
-			
-			
-			
-			
 			
 			
 			
