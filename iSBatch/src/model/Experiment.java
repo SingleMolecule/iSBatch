@@ -50,5 +50,17 @@ public class Experiment extends Node {
 		}
 		return total;
 	}
+
+	@SuppressWarnings("null")
+	@Override
+	public ArrayList<FieldOfView> getFieldOfView() {
+		ArrayList<FieldOfView> fovs = null;
+		for(Sample sample : getSamples()){
+			fovs.addAll(sample.getFieldOfView());
+		}
+		
+		
+		return fovs;
+	}
 	
 }

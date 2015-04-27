@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 import ij.IJ;
 import ij.ImagePlus;
 import model.types.Channel;
@@ -57,5 +59,11 @@ public class FileNode extends Node {
 
 	public ImagePlus getImage() {
 		return IJ.openImage(this.getPath());
+	}
+
+
+	@Override
+	public ArrayList<FieldOfView> getFieldOfView() {
+				return null;
 	}
 }

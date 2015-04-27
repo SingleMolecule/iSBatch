@@ -1,6 +1,7 @@
 package model;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import operations.Operation;
 
@@ -40,6 +41,12 @@ public class Root extends Node {
 	public int getNumberOfFoV() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public ArrayList<FieldOfView> getFieldOfView() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

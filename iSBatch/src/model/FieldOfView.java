@@ -60,6 +60,14 @@ public class FieldOfView extends Node {
 	
 		return null;
 	}
+
+	@SuppressWarnings("null")
+	@Override
+	public ArrayList<FieldOfView> getFieldOfView() {
+		ArrayList<FieldOfView> fovs = null;
+		fovs.add(this);
+		return fovs;
+	}
 	
 	
 	
