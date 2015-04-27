@@ -57,6 +57,8 @@ public class FieldOfView extends Node {
 	public int getNumberOfFoV() {
 		return 1;
 	}
+	
+	
 
 	public String getCellularROIs() {
 		if(cellRoiPath!=null){
@@ -87,6 +89,8 @@ public class FieldOfView extends Node {
 		return null;
 	}
 	
-	
+	public void setCellROIPath(String path){
+		this.cellRoiPath = path;
+	}
 	
 }
