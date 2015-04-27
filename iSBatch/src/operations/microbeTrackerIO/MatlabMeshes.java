@@ -1,5 +1,6 @@
 package operations.microbeTrackerIO;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
@@ -12,6 +13,10 @@ import com.jmatio.types.MLNumericArray;
 import com.jmatio.types.MLStructure;
 
 public class MatlabMeshes {
+	
+	public static ArrayList<Mesh> getMeshes(File file) throws IOException{
+		return getMeshes(file.getAbsolutePath());
+	}
 	
 	public static ArrayList<Mesh> getMeshes(String filename) throws IOException {
 
