@@ -1,5 +1,6 @@
 package model;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import ij.IJ;
@@ -7,10 +8,11 @@ import ij.ImagePlus;
 import model.types.Channel;
 import operations.Operation;
 
-public class FileNode extends Node {
+public class FileNode extends Node implements FileInterface{
 	String channel = null;
 	public static final String type = "File";
 	Channel channel1 = null;
+	private String tag;
 	
 	public FileNode(Node parent) {
 		super(parent, type);
@@ -53,7 +55,6 @@ public class FileNode extends Node {
 
 	@Override
 	public int getNumberOfFoV() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -69,7 +70,30 @@ public class FileNode extends Node {
 
 	@Override
 	public ArrayList<Sample> getSamples() {
-		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public String getTag() {
+		if(tag==null){
+			File f = getFile();
+			if(f.isFile()){
+				String fileName = f.getName();
+				//remove extension
+				
+				fileName= fileName.substring(0, fileName.lastIndexOf('.'));
+				
+				//get Last item after _ This should be the tag itself.
+				//If null, return RAW
+				tag = fileName.substring(fileName.lastIndexOf('_') + 1);
+				
+				//check if the last is not a channel
+				if(tag.equalsIgnoreCase(channel)){
+					tag = "raw";
+				}
+			}
+		}
+		
+		return tag;
 	}
 }
