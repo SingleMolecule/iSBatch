@@ -450,7 +450,6 @@ public class ISBatch implements TreeSelectionListener {
 				new FocusLifetimes(treeModel),
 				new Tracking(treeModel),
 				new LocationMaps(treeModel),
-				new CellOutlines(treeModel),
 				new ChangePoint(treeModel),
 				 };
 	}
