@@ -13,10 +13,10 @@ import model.Node;
 public class NodeToImageStack {
 	ImagePlus imp;
 	
-	public NodeToImageStack(ArrayList<Node> nodes, String channel) {
+	public NodeToImageStack(ArrayList<Node> nodes, String channel, String tag) {
 //		System.out.println(nodes.get(0).getPath());
 		ImagePlus ip = IJ.openImage(nodes.get(0).getPath());
-		String str = "[" +channel +"]MTinput" ;
+		String str = "[" +channel +"]"+tag ;
 		
 		
 		ImagePlus imp2 = IJ.createImage(str, ip.getWidth(), ip.getHeight(), nodes.size(), 16);

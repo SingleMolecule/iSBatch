@@ -440,11 +440,11 @@ public class ISBatch implements TreeSelectionListener {
 				
 				new SetBackGround(treeModel),
 				new FlattenOperation(treeModel),
+				new MicrobeTrackerIO(treeModel),
+				new CellOutlines(treeModel),
 				new FindPeaksOperation(treeModel),
 				new FitPeaksOperation(treeModel),
 				new macros.MacroOperation(),
-				new MicrobeTrackerIO(treeModel),
-				new CellOutlines(treeModel),
 				new CellularConcentration(treeModel),
 				new CellIntensity(treeModel),
 				new FocusLifetimes(treeModel),

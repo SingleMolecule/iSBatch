@@ -147,19 +147,21 @@ public class FlattenOperation implements Operation {
 					
 		}
 		
-		JFileChooser fileChooser = new JFileChooser(node.getProperty("folder"));
-		fileChooser.setDialogTitle("Select Background Image");
-		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-		int option = fileChooser.showOpenDialog(null);
-				
-		if (option == JFileChooser.APPROVE_OPTION) {
+//		JFileChooser fileChooser = new JFileChooser(node.getProperty("folder"));
+//		fileChooser.setDialogTitle("Select Background Image");
+//		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+//		int option = fileChooser.showOpenDialog(null);
+//				
+//		if (option == JFileChooser.APPROVE_OPTION) {
 			
-			backgroundImage = IJ.openImage(fileChooser.getSelectedFile().getPath());
-			
-			return true;
+			backgroundImage = IJ.openImage(node.getBeamProfile(channel));//IJ.openImage(fileChooser.getSelectedFile().getPath());
+		if(backgroundImage == null)	{
+			return false;
 		}
+			
+//		}
 		
-		return false;
+		return true;
 	}
 
 	/* (non-Javadoc)
@@ -279,7 +281,7 @@ public class FlattenOperation implements Operation {
 		File file = new File(path);
 		String filename = file.getName();
 		String filenameWithoutExtension = filename.substring(0, filename.lastIndexOf('.'));
-		File outputFile = new File(fileNode.getOutputFolder(), filenameWithoutExtension + "-flat.tif");
+		File outputFile = new File(fileNode.getOutputFolder(), filenameWithoutExtension + "_flat.tif");
 		
 		LogPanel.log("saving flattened file as " + outputFile);
 		IJ.saveAsTiff(imp, outputFile.getPath());

@@ -138,18 +138,29 @@ public class MicrobeTrackerIO implements Operation {
 		manager = new RoiManager(true);
 		ArrayList<FieldOfView> nodes = node.getFieldOfView();
 
+		
+
 		// By the way that it acts, get the parent is the folder to Save the
 		// ROI. The list of nodes
 		// contain imagePaths based on the filter tag. Sure this has to be
 		// improved later, but provides enough control now
 		// TODO: Improve the search for file and provide bug free record keep.
 		// This is a temporary solution.
-
+		FieldOfView currentFov = null;
 		try {
 			ArrayList<Mesh> meshes = MatlabMeshes.getMeshes(matFile);
 
 			for (int i = 1; i <= referenceImp.getStackSize(); i++) {
+				// get the matching FOV
+				for(Node node1 : nodes){
+					if(node1.getName().equalsIgnoreCase(referenceImp.getStack().getSliceLabel(i))){
+						currentFov = (FieldOfView)node1;
+					}
+				}
+				
 				RoiManager currentManager = new RoiManager(true);
+				
+				
 				for (Mesh m : meshes) {
 					int stackPosition = m.getSlice();
 					referenceImp.setSlice(stackPosition); // Set slice in the
@@ -161,11 +172,15 @@ public class MicrobeTrackerIO implements Operation {
 						currentManager.addRoi(roi);
 					}
 
+					
+					
+					
 				}
 				// Save all Rois in that folder
-				node.setCellROIPath(node.getOutputFolder() + File.separator
+				node.setCellROIPath(currentFov.getOutputFolder() + File.separator
 						+ "cellRoi.zip");
-				currentManager.runCommand("Save", node.getOutputFolder()
+				node.getProperties().put("CellRoi", node.getCellROIPath());
+				currentManager.runCommand("Save", currentFov.getOutputFolder()
 						+ File.separator + "cellRoi.zip");
 
 			}
@@ -187,7 +202,7 @@ public class MicrobeTrackerIO implements Operation {
 		ArrayList<Node> nodes = node.getDescendents(filter(channel));
 
 		// Create BF File
-		NodeToImageStack temp = new NodeToImageStack(nodes, channel);
+		NodeToImageStack temp = new NodeToImageStack(nodes, channel, "MTinput");
 		ImagePlus imp = temp.getImagePlus();
 		System.out.println("Filters to use");
 		System.out.println("Channel: " + channel);

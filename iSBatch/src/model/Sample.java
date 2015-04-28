@@ -23,13 +23,13 @@ public class Sample extends Node {
 	}
 
 	public  ArrayList<FieldOfView> getFieldOfView() {
-		ArrayList<Node> nodes = this.getChildren(new NodeFilter(FieldOfView.type));
+		ArrayList<Node> nodes = this.getChildren();
 		
 		//convert to sample array
 		ArrayList<FieldOfView> fov = new ArrayList<FieldOfView>();
 		for(Node node : nodes){
 			fov.add((FieldOfView) node);
-					}
+			}
 		return fov;
 	}
 

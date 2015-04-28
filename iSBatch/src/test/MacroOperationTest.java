@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Map.Entry;
 
 import gui.CodeTextPane;
@@ -193,6 +194,18 @@ public class MacroOperationTest implements ActionListener, Runnable {
 				public int getNumberOfFoV() {
 					// TODO Auto-generated method stub
 					return 0;
+				}
+
+				@Override
+				public ArrayList<FieldOfView> getFieldOfView() {
+					// TODO Auto-generated method stub
+					return null;
+				}
+
+				@Override
+				public ArrayList<Sample> getSamples() {
+					// TODO Auto-generated method stub
+					return null;
 				}
 			};
 			

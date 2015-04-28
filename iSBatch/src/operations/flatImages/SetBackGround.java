@@ -5,6 +5,7 @@ package operations.flatImages;
 
 import ij.IJ;
 import ij.ImagePlus;
+import ij.plugin.ZProjector;
 import imageOperations.NodeToImageStack;
 
 import java.io.File;
@@ -118,10 +119,15 @@ public class SetBackGround implements Operation {
 					channel, imageTag));
 			// get ImageStack from the ArrayList
 
-			NodeToImageStack temp = new NodeToImageStack(filenodes, channel);
+			NodeToImageStack temp = new NodeToImageStack(filenodes, channel, "BeamProfile");
 
 			ImagePlus imp = temp.getImagePlus();
-
+			
+			//GetProjection
+			ZProjector projector = new ZProjector(imp);
+			projector.setMethod(ZProjector.AVG_METHOD);
+			projector.doProjection();
+			
 			save(node, imp);
 		}
 
@@ -131,9 +137,15 @@ public class SetBackGround implements Operation {
 		// Properly save and keep track of that file now.
 //		System.out.println(node.getOutputFolder());
 //		System.out.println(imp.getTitle());
-		IJ.saveAsTiff(imp,
+		ZProjector projector = new ZProjector(imp);
+		projector.setMethod(ZProjector.AVG_METHOD);
+		projector.doProjection();
+		File folder = new File(node.getOutputFolder());
+		folder.mkdirs();
+		
+		IJ.saveAsTiff(projector.getProjection(),
 				node.getOutputFolder() + File.separator + imp.getTitle());
-		node.getProperties().put("BeamProfile", node.getOutputFolder() + File.separator + imp.getTitle());
+		node.getProperties().put(channel+"_BeamProfile", node.getOutputFolder() + File.separator + imp.getTitle());
 	}
 
 	@Override
