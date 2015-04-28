@@ -8,11 +8,14 @@ import ij.ImagePlus;
 import ij.ImageStack;
 import ij.gui.PolygonRoi;
 import ij.gui.Roi;
+import ij.measure.Measurements;
 import ij.plugin.ZProjector;
 import ij.plugin.frame.RoiManager;
 import ij.process.ImageProcessor;
+import ij.process.ImageStatistics;
 import imageOperations.NodeToImageStack;
 
+import java.awt.Rectangle;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -204,6 +207,7 @@ public class MicrobeTrackerIO implements Operation {
 		// Create BF File
 		NodeToImageStack temp = new NodeToImageStack(nodes, channel, "MTinput");
 		ImagePlus imp = temp.getImagePlus();
+		Stack_Deflicker(imp);
 		System.out.println("Filters to use");
 		System.out.println("Channel: " + channel);
 		System.out.println("Type: " + imageType);
@@ -348,6 +352,73 @@ public class MicrobeTrackerIO implements Operation {
 
 		return roi;
 	}
+	public static void Stack_Deflicker(ImagePlus imp){
+		int Fram=-1;
+		/* Adapted from: Stack_Deflicker.java
+		 * ImageJ plugin to remove flickering from movies by J. S. Pedersen. 
+		 * version 1 2008-12-30 Initial version based on Stack_Normalizer plugin by Joachim Walter
+		 *
+		 * version 2 2010-09-09 Uses ImageJ functions to measure mean and multiply frames in stead of getPixelValue and putPixel
+		 *                      These changes make the plugin about 4 times faster than version 1.
+		*/
+		/** The Stack_Deflicker calculates the average grey value for each frame and normalizes all frames so that they have same average grey level as a specified frame of the stack
+		 * This plugin is very useful to remove flickering in movies caused by frame rates different from the frequency of 50/60Hz AC power used for the light-source that illuminate the scene.
+		 * An input value of -1 corresponds to the brightest frame while an input value of zero corresponds to the faintest frame.
+		 * If a ROI is selected the average frame intensity will be calculated from this region, but the whole scene will be normalized.
+		 */
+
+
+		ImageStack stack = imp.getStack();
+		int size = stack.getSize();
+		ImageProcessor ip = imp.getProcessor();
+		Rectangle roi = ip.getRoi();
+
+		// Find min and max
+
+		double roiAvg[] = new double[size+1];
+		double fMin = Double.MAX_VALUE;
+		double fMax = -Double.MAX_VALUE;
+		int maxF = 1;
+		int minF = 1; 
+						
+		for (int slice=1; slice<=size; slice++) {
+			IJ.showStatus("Calculating: "+slice+"/"+size);
+			IJ.showProgress((double)slice/size);
+			ip = stack.getProcessor(slice);
+		roiAvg[slice]=0;
+		
+		ip.setRoi(roi);
+		ImageStatistics is = ImageStatistics.getStatistics(ip, Measurements.MEAN, imp.getCalibration());
+		
+		roiAvg[slice]=is.mean; 
+		
+		if (roiAvg[slice]>fMax) {
+		maxF= slice ;
+		fMax=roiAvg[slice];
+		}
+		if (roiAvg[slice]<fMin) {
+		minF = slice;
+		fMin=roiAvg[slice];
+		}
+			
+		}
+		if (Fram<0) Fram=maxF;
+		else if (Fram<1) Fram=minF;
+
+		
+		for (int slice=1; slice<=size; slice++) {
+			IJ.showStatus("Normalizing: "+slice+"/"+size);
+			IJ.showProgress((double)slice/size);
+			ip = stack.getProcessor(slice);
+			ip.multiply(roiAvg[Fram]/roiAvg[slice]);  
+		}
+		
+		
+		
+		
+		
+	}
+
 
 }
 // Test
