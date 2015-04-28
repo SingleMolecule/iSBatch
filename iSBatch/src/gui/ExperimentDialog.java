@@ -1,5 +1,7 @@
 package gui;
 
+import iSBatch.iSBatchPreferences;
+
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Frame;
@@ -109,7 +111,7 @@ public class ExperimentDialog extends JDialog implements ActionListener {
 
 			JFileChooser fileChooser = new JFileChooser();
 			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-	
+			fileChooser.setCurrentDirectory(iSBatchPreferences.lastSelectedPath);
 			if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 				folderTextField.setText(fileChooser.getSelectedFile().getPath());
 				nameTextField.setText(fileChooser.getSelectedFile().getName());
