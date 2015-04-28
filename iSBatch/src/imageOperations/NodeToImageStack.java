@@ -14,7 +14,7 @@ public class NodeToImageStack {
 	ImagePlus imp;
 	
 	public NodeToImageStack(ArrayList<Node> nodes, String channel) {
-		System.out.println(nodes.get(0).getPath());
+//		System.out.println(nodes.get(0).getPath());
 		ImagePlus ip = IJ.openImage(nodes.get(0).getPath());
 		String str = "[" +channel +"]MTinput" ;
 		
@@ -33,6 +33,7 @@ public class NodeToImageStack {
 			stack.setProcessor(ip2, i+1);			
 			stack.setSliceLabel(ImageName, i+1);
 		}
+		this.imp = imp2;
 	}
 
 	public ImagePlus getImagePlus() {
