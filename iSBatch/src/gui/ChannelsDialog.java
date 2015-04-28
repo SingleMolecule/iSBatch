@@ -38,6 +38,8 @@ public class ChannelsDialog extends JDialog implements ActionListener {
 	private JButton okButton = new JButton("Ok");
 	private JButton cancelButton = new JButton("Cancel");
 
+	private boolean canceled = false;
+	
 	public ChannelsDialog(JFrame parent, File folder) {
 		super(parent, "Database", true);
 
@@ -166,7 +168,7 @@ public class ChannelsDialog extends JDialog implements ActionListener {
 
 			dispose();
 		} else if (e.getSource() == cancelButton) {
-
+			canceled = true;
 			dispose();
 		} else if (e.getSource() == searchButton) {
 
@@ -187,6 +189,10 @@ public class ChannelsDialog extends JDialog implements ActionListener {
 
 		}
 
+	}
+	
+	public boolean isCanceled() {
+		return canceled;
 	}
 
 }
