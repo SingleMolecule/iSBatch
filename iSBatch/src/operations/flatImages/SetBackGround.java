@@ -110,22 +110,16 @@ public class SetBackGround implements Operation {
 			// TODO: add gui to ask file from the user
 
 			ImagePlus imp = null;
-			save(node,imp);
-			
-			
+			save(node, imp);
+
 		} else if (method.equalsIgnoreCase("Average Images")) {
 
 			ArrayList<Node> filenodes = node.getDescendents(new GenericFilter(
 					channel, imageTag));
 			// get ImageStack from the ArrayList
-			
-			
-			
-			
+
 			NodeToImageStack temp = new NodeToImageStack(filenodes, channel);
-			
-			
-			
+
 			ImagePlus imp = temp.getImagePlus();
 
 			save(node, imp);
@@ -134,9 +128,12 @@ public class SetBackGround implements Operation {
 	}
 
 	private void save(Node node, ImagePlus imp) {
-		//Properly save and keep track of that file now.
-		IJ.saveAsTiff(imp, node.getOutputFolder() + File.separator + imp.getTitle());
-		
+		// Properly save and keep track of that file now.
+//		System.out.println(node.getOutputFolder());
+//		System.out.println(imp.getTitle());
+		IJ.saveAsTiff(imp,
+				node.getOutputFolder() + File.separator + imp.getTitle());
+		node.getProperties().put("BeamProfile", node.getOutputFolder() + File.separator + imp.getTitle());
 	}
 
 	@Override
