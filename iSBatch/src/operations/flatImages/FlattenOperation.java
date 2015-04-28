@@ -39,7 +39,7 @@ public class FlattenOperation implements Operation {
 	/** The channels. */
 	private String[] channels = new String[] {
 			"acquisition",
-			"bf",
+			"Bright Field",
 			"red",
 			"green",
 			"blue",
