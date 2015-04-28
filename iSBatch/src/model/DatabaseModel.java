@@ -1,5 +1,7 @@
 package model;
 
+import iSBatch.iSBatchPreferences;
+
 import java.util.ArrayList;
 
 import javax.swing.event.TreeModelEvent;
