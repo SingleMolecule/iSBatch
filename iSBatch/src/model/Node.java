@@ -15,8 +15,7 @@ public abstract class Node implements OperationElement, ContextElement, NodeInte
 	private HashMap<String, String> properties = new HashMap<String, String>();
 	private ArrayList<Node> children = new ArrayList<Node>();
 	private String cellROIPath;
-	
-	
+	private File file;
 	
 	
 	
@@ -172,6 +171,19 @@ public abstract class Node implements OperationElement, ContextElement, NodeInte
 	public String getChannel(){
 		return this.getProperty("channel");
 	}
+
+	public File getFile(){
+		if(file == null){
+			this.file = new File(getPath());
+		}
+		return file;
+	}
+	public String getTag() {
+		System.out.println("does not apply to this level.");
+		return null;
+	}
+
+
 
 	
 	

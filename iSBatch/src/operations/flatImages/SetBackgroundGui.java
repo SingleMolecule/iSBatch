@@ -22,6 +22,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 import model.Node;
+
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
@@ -213,7 +214,7 @@ public class SetBackgroundGui extends JDialog implements ActionListener {
 		// // get array of Images
 		// ArrayList<Node> images = node.getDescendents(imageFileNodeFilter);
 
-		System.out.println("Run this baby");
+		
 		System.out.println("Parameters will be: " + channel + " , " + imagePath
 				+ " , " + method);
 	}
@@ -266,5 +267,9 @@ public class SetBackgroundGui extends JDialog implements ActionListener {
 
 	public String getImagePath() {
 		return imagePath;
+	}
+
+	public String getImageTag() {
+		return imageType;
 	}
 }

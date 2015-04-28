@@ -78,7 +78,8 @@ public class FileNode extends Node implements FileInterface{
 		if(tag==null){
 			File f = getFile();
 			if(f.isFile()){
-				String fileName = f.getName();
+				
+				String fileName = getChannel();//f.getName();
 				//remove extension
 				
 				fileName= fileName.substring(0, fileName.lastIndexOf('.'));
@@ -87,8 +88,10 @@ public class FileNode extends Node implements FileInterface{
 				//If null, return RAW
 				tag = fileName.substring(fileName.lastIndexOf('_') + 1);
 				
-				//check if the last is not a channel
-				if(tag.equalsIgnoreCase(channel)){
+				//check if the taglast is not a channel
+				System.out.println("Check tag");
+				System.out.println(tag + " " + f.getName());
+				if(tag.equalsIgnoreCase(getChannel()) || tag.equalsIgnoreCase(f.getName())){
 					tag = "raw";
 				}
 			}

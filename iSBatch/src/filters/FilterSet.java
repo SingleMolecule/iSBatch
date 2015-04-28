@@ -3,9 +3,6 @@
  */
 package filters;
 
-import java.util.ArrayList;
-
-import model.FileNode;
 import model.Node;
 
 // TODO: Auto-generated Javadoc
