@@ -33,6 +33,9 @@ public class iSBatchPreferences  {
 		Double.parseDouble(ERROR_SIGMA_X),
 		Double.parseDouble(ERROR_SIGMA_Y),};
 	
+	
+	public static String lastSelectedPath;
+	
 //	public String INNER_RADIUS = "1";
 //	public String INNER_RADIUS = "1";
 //	public String INNER_RADIUS = "1";
