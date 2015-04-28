@@ -1,5 +1,6 @@
 package operations.peakFinder;
 
+import iSBatch.iSBatchPreferences;
 import ij.IJ;
 
 import javax.swing.JDialog;
@@ -27,7 +28,6 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 import model.Node;
-import model.iSBatchPreferences;
 
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;

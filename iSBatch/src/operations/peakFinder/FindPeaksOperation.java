@@ -4,6 +4,7 @@
 package operations.peakFinder;
 
 
+import iSBatch.iSBatchPreferences;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.ImageStack;
@@ -34,7 +35,6 @@ import model.Node;
 import model.OperationNode;
 import model.Root;
 import model.Sample;
-import model.iSBatchPreferences;
 
 /**
  * @author VictorCaldas
