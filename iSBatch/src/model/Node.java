@@ -171,6 +171,11 @@ public abstract class Node implements OperationElement, ContextElement, NodeInte
 	public String getChannel(){
 		return this.getProperty("channel");
 	}
+	
+	public String getBeamProfile(String channel){
+		return this.getProperty(channel+"_BeamProfile");
+	}
+	
 
 	public File getFile(){
 		if(file == null){

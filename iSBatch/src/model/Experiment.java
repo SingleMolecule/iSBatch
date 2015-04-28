@@ -63,4 +63,8 @@ public class Experiment extends Node {
 		return fovs;
 	}
 	
+	public String getBeamProfile(String channel){
+		return this.getProperty(channel+"_BeamProfile");
+	}
+	
 }

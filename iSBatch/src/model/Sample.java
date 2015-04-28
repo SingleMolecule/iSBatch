@@ -46,6 +46,12 @@ public class Sample extends Node {
 		return samples;
 	}
 
+	public String getBeamProfile(String channel){
+		if(this.getProperty(channel+"_BeamProfile")== null){
+			return this.getParent().getBeamProfile(channel);
+		}
+		return this.getProperty(channel+"_BeamProfile");
+	}
 
 
 	

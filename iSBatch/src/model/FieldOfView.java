@@ -93,4 +93,12 @@ public class FieldOfView extends Node {
 		this.cellRoiPath = path;
 	}
 	
+	public String getBeamProfile(String channel){
+		if(this.getProperty(channel+"_BeamProfile")== null){
+			return this.getParent().getBeamProfile(channel);
+		}
+		return this.getProperty(channel+"_BeamProfile");
+	}
+
+	
 }
