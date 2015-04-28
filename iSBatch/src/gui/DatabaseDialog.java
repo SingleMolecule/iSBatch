@@ -1,5 +1,7 @@
 package gui;
 
+import iSBatch.iSBatchPreferences;
+
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Frame;
@@ -84,7 +86,9 @@ public class DatabaseDialog extends JDialog implements ActionListener {
 			
 			try {
 				String path = pathTextField.getText();
+				
 				File file = new File(path);
+				iSBatchPreferences.lastSelectedPath = file.getAbsolutePath();
 				database = new Database(file);
 			}
 			catch (SqlJetException exception) {
