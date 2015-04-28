@@ -575,9 +575,11 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 
 			if (isSelected) {
 				this.useCells = true;
+				iSBatchPreferences.insideCell = true;
 
 			} else {
 				this.useCells = false;
+				iSBatchPreferences.insideCell = false;
 			}
 		}
 	}
