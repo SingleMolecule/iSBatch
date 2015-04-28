@@ -75,28 +75,26 @@ public class FileNode extends Node implements FileInterface{
 
 	@Override
 	public String getTag() {
-		if(tag==null){
-			File f = getFile();
-			if(f.isFile()){
-				
-				String fileName = getChannel();//f.getName();
-				//remove extension
-				
-				fileName= fileName.substring(0, fileName.lastIndexOf('.'));
-				
-				//get Last item after _ This should be the tag itself.
-				//If null, return RAW
-				tag = fileName.substring(fileName.lastIndexOf('_') + 1);
-				
-				//check if the taglast is not a channel
-				System.out.println("Check tag");
-				System.out.println(tag + " " + f.getName());
-				if(tag.equalsIgnoreCase(getChannel()) || tag.equalsIgnoreCase(f.getName())){
-					tag = "raw";
-				}
-			}
-		}
+		if(countOccurrences(getName(), '_')==0)
+			this.tag = "Raw";
 		
+		else {
+			//TODO
+			this.tag = "Raw";
+		}
 		return tag;
 	}
+	public static int countOccurrences(String haystack, char needle)
+	{
+	    int count = 0;
+	    for (int i=0; i < haystack.length(); i++)
+	    {
+	        if (haystack.charAt(i) == needle)
+	        {
+	             count++;
+	        }
+	    }
+	    return count;
+	}
+	
 }
