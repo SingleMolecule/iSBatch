@@ -82,7 +82,7 @@ public class ISBatch implements TreeSelectionListener {
 	/** The Newt menu item. */
 	private JMenuItem NewtMenuItem;
 
-	/** The Loat menu item. */
+	/** The Load menu item. */
 	private JMenuItem LoadMenuItem;
 
 	/** The save menu item. */
