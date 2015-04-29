@@ -451,6 +451,7 @@ public class ISBatch implements TreeSelectionListener {
 				new Tracking(treeModel),
 				new LocationMaps(treeModel),
 				new ChangePoint(treeModel),
+				new DebugProperties(treeModel),
 				 };
 	}
 	

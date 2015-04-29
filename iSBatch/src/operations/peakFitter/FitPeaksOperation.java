@@ -84,7 +84,7 @@ public class FitPeaksOperation implements Operation {
 	public boolean setup(Node node) {
 		// String to parse:
 
-		dialog = new PeakFitterGui(node, preferences);
+		dialog = new PeakFitterGui(node);
 		if (dialog.isCanceled())
 			return false;
 		this.channel = dialog.getChannel();
@@ -117,7 +117,6 @@ public class FitPeaksOperation implements Operation {
 	}
 
 	private void run(Node node) {
-		System.out.println("I'm running!");
 		FileNode fnode = (FileNode) node;
 		imp = fnode.getImage();
 		stack = imp.getImageStack();
@@ -139,6 +138,11 @@ public class FitPeaksOperation implements Operation {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
+		
+		
+		
 
 	}
 
@@ -161,7 +165,7 @@ public class FitPeaksOperation implements Operation {
 		if (iSBatchPreferences.insideCell) {
 			// Load cellular ROIS from ZIP into manager
 
-			addRoisToManager(fieldOfView.getCellularROIs());
+			addRoisToManager(fieldOfView.getCellROIPath());
 		}
 
 		for (FileNode fileNode : fieldOfView.getImages(channel)) {
@@ -280,20 +284,13 @@ public class FitPeaksOperation implements Operation {
 						ip2.getWidth(), iSBatchPreferences.INNER_RADIUS,
 						iSBatchPreferences.OUTER_RADIUS);
 
-				// PeakFinder peakFinder = new PeakFinder(true, filter, 0,
-				// PeakFinderThreshold, 3);
-				// PeakFinder peakFinder2 = new PeakFinder(true, filter1, 0,
-				// PeakFinderThreshold, 3);
 				PeakFinder finder = new PeakFinder(
 						iSBatchPreferences.useDiscoidalFiltering, filter1,
 						iSBatchPreferences.SNR_THRESHOLD,
 						iSBatchPreferences.INTENSITY_THRESHOLD,
 						iSBatchPreferences.DISTANCE_BETWEEN_PEAKS);
 
-				// ArrayList<Point> positions = peakFinder.findPeaks(ip);
 				ArrayList<Point> positions = finder.findPeaks(ip2);
-				// System.out.println("--" + positions.size() + "," +
-				// positions2.size());
 
 				for (int j = 0; j < positions.size(); j++) {
 					// System.out.println("here");
@@ -425,20 +422,13 @@ public class FitPeaksOperation implements Operation {
 						ip2.getWidth(), iSBatchPreferences.INNER_RADIUS,
 						iSBatchPreferences.OUTER_RADIUS);
 
-				// PeakFinder peakFinder = new PeakFinder(true, filter, 0,
-				// PeakFinderThreshold, 3);
-				// PeakFinder peakFinder2 = new PeakFinder(true, filter1, 0,
-				// PeakFinderThreshold, 3);
 				PeakFinder finder = new PeakFinder(
 						iSBatchPreferences.useDiscoidalFiltering, filter1,
 						iSBatchPreferences.SNR_THRESHOLD,
 						iSBatchPreferences.INTENSITY_THRESHOLD,
 						iSBatchPreferences.DISTANCE_BETWEEN_PEAKS);
 
-				// ArrayList<Point> positions = peakFinder.findPeaks(ip);
 				ArrayList<Point> positions = finder.findPeaks(ip2);
-				// System.out.println("--" + positions.size() + "," +
-				// positions2.size());
 
 				for (int j = 0; j < positions.size(); j++) {
 					// System.out.println("here");

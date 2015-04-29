@@ -158,7 +158,12 @@ public class MicrobeTrackerIO implements Operation {
 				for(Node node1 : nodes){
 					if(node1.getName().equalsIgnoreCase(referenceImp.getStack().getSliceLabel(i))){
 						currentFov = (FieldOfView)node1;
+						continue;
 					}
+					
+					
+					
+					
 				}
 				
 				RoiManager currentManager = new RoiManager(true);
@@ -180,9 +185,13 @@ public class MicrobeTrackerIO implements Operation {
 					
 				}
 				// Save all Rois in that folder
-				node.setCellROIPath(currentFov.getOutputFolder() + File.separator
+				System.out.println(referenceImp.getStack().getSliceLabel(i));
+				System.out.println(currentFov.getName());
+				System.out.println(currentFov.getOutputFolder() + File.separator
 						+ "cellRoi.zip");
-				node.getProperties().put("CellRoi", node.getCellROIPath());
+				currentFov.setCellROIPath(currentFov.getOutputFolder() + File.separator
+						+ "cellRoi.zip");
+				currentFov.getProperties().put("CellRoi", currentFov.getCellROIPath());
 				currentManager.runCommand("Save", currentFov.getOutputFolder()
 						+ File.separator + "cellRoi.zip");
 

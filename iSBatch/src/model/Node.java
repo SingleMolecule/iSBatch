@@ -14,18 +14,17 @@ public abstract class Node implements OperationElement, ContextElement, NodeInte
 	private String type;
 	private HashMap<String, String> properties = new HashMap<String, String>();
 	private ArrayList<Node> children = new ArrayList<Node>();
-	private String cellROIPath;
 	private File file;
 	
 	
 	
 	
 	public String getCellROIPath() {
-		return cellROIPath;
+		return this.getProperty("CellRoi");
 	}
 
 	public void setCellROIPath(String cellROIPath) {
-		this.cellROIPath = cellROIPath;
+		this.getProperties().put("CellRoi", cellROIPath);
 	}
 
 	public Node(Node parent, String type) {

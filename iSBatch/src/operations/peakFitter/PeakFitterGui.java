@@ -70,7 +70,6 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 	private JLabel lblPx;
 	private JLabel lblPx_1;
 	private JCheckBox chckbxInsideCells;
-	private iSBatchPreferences preferences;
 
 	// butons
 
@@ -187,10 +186,9 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 	 * Filter variables
 	 */
 
-	public PeakFitterGui(Node node, iSBatchPreferences preferences) {
+	public PeakFitterGui(Node node) {
 		setModal(true);
 		setTitle("Fit Peaks");
-		this.preferences = preferences;
 		frame = new JFrame("Find Peaks");
 		this.node = node;
 
@@ -327,13 +325,13 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 		panel.add(useDiscoidalFilterChk, gbc_useDiscoidalFilterChk);
 
 		innerRadiusTxt = new JFormattedTextField(decimalFormat);
-		innerRadiusTxt.setText(preferences.INNER_RADIUS);
+		innerRadiusTxt.setText(iSBatchPreferences.INNER_RADIUS);
 		innerRadiusTxt.setColumns(15);
 		innerRadiusTxt.addActionListener(this);
 		addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				preferences.INNER_RADIUS = innerRadiusTxt.getText();
+				iSBatchPreferences.INNER_RADIUS = innerRadiusTxt.getText();
 			}
 		});
 
@@ -347,7 +345,7 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 		innerRadiusTxt.setColumns(10);
 
 		outerRadiusTxt = new JTextField();
-		outerRadiusTxt.setText(preferences.OUTER_RADIUS);
+		outerRadiusTxt.setText(iSBatchPreferences.OUTER_RADIUS);
 		GridBagConstraints gbc_outerRadiusTxt = new GridBagConstraints();
 		gbc_outerRadiusTxt.insets = new Insets(0, 0, 5, 0);
 		gbc_outerRadiusTxt.anchor = GridBagConstraints.WEST;
@@ -359,7 +357,7 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 			@Override
 			public void keyTyped(KeyEvent e) {
 
-				preferences.OUTER_RADIUS = outerRadiusTxt.getText();
+				iSBatchPreferences.OUTER_RADIUS = outerRadiusTxt.getText();
 			}
 		});
 
@@ -415,7 +413,7 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 		PeakFinderParameters.add(lblThreshold, gbc_lblThreshold);
 
 		SNRTxt = new JTextField();
-		SNRTxt.setText(preferences.SNR_THRESHOLD);
+		SNRTxt.setText(iSBatchPreferences.SNR_THRESHOLD);
 		GridBagConstraints gbc_SNRTxt = new GridBagConstraints();
 		gbc_SNRTxt.insets = new Insets(0, 0, 5, 5);
 		gbc_SNRTxt.fill = GridBagConstraints.HORIZONTAL;
@@ -427,7 +425,7 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 		SNRTxt.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				preferences.SNR_THRESHOLD = SNRTxt.getText();
+				iSBatchPreferences.SNR_THRESHOLD = SNRTxt.getText();
 			}
 		});
 
@@ -448,7 +446,7 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 		PeakFinderParameters.add(lblThreshold_1, gbc_lblThreshold_1);
 
 		IntensityTxt = new JTextField();
-		IntensityTxt.setText(preferences.INTENSITY_THRESHOLD);
+		IntensityTxt.setText(iSBatchPreferences.INTENSITY_THRESHOLD);
 		GridBagConstraints gbc_IntensityTxt = new GridBagConstraints();
 		gbc_IntensityTxt.insets = new Insets(0, 0, 5, 5);
 		gbc_IntensityTxt.fill = GridBagConstraints.HORIZONTAL;
@@ -459,7 +457,7 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 		IntensityTxt.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				preferences.INTENSITY_THRESHOLD = IntensityTxt.getText();
+				iSBatchPreferences.INTENSITY_THRESHOLD = IntensityTxt.getText();
 			}
 		});
 
@@ -480,7 +478,7 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 		PeakFinderParameters.add(lblSelectionRadius, gbc_lblSelectionRadius);
 
 		SelectionRadiusTxt = new JTextField();
-		SelectionRadiusTxt.setText(preferences.SELECTION_RADIUS);
+		SelectionRadiusTxt.setText(iSBatchPreferences.SELECTION_RADIUS);
 		GridBagConstraints gbc_SelectionRadiusTxt = new GridBagConstraints();
 		gbc_SelectionRadiusTxt.insets = new Insets(0, 0, 5, 5);
 		gbc_SelectionRadiusTxt.fill = GridBagConstraints.HORIZONTAL;
@@ -492,7 +490,7 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 		SelectionRadiusTxt.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				preferences.SELECTION_RADIUS = SelectionRadiusTxt.getText();
+				iSBatchPreferences.SELECTION_RADIUS = SelectionRadiusTxt.getText();
 			}
 		});
 		lblPx = new JLabel("px");
@@ -512,7 +510,7 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 		PeakFinderParameters.add(lblMinDistance, gbc_lblMinDistance);
 
 		minDistanceTxt = new JTextField();
-		minDistanceTxt.setText(preferences.DISTANCE_BETWEEN_PEAKS);
+		minDistanceTxt.setText(iSBatchPreferences.DISTANCE_BETWEEN_PEAKS);
 		GridBagConstraints gbc_minDistanceTxt = new GridBagConstraints();
 		gbc_minDistanceTxt.insets = new Insets(0, 0, 0, 5);
 		gbc_minDistanceTxt.fill = GridBagConstraints.HORIZONTAL;
@@ -524,7 +522,7 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 		minDistanceTxt.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				preferences.DISTANCE_BETWEEN_PEAKS = minDistanceTxt.getText();
+				iSBatchPreferences.DISTANCE_BETWEEN_PEAKS = minDistanceTxt.getText();
 			}
 		});
 
@@ -562,7 +560,7 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 		PeakFitterPanel.add(lblNewLabel, gbc_lblNewLabel);
 		
 		ErrorBaselinetextField = new JTextField();
-		ErrorBaselinetextField.setText(preferences.ERROR_BASELINE);
+		ErrorBaselinetextField.setText(iSBatchPreferences.ERROR_BASELINE);
 		GridBagConstraints gbc_ErrorBaselinetextField = new GridBagConstraints();
 		gbc_ErrorBaselinetextField.insets = new Insets(0, 0, 5, 5);
 		gbc_ErrorBaselinetextField.fill = GridBagConstraints.HORIZONTAL;
@@ -573,7 +571,7 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 		ErrorBaselinetextField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				preferences.ERROR_BASELINE = ErrorBaselinetextField.getText();
+				iSBatchPreferences.ERROR_BASELINE = ErrorBaselinetextField.getText();
 			}
 		});
 		
@@ -586,7 +584,7 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 		PeakFitterPanel.add(lblNewLabel_6, gbc_lblNewLabel_6);
 		
 		errorHeightextField = new JTextField();
-		errorHeightextField.setText(preferences.ERROR_HEIGHT);
+		errorHeightextField.setText(iSBatchPreferences.ERROR_HEIGHT);
 		GridBagConstraints gbc_errorHeightextField = new GridBagConstraints();
 		gbc_errorHeightextField.insets = new Insets(0, 0, 5, 5);
 		gbc_errorHeightextField.fill = GridBagConstraints.HORIZONTAL;
@@ -597,7 +595,7 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 		errorHeightextField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				preferences.ERROR_HEIGHT = errorHeightextField.getText();
+				iSBatchPreferences.ERROR_HEIGHT = errorHeightextField.getText();
 			}
 		});
 		
@@ -609,7 +607,7 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 		PeakFitterPanel.add(lblNewLabel_1, gbc_lblNewLabel_1);
 		
 		errorXtextField = new JTextField();
-		errorXtextField.setText(preferences.ERROR_X);
+		errorXtextField.setText(iSBatchPreferences.ERROR_X);
 		GridBagConstraints gbc_errorXtextField = new GridBagConstraints();
 		gbc_errorXtextField.insets = new Insets(0, 0, 5, 5);
 		gbc_errorXtextField.fill = GridBagConstraints.HORIZONTAL;
@@ -620,7 +618,7 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 		errorXtextField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				preferences.ERROR_X = errorXtextField.getText();
+				iSBatchPreferences.ERROR_X = errorXtextField.getText();
 			}
 		});
 		
@@ -632,11 +630,11 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 		PeakFitterPanel.add(lblNewLabel_2, gbc_lblNewLabel_2);
 		
 		errorYtextField = new JTextField();
-		errorYtextField.setText(preferences.ERROR_X);
+		errorYtextField.setText(iSBatchPreferences.ERROR_X);
 		errorYtextField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				preferences.ERROR_X = errorYtextField.getText();
+				iSBatchPreferences.ERROR_X = errorYtextField.getText();
 			}
 		});
 		GridBagConstraints gbc_errorYtextField = new GridBagConstraints();
@@ -649,7 +647,7 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 		errorYtextField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				preferences.ERROR_SIGMA_Y = errorYtextField.getText();
+				iSBatchPreferences.ERROR_SIGMA_Y = errorYtextField.getText();
 			}
 		});
 		
@@ -661,11 +659,11 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 		PeakFitterPanel.add(lblNewLabel_3, gbc_lblNewLabel_3);
 		
 		errorSigmaXtextField = new JTextField();
-		errorSigmaXtextField.setText(preferences.ERROR_SIGMA_X);
+		errorSigmaXtextField.setText(iSBatchPreferences.ERROR_SIGMA_X);
 		errorSigmaXtextField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				preferences.ERROR_SIGMA_X =  errorSigmaXtextField.getText();
+				iSBatchPreferences.ERROR_SIGMA_X =  errorSigmaXtextField.getText();
 			}
 		});
 		GridBagConstraints gbc_errorSigmaXtextField = new GridBagConstraints();
@@ -684,11 +682,11 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 		PeakFitterPanel.add(lblNewLabel_4, gbc_lblNewLabel_4);
 		
 		errorSigmaYtextField = new JTextField();
-		errorSigmaYtextField.setText(preferences.ERROR_SIGMA_Y);
+		errorSigmaYtextField.setText(iSBatchPreferences.ERROR_SIGMA_Y);
 		errorSigmaYtextField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				preferences.ERROR_SIGMA_Y = errorSigmaYtextField.getText();
+				iSBatchPreferences.ERROR_SIGMA_Y = errorSigmaYtextField.getText();
 			}
 		});
 		GridBagConstraints gbc_errorSigmaYtextField = new GridBagConstraints();
@@ -707,11 +705,11 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 		PeakFitterPanel.add(lblNewLabel_5, gbc_lblNewLabel_5);
 		
 		ZscaletxtField = new JTextField();
-		ZscaletxtField.setText(preferences.Z_SCALE);
+		ZscaletxtField.setText(iSBatchPreferences.Z_SCALE);
 		ZscaletxtField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				preferences.Z_SCALE = ZscaletxtField.getText();
+				iSBatchPreferences.Z_SCALE = ZscaletxtField.getText();
 			}
 		});
 	
@@ -779,20 +777,20 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 			canceled = true;
 			dispose();
 		} else if (e.getSource() == btnProcess) {
-			preferences.INNER_RADIUS = innerRadiusTxt.getText();
-			preferences.DISTANCE_BETWEEN_PEAKS = minDistanceTxt.getText();
-			preferences.SELECTION_RADIUS = SelectionRadiusTxt.getText();
-			preferences.INTENSITY_THRESHOLD = IntensityTxt.getText();
-			preferences.SNR_THRESHOLD = SNRTxt.getText();
-			preferences.OUTER_RADIUS = outerRadiusTxt.getText();
-			preferences.Z_SCALE = ZscaletxtField.getText();
+			iSBatchPreferences.INNER_RADIUS = innerRadiusTxt.getText();
+			iSBatchPreferences.DISTANCE_BETWEEN_PEAKS = minDistanceTxt.getText();
+			iSBatchPreferences.SELECTION_RADIUS = SelectionRadiusTxt.getText();
+			iSBatchPreferences.INTENSITY_THRESHOLD = IntensityTxt.getText();
+			iSBatchPreferences.SNR_THRESHOLD = SNRTxt.getText();
+			iSBatchPreferences.OUTER_RADIUS = outerRadiusTxt.getText();
+			iSBatchPreferences.Z_SCALE = ZscaletxtField.getText();
 			
-			preferences.ERROR_SIGMA_Y = errorSigmaYtextField.getText();
-			preferences.ERROR_SIGMA_X = errorSigmaXtextField.getText();
-			preferences.ERROR_X = errorYtextField.getText();
-			preferences.ERROR_Y = errorXtextField.getText();
-			preferences.ERROR_HEIGHT = errorHeightextField.getText();
-			preferences.ERROR_BASELINE = ErrorBaselinetextField.getText();
+			iSBatchPreferences.ERROR_SIGMA_Y = errorSigmaYtextField.getText();
+			iSBatchPreferences.ERROR_SIGMA_X = errorSigmaXtextField.getText();
+			iSBatchPreferences.ERROR_X = errorYtextField.getText();
+			iSBatchPreferences.ERROR_Y = errorXtextField.getText();
+			iSBatchPreferences.ERROR_HEIGHT = errorHeightextField.getText();
+			iSBatchPreferences.ERROR_BASELINE = ErrorBaselinetextField.getText();
 			run();
 			dispose();
 		} else if (e.getSource() == channelComboBox) {
@@ -810,22 +808,22 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 
 			if (isSelected) {
 				this.useDiscoidal = true;
-				preferences.useDiscoidalFiltering = true;
+				iSBatchPreferences.useDiscoidalFiltering = true;
 
 			} else {
 				this.useDiscoidal = false;
-				preferences.useDiscoidalFiltering = true;
+				iSBatchPreferences.useDiscoidalFiltering = true;
 			}
 		} else if (e.getSource() == chckbxInsideCells) {
 			boolean isSelected = chckbxInsideCells.isSelected();
 
 			if (isSelected) {
 				this.useCells = true;
-				preferences.insideCell = true;
+				iSBatchPreferences.insideCell = true;
 
 			} else {
 				this.useCells = false;
-				preferences.insideCell = false;
+				iSBatchPreferences.insideCell = false;
 			}
 		}
 	}

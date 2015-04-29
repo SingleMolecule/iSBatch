@@ -60,20 +60,20 @@ public class FieldOfView extends Node {
 	
 	
 
-	public String getCellularROIs() {
-		if(cellRoiPath!=null){
-			return cellRoiPath;
-		}
-		else {
-			//Try to find it on the disk
-			File temp = new File(this.getPath()+ File.separator + "cellRois.zip");
-			if(temp.exists()){
-				this.cellRoiPath = temp.getAbsolutePath();
-				return cellRoiPath;
-			}
-		}
-		return null;
-	}
+//	public String getCellularROIs() {
+//		if(cellRoiPath!=null){
+//			return cellRoiPath;
+//		}
+//		else {
+//			//Try to find it on the disk
+//			File temp = new File(this.getPath()+ File.separator + "cellRois.zip");
+//			if(temp.exists()){
+//				this.cellRoiPath = temp.getAbsolutePath();
+//				return cellRoiPath;
+//			}
+//		}
+//		return null;
+//	}
 
 	@SuppressWarnings("null")
 	@Override
@@ -89,9 +89,6 @@ public class FieldOfView extends Node {
 		return null;
 	}
 	
-	public void setCellROIPath(String path){
-		this.cellRoiPath = path;
-	}
 	
 	public String getBeamProfile(String channel){
 		if(this.getProperty(channel+"_BeamProfile")== null){
