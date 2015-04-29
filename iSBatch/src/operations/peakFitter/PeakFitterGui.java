@@ -26,6 +26,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 import model.Node;
@@ -872,6 +875,27 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 
 	public double getSelectionRadius() {
 		return parseDouble(selectionRadius);
+	}
+
+	public String getCustomSearch() {
+		return this.customSearch;
+	}
+
+	public ArrayList<String> getTags() {
+		ArrayList<String> container = new ArrayList<String>();
+		if (imageType != null) {
+			
+			List<String> list = Arrays.asList(imageType.split("\\s*,\\s*"));
+			for (String foo : list) {
+				container.add(foo);
+			}
+			return container;
+		}
+
+		else
+			
+			return container;
+
 	}
 
 }
