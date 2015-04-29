@@ -70,7 +70,7 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 	private JLabel lblPx;
 	private JLabel lblPx_1;
 	private JCheckBox chckbxInsideCells;
-
+	private String customSearch;
 	// butons
 
 	private JButton btnCancel;
@@ -118,7 +118,6 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 	// ComboBox
 	private JComboBox<String> fileTypeComboBox;
 	private JComboBox<String> channelComboBox;
-	private JComboBox<String> methodComboBox;
 
 	private static final long serialVersionUID = 1L;
 	private String[] channels = new String[] {
@@ -178,6 +177,7 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 		return parseDouble(errorHeight);
 	}
 	protected String errorBaseline;
+	private JTextField customSearchTxtField;
 	public double getErrorBaseline(){
 		return parseDouble(errorBaseline);
 	}
@@ -257,26 +257,31 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 		gbc_fileTypeComboBox.gridy = 1;
 		getContentPane().add(fileTypeComboBox, gbc_fileTypeComboBox);
 
-		JLabel lblMethod = new JLabel("Select method: ");
+		JLabel lblMethod = new JLabel("Custom Search: ");
 		GridBagConstraints gbc_lblMethod = new GridBagConstraints();
 		gbc_lblMethod.anchor = GridBagConstraints.EAST;
 		gbc_lblMethod.insets = new Insets(0, 0, 5, 5);
 		gbc_lblMethod.gridx = 0;
 		gbc_lblMethod.gridy = 2;
 		getContentPane().add(lblMethod, gbc_lblMethod);
+		
+		customSearchTxtField = new JTextField();
+		GridBagConstraints gbc_customSearchTxtField = new GridBagConstraints();
+		gbc_customSearchTxtField.gridwidth = 2;
+		gbc_customSearchTxtField.insets = new Insets(0, 0, 5, 5);
+		gbc_customSearchTxtField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_customSearchTxtField.gridx = 1;
+		gbc_customSearchTxtField.gridy = 2;
+		getContentPane().add(customSearchTxtField, gbc_customSearchTxtField);
+		customSearchTxtField.setColumns(10);
+		customSearchTxtField.addKeyListener(new KeyAdapter() {
+			
 
-		methodComboBox = new JComboBox<String>();
-		methodComboBox.addActionListener(this);
-
-		methodComboBox.setModel(new DefaultComboBoxModel<String>(methods));
-
-		GridBagConstraints gbc_methodComboBox = new GridBagConstraints();
-		gbc_methodComboBox.gridwidth = 2;
-		gbc_methodComboBox.insets = new Insets(0, 0, 5, 0);
-		gbc_methodComboBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_methodComboBox.gridx = 1;
-		gbc_methodComboBox.gridy = 2;
-		getContentPane().add(methodComboBox, gbc_methodComboBox);
+			@Override
+			public void keyTyped(KeyEvent e) {
+				customSearch = customSearchTxtField.getText();
+			}
+		});
 
 		DiscoidalFilterPanel = new JPanel();
 		DiscoidalFilterPanel.setBorder(new TitledBorder(null,
@@ -541,7 +546,7 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 		GridBagConstraints gbc_PeakFitterPanel = new GridBagConstraints();
 		gbc_PeakFitterPanel.fill = GridBagConstraints.BOTH;
 		gbc_PeakFitterPanel.gridwidth = 3;
-		gbc_PeakFitterPanel.insets = new Insets(0, 0, 5, 5);
+		gbc_PeakFitterPanel.insets = new Insets(0, 0, 5, 0);
 		gbc_PeakFitterPanel.gridx = 0;
 		gbc_PeakFitterPanel.gridy = 5;
 		getContentPane().add(PeakFitterPanel, gbc_PeakFitterPanel);
@@ -791,17 +796,30 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 			iSBatchPreferences.ERROR_Y = errorXtextField.getText();
 			iSBatchPreferences.ERROR_HEIGHT = errorHeightextField.getText();
 			iSBatchPreferences.ERROR_BASELINE = ErrorBaselinetextField.getText();
+			
+			customSearch = customSearchTxtField.getText();
 			run();
 			dispose();
 		} else if (e.getSource() == channelComboBox) {
-			this.channel = channels[channelComboBox.getSelectedIndex()];
+			String foo = (String) channelComboBox.getSelectedItem();
+			if (foo.equalsIgnoreCase("[Select Channel]")) {
+				this.channel = "All";
+			} else {
+				this.channel = channels[channelComboBox.getSelectedIndex()];
+			}
+			
 //			System.out.println(channel);
-		} else if (e.getSource() == methodComboBox) {
-			this.method = (String) methodComboBox.getSelectedItem();
-//			System.out.println(method);
+//		} else if (e.getSource() == methodComboBox) {
+//			this.method = (String) methodComboBox.getSelectedItem();
+////			System.out.println(method);
 		} else if (e.getSource() == fileTypeComboBox) {
-			this.imageType = (String) fileTypeComboBox.getSelectedItem();
-//			System.out.println(imageType);
+			String foo = (String) fileTypeComboBox.getSelectedItem();
+			if (foo.equalsIgnoreCase("[File Type]")) {
+				
+				this.imageType = null;
+			} else {
+				this.imageType = (String) fileTypeComboBox.getSelectedItem();
+			}
 
 		} else if (e.getSource() == useDiscoidalFilterChk) {
 			boolean isSelected = useDiscoidalFilterChk.isSelected();
