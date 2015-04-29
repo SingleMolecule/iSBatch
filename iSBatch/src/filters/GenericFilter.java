@@ -1,64 +1,93 @@
 package filters;
 
+import java.util.ArrayList;
 
+import model.FileNode;
 import model.Node;
 
-public class GenericFilter implements NodeFilterInterface{
+public class GenericFilter implements NodeFilterInterface {
 
 	private String channel;
-	private String customTag;
-	
-	public GenericFilter(String channel, String customTag) {
+	private ArrayList<String> tags;
+	private String extension;
+	private String custom;
+
+	public GenericFilter(String channel, String custom) {
 		this.channel = channel;
-		
-		this.customTag =customTag;
-		if(customTag==null){
-			this.customTag="raw";
+
+		this.custom = custom;
+		if (custom == null) {
+			this.custom = "raw";
 		}
 	}
-	
+
+	public GenericFilter(String channel, ArrayList<String> tags,
+			String extension, String custom) {
+		this.channel = channel;
+		this.tags = tags;
+		this.extension = extension;
+		this.custom = custom;
+
+	}
+
 	@Override
 	public boolean accept(Node node) {
 		
-		String ch = node.getChannel();
-		String name = node.getTag();
-//		System.out.println(ch + " to match with " + channel + "|| " + name + " to match with " + customTag);
-		// Filter by channel
-		if (!channel.equalsIgnoreCase("All")) {
-			// check the channel of this file
-			if (ch == null || !ch.equalsIgnoreCase(channel))
-				return false;
-		}
-		
-		// Filter by imageTag (e.g. raw, flat, etc or CUSTOM
-		// File names follow the pattern CHANNEL_TYPE.FILE_EXTENSION
-		// For now, getting the term between the dot ant the last _ should suffice.
-		
-		//Split the name in several parts
-		String[] array = name.split("_|\\."); 
-		for(int i=0; i<array.length; i++){
-			boolean checkType = false;
-			if(customTag.equalsIgnoreCase(array[i])){
-				checkType = true;
-			}
-			if(checkType ==false){
-				return false;
-			}
-		}
-		
-		
-		
-		String path = node.getProperty("path");
-
-		// check if this file is an image
-		if (path == null
-				|| !(path.toLowerCase().endsWith(".tiff") || path
-						.toLowerCase().endsWith(".tif"))){
+		// Just for files
+		if (!node.getType().equalsIgnoreCase(FileNode.type)) {
 			return false;
 		}
+		
+		boolean isChannel = false;
+		if(channel==null || channel.equalsIgnoreCase("All")|| node.getChannel().equalsIgnoreCase(channel)){
+			isChannel = true;
+		}
+
+
+		boolean matchTag = false;
+		if(tags.isEmpty() || tags==null || tags.size()==0){
+			matchTag = true;
+			System.out.println("tags null");
+		}
+		else{
+			FileNode fNode = (FileNode) node;
+			for (String currentTag : fNode.getTag()) {
+				if (tags.contains(currentTag)) {
+					matchTag = true;
+				}
+			}
+		}
+
+		
+//		if (!(extension == null)) {
+//			// Check Extension
+//
+//			String path = node.getProperty("path");
+//
+//			// check if this file is an image
+//			if (path == null
+//					|| !(path.toLowerCase().endsWith(".tiff") || path
+//							.toLowerCase().endsWith(".tif"))) {
+//				return false;
+//			}
+//
+//		}
+
+		boolean containsCustomTag = false;
+		if(custom==null || custom.equalsIgnoreCase("")){
+			containsCustomTag = true;
+		}
+		if(!(custom == null)) {
+			if(node.getName().contains(custom)){
+				 containsCustomTag = true;
 			
-		return true;
+			}
+		}
+		System.out.println(isChannel +"|"+matchTag+ "|" + containsCustomTag);
+		if (isChannel && matchTag && containsCustomTag) {
+			return true;
+		}
+	
+		return false;
 	};
 };
-	
-	
