@@ -1,6 +1,13 @@
-package pluginsIJ;
+package plugins_ij;
+
+
+import java.io.FileInputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import ij.IJ;
+import ij.ImagePlus;
+import ij.measure.ResultsTable;
 import ij.plugin.PlugIn;
 
 import java.io.BufferedReader;
@@ -9,202 +16,136 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.LineNumberReader;
+import java.io.OutputStream;
+
 
 
 public class Copy_files_IJ implements PlugIn{
 		static String logpath;
 		
+		
 		public static void main(String[] args) {
 			new Copy_files_IJ().run("");
-			System.out.println("Copy_files_IJ");
+			IJ.log("All files copied");
 		}
+		
 		public void run(String arg0){
 			
 		//Get file
-		String csvFilename =  IJ.getFilePath("Provide the input.CSV");
+		String csvFilename =  IJ.getFilePath("Provide ControlFile.CSV");
 			if (csvFilename==null) return;	
-			
-		//String csvFilename = "H:\\TestOutput\\20140506_InputFile_Fast.csv";
-		File tempFile = new File(csvFilename);
+		long startTime = System.currentTimeMillis();	
 		
-		logpath = tempFile.getParent() + File.separator+"ControlFile.csv";
+		
 		try {
-			new FileOutputStream(logpath, true).close();
-		} catch (FileNotFoundException e6) {
+			CopyAllFiles(csvFilename);
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e6.printStackTrace();
-		} catch (IOException e6) {
+			e.printStackTrace();
+		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
-			e6.printStackTrace();
+			e.printStackTrace();
 		}
 		
 		
-		long startTime = System.currentTimeMillis();
-    	LineNumberReader reader = null;
-		try {
-			reader = new LineNumberReader(new FileReader(csvFilename));
-		} catch (FileNotFoundException e6) {
-			// TODO Auto-generated catch block
-			e6.printStackTrace();
-		}
-    	int nLines = 0;
-		try {	
-			nLines = countLines(reader);
-		} catch (IOException e6) {
-			// TODO Auto-generated catch block
-			e6.printStackTrace();
-		}
-    	try {
-			reader = new LineNumberReader(new FileReader(csvFilename));
-		} catch (FileNotFoundException e6) {
-			// TODO Auto-generated catch block
-			e6.printStackTrace();
-		}
-    	print(nLines);
-    	
-    	
-    	
-    	
-    	reader.setLineNumber(0);
-    	
-    	
-    	//Store the headers in a array
-    	reader.setLineNumber(0);
-    	String[] Headers = null;
-		try {
-			Headers = splitCSVLine(reader.readLine());
-		} catch (IOException e5) {
-			// TODO Auto-generated catch block
-			e5.printStackTrace();
-		}
-  
-    	
-    	//Get index for Source Directory
-    	
-    	int SourceCol = getCol("LoadFromPath", Headers);
-    	int DestCol = getCol("SaveToPath", Headers);
-    	int indexCol = getCol("Index",Headers);
-    	int ChannelCol = getCol("Channel", Headers);
-    	int FolderCol = getCol("FolderIndex", Headers);
-    	try {
-			WriteArray(getHeaders(), logpath);
-		} catch (IOException e4) {
-			// TODO Auto-generated catch block
-			e4.printStackTrace();
-		}
-    	
-    	
-        for(int i=1; i<nLines; i++){
-    		reader.setLineNumber(i);
-	       	String currentLine = null;
-			try {
-				currentLine = reader.readLine();
-			} catch (IOException e3) {
-				// TODO Auto-generated catch block
-				e3.printStackTrace();
-			}
-	       	String[] items = currentLine.split(",");
-	       	print(i + " Move from: " + items[SourceCol]);
-	       	print("to ------> " + items[DestCol]);
-	       	CopyFile(items[SourceCol],items[DestCol]);
-	      /**
-	       	try {
-				AppendLogLine(items[indexCol], logpath);
-			} catch (IOException e2) {
-				// TODO Auto-generated catch block
-				e2.printStackTrace();
-			}
-	       	try {
-				//AppendLogLine(items[DestCol], logpath);
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-	       	try {
-				//AppendLogLine(items[ChannelCol].substring(0, items[ChannelCol].lastIndexOf('.')), logpath);
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-	       	try {
-				NewLogLine(items[FolderCol], logpath);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-	      */
-	             	
-	       	
-	       	
-        }  
-    	
-    	long endTime   = System.currentTimeMillis();
+		long endTime   = System.currentTimeMillis();
 		long totalTime = (endTime - startTime);
 		System.out.println("Done in "+ totalTime +" ms.");	
 		IJ.showMessage("Done Copying Files");
 		java.awt.Toolkit.getDefaultToolkit().beep(); 
-    }
+	       	
+        }  
+    	
+    	
+    
 		
 		
 		
 		
-		private static int getCol(String string, String[] headers) {
-			int col = 0;
-			for(int i=0; i<headers.length; i++){
+		private void CopyAllFiles(String csvFilename) throws IOException, NoSuchAlgorithmException {
+			ResultsTable table = ResultsTable.open(csvFilename);
+			
+			int size = table.getCounter();
+			for(int i=0; i<size; i++){
+				String source = table.getStringValue("OriginaFile", i);
+				String destination = table.getStringValue("WorkingFile", i);
+				print(i+1 + " Move from: " + source + " to ------> " + destination);
+				//print("to ------> " + destination);
+					//imp =  new ImagePlus(source);
+					//IJ.save(imp, destination);
+					CopyFile(source,destination);
+					StringBuffer sb1 = CheckSum(source);
+					StringBuffer sb2 = CheckSum( destination);
+					//CheckSum(source);
+					//check SHA1
+					writeChecksum(sb1, sb2, table,i);
+					
+					
+					
+			}
+			table.saveAs(csvFilename);
+			
+			
+		}
+		private void writeChecksum(StringBuffer sb1, StringBuffer sb2, ResultsTable table, int row) {
+			if (sb1.toString().equals(sb2.toString())){
 				
-				if( headers[i].equalsIgnoreCase(string)){
-					col = i;
-				}
+				System.out.println("Checksum Match!" + sb1.toString());
+				//table.addValue("CheckSum", "Safe");
+				table.setValue("Checksum", row ,  sb1.toString());
+				//table.addValue("CheckSum", sb1.toString());
+				//table.incrementCounter();
+			}
+			else {
+				
+			//	System.out.println("Checksum Match! Image may be damaged!"+ " : " + t);
+				//i = i-1;
+				//table.addValue("CheckSum", "Damaged");
+				table.setValue("Checksum", row ,  "Damaged");
+				//table.incrementCounter();
 			}
 			
-			return col;
 		}
 
-		private static String[] splitCSVLine(String string) {
-			String[] parts = string.split(",");
-			return parts;
-		}
+		public StringBuffer  CheckSum (String source) throws NoSuchAlgorithmException, IOException{
+			    //MessageDigest md = MessageDigest.getInstance("MD5");
+			    // Change MD5 to SHA1 to get SHA checksum
+			    MessageDigest md = MessageDigest.getInstance("SHA1");
+			 
+			    FileInputStream fis = new FileInputStream(source);
+			    byte[] dataBytes = new byte[4096];
+			    int nread = 0; 
+			 
+			    while ((nread = fis.read(dataBytes)) != -1) {
+			      md.update(dataBytes, 0, nread);
+			    };
+			 
+			    byte[] mdbytes = md.digest();
+			 
+			    //convert the byte to hex format
+			    StringBuffer sb = new StringBuffer("");
+			    for (int i = 0; i < mdbytes.length; i++) {
+			    	sb.append(Integer.toString((mdbytes[i] & 0xff) + 0x100, 16).substring(1));
+			    }
+			    
+			    
+			  //  System.out.println("Checksum");
+			 
+			  //  System.out.println(sb.toString() + " " + source);
+			   
+			//    System.out.println("------------------");
+			    fis.close();
+			    
+			    return sb;
+			    
+			 }
+			
 
-		private static void WriteArray(String[] headers, String logpath2) throws IOException {
-			for (int i=0; i<headers.length; i++){
-				if(i==headers.length-1){
-					NewLogLine(headers[i], logpath2);
-					}
-				
-				else{
-					AppendLogLine(headers[i], logpath2);
-				}
-				
-				}
-				
-				
-			}
-		private static String[] getHeaders() {
-			String[] Headers = new String[9];
-			
-			
-				Headers[0]="Index";
-				Headers[1]="Input";
-				Headers[2]="Channel";
-				Headers[3]="Trimm";
-				Headers[4]="OffSet_Removed";
-				Headers[5]="BG_BP_Corrected";
-				Headers[6]="Proccess_1";
-				Headers[7]="Proccess_2";
-				Headers[8]="FolderIndex";
 		
-
-
-
-
-
-			return Headers;
-		}
 		public static void NewLogLine( String string, String logpath) throws IOException{
 			BufferedWriter output;
 			output = new BufferedWriter(new FileWriter(logpath, true));
@@ -246,10 +187,49 @@ public class Copy_files_IJ implements PlugIn{
 		            reader.close();
 		    }
 		}
+		
+		public static void CopyFile2(String source, String destination){
+		
+		   		 
+		   	InputStream inStream = null;
+			OutputStream outStream = null;
+		 
+		    	try{
+		 
+		    	    File afile =new File(source);
+		    	    File bfile =new File(destination);
+		 
+		    	    inStream = new FileInputStream(afile);
+		    	    outStream = new FileOutputStream(bfile);
+		 
+		    	    byte[] buffer = new byte[1024];
+		 
+		    	    int length;
+		    	    //copy the file content in bytes 
+		    	    while ((length = inStream.read(buffer)) > 0){
+		 
+		    	    	outStream.write(buffer, 0, length);
+		 
+		    	    }
+		 
+		    	    inStream.close();
+		    	    outStream.close();
+		 
+		    	    System.out.println("File is copied successful!");
+		 
+		    	}catch(IOException e){
+		    		e.printStackTrace();
+		    	}
+		    }
+		
 		private static void CopyFile(String Origin, String Destination) {
 			
 			File file = new File(Origin);
 			File saveFileat = new File(Destination);
+			
+			if(!saveFileat.exists() && !saveFileat.isDirectory()){
+				
+			
 			
 			try{
 				 
@@ -267,7 +247,7 @@ public class Copy_files_IJ implements PlugIn{
 	 
 	    	    }
 			
-			
+	    	    	
 	    	    inStream.close();
 	    	    outStream.close();
 	 	    	    			
@@ -275,7 +255,9 @@ public class Copy_files_IJ implements PlugIn{
 					e.printStackTrace();
 			
 					
-			}	
+				}	
+			}
+			
 		}
 		public static void print(String string){
 			System.out.println(string);
@@ -286,7 +268,8 @@ public class Copy_files_IJ implements PlugIn{
 
 
 
+}
 
 	
 		
-}	
+	

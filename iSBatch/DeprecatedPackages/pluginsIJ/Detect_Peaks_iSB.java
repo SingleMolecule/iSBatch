@@ -215,13 +215,11 @@ public class Detect_Peaks_iSB implements PlugIn {
 					PeakFinder peakFinder2 = new PeakFinder(true, filter1, 0, PeakFinderThreshold, 3);
 								
 					
-					//ArrayList<Point> positions = peakFinder.findPeaks(ip);						
 					ArrayList<Point> positions = peakFinder2.findPeaks(ip2);
 					//System.out.println("--" + positions.size() + "," + positions2.size());
 					
 						
 					for (int j = 0; j < positions.size(); j++) {
-					//	System.out.println("here");
 						// fit peak
 						
 						double[] parameters= new double[6];
