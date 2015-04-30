@@ -1,6 +1,7 @@
 package macros;
 
 import ij.IJ;
+import ij.WindowManager;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -68,7 +69,8 @@ public class MacroOperation implements Operation {
 			macro = templateMacro.replaceAll("%user_macro%", macro);
 
 			IJ.runMacro(macro, getArgument(node));
-
+			WindowManager.closeAllWindows();
+			
 			System.out.println("DEBUG : " + getArgument(node));
 
 		} catch (IOException e) {
