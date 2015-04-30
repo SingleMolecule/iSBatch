@@ -1,7 +1,13 @@
 package model;
 
+import java.util.ArrayList;
+
 public interface FileInterface {
 //	String tag= null;
 	
-	public String getTag();
+	public ArrayList<String> getTag();
+	
+	
+	
+	
 }

@@ -182,9 +182,24 @@ public abstract class Node implements OperationElement, ContextElement, NodeInte
 		}
 		return file;
 	}
-	public String getTag() {
+	public ArrayList<String> getTag() {
 		System.out.println("does not apply to this level.");
 		return null;
+	}
+
+	public String getExperimentName() {
+
+		return this.getParent().getExperimentName();
+	}
+
+	public String getSampleName() {
+		
+		return this.getParent().getSampleName();
+	}
+
+	public String getFieldOfViewName() {
+		
+		return this.getParent().getFieldOfViewName();
 	}
 
 

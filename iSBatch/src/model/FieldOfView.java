@@ -97,5 +97,16 @@ public class FieldOfView extends Node {
 		return this.getProperty(channel+"_BeamProfile");
 	}
 
+	public String getExperimentName(){
+		return this.getParent().getParent().getName();
+	}
+	public String getSampleName(){
+		return this.getParent().getName();
+	}
+	
+	public String getFieldOfViewName(){
+		return this.getName();
+	}
+	
 	
 }

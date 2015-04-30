@@ -66,5 +66,15 @@ public class Experiment extends Node {
 	public String getBeamProfile(String channel) {
 		return this.getProperty(channel + "_BeamProfile");
 	}
+	
+	public String getExperimentName(){
+		return this.getName();
+	}
+	
+	
+	
+	
+	
+	
 
 }

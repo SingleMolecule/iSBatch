@@ -53,6 +53,12 @@ public class Sample extends Node {
 		return this.getProperty(channel+"_BeamProfile");
 	}
 
+	public String getExperimentName(){
+		return this.getParent().getName();
+	}
 
+	public String getSampleName(){
+		return this.getName();
+	}
 	
 }

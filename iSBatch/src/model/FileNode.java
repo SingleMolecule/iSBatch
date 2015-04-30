@@ -1,6 +1,5 @@
 package model;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import ij.IJ;
@@ -12,11 +11,33 @@ public class FileNode extends Node implements FileInterface{
 	String channel = null;
 	public static final String type = "File";
 	Channel channel1 = null;
-	private String tag;
+	private ArrayList<String> tag = new ArrayList<String>();
+	private String extension;
+	
+	
+	
+	
+	
 	
 	public FileNode(Node parent) {
 		super(parent, type);
 	}
+
+	public void addTag(String tag){
+		this.tag.add(tag);
+		
+	}
+	
+	public void setExtension(String extention){
+		this.extension = extention;
+	}
+	
+	public String getExtension(){
+		return extension;
+	}
+
+	
+	
 
 	@Override
 	public void accept(Operation operation) {
@@ -73,16 +94,18 @@ public class FileNode extends Node implements FileInterface{
 		return null;
 	}
 
-	@Override
-	public String getTag() {
-		if(countOccurrences(getName(), '_')==0)
-			this.tag = "Raw";
+	public ArrayList<String> getTag() {
 		
-		else {
-			//TODO
-			this.tag = "Raw";
+		if(this.tag.isEmpty()){
+			this.tag = new ArrayList<String>();
+			this.tag.add("Raw");
 		}
-		return tag;
+		if(this.getName().contains("flat")){
+			this.tag.add("Flat");
+		}
+		//check if there are underscores
+
+		return this.tag;
 	}
 	public static int countOccurrences(String haystack, char needle)
 	{
@@ -96,5 +119,15 @@ public class FileNode extends Node implements FileInterface{
 	    }
 	    return count;
 	}
+	
+	
+	public String getCellROIPath() {
+		if(this.getParent().getType() == FieldOfView.type){
+			return this.getParent().getProperty("CellRoi");
+		}
+		return null;
+	}
+
+	
 	
 }
