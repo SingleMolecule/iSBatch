@@ -35,8 +35,8 @@ public class Database {
 			createTablesFromFile();
 //			createTables();
 
-		} else
-			System.out.println("Database exist!");
+		}
+		
 		database = SqlJetDb.open(file, true);
 
 	}
