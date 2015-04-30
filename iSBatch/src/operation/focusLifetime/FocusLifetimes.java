@@ -99,9 +99,14 @@ public class FocusLifetimes implements Operation {
 			
 			detectedPeaks.runCommand("Save",currentNode.getOutputFolder() + File.separator
 						+ "Pre.zip");
-			
-			
-			if (!node.getCellROIPath().isEmpty()) {
+			System.out.println(currentNode.getParentFolder()+ File.separator + "cellRoi.zip");
+			File roisFile = new File(currentNode.getOutputFolder()+ File.separator + "cellRoi.zip");
+			if ( roisFile.exists()){
+				System.out.println("Roi Found");
+				currentNode.getParent().setCellROIPath(roisFile.getAbsolutePath());
+			}
+			if (!currentNode.getCellROIPath().isEmpty()) {
+				System.out.println(currentNode.getCellROIPath());
 				RoiManager cellRoiManager = new RoiManager(true);
 				cellRoiManager.runCommand("Open", currentNode.getCellROIPath());
 
