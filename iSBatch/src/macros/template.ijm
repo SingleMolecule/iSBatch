@@ -137,25 +137,29 @@ function escape(str) {
 }
 
 
-/*
-function escape(str) {
-	str = replace(str, " +", "\n");
-	str = replace(str, "\\\(", "(");
-	str = replace(str, "\\\)", ")");
-	str = replace(str, "\\\\=", "=");
-	str = replace(str, "\\\\", "\\\\\\\\");
-	
-	
-	return str;
-}
-*/
-
 children = getChildren(getArgument());
 root = children[0];
 children = getChildren(root);
 getProperties(root);
 
+// if node is a file node then we open the file (only if it is a tif file)
+
+title = "";
+
+if (List.get("type") == "File") {
+
+	path = List.get("path");
+	test = toLowerCase(path);
+	
+	if (endsWith(test, ".tif") || endsWith(test, ".tiff")) {
+		open(path);
+		title = getTitle;
+	}
+}
 
 %user_macro%
 
+close(title);
+
 return outputFiles;
+
