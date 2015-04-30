@@ -193,7 +193,7 @@ public class Detect_Peaks_iSB implements PlugIn {
 			ImageStack stack = imp.getStack();
 			int stackSize = stack.getSize();
 			for(int stackPosition = 1; stackPosition<=stackSize; stackPosition++){
-				ImageProcessor ip = stack.getProcessor(stackPosition);
+//				ImageProcessor ip = stack.getProcessor(stackPosition);
 				
 				
 				@SuppressWarnings("unchecked")
@@ -201,23 +201,13 @@ public class Detect_Peaks_iSB implements PlugIn {
 				
 				 for (String label : table.keySet()) {
 					 //System.out.println(label);
-					 
-					 
 				     Roi roi = table.get(label);
-				     
-				     
 				     ImageProcessor ip2 = imp.getProcessor();
 				     ip2.setRoi(roi);
-				     
 					DiscoidalAveragingFilter filter1 = new DiscoidalAveragingFilter(ip2.getWidth(), 1, 3);
-					
-					//PeakFinder peakFinder = new PeakFinder(true, filter, 0, PeakFinderThreshold, 3);
 					PeakFinder peakFinder2 = new PeakFinder(true, filter1, 0, PeakFinderThreshold, 3);
-								
-					
 					ArrayList<Point> positions = peakFinder2.findPeaks(ip2);
 					//System.out.println("--" + positions.size() + "," + positions2.size());
-					
 						
 					for (int j = 0; j < positions.size(); j++) {
 						// fit peak
