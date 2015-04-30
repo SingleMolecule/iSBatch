@@ -48,12 +48,10 @@ public class CellIntensityGUI extends JDialog implements ActionListener {
 	"[Select Channel]", "All", "Acquisition", "Bright Field", "Red", "Green",
 			"Blue", };
 
-	private static final String[] methods = { "[Method]", "Load Image",
-			"Average Images" };
-	private String[] types = new String[] { "[File Type]", "Raw", "Flat",
-			"Discoidal" };
+	private static final String[] methods = { "[Method]", "Average Images" };
+	private String[] types = new String[] { "[File Type]", "Raw", "Flat"};
 
-	private JTextField pathToImage;
+	private JTextField customSearchTxtField;
 
 	private boolean canceled = false;
 
@@ -67,7 +65,7 @@ public class CellIntensityGUI extends JDialog implements ActionListener {
 
 	public CellIntensityGUI(Node node) {
 		setModal(true);
-		setTitle("Set Background Image");
+		setTitle("Focus Lifetimes");
 		frame = new JFrame("Set Backgroung Image");
 		this.node = node;
 
@@ -157,7 +155,7 @@ public class CellIntensityGUI extends JDialog implements ActionListener {
 		gbc_methodComboBox.gridy = 2;
 		getContentPane().add(methodComboBox, gbc_methodComboBox);
 
-		JLabel lblFilenameContains = new JLabel("Custom tag: ");
+		JLabel lblFilenameContains = new JLabel("Custom search: ");
 		GridBagConstraints gbc_lblFilenameContains = new GridBagConstraints();
 		gbc_lblFilenameContains.gridwidth = 2;
 		gbc_lblFilenameContains.insets = new Insets(0, 0, 5, 5);
@@ -169,22 +167,25 @@ public class CellIntensityGUI extends JDialog implements ActionListener {
 		btnProcess = new JButton("Process");
 		btnProcess.addActionListener(this);
 
-		pathToImage = new JTextField();
-		pathToImage.addKeyListener(new KeyAdapter() {
+		customSearchTxtField = new JTextField();
+		customSearchTxtField.addKeyListener(new KeyAdapter() {
+			
+
 			@Override
 			public void keyTyped(KeyEvent e) {
-				imagePath = pathToImage.getText();
+				customSearch = customSearchTxtField.getText();
 			}
 		});
 
-		GridBagConstraints gbc_pathToImage = new GridBagConstraints();
-		gbc_pathToImage.gridwidth = 2;
-		gbc_pathToImage.insets = new Insets(0, 0, 5, 5);
-		gbc_pathToImage.fill = GridBagConstraints.HORIZONTAL;
-		gbc_pathToImage.gridx = 3;
-		gbc_pathToImage.gridy = 3;
-		getContentPane().add(pathToImage, gbc_pathToImage);
-		pathToImage.setColumns(1);
+
+		GridBagConstraints gbc_customSearchTxtField = new GridBagConstraints();
+		gbc_customSearchTxtField.gridwidth = 2;
+		gbc_customSearchTxtField.insets = new Insets(0, 0, 5, 5);
+		gbc_customSearchTxtField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_customSearchTxtField.gridx = 3;
+		gbc_customSearchTxtField.gridy = 3;
+		getContentPane().add(customSearchTxtField, gbc_customSearchTxtField);
+		customSearchTxtField.setColumns(1);
 		GridBagConstraints gbc_btnProcess = new GridBagConstraints();
 		gbc_btnProcess.insets = new Insets(0, 0, 0, 5);
 		gbc_btnProcess.gridx = 4;
@@ -212,8 +213,6 @@ public class CellIntensityGUI extends JDialog implements ActionListener {
 		// // get array of Images
 		// ArrayList<Node> images = node.getDescendents(imageFileNodeFilter);
 
-		System.out.println("Parameters will be: " + channel + " , " + imagePath
-				+ " , " + method);
 	}
 
 	public static void main(String[] args) {
@@ -232,6 +231,7 @@ public class CellIntensityGUI extends JDialog implements ActionListener {
 	}
 
 	private String imageType = null;
+	private String customSearch;
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -260,8 +260,7 @@ public class CellIntensityGUI extends JDialog implements ActionListener {
 			} else {
 				this.method = (String) methodComboBox.getSelectedItem();
 			}
-			
-			imagePath = pathToImage.getText();
+			customSearch = customSearchTxtField.getText();
 			run();
 			dispose();
 		} else if (e.getSource() == channelComboBox) {
@@ -315,4 +314,8 @@ public class CellIntensityGUI extends JDialog implements ActionListener {
 	public String getCustom() {
 		return imagePath;
 	}
+	public String getCustomSearch() {
+		return this.customSearch;
+	}
+	
 }

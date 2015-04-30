@@ -207,7 +207,7 @@ public class ISBatch implements TreeSelectionListener {
 		menu.add(saveMenuItem);
 		saveMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent event) {
-				LogPanel.log("Save database");
+				LogPanel.log("Save database"); 
 				saveDatabase();
 			}
 		});
@@ -237,7 +237,7 @@ public class ISBatch implements TreeSelectionListener {
 
 		// add Menu about
 		helpMenuItem = new JMenuItem("Help");
-		about.add(helpMenuItem);
+//		about.add(helpMenuItem);
 		helpMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent event) {
 				showHelp();
@@ -265,7 +265,7 @@ public class ISBatch implements TreeSelectionListener {
 
 		menu.add(exit);
 		menuBar.add(menu);
-		menuBar.add(preferences);
+//		menuBar.add(preferences);
 		menuBar.add(about);
 		frame.setJMenuBar(menuBar);
 
@@ -274,7 +274,7 @@ public class ISBatch implements TreeSelectionListener {
 	protected void goToSourceCode() {
 		try {
 			Desktop.getDesktop().browse(
-					new URL("http://vcaldas.github.io/iSBatch/").toURI());
+					new URL("https://github.com/SingleMolecule/iSBatch").toURI());
 		} catch (Exception e) {
 		}
 
