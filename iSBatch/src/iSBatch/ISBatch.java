@@ -554,9 +554,10 @@ public class ISBatch implements TreeSelectionListener {
 			return;
 
 		try {
-			treeModel = new DatabaseModel(database.getRoot());
-			tree.setModel(treeModel);
+			
+			treeModel.setRoot(database.getRoot());
 			tree.invalidate();
+			
 		} catch (SqlJetException e) {
 			JOptionPane.showMessageDialog(frame,
 					"Database error : " + e.getMessage(), "Error",
