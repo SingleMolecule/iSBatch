@@ -6,6 +6,9 @@ import gui.DatabaseDialog;
 import gui.DatabaseTreeCellRenderer;
 import gui.LogPanel;
 import gui.OperationButton;
+import ij.IJ;
+import ij.ImagePlus;
+import ij.measure.ResultsTable;
 
 import java.awt.BorderLayout;
 import java.awt.Cursor;
@@ -20,6 +23,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
+import java.io.IOException;
 import java.net.URL;
 
 import javax.swing.DefaultListModel;
@@ -298,6 +302,49 @@ public class ISBatch implements TreeSelectionListener {
 	private JPanel createListPanel() {
 		JPanel listPanel = new JPanel(new BorderLayout());
 		listPanel.add(new JScrollPane(list), BorderLayout.CENTER);
+
+		list.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+				if (e.getClickCount() != 2)
+					return;
+
+				int index = list.locationToIndex(e.getPoint());
+
+				if (index == -1)
+					return;
+
+				Node node = list.getModel().getElementAt(index);
+				String path = node.getProperty("path");
+
+				if (path == null)
+					return;
+
+				if (path.toLowerCase().matches(".+\\.(tif|tiff)")) {
+					LogPanel.log("open " + path);
+					ImagePlus imp = IJ.openImage(path);
+					imp.show();
+				} else if (path.toLowerCase().matches(".+\\.(csv|txt)")) {
+
+					try {
+						LogPanel.log("open " + path);
+						ResultsTable table = ResultsTable.open(path);
+						table.show("Results");
+					} catch (IOException ex) {
+						JOptionPane.showMessageDialog(
+								frame,
+								"Could not open results table : "
+										+ ex.getMessage());
+					}
+
+				}
+
+			}
+
+		});
+
 		return listPanel;
 	}
 
