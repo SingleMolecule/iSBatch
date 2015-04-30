@@ -283,22 +283,4 @@ public class CellIntensity implements Operation {
 
 	}
 
-	private double parseDouble(String str) throws NumberFormatException {
-		double toReturn = 0;
-		// System.out.println(str);
-		if (!str.equalsIgnoreCase("") || !str.equals(null)) {
-			try {
-				toReturn = Double.parseDouble(str);
-				// System.out.println("Value parsed :" + toReturn);
-			} catch (NumberFormatException ex) {
-				System.err.println("Ilegal input");
-				toReturn = 0;
-				// Discard input or request new input ...
-				// clean up if necessary
-			}
-		}
-
-		return toReturn;
-	}
-
 }
