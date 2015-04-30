@@ -47,7 +47,7 @@ public class GenericFilter implements NodeFilterInterface {
 		boolean matchTag = false;
 		if(tags.isEmpty() || tags==null || tags.size()==0){
 			matchTag = true;
-			System.out.println("tags null");
+//			System.out.println("tags null");
 		}
 		else{
 			FileNode fNode = (FileNode) node;
@@ -83,7 +83,7 @@ public class GenericFilter implements NodeFilterInterface {
 			
 			}
 		}
-		System.out.println(isChannel +"|"+matchTag+ "|" + containsCustomTag);
+//		System.out.println(isChannel +"|"+matchTag+ "|" + containsCustomTag);
 		if (isChannel && matchTag && containsCustomTag) {
 			return true;
 		}
