@@ -755,13 +755,6 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 	}
 
 	private void run() {
-		//
-		// // get array of Images
-		// ArrayList<Node> images = node.getDescendents(imageFileNodeFilter);
-
-		System.out.println("Run this baby");
-//		System.out.println("Parameters will be: " + channel + " , " + imagePath
-//				+ " , " + method);
 	}
 
 	public static void main(String[] args) {

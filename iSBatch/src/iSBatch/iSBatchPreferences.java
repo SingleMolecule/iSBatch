@@ -11,7 +11,7 @@ import java.io.File;
 public class iSBatchPreferences  {
 
 	public static String INNER_RADIUS = "1";
-	public static String OUTER_RADIUS = "4";
+	public static String OUTER_RADIUS = "3";
 	public static String SNR_THRESHOLD = "6";
 	public static String INTENSITY_THRESHOLD = "0";
 	public static String SELECTION_RADIUS = "4";
