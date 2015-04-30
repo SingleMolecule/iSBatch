@@ -49,7 +49,7 @@ public class DatabaseDialog extends JDialog implements ActionListener {
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		
-		centerPanel.add(new JLabel("Specify database to use"));
+		centerPanel.add(new JLabel("Specify database to use (or choose a filename for a new database)"));
 		
 		gbc.gridx = 0;
 		gbc.gridy++;
