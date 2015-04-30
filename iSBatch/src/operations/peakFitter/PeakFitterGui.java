@@ -128,8 +128,8 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 	"[Select Channel]", "All", "Acquisition", "Bright Field", "Red", "Green",
 			"Blue", };
 
-	private static final String[] methods = { "[Method]", "Load Image",
-			"Average Images" };
+//	private static final String[] methods = { "[Method]", "Load Image",
+//			"Average Images" };
 	private String[] types = new String[] { "[File Type]", "Raw", "Flat",
 			"Discoidal" };
 
