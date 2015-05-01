@@ -88,7 +88,7 @@ public class DatabaseDialog extends JDialog implements ActionListener {
 				String path = pathTextField.getText();
 				
 				File file = new File(path);
-				iSBatchPreferences.lastSelectedPath = file;
+				iSBatchPreferences.lastSelectedPath = file.getPath();
 				database = new Database(file);
 			}
 			catch (SqlJetException exception) {

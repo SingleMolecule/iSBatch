@@ -10,6 +10,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -99,7 +100,7 @@ public class FieldOfViewDialog extends JDialog implements ActionListener {
 
 			JFileChooser fileChooser = new JFileChooser();
 			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-			fileChooser.setCurrentDirectory(iSBatchPreferences.lastSelectedPath);
+			fileChooser.setCurrentDirectory(new File(iSBatchPreferences.lastSelectedPath));
 			if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
 				folderTextField.setText(fileChooser.getSelectedFile().getPath());
 
