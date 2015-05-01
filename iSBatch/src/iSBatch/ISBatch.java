@@ -568,6 +568,9 @@ public class ISBatch implements TreeSelectionListener {
 					"Database error : " + e.getMessage(), "Error",
 					JOptionPane.ERROR_MESSAGE);
 		}
+		
+		// load preferences
+		iSBatchPreferences.loadPreferences(treeModel.getRoot());
 
 	}
 
