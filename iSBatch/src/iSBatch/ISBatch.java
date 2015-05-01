@@ -132,7 +132,9 @@ public class ISBatch implements TreeSelectionListener {
 				setContext(treeModel.getRoot());
 			}
 		});
-
+		
+		// load preferences
+		iSBatchPreferences.loadPreferences(treeModel.getRoot());
 	}
 
 	public static ISBatch getInstance() {
@@ -532,6 +534,9 @@ public class ISBatch implements TreeSelectionListener {
 
 	public void saveDatabase() {
 
+		// save preferences
+		iSBatchPreferences.savePreferences(treeModel.getRoot());
+		
 		try {
 			database.write(treeModel.getRoot());
 		} catch (SqlJetException e) {
