@@ -41,7 +41,8 @@ public class iSBatchPreferences  {
 	public static String ERROR_X = "1";
 	public static String ERROR_Y = "1";
 	public static String ERROR_HEIGHT = "5000";
-
+	public static String lastSelectedPath = "";
+	
 	public static boolean insideCell = false;
 	public static boolean useDiscoidalFiltering = false;
 	
