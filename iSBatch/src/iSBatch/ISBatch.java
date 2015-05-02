@@ -52,6 +52,7 @@ import operation.cellIntensity.CellIntensity;
 import operation.cellOutlines.CellOutlines;
 import operation.cellularConcentration.CellularConcentration;
 import operation.changePoint.ChangePoint;
+import operation.diffusion.DiffusioOperation;
 import operation.focusLifetime.FocusLifetimes;
 import operation.tracking.Tracking;
 import operations.*;
@@ -467,6 +468,7 @@ public class ISBatch implements TreeSelectionListener {
 				new CellIntensity(treeModel),
 				new FocusLifetimes(treeModel),
 				new Tracking(treeModel),
+				new DiffusioOperation(treeModel),
 				new LocationMaps(treeModel),
 				new ChangePoint(treeModel),
 				new DebugProperties(treeModel),
