@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package plugins_ij;
 
 import java.io.File;
@@ -10,10 +13,24 @@ import ij.measure.ResultsTable;
 import ij.plugin.PlugIn;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CellMeasurements_To_ControlFile.
+ */
 public class CellMeasurements_To_ControlFile implements PlugIn {
+	
+	/** The table. */
 	static ResultsTable table;
+	
+	/** The m table. */
 	static ResultsTable mTable;
 	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static void main(String[] args) throws IOException{
 		new CellMeasurements_To_ControlFile().run("");
 		
@@ -23,6 +40,11 @@ public class CellMeasurements_To_ControlFile implements PlugIn {
 	}
 	
 	
+	/**
+	 * Run.
+	 *
+	 * @param arg0 the arg0
+	 */
 	public void run(String arg0){
 		
 		
@@ -158,6 +180,14 @@ public class CellMeasurements_To_ControlFile implements PlugIn {
 		
 		
 	}
+	
+	/**
+	 * Gets the standard deviation.
+	 *
+	 * @param values the values
+	 * @param mean the mean
+	 * @return the standard deviation
+	 */
 	public static double getStandardDeviation(List<Double> values, double mean) {
         double deviation = 0.0;
         if ((values != null) && (values.size() > 1)) {
@@ -171,6 +201,12 @@ public class CellMeasurements_To_ControlFile implements PlugIn {
         return deviation;
     }
 	
+	/**
+	 * Calculate average.
+	 *
+	 * @param data the data
+	 * @return the double
+	 */
 	private double calculateAverage(List<Double> data) {
 		if(data != null){
 			
@@ -191,6 +227,12 @@ public class CellMeasurements_To_ControlFile implements PlugIn {
 	
 	}
 	
+	/**
+	 * Load table.
+	 *
+	 * @param table the table
+	 * @param csvFilename the csv filename
+	 */
 	private void loadTable(ResultsTable table, String csvFilename) {
 		try {
 			table = ResultsTable.open(csvFilename);

@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package util;
 
 import java.awt.TextField;
@@ -13,14 +16,35 @@ import ij.Prefs;
 import ij.gui.GenericDialog;
 import ij.plugin.PlugIn;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Update.
+ */
 public class Update implements PlugIn {
+	
+	/** The protocols. */
 	String[] protocols = {"ftp", "http"};
+	
+	/** The protocol. */
 	String protocol = Prefs.getString("Update.protocol", "ftp");
+	
+	/** The host. */
 	String host = Prefs.getString("Update.host", "singlemolecule.nl");
+	
+	/** The path. */
 	String path = Prefs.getString("Update.path", "new/single_molecule_biophysics.jar");
+	
+	/** The username. */
 	String username = Prefs.getString("Update.username", "plugins");
+	
+	/** The password. */
 	String password = Prefs.getString("Update.password", "ImageJSMB!");
 	
+	/**
+	 * Run.
+	 *
+	 * @param arg0 the arg0
+	 */
 	@Override
 	public void run(String arg0) {
 		

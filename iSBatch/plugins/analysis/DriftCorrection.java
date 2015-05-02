@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package analysis;
 
 import java.awt.BorderLayout;
@@ -22,14 +25,25 @@ import ij.plugin.filter.PlugInFilter;
 import ij.plugin.frame.RoiManager;
 import ij.process.ImageProcessor;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class DriftCorrection.
+ */
 public class DriftCorrection implements PlugInFilter, ActionListener {
+	
+	/** The flags. */
 	private int flags = DOES_8G | DOES_16 | DOES_32 | FINAL_PROCESSING | DOES_STACKS;
 	
+	/** The roi manager. */
 	private RoiManager roiManager;
 	
+	/** The from slice. */
 	private int fromSlice;
+	
+	/** The to slice. */
 	private int toSlice;
 	
+	/** The max error. */
 	private double[] maxError = new double[] {
 			Prefs.getDouble("PeakFitter.maxErrorBaseline", 5000),
 			Prefs.getDouble("PeakFitter.maxErrorHeight", 5000),
@@ -39,21 +53,44 @@ public class DriftCorrection implements PlugInFilter, ActionListener {
 			Prefs.getDouble("PeakFitter.maxErrorSigmaY", 1),
 	};
 	
+	/** The degree of polynomial. */
 	private int degreeOfPolynomial = Prefs.getInt("DriftCorrection.degreeOfPolynomial", 5);
 	
+	/** The x. */
 	private double[][] x;
+	
+	/** The x positions. */
 	private double[][] xPositions;
+	
+	/** The y positions. */
 	private double[][] yPositions;
+	
+	/** The fitted peaks. */
 	private int[] fittedPeaks;
 	
+	/** The x parameters. */
 	private double[] xParameters;
+	
+	/** The y parameters. */
 	private double[] yParameters;
+	
+	/** The x error. */
 	private double[] xError;
+	
+	/** The y error. */
 	private double[] yError;
 
+	/** The correct results button. */
 	private JButton correctResultsButton = new JButton("Correct Results");
+	
+	/** The correct image button. */
 	private JButton correctImageButton = new JButton("Correct Image");
 	
+	/**
+	 * Run.
+	 *
+	 * @param ip the ip
+	 */
 	@Override
 	public void run(ImageProcessor ip) {
 		
@@ -91,6 +128,13 @@ public class DriftCorrection implements PlugInFilter, ActionListener {
 		
 	}
 	
+	/**
+	 * Polynomial.
+	 *
+	 * @param x the x
+	 * @param p the p
+	 * @return the double
+	 */
 	private double polynomial(double x, double[] p) {
 		double value = 0;
 		
@@ -100,6 +144,13 @@ public class DriftCorrection implements PlugInFilter, ActionListener {
 		return value;
 	}
 	
+	/**
+	 * Setup.
+	 *
+	 * @param arg the arg
+	 * @param imp the imp
+	 * @return the int
+	 */
 	@Override
 	public int setup(String arg, ImagePlus imp) {
 
@@ -263,6 +314,11 @@ public class DriftCorrection implements PlugInFilter, ActionListener {
 		return flags;
 	}
 
+	/**
+	 * Action performed.
+	 *
+	 * @param e the e
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		

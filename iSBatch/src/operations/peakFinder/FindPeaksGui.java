@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package operations.peakFinder;
 
 import iSBatch.iSBatchPreferences;
@@ -36,49 +39,113 @@ import javax.swing.JPanel;
 import javax.swing.JCheckBox;
 import javax.swing.border.TitledBorder;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class FindPeaksGui.
+ */
 public class FindPeaksGui extends JDialog implements ActionListener {
-	/**
-	 * 
-	 */
+	
+	/** The number format. */
 	NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale
 			.getDefault());
+	
+	/** The decimal format. */
 	DecimalFormat decimalFormat = (DecimalFormat) numberFormat;
 
+	/** The panel. */
 	private JPanel panel;
+	
+	/** The use discoidal filter chk. */
 	private JCheckBox useDiscoidalFilterChk;
+	
+	/** The inner radius txt. */
 	private JTextField innerRadiusTxt;
+	
+	/** The outer radius txt. */
 	private JTextField outerRadiusTxt;
+	
+	/** The lbl radius. */
 	private JLabel lblRadius;
+	
+	/** The lbl inner. */
 	private JLabel lblInner;
+	
+	/** The lbl outer. */
 	private JLabel lblOuter;
+	
+	/** The Discoidal filter panel. */
 	private JPanel DiscoidalFilterPanel;
+	
+	/** The Peak finder parameters. */
 	private JPanel PeakFinderParameters;
+	
+	/** The lbl threshold. */
 	private JLabel lblThreshold;
+	
+	/** The SNR txt. */
 	private JTextField SNRTxt;
+	
+	/** The lbl snr. */
 	private JLabel lblSnr;
+	
+	/** The Intensity txt. */
 	private JTextField IntensityTxt;
+	
+	/** The lbl threshold_1. */
 	private JLabel lblThreshold_1;
+	
+	/** The lbl intensity. */
 	private JLabel lblIntensity;
+	
+	/** The lbl selection radius. */
 	private JLabel lblSelectionRadius;
+	
+	/** The Selection radius txt. */
 	private JTextField SelectionRadiusTxt;
+	
+	/** The lbl min distance. */
 	private JLabel lblMinDistance;
+	
+	/** The min distance txt. */
 	private JTextField minDistanceTxt;
+	
+	/** The lbl px. */
 	private JLabel lblPx;
+	
+	/** The lbl px_1. */
 	private JLabel lblPx_1;
+	
+	/** The chckbx inside cells. */
 	private JCheckBox chckbxInsideCells;
 
 	// butons
 
+	/** The btn cancel. */
 	private JButton btnCancel;
+	
+	/** The btn process. */
 	private JButton btnProcess;
 
 	// Parameters
+	/** The inner radius. */
 	public String innerRadius = null;
 
+	/**
+	 * Gets the inner radius.
+	 *
+	 * @return the inner radius
+	 */
 	public double getInnerRadius() {
 		return parseDouble(innerRadius);
 	}
 
+	/**
+	 * Parses the double.
+	 *
+	 * @param str the str
+	 * @return the double
+	 * @throws NumberFormatException the number format exception
+	 */
 	private double parseDouble(String str) throws NumberFormatException {
 		double toReturn = 0;
 		// System.out.println(str);
@@ -97,39 +164,76 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 		return toReturn;
 	}
 
+	/** The outer radius. */
 	public String outerRadius = null;
 
+	/**
+	 * Gets the outer radius.
+	 *
+	 * @return the outer radius
+	 */
 	public double getOuterRadius() {
 		return parseDouble(outerRadius);
 	}
 
+	/** The SNR threshold. */
 	public String SNRThreshold = null;
+	
+	/** The threshold. */
 	public String threshold = null;
+	
+	/** The min distance. */
 	public String minDistance = null;
+	
+	/** The selection radius. */
 	public String selectionRadius = null;
 
 	// ComboBox
+	/** The file type combo box. */
 	private JComboBox<String> fileTypeComboBox;
+	
+	/** The channel combo box. */
 	private JComboBox<String> channelComboBox;
+	
+	/** The method combo box. */
 	private JComboBox<String> methodComboBox;
+	
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+	
+	/** The channels. */
 	private String[] channels = new String[] {
 
 	"[Select Channel]", "All", "Acquisition", "Bright Field", "Red", "Green",
 			"Blue", };
 
+	/** The Constant methods. */
 	private static final String[] methods = { "[Method]", "Load Image",
 			"Average Images" };
+	
+	/** The types. */
 	private String[] types = new String[] { "[File Type]", "Raw", "Flat",
 			"Discoidal" };
 
+	/** The canceled. */
 	private boolean canceled = false;
 
+	/** The frame. */
 	static JFrame frame;
+	
+	/** The node. */
 	private Node node;
+	
+	/** The image path. */
 	private String channel, method, imagePath;
+	
+	/** The use discoidal. */
 	public boolean useDiscoidal;
+	
+	/** The use cells. */
 	public boolean useCells;
+	
+	/** The image type. */
 	@SuppressWarnings("unused")
 	private String imageType;
 
@@ -137,6 +241,12 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 	 * Filter variables
 	 */
 
+	/**
+	 * Instantiates a new find peaks gui.
+	 *
+	 * @param node the node
+	 * @param preferences the preferences
+	 */
 	public FindPeaksGui(Node node, iSBatchPreferences preferences) {
 		setModal(true);
 		setTitle("Find Peaks");
@@ -148,9 +258,15 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 
 	}
 
+	/**
+	 * Setup.
+	 */
 	private void setup() {
 	}
 
+	/**
+	 * Display.
+	 */
 	private void display() {
 		decimalFormat.setGroupingUsed(false);
 
@@ -512,6 +628,9 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 
 	}
 
+	/**
+	 * Run.
+	 */
 	private void run() {
 		//
 		// // get array of Images
@@ -522,6 +641,11 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 				+ " , " + method);
 	}
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		frame = new JFrame();
 
@@ -529,14 +653,29 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 
 	}
 
+	/**
+	 * Error.
+	 *
+	 * @param msg the msg
+	 */
 	void error(String msg) {
 		IJ.error("Batch Processor", msg);
 	}
 
+	/**
+	 * Checks if is canceled.
+	 *
+	 * @return true, if is canceled
+	 */
 	public boolean isCanceled() {
 		return canceled;
 	}
 
+	/**
+	 * Action performed.
+	 *
+	 * @param e the e
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnCancel) {
@@ -584,30 +723,65 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 		}
 	}
 
+	/**
+	 * Gets the channel.
+	 *
+	 * @return the channel
+	 */
 	public String getChannel() {
 		return channel;
 	}
 
+	/**
+	 * Gets the method.
+	 *
+	 * @return the method
+	 */
 	public String getMethod() {
 		return method;
 	}
 
+	/**
+	 * Gets the image path.
+	 *
+	 * @return the image path
+	 */
 	public String getImagePath() {
 		return imagePath;
 	}
 
+	/**
+	 * Gets the threshold.
+	 *
+	 * @return the threshold
+	 */
 	public double getThreshold() {
 		return parseDouble(iSBatchPreferences.INTENSITY_THRESHOLD);
 	}
 
+	/**
+	 * Gets the SNR threshold.
+	 *
+	 * @return the SNR threshold
+	 */
 	public double getSNRThreshold() {
 		return parseDouble(iSBatchPreferences.SNR_THRESHOLD);
 	}
 
+	/**
+	 * Gets the min distance.
+	 *
+	 * @return the min distance
+	 */
 	public double getMinDistance() {
 		return parseDouble(iSBatchPreferences.DISTANCE_BETWEEN_PEAKS);
 	}
 
+	/**
+	 * Gets the selection radius.
+	 *
+	 * @return the selection radius
+	 */
 	public double getSelectionRadius() {
 		return parseDouble(iSBatchPreferences.SELECTION_RADIUS);
 	}

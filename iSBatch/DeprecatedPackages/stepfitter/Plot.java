@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package stepfitter;
 
 import java.awt.BasicStroke;
@@ -13,34 +16,73 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Plot.
+ */
 public class Plot extends Component implements Runnable {
+	
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	
+	/** The Constant LINE. */
 	public static final int LINE = 1;
+	
+	/** The Constant CIRCLE. */
 	public static final int CIRCLE = 2;
 	
+	/** The zoom factor. */
 	public double zoomFactor = 2;
+	
+	/** The left margin. */
 	public int leftMargin = 50;
+	
+	/** The bottom margin. */
 	public int bottomMargin = 50;
+	
+	/** The x selected. */
 	public double xSelected = Double.NaN;
+	
+	/** The y selected. */
 	public double ySelected = Double.NaN;
 	
 	// contains the data points for each plot  
+	/** The x values. */
 	private ArrayList<double[]> xValues = new ArrayList<double[]>();
+	
+	/** The y values. */
 	private ArrayList<double[]> yValues = new ArrayList<double[]>();
+	
+	/** The colors. */
 	private ArrayList<Color> colors = new ArrayList<Color>();
+	
+	/** The types. */
 	private ArrayList<Integer> types = new ArrayList<Integer>();	
+	
+	/** The thickness. */
 	private ArrayList<Integer> thickness = new ArrayList<Integer>();
 	
+	/** The plot bounds. */
 	private Rectangle2D.Double plotBounds = new Rectangle2D.Double();
+	
+	/** The visible bounds. */
 	private Rectangle2D.Double visibleBounds = new Rectangle2D.Double();
+	
+	/** The targeted visible bounds. */
 	private Rectangle2D.Double targetedVisibleBounds = new Rectangle2D.Double();
 	
+	/** The mark values. */
 	private ArrayList<double[]> markValues = new ArrayList<double[]>();
+	
+	/** The mark colors. */
 	private ArrayList<Color> markColors = new ArrayList<Color>();
 	
+	/** The lock. */
 	private Object lock = new Object();
 	
+	/**
+	 * Instantiates a new plot.
+	 */
 	public Plot() {
 		
 		addMouseMotionListener(new MouseMotionAdapter() {
@@ -152,6 +194,9 @@ public class Plot extends Component implements Runnable {
 		new Thread(this).start();
 	}
 	
+	/**
+	 * Run.
+	 */
 	@Override
 	public void run() {
 		double dx, dy, dw, dh, sx, sy;
@@ -193,6 +238,15 @@ public class Plot extends Component implements Runnable {
 		}
 	}
 	
+	/**
+	 * Adds the.
+	 *
+	 * @param x the x
+	 * @param y the y
+	 * @param c the c
+	 * @param type the type
+	 * @param w the w
+	 */
 	public void add(double[] x, double[] y, Color c, int type, int w) {		
 		xValues.add(x);
 		yValues.add(y);
@@ -212,6 +266,9 @@ public class Plot extends Component implements Runnable {
 		repaint();
 	}
 	
+	/**
+	 * Clear.
+	 */
 	public void clear() {
 		visibleBounds = new Rectangle2D.Double();
 		
@@ -223,16 +280,34 @@ public class Plot extends Component implements Runnable {
 		markClear();
 	}
 	
+	/**
+	 * Mark.
+	 *
+	 * @param start the start
+	 * @param end the end
+	 * @param c the c
+	 */
 	public void mark(double start, double end, Color c) {
 		markValues.add(new double[]{start, end});
 		markColors.add(c);
 	}
 	
+	/**
+	 * Mark clear.
+	 */
 	public void markClear() {
 		markValues.clear();
 		markColors.clear();
 	}
 	
+	/**
+	 * Sets the plot bounds.
+	 *
+	 * @param xMin the x min
+	 * @param yMin the y min
+	 * @param xMax the x max
+	 * @param yMax the y max
+	 */
 	public void setPlotBounds(double xMin, double yMin, double xMax, double yMax) {
 		synchronized (lock) {
 			targetedVisibleBounds.setRect(xMin, yMin, xMax - xMin, yMax - yMin);
@@ -240,12 +315,24 @@ public class Plot extends Component implements Runnable {
 		}
 	}
 	
+	/**
+	 * Gets the plot bounds.
+	 *
+	 * @return the plot bounds
+	 */
 	public Rectangle2D.Double getPlotBounds() {
 		synchronized (lock) {
 			return (Rectangle2D.Double)targetedVisibleBounds.clone();
 		}
 	}
 	
+	/**
+	 * Gets the step size.
+	 *
+	 * @param range the range
+	 * @param steps the steps
+	 * @return the step size
+	 */
 	private final float getStepSize(double range, int steps) {
 		double step = range / steps;    // e.g. 0.00321
 		double magnitude = Math.pow(10, Math.floor(Math.log10(step)));  // e.g. 0.001
@@ -259,6 +346,11 @@ public class Plot extends Component implements Runnable {
             return (float)(magnitude * 2.0);
 	}
 	
+	/**
+	 * Paint.
+	 *
+	 * @param g the g
+	 */
 	@Override
 	public void paint(Graphics g) {
 		int plotWidth = getWidth() - leftMargin;
@@ -352,6 +444,11 @@ public class Plot extends Component implements Runnable {
 		
 	}
 	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		
 		int size = 100000;

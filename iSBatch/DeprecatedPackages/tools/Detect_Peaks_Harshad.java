@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 
 
 import fiji.util.gui.GenericDialogPlus;
@@ -37,27 +40,53 @@ import External.PeakFitter;
 
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Detect_Peaks_Harshad.
+ */
 public class Detect_Peaks_Harshad implements PlugIn {
+	
+	/** The CSV content. */
 	static String[][] CSVContent = null;
+	
+	/** The file. */
 	static File file;
+	
+	/** The max distance. */
 	private static double maxDistance = 12;
+	
+	/** The mat filename. */
 	static String matFilename;
 	//String tableFilename = null;
+	/** The roi folder. */
 	static String roiFolder;
+	
+	/** The ROI file. */
 	static File ROIFile;
+	
+	/** The Stats folder. */
 	static String StatsFolder;
+	
+	/** The Constant SIGMA_TO_FWHM. */
 	public static final double SIGMA_TO_FWHM = 2.0 * Math.sqrt(2.0 * Math.log(2));
+	
+	/** The Peak finder threshold. */
 	private static int PeakFinderThreshold = 0;
 	
+	/** The labels. */
 	String[] labels;
+	
+	/** The table. */
 	static ResultsTable table;
 	
-	/** source directory **/
+	/**  source directory *. */
 	public static String sourceDirectory="";
-	/** output directory **/
+	
+	/**  output directory *. */
 	public static String outputDirectory="";
 	
 	
+	/** The max error. */
 	private static double[] maxError = new double[] {
 		Prefs.getDouble("PeakFitter.maxErrorBaseline", 5000),
 		Prefs.getDouble("PeakFitter.maxErrorHeight",5000),
@@ -68,6 +97,12 @@ public class Detect_Peaks_Harshad implements PlugIn {
 	
 	
 	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static void main(String[] args) throws IOException{
 
 		
@@ -154,6 +189,11 @@ public class Detect_Peaks_Harshad implements PlugIn {
 	
 	
 	
+	/**
+	 * Run.
+	 *
+	 * @param arg0 the arg0
+	 */
 	public void run(String arg0){
 		
 		// ASk control File
@@ -293,6 +333,13 @@ public class Detect_Peaks_Harshad implements PlugIn {
 		
 	}
 	
+	/**
+	 * Gets the unique tags.
+	 *
+	 * @param collum the collum
+	 * @param table the table
+	 * @return the unique tags
+	 */
 	private List<String> getUniqueTags(String collum, ResultsTable table) {
 		List<String> list = getAllTags(collum, table);
 		HashSet<String> repeated = new HashSet<String>();
@@ -303,6 +350,13 @@ public class Detect_Peaks_Harshad implements PlugIn {
 		
 	}
 	
+	/**
+	 * Gets the all tags.
+	 *
+	 * @param collum the collum
+	 * @param table the table
+	 * @return the all tags
+	 */
 	private List<String> getAllTags(String collum, ResultsTable table)
 	{
 		
@@ -321,6 +375,12 @@ public class Detect_Peaks_Harshad implements PlugIn {
 	
 	
 	
+	/**
+	 * Decision tree.
+	 *
+	 * @param labels2 the labels2
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	private void decisionTree(String[] labels2) throws IOException {
 		
 		//System.out.println(labels2);
@@ -346,6 +406,12 @@ public class Detect_Peaks_Harshad implements PlugIn {
 
 
 
+	/**
+	 * Calculate peakson channel.
+	 *
+	 * @param labelsName the labels name
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	private static void CalculatePeaksonChannel(String labelsName) throws IOException {
 		
 	 
@@ -609,6 +675,12 @@ public class Detect_Peaks_Harshad implements PlugIn {
 	
 	
 	
+	/**
+	 * Start calculation.
+	 *
+	 * @param choice the choice
+	 * @return true, if successful
+	 */
 	private static boolean startCalculation(int choice) {
 		if(choice==-1){
 			return false;
@@ -621,6 +693,11 @@ public class Detect_Peaks_Harshad implements PlugIn {
 
 
 
+	/**
+	 * Check to continue.
+	 *
+	 * @return true, if successful
+	 */
 	private static boolean checkToContinue() {
 
 		int choice2 = askToContinue();	
@@ -637,6 +714,13 @@ public class Detect_Peaks_Harshad implements PlugIn {
 
 
 
+	/**
+	 * Adds the localization.
+	 *
+	 * @param peakData the peak data
+	 * @param matFilename2 the mat filename2
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	private static void addLocalization(ResultsTable peakData,
 			String matFilename2) throws IOException {
 		
@@ -699,6 +783,13 @@ public class Detect_Peaks_Harshad implements PlugIn {
 		
 	}
 
+	/**
+	 * Gets the RO is.
+	 *
+	 * @param listRois the list rois
+	 * @param folder the folder
+	 * @return the RO is
+	 */
 	private static List<File> getROIs(List<File> listRois, int folder) {
 		List<File> results = new ArrayList<>();
 		
@@ -718,19 +809,22 @@ public class Detect_Peaks_Harshad implements PlugIn {
 		}
 		return results;
 	}
+
 /**
-	private static double[] askThreshold() {
-		GenericDialog gd = new GenericDialog("threshold values");
-		double offset[];
-		gd.addNumericField("Threshold: ", offset, 0);
-		gd.showDialog();
-        	if (gd.wasCanceled()){
-        		return offset=0 ;
-        	}
-        offset = (int)gd.getNextNumber();
-		return offset[];
-	}
-*/
+ * 	private static double[] askThreshold() {
+ * 		GenericDialog gd = new GenericDialog("threshold values");
+ * 		double offset[];
+ * 		gd.addNumericField("Threshold: ", offset, 0);
+ * 		gd.showDialog();
+ *         	if (gd.wasCanceled()){
+ *         		return offset=0 ;
+ *         	}
+ *         offset = (int)gd.getNextNumber();
+ * 		return offset[];
+ * 	}
+ *
+ * @return the double[]
+ */
 	private static double[] askThreshold() {
 		GenericDialog gd = new GenericDialog("threshold values");
 		double offset[] = new double[2];
@@ -752,6 +846,12 @@ public class Detect_Peaks_Harshad implements PlugIn {
 	}
 	
 
+	/**
+	 * Choose channel.
+	 *
+	 * @param labels the labels
+	 * @return the int
+	 */
 	private static int chooseChannel(String[] labels) {
 		
 		
@@ -769,6 +869,12 @@ public class Detect_Peaks_Harshad implements PlugIn {
 	return DKSelection;// TODO Auto-generated method stub
 		
 	}
+	
+	/**
+	 * Ask to continue.
+	 *
+	 * @return the int
+	 */
 	private static int askToContinue() {
 		Object[] options2 = {"Yes","No"};
 
@@ -785,6 +891,12 @@ public class Detect_Peaks_Harshad implements PlugIn {
 		
 
 	}
+	
+	/**
+	 * Load table.
+	 *
+	 * @param csvFilename the csv filename
+	 */
 	private void loadTable(String csvFilename) {
 		try {
 			table = ResultsTable.open(csvFilename);

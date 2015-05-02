@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package operations.microbeTrackerIO;
 
 import java.io.File;
@@ -12,12 +15,30 @@ import com.jmatio.types.MLDouble;
 import com.jmatio.types.MLNumericArray;
 import com.jmatio.types.MLStructure;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class MatlabMeshes.
+ */
 public class MatlabMeshes {
 	
+	/**
+	 * Gets the meshes.
+	 *
+	 * @param file the file
+	 * @return the meshes
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static ArrayList<Mesh> getMeshes(File file) throws IOException{
 		return getMeshes(file.getAbsolutePath());
 	}
 	
+	/**
+	 * Gets the meshes.
+	 *
+	 * @param filename the filename
+	 * @return the meshes
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static ArrayList<Mesh> getMeshes(String filename) throws IOException {
 
 		ArrayList<Mesh> meshes = new ArrayList<Mesh>();
@@ -79,6 +100,12 @@ public class MatlabMeshes {
 		return meshes;
 	}
 
+	/**
+	 * Gets the points.
+	 *
+	 * @param struct the struct
+	 * @return the points
+	 */
 	private static ArrayList<Point> getPoints(MLStructure struct) {
 		ArrayList<Point> points = new ArrayList<Point>();
 		

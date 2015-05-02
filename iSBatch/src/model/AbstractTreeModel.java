@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package model;
 
 import javax.swing.tree.TreePath;
@@ -7,21 +10,34 @@ import javax.swing.event.TreeModelEvent;
 import javax.swing.event.EventListenerList;
 
 
+// TODO: Auto-generated Javadoc
 /** Support for generic dynamically changing TreeModels.
 */
 
 public abstract class AbstractTreeModel
     implements TreeModel
 {
+    
+    /** The listeners. */
     protected EventListenerList listeners;
     
 
+    /**
+     * Instantiates a new abstract tree model.
+     */
     protected AbstractTreeModel()
     {
         listeners = new EventListenerList();
     }
 
 
+    /**
+     * Gets the index of child.
+     *
+     * @param parent the parent
+     * @param child the child
+     * @return the index of child
+     */
     public int getIndexOfChild(Object parent, Object child)
     {
         for (int count = getChildCount(parent), i = 0; i < count; i++)
@@ -68,13 +84,21 @@ public abstract class AbstractTreeModel
         fireTreeStructureChanged(new TreePath(getRoot()));
     }
     
-    /** Call when a node has changed its leaf state. */
+    /**
+     *  Call when a node has changed its leaf state.
+     *
+     * @param path the path
+     */
     protected void firePathLeafStateChanged(TreePath path)
     {
         fireTreeStructureChanged(path);
     }
     
-    /** Call when the tree structure below the path has completely changed. */
+    /**
+     *  Call when the tree structure below the path has completely changed.
+     *
+     * @param parentPath the parent path
+     */
     protected void fireTreeStructureChanged(TreePath parentPath)
     {
         Object[] pairs = listeners.getListenerList();
@@ -93,9 +117,12 @@ public abstract class AbstractTreeModel
         }
      }
     
-    /** Call when the path itself has changed, but no structure changes
-        have occurred.
-    */
+    /**
+     *  Call when the path itself has changed, but no structure changes
+     *         have occurred.
+     *
+     * @param path the path
+     */
     protected void firePathChanged(TreePath path)
     {
         Object node = path.getLastPathComponent();
@@ -111,22 +138,50 @@ public abstract class AbstractTreeModel
         }
     }
     
+    /**
+     * Fire child added.
+     *
+     * @param parentPath the parent path
+     * @param index the index
+     * @param child the child
+     */
     protected void fireChildAdded(TreePath parentPath, int index, Object child)
     {
         fireChildrenAdded(parentPath, new int[] {index}, new Object[] {child});
     }
     
+    /**
+     * Fire child changed.
+     *
+     * @param parentPath the parent path
+     * @param index the index
+     * @param child the child
+     */
     protected void fireChildChanged(TreePath parentPath, int index, Object child)
     {
         fireChildrenChanged(parentPath, new int[] {index}, new Object[] {child});
     }
     
+    /**
+     * Fire child removed.
+     *
+     * @param parentPath the parent path
+     * @param index the index
+     * @param child the child
+     */
     protected void fireChildRemoved(TreePath parentPath, int index, Object child)
     {
         fireChildrenRemoved(parentPath, new int[] {index}, new Object[] {child});
     }
     
     
+    /**
+     * Fire children added.
+     *
+     * @param parentPath the parent path
+     * @param indices the indices
+     * @param children the children
+     */
     protected void fireChildrenAdded(TreePath parentPath, int[] indices, Object[] children)
     {
         Object[] pairs = listeners.getListenerList();
@@ -145,6 +200,13 @@ public abstract class AbstractTreeModel
         }
     }
 
+    /**
+     * Fire children changed.
+     *
+     * @param parentPath the parent path
+     * @param indices the indices
+     * @param children the children
+     */
     protected void fireChildrenChanged(TreePath parentPath, int[] indices, Object[] children)
     {
         Object[] pairs = listeners.getListenerList();
@@ -163,6 +225,13 @@ public abstract class AbstractTreeModel
         }
     }
 
+    /**
+     * Fire children removed.
+     *
+     * @param parentPath the parent path
+     * @param indices the indices
+     * @param children the children
+     */
     protected void fireChildrenRemoved(TreePath parentPath, int[] indices, Object[] children)
     {
         Object[] pairs = listeners.getListenerList();
@@ -181,6 +250,12 @@ public abstract class AbstractTreeModel
     }
 
 
+    /**
+     * Clone.
+     *
+     * @return the object
+     * @throws CloneNotSupportedException the clone not supported exception
+     */
     protected Object clone()
         throws CloneNotSupportedException
     {
@@ -193,11 +268,21 @@ public abstract class AbstractTreeModel
         
 
 
+    /**
+     * Adds the tree model listener.
+     *
+     * @param l the l
+     */
     public void addTreeModelListener(TreeModelListener l)
     {
         listeners.add(TreeModelListener.class, l);
     }
 
+    /**
+     * Removes the tree model listener.
+     *
+     * @param l the l
+     */
     public void removeTreeModelListener(TreeModelListener l)
     {
         listeners.remove(TreeModelListener.class, l);

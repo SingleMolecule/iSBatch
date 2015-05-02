@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package test;
 
 import java.awt.BorderLayout;
@@ -15,8 +18,20 @@ import model.FileNode;
 import model.Root;
 import model.Sample;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class TreeGenerator.
+ */
 public class TreeGenerator {
 
+	/**
+	 * Generate.
+	 *
+	 * @param outputFolder the output folder
+	 * @param tempFolder the temp folder
+	 * @param size the size
+	 * @return the database model
+	 */
 	public static DatabaseModel generate(String outputFolder, String tempFolder, int size) {
 		
 		Root root = new Root(outputFolder);
@@ -78,6 +93,11 @@ public class TreeGenerator {
 		return model;
 	}
 	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		
 		DatabaseModel model = TreeGenerator.generate("e:\\test", "e:\\temp", 10);

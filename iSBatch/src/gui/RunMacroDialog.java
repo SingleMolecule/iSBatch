@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package gui;
 
 import filters.NodeFilterInterface;
@@ -32,10 +35,16 @@ import model.Node;
 import model.Root;
 import model.Sample;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class RunMacroDialog.
+ */
 public class RunMacroDialog extends JDialog implements ActionListener, Runnable {
 	
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/** The channels. */
 	private String[] channels = new String[] {
 			"acquisition",
 			"bf",
@@ -44,6 +53,7 @@ public class RunMacroDialog extends JDialog implements ActionListener, Runnable 
 			"blue",
 	};
 	
+	/** The levels. */
 	private String[] levels = new String[] {
 			Root.type,
 			Experiment.type,
@@ -52,23 +62,52 @@ public class RunMacroDialog extends JDialog implements ActionListener, Runnable 
 			FileNode.type
 	};
 	
+	/** The macro filename text field. */
 	private JTextField macroFilenameTextField = new JTextField(20);
+	
+	/** The choose button. */
 	private JButton chooseButton = new JButton("Choose");
+	
+	/** The macro text pane. */
 	private CodeTextPane macroTextPane = new CodeTextPane();
+	
+	/** The channel combo box. */
 	private JComboBox<String> channelComboBox = new JComboBox<String>(channels);
+	
+	/** The run for each combo box. */
 	private JComboBox<String> runForEachComboBox = new JComboBox<String>(levels);
+	
+	/** The filename contains text field. */
 	private JTextField filenameContainsTextField = new JTextField(20);
 	
+	/** The save button. */
 	private JButton saveButton = new JButton("Save");
+	
+	/** The run button. */
 	private JButton runButton = new JButton("Run");
+	
+	/** The stop button. */
 	private JButton stopButton = new JButton("Stop");
 	
+	/** The selected file. */
 	private File selectedFile;
+	
+	/** The node. */
 	private Node node;
+	
+	/** The model. */
 	private DatabaseModel model;
 	
+	/** The is running. */
 	private boolean isRunning = false;
 	
+	/**
+	 * Instantiates a new run macro dialog.
+	 *
+	 * @param parent the parent
+	 * @param model the model
+	 * @param node the node
+	 */
 	public RunMacroDialog(JFrame parent, DatabaseModel model, Node node) {
 		super(parent, "Run Macro", true);
 		
@@ -153,6 +192,11 @@ public class RunMacroDialog extends JDialog implements ActionListener, Runnable 
 	}
 	
 	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		
 		DatabaseModel model = TreeGenerator.generate("e:\\test", "e:\\temp", 10);
@@ -160,6 +204,11 @@ public class RunMacroDialog extends JDialog implements ActionListener, Runnable 
 		new RunMacroDialog(null, model, model.getRoot().getChildren().get(4));
 	}
 	
+	/**
+	 * Action performed.
+	 *
+	 * @param e the e
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
@@ -204,6 +253,9 @@ public class RunMacroDialog extends JDialog implements ActionListener, Runnable 
 		
 	}
 	
+	/**
+	 * Run.
+	 */
 	@Override
 	public void run() {
 		

@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package plugins_ij;
 
 import ij.IJ;
@@ -16,11 +19,24 @@ import java.util.regex.Pattern;
 
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Create_inputCSV.
+ */
 public class Create_inputCSV implements PlugIn{
 
+	/** The logpath. */
 	static String logpath;
+	
+	/** The out dir. */
 	static String OUT_DIR;
 		
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static void main(String[] args) throws IOException {
 		
 		new Create_inputCSV().run("");
@@ -31,6 +47,11 @@ public class Create_inputCSV implements PlugIn{
 	
 	
 
+	/**
+	 * Run.
+	 *
+	 * @param arg0 the arg0
+	 */
 	public void run(String arg0){
 		
 		
@@ -204,6 +225,12 @@ public class Create_inputCSV implements PlugIn{
 
 	
 	
+/**
+ * Removes the from parts.
+ *
+ * @param parts the parts
+ * @param foV the fo v
+ */
 private void removeFromParts(List<String> parts, String foV) {
 		for(int i=0; i<parts.size(); i++){
 			String string = parts.get(i);
@@ -226,7 +253,13 @@ private void removeFromParts(List<String> parts, String foV) {
 
 	
 
-	public static String getPath(String question){
+	/**
+ * Gets the path.
+ *
+ * @param question the question
+ * @return the path
+ */
+public static String getPath(String question){
 		String string = IJ.getDirectory(question);	
 			if (string==null){
 				getPath(question);
@@ -237,12 +270,26 @@ private void removeFromParts(List<String> parts, String foV) {
 		
 	}
 	
+	/**
+	 * String to file.
+	 *
+	 * @param string the string
+	 * @return the file
+	 */
 	public File StringToFile(String string){
 		File file = new File(string);
 		return file;
 				
 	}
 	
+	/**
+	 * Parses the name.
+	 *
+	 * @param fileName the file name
+	 * @param FolderName the folder name
+	 * @return the string[]
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	static String[] ParseName(String fileName, String FolderName) throws IOException {
 		String[] sOutput = new String[17];
 				
@@ -355,6 +402,13 @@ private void removeFromParts(List<String> parts, String foV) {
 		return sOutput;
 
 	}
+	
+	/**
+	 * Gets the FP data.
+	 *
+	 * @param parts the parts
+	 * @return the FP data
+	 */
 	private static String getFPData(List<String> parts) {
 		Pattern pattern = Pattern.compile("^\\b[mkate2]|^\\b[ypet]", Pattern.CASE_INSENSITIVE);
 		String index = null;
@@ -375,12 +429,14 @@ private void removeFromParts(List<String> parts, String foV) {
 	}
 
 /**
-	private static String getODData(List<String> parts) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-*/
+ * 	private static String getODData(List<String> parts) {
+ * 		// TODO Auto-generated method stub
+ * 		return null;
+ * 	}.
+ *
+ * @param tag the tag
+ * @return the string[]
+ */
 	private static String[] splitTags(String tag){
 						
 		/**
@@ -474,6 +530,12 @@ private void removeFromParts(List<String> parts, String foV) {
 		return tags;
 	}
 
+	/**
+	 * Gets the plasmid data.
+	 *
+	 * @param parts the parts
+	 * @return the plasmid data
+	 */
 	private static String getPlasmidData(List<String> parts) {
 		Pattern pattern = Pattern.compile("\\b[pBAD]", Pattern.CASE_INSENSITIVE);
 		String index = null;
@@ -494,6 +556,12 @@ private void removeFromParts(List<String> parts, String foV) {
 		return index;	
 	}
 	
+	/**
+	 * Gets the damager data.
+	 *
+	 * @param parts the parts
+	 * @return the damager data
+	 */
 	private static String getDamagerData(List<String> parts) {
 		Pattern pattern = Pattern.compile("\\b[UVL]{2,4}|\\b[NFZ]{2,4}", Pattern.CASE_INSENSITIVE);
 		String index = null;
@@ -513,6 +581,12 @@ private void removeFromParts(List<String> parts, String foV) {
 		return index;	
 	}
 
+	/**
+	 * Gets the inducer data.
+	 *
+	 * @param parts the parts
+	 * @return the inducer data
+	 */
 	private static String[] getInducerData(List<String> parts) {
 		
 		//Pattern pattern = Pattern.compile("\\b[Ara]{2,4}", Pattern.CASE_INSENSITIVE);
@@ -534,6 +608,12 @@ private void removeFromParts(List<String> parts, String foV) {
 		return index;	
 	}
 
+	/**
+	 * Gets the time stamp.
+	 *
+	 * @param parts the parts
+	 * @return the time stamp
+	 */
 	private static String[] getTimeStamp(List<String> parts) {
 		
 		Pattern pattern = Pattern.compile("\\b[min]{2,4}", Pattern.CASE_INSENSITIVE);
@@ -556,6 +636,12 @@ private void removeFromParts(List<String> parts, String foV) {
 		return index;	
 	}
 
+	/**
+	 * Separate string from int.
+	 *
+	 * @param string the string
+	 * @return the string[]
+	 */
 	private static String[] SeparateStringFromInt(String string) {
 		String[] tags = new String[2];
 		
@@ -576,6 +662,12 @@ private void removeFromParts(List<String> parts, String foV) {
 		return tags;
 	}
 
+	/**
+	 * Gets the replicate.
+	 *
+	 * @param parts the parts
+	 * @return the replicate
+	 */
 	private static String getReplicate(List<String> parts) {
 		Pattern pattern = Pattern.compile("^\\d{3}");
 		String index = null;
@@ -593,6 +685,12 @@ private void removeFromParts(List<String> parts, String foV) {
 		return index;	
 	}
 
+	/**
+	 * Check condition.
+	 *
+	 * @param date the date
+	 * @return true, if successful
+	 */
 	private static boolean checkCondition(String date) {
 		boolean condition;
 		if (date==null){
@@ -604,6 +702,12 @@ private void removeFromParts(List<String> parts, String foV) {
 		return condition;
 	}
 
+	/**
+	 * Gets the date.
+	 *
+	 * @param parts the parts
+	 * @return the date
+	 */
 	private static String getDate(List<String> parts) {
 		Pattern pattern = Pattern.compile("\\d{6,8}");
 		String index = null;
@@ -621,6 +725,12 @@ private void removeFromParts(List<String> parts, String foV) {
 		return index;		
 	}
 	
+	/**
+	 * Gets the parts.
+	 *
+	 * @param Folderdame the folderdame
+	 * @return the parts
+	 */
 	public static List<String> getParts(String Folderdame){
 		String[] parts = Folderdame.split("_");
 		List<String> myList = new LinkedList<String>();

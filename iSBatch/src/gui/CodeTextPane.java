@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package gui;
 
 import java.awt.BorderLayout;
@@ -18,13 +21,24 @@ import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CodeTextPane.
+ */
 public class CodeTextPane extends JComponent implements DocumentListener, Runnable {
 	
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	
+	/** The text pane. */
 	private JTextPane textPane = new JTextPane();
+	
+	/** The document. */
 	private StyledDocument document = textPane.getStyledDocument();
 	
+	/**
+	 * Instantiates a new code text pane.
+	 */
 	public CodeTextPane() {
 		
 		setPreferredSize(new Dimension(600, 400));
@@ -59,6 +73,9 @@ public class CodeTextPane extends JComponent implements DocumentListener, Runnab
 		document.addDocumentListener(this);
 	}
 
+	/**
+	 * Run.
+	 */
 	@Override
 	public void run () {
 		
@@ -81,6 +98,11 @@ public class CodeTextPane extends JComponent implements DocumentListener, Runnab
 		}
 	}
 	
+	/**
+	 * Highlight identifiers.
+	 *
+	 * @param text the text
+	 */
 	protected void highlightIdentifiers(String text) {
 		
 		String identifierRegEx = "[a-zA-Z]\\w*";
@@ -101,6 +123,13 @@ public class CodeTextPane extends JComponent implements DocumentListener, Runnab
 		
 	}
 	
+	/**
+	 * Highlight.
+	 *
+	 * @param text the text
+	 * @param regEx the reg ex
+	 * @param styleName the style name
+	 */
 	protected void highlight(String text, String regEx, String styleName) {
 		
 		Pattern pattern = Pattern.compile(regEx);
@@ -115,11 +144,21 @@ public class CodeTextPane extends JComponent implements DocumentListener, Runnab
 		
 	}
 	
+	/**
+	 * Changed update.
+	 *
+	 * @param e the e
+	 */
 	@Override
 	public void changedUpdate(DocumentEvent e) {
 		//System.out.println("changed update");
 	}
 
+	/**
+	 * Insert update.
+	 *
+	 * @param e the e
+	 */
 	@Override
 	public void insertUpdate(DocumentEvent e) {
 		//System.out.println("insert update");
@@ -127,6 +166,11 @@ public class CodeTextPane extends JComponent implements DocumentListener, Runnab
 		SwingUtilities.invokeLater(this);
 	}
 
+	/**
+	 * Removes the update.
+	 *
+	 * @param e the e
+	 */
 	@Override
 	public void removeUpdate(DocumentEvent e) {
 		//System.out.println("remove update");
@@ -134,10 +178,20 @@ public class CodeTextPane extends JComponent implements DocumentListener, Runnab
 		SwingUtilities.invokeLater(this);
 	}
 	
+	/**
+	 * Sets the text.
+	 *
+	 * @param text the new text
+	 */
 	public void setText(String text) {
 		textPane.setText(text);
 	}
 	
+	/**
+	 * Gets the text.
+	 *
+	 * @return the text
+	 */
 	public String getText() {
 		return textPane.getText();
 	}

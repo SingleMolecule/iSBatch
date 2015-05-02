@@ -40,10 +40,26 @@ import ij.process.ImageProcessor;
 
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CellMeshOverlay.
+ */
 public class CellMeshOverlay implements PlugIn {
 
 
 
+	/**
+	 * Gets the profile line.
+	 *
+	 * @param ip the ip
+	 * @param x0 the x0
+	 * @param y0 the y0
+	 * @param x1 the x1
+	 * @param y1 the y1
+	 * @param xpoints the xpoints
+	 * @param ypoints the ypoints
+	 * @return the profile line
+	 */
 	private void getProfileLine(ImageProcessor ip, double x0, double y0, double x1, double y1, double[] xpoints, double[] ypoints) {
 
 		
@@ -88,6 +104,11 @@ public class CellMeshOverlay implements PlugIn {
 
 	
 
+	/**
+	 * Gets the image titles.
+	 *
+	 * @return the image titles
+	 */
 	private String[] getImageTitles() {
 
 
@@ -114,6 +135,11 @@ public class CellMeshOverlay implements PlugIn {
 
 	
 
+	/**
+	 * Run.
+	 *
+	 * @param arg0 the arg0
+	 */
 	public void run(String arg0) {
 
 

@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package utils;
 
 
@@ -7,14 +10,33 @@ import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ListContentsOfZipFile.
+ */
 public class ListContentsOfZipFile {
+		
+		/** The zip file. */
 		ZipFile zipFile = null;
+		
+		/** The zip. */
 		File zip;
 	
+	/**
+	 * Instantiates a new list contents of zip file.
+	 *
+	 * @param file the file
+	 */
 	public ListContentsOfZipFile(File file){
 		this.zip = file;
 		
 	}
+	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		
 		ZipFile zipFile = null;

@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package operation.cellIntensity;
 
 import filters.GenericFilter;
@@ -26,19 +29,44 @@ import model.Root;
 import model.Sample;
 import operations.Operation;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CellIntensity.
+ */
 public class CellIntensity implements Operation {
+	
+	/** The dialog. */
 	private CellIntensityGUI dialog;
+	
+	/** The channel. */
 	private String channel;
+	
+	/** The custom search. */
 	private String customSearch;
+	
+	/** The tags. */
 	private ArrayList<String> tags;
 
+	/**
+	 * Instantiates a new cell intensity.
+	 *
+	 * @param treeModel the tree model
+	 */
 	public CellIntensity(DatabaseModel treeModel) {
 		// TODO Auto-generated constructor stub
 	}
 
+	/** The traces. */
 	ResultsTable traces = new ResultsTable();
+	
+	/** The traces corrected. */
 	ResultsTable tracesCorrected = new ResultsTable();
 
+	/**
+	 * Run.
+	 *
+	 * @param node the node
+	 */
 	private void run(Node node) {
 
 		// First, get a list of all files to execute
@@ -57,6 +85,11 @@ public class CellIntensity implements Operation {
 		}
 	}
 
+	/**
+	 * Calculate cell intensities.
+	 *
+	 * @param currentNode the current node
+	 */
 	private void calculateCellIntensities(Node currentNode) {
 		FileNode fNode = (FileNode) currentNode;
 		ImagePlus imp = fNode.getImage();
@@ -142,6 +175,14 @@ public class CellIntensity implements Operation {
 		traces.reset();
 	}
 
+	/**
+	 * Gets the average.
+	 *
+	 * @param ip the ip
+	 * @param mask the mask
+	 * @param r the r
+	 * @return the average
+	 */
 	private static double[] getAverage(ImageProcessor ip, ImageProcessor mask,
 			Rectangle r) {
 		double[] results = new double[7];
@@ -180,6 +221,12 @@ public class CellIntensity implements Operation {
 		return results;
 	}
 
+	/**
+	 * Gets the stddev.
+	 *
+	 * @param listOfValues the list of values
+	 * @return the stddev
+	 */
 	private static double getSTDDEV(List<Double> listOfValues) {
 		int size = listOfValues.size();
 		double sum = 0;
@@ -207,17 +254,33 @@ public class CellIntensity implements Operation {
 		return s2;
 	}
 
+	/**
+	 * Gets the context.
+	 *
+	 * @return the context
+	 */
 	@Override
 	public String[] getContext() {
 		return new String[] { "All" };
 	}
 
+	/**
+	 * Gets the name.
+	 *
+	 * @return the name
+	 */
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
 		return "Cell Intensity";
 	}
 
+	/**
+	 * Setup.
+	 *
+	 * @param node the node
+	 * @return true, if successful
+	 */
 	@Override
 	public boolean setup(Node node) {
 		dialog = new CellIntensityGUI(node);
@@ -230,24 +293,44 @@ public class CellIntensity implements Operation {
 		return true;
 	}
 
+	/**
+	 * Finalize.
+	 *
+	 * @param node the node
+	 */
 	@Override
 	public void finalize(Node node) {
 		// TODO Auto-generated method stub
 
 	}
 
+	/**
+	 * Gets the created nodes.
+	 *
+	 * @return the created nodes
+	 */
 	@Override
 	public Node[] getCreatedNodes() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/**
+	 * Gets the parameters.
+	 *
+	 * @return the parameters
+	 */
 	@Override
 	public HashMap<String, String> getParameters() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param root the root
+	 */
 	@Override
 	public void visit(Root root) {
 
@@ -255,28 +338,53 @@ public class CellIntensity implements Operation {
 
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param experiment the experiment
+	 */
 	@Override
 	public void visit(Experiment experiment) {
 		run(experiment);
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param sample the sample
+	 */
 	@Override
 	public void visit(Sample sample) {
 		run(sample);
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param fieldOfView the field of view
+	 */
 	@Override
 	public void visit(FieldOfView fieldOfView) {
 		run(fieldOfView);
 
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param fileNode the file node
+	 */
 	@Override
 	public void visit(FileNode fileNode) {
 		run(fileNode);
 
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param operationNode the operation node
+	 */
 	@Override
 	public void visit(OperationNode operationNode) {
 		// TODO Auto-generated method stub

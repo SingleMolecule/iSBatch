@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package operations.correlation;
 
 import ij.IJ;
@@ -33,27 +36,49 @@ import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 import javax.swing.JCheckBox;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CorrelationOperationGui.
+ */
 public class CorrelationOperationGui extends JDialog implements ActionListener {
 
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+	
+	/** The channels. */
 	private String[] channels = new String[] {
 
 	"[Select Channel]", "All", "Acquisition", "Bright Field", "Red", "Green",
 			"Blue", };
+	
+	/** The types. */
 	private String[] types = new String[] { "[File Type]", "Raw", "Flat",
 			"Discoidal" };
 
+	/** The canceled. */
 	private boolean canceled = false;
 
+	/** The frame. */
 	static JFrame frame;
+	
+	/** The node. */
 	private Node node;
+	
+	/** The filter1 text. */
 	protected String filter1Text;
+	
+	/** The filter2 text. */
 	protected String filter2Text;
 
 	/*
 	 * Filter variables
 	 */
 
+	/**
+	 * Instantiates a new correlation operation gui.
+	 *
+	 * @param node the node
+	 */
 	public CorrelationOperationGui(Node node) {
 		setModal(true);
 		setTitle("Set Background Image");
@@ -65,9 +90,15 @@ public class CorrelationOperationGui extends JDialog implements ActionListener {
 
 	}
 
+	/**
+	 * Setup.
+	 */
 	private void setup() {
 	}
 
+	/**
+	 * Display.
+	 */
 	private void display() {
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -300,6 +331,11 @@ public class CorrelationOperationGui extends JDialog implements ActionListener {
 
 	}
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		frame = new JFrame();
 
@@ -307,53 +343,143 @@ public class CorrelationOperationGui extends JDialog implements ActionListener {
 
 	}
 
+	/**
+	 * Error.
+	 *
+	 * @param msg the msg
+	 */
 	void error(String msg) {
 		IJ.error("Batch Processor", msg);
 	}
 
+	/**
+	 * Checks if is canceled.
+	 *
+	 * @return true, if is canceled
+	 */
 	public boolean isCanceled() {
 		return canceled;
 	}
 
+	/** The panel. */
 	private JPanel panel;
+	
+	/** The panel_1. */
 	private JPanel panel_1;
+	
+	/** The panel_2. */
 	private JPanel panel_2;
+	
+	/** The panel_3. */
 	private JPanel panel_3;
+	
+	/** The panel_4. */
 	private JPanel panel_4;
+	
+	/** The panel_5. */
 	private JPanel panel_5;
+	
+	/** The channel1_ typ combo box. */
 	private JComboBox<String> channel1_TypComboBox;
+	
+	/** The ch2 type combo box. */
 	private JComboBox<String> ch2TypeComboBox;
+	
+	/** The channel1 combo box. */
 	private JComboBox<String> channel1ComboBox;
+	
+	/** The channel2 combo box. */
 	private JComboBox<String> channel2ComboBox;
+	
+	/** The filter ch1 text field. */
 	private JTextField filterCh1TextField;
+	
+	/** The filter ch2 text field. */
 	private JTextField filterCh2TextField;
+	
+	/** The lbl custom. */
 	private JLabel lblCustom;
+	
+	/** The lbl custom_1. */
 	private JLabel lblCustom_1;
+	
+	/** The btn process. */
 	private JButton btnProcess;
+	
+	/** The btn cancel. */
 	private JButton btnCancel;
+	
+	/** The type2. */
 	private String type2;
+	
+	/** The type1. */
 	private String type1;
+	
+	/** The channel1. */
 	private String channel1;
+	
+	/** The channel2. */
 	private String channel2;
+	
+	/** The filter1. */
 	private String filter1;
+	
+	/** The filter2. */
 	private String filter2;
+	
+	/** The x projection. */
 	private JCheckBox xProjection;
+	
+	/** The y projection. */
 	private JCheckBox yProjection;
+	
+	/** The project_on_ x. */
 	private boolean project_on_X;
+	
+	/** The project_on_ y. */
 	private boolean project_on_Y;
 
+	/**
+	 * Gets the channel1.
+	 *
+	 * @return the channel1
+	 */
 	public String getChannel1() {
 		return channel1;
 	}
+	
+	/**
+	 * Gets the channel2.
+	 *
+	 * @return the channel2
+	 */
 	public String getChannel2() {
 		return channel2;
 	}
+	
+	/**
+	 * Gets the type1.
+	 *
+	 * @return the type1
+	 */
 	public String gettype1() {
 		return type1;
 	}
+	
+	/**
+	 * Gets the type2.
+	 *
+	 * @return the type2
+	 */
 	public String gettype2() {
 		return type2;
 	}
+	
+	/**
+	 * Action performed.
+	 *
+	 * @param e the e
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == channel1ComboBox){
@@ -403,19 +529,40 @@ public class CorrelationOperationGui extends JDialog implements ActionListener {
 		
 	}
 	
+	/**
+	 * Require x projection.
+	 *
+	 * @return true, if successful
+	 */
 	public boolean requireXProjection(){
 		return project_on_X;
 	};
 	
+	/**
+	 * Require y projection.
+	 *
+	 * @return true, if successful
+	 */
 	public boolean requireYProjection(){
 		return project_on_Y;
 	};
 	
 	
+	/**
+	 * Gets the filter1.
+	 *
+	 * @return the filter1
+	 */
 	public String getFilter1(){
 		return filter1;
 		
 	}
+	
+	/**
+	 * Gets the filter2.
+	 *
+	 * @return the filter2
+	 */
 	public String getFilter2(){
 		return filter2;
 		

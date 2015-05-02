@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package operation.macro;
 
 import filters.NodeFilterInterface;
@@ -49,40 +52,72 @@ import javax.swing.JScrollPane;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class MacroOperationGUI.
+ */
 public class MacroOperationGUI extends JDialog implements ItemListener {
-	/**
-	 * 
-	 */
+	
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+	
+	/** The output text field. */
 	private static JTextField outputTextField;
+	
+	/** The channels. */
 	private String[] channels = new String[] {
 
 	"[Select Channel]", "All", "Acquisition", "Bright Field", "Red", "Green",
 			"Blue", };
+	
+	/** The combo box. */
 	private JComboBox comboBox;
 
+	/** The Constant code. */
 	private static final String[] code = { "[Select from list]", "Add Border",
 			"Convert to RGB", "Crop", "Gaussian Blur", "Invert", "Label",
 			"Timestamp", "Max Dimension", "Measure", "Print Index and Title",
 			"Resize", "Scale", "Show File Info", "Unsharp Mask", };
 
+	/** The Custom filter. */
 	private JTextField CustomFilter;
+	
+	/** The macro combo box. */
 	private JComboBox macroComboBox;
+	
+	/** The Macro text area. */
 	private JTextArea MacroTextArea;
+	
+	/** The canceled. */
 	private boolean canceled = false;
+	
+	/** The macro. */
 	private String macro = "";
+	
+	/** The output tag. */
 	private JTextField outputTag;
+	
+	/** The output image. */
 	private ImagePlus outputImage;
 	
+	/** The frame. */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private JFrame frame;
+	
+	/** The node. */
 	private Node node;
 
 	/*
 	 * Filter variables
 	 */
+	/** The Selectedchannel. */
 	private String Selectedchannel = "All";
 
+	/**
+	 * Instantiates a new macro operation gui.
+	 *
+	 * @param node the node
+	 */
 	public MacroOperationGUI(Node node) {
 		frame = new JFrame();
 		this.node = node;
@@ -92,9 +127,15 @@ public class MacroOperationGUI extends JDialog implements ItemListener {
 
 	}
 
+	/**
+	 * Setup.
+	 */
 	private void setup() {
 	}
 
+	/**
+	 * Display.
+	 */
 	private void display() {
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -385,6 +426,9 @@ public class MacroOperationGUI extends JDialog implements ItemListener {
 
 	}
 
+	/**
+	 * Run.
+	 */
 	private void run() {
 		macro = MacroTextArea.getText();
 		if (macro.equals("")) {
@@ -454,6 +498,13 @@ public class MacroOperationGUI extends JDialog implements ItemListener {
 
 
 
+	/**
+	 * Run macro.
+	 *
+	 * @param macro the macro
+	 * @param image the image
+	 * @return true, if successful
+	 */
 	private boolean runMacro(String macro, Node image) {
 		ImagePlus imp = IJ.openImage(image.getProperty("path"));
 		
@@ -474,6 +525,13 @@ public class MacroOperationGUI extends JDialog implements ItemListener {
 		
 	}
 
+	/**
+	 * Run macro.
+	 *
+	 * @param macro the macro
+	 * @param imp the imp
+	 * @return true, if successful
+	 */
 	private boolean runMacro(String macro, ImagePlus imp) {
 		WindowManager.setTempCurrentImage(imp);
 		Interpreter interp = new Interpreter();
@@ -491,6 +549,9 @@ public class MacroOperationGUI extends JDialog implements ItemListener {
 		return true;
 	}
 
+	/**
+	 * Test.
+	 */
 	private void test() {
 		IJ.log("Print list of files to be analysed.");
 		ArrayList<Node> allnodes = node.getDescendents(imageFileNodeFilter);
@@ -505,6 +566,9 @@ public class MacroOperationGUI extends JDialog implements ItemListener {
 
 	}
 
+	/**
+	 * Save.
+	 */
 	private void save() {
 		macro = MacroTextArea.getText();
 		if (!macro.equals(""))
@@ -514,6 +578,9 @@ public class MacroOperationGUI extends JDialog implements ItemListener {
 
 	}
 
+	/**
+	 * Open.
+	 */
 	private void open() {
 		String text = IJ.openAsString("");
 		if (text == null)
@@ -532,6 +599,11 @@ public class MacroOperationGUI extends JDialog implements ItemListener {
 
 	}
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		JFrame frame = new JFrame();
 
@@ -539,10 +611,20 @@ public class MacroOperationGUI extends JDialog implements ItemListener {
 
 	}
 
+	/**
+	 * Channel combo box.
+	 *
+	 * @return the j combo box
+	 */
 	public JComboBox ChannelComboBox() {
 		return comboBox;
 	}
 
+	/**
+	 * Item state changed.
+	 *
+	 * @param e the e
+	 */
 	public void itemStateChanged(ItemEvent e) {
 		if (e.getStateChange() == ItemEvent.SELECTED) {
 			// Do any operations you need to do when an item is selected.
@@ -589,6 +671,12 @@ public class MacroOperationGUI extends JDialog implements ItemListener {
 
 	}
 
+	/**
+	 * Open macro from jar.
+	 *
+	 * @param name the name
+	 * @return the string
+	 */
 	private String openMacroFromJar(String name) {
 		ImageJ ij = IJ.getInstance();
 		Class c = ij != null ? ij.getClass() : (new ImageStack()).getClass();
@@ -610,18 +698,34 @@ public class MacroOperationGUI extends JDialog implements ItemListener {
 		return macro;
 	}
 
+	/**
+	 * Error.
+	 *
+	 * @param msg the msg
+	 */
 	void error(String msg) {
 		IJ.error("Batch Processor", msg);
 	}
 
+	/**
+	 * Macro combo box.
+	 *
+	 * @return the j combo box
+	 */
 	public JComboBox MacroComboBox() {
 		return macroComboBox;
 	}
 
+	/**
+	 * Checks if is canceled.
+	 *
+	 * @return true, if is canceled
+	 */
 	public boolean isCanceled() {
 		return canceled;
 	}
 
+	/** The image file node filter. */
 	private NodeFilterInterface imageFileNodeFilter = new NodeFilterInterface() {
 
 		@Override

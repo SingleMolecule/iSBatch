@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package operations.microbeTrackerIO;
 
 
@@ -34,31 +37,50 @@ import java.awt.event.KeyEvent;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class MicrobeTrackerIOGui.
+ */
 public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
-	/**
-	 * 
-	 */
+	
+	/** The btn cancel. */
 
 	// butons
 
 	private JButton btnCancel;
+	
+	/** The btn process. */
 	private JButton btnProcess;
 
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+	
+	/** The channels. */
 	private String[] channels = new String[] {
 
 	"[Select Channel]", "All", "Acquisition", "Bright Field", "Red", "Green",
 			"Blue", };
 
+	/** The types. */
 	private String[] types = new String[] { "[File Type]", "Raw", "Flat",
 			"Discoidal" };
 
+	/** The canceled. */
 	private boolean canceled = false;
 
+	/** The frame. */
 	static JFrame frame;
+	
+	/** The node. */
 	private Node node;
+	
+	/** The image path. */
 	private String channel, method, imagePath;
+	
+	/** The BFF ile input path. */
 	protected String matFilePath, BFFIleInputPath;
+	
+	/** The custom fiter. */
 	protected String customFiter;
 
 	/*
@@ -66,6 +88,11 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 	 */
 
 	
+	/**
+	 * Instantiates a new microbe tracker io gui.
+	 *
+	 * @param node the node
+	 */
 	public MicrobeTrackerIOGui(Node node) {
 		setModal(true);
 		setTitle("MicrobeTracker I/O");
@@ -77,9 +104,15 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 
 	}
 
+	/**
+	 * Setup.
+	 */
 	private void setup() {
 	}
 
+	/**
+	 * Display.
+	 */
 	private void display() {
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -290,6 +323,11 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 
 	}
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		frame = new JFrame();
 
@@ -297,29 +335,71 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 
 	}
 
+	/**
+	 * Error.
+	 *
+	 * @param msg the msg
+	 */
 	void error(String msg) {
 		IJ.error("Batch Processor", msg);
 	}
 
+	/**
+	 * Checks if is canceled.
+	 *
+	 * @return true, if is canceled
+	 */
 	public boolean isCanceled() {
 		return canceled;
 	}
 
+	/** The image type. */
 	private String imageType;
+	
+	/** The panel. */
 	private JPanel panel;
+	
+	/** The panel_1. */
 	private JPanel panel_1;
+	
+	/** The Import panel. */
 	private JPanel ImportPanel;
+	
+	/** The Create input panel. */
 	private JPanel CreateInputPanel;
+	
+	/** The file type combo box. */
 	private JComboBox<String> fileTypeComboBox;
+	
+	/** The channel combo box. */
 	private JComboBox<String> channelComboBox;
+	
+	/** The lbl customfilter. */
 	private JLabel lblCustomfilter;
+	
+	/** The custom filter text field. */
 	private JTextField customFilterTextField;
+	
+	/** The btn loadmat. */
 	private JButton btnLoadmat;
+	
+	/** The math path text field. */
 	private JTextField mathPathTextField;
+	
+	/** The btn bf input. */
 	private JButton btnBfInput;
+	
+	/** The BF input. */
 	private JTextField BFInput;
+	
+	/** The btn import. */
 	private JButton btnImport;
 
+	/**
+	 * Action performed.
+	 *
+	 * @param e the e
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnCancel) {
@@ -368,26 +448,56 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 	
 	
 	
+	/**
+	 * Gets the channel.
+	 *
+	 * @return the channel
+	 */
 	public String getChannel() {
 		return channel;
 	}
 
+	/**
+	 * Gets the method.
+	 *
+	 * @return the method
+	 */
 	public String getMethod() {
 		return method;
 	}
 
+	/**
+	 * Gets the image path.
+	 *
+	 * @return the image path
+	 */
 	public String getImagePath() {
 		return imagePath;
 	}
 
+	/**
+	 * Gets the custom filter.
+	 *
+	 * @return the custom filter
+	 */
 	public String getCustomFilter() {
 		return customFiter;
 	}
 
+	/**
+	 * Gets the mat file path.
+	 *
+	 * @return the mat file path
+	 */
 	public String getMatFilePath() {
 		return matFilePath;
 	}
 
+	/**
+	 * Gets the image type.
+	 *
+	 * @return the image type
+	 */
 	public String getImageType() {
 		return imageType;
 	}

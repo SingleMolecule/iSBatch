@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package plugins_ij;
 
 import java.awt.Component;
@@ -22,15 +25,35 @@ import ij.plugin.PlugIn;
 import ij.plugin.frame.RoiManager;
 import ij.process.ImageProcessor;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Cell_Fluorescence.
+ */
 public class Cell_Fluorescence implements PlugIn {
+	
+	/** The table. */
 	static ResultsTable table;
+	
+	/** The CSV content. */
 	static String[][] CSVContent = null;
+	
+	/** The file. */
 	static File file;
 	//String matFilename = "D:\\20140521-UmuC\\BF.mat";
+	/** The roi folder. */
 	static String roiFolder;
+	
+	/** The ROI file. */
 	static File ROIFile;
+	
+	/** The Stats folder. */
 	static String StatsFolder;
 	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		new Cell_Fluorescence().run("");
 
@@ -39,6 +62,11 @@ public class Cell_Fluorescence implements PlugIn {
 	
 	
 	
+	/**
+	 * Run.
+	 *
+	 * @param arg0 the arg0
+	 */
 	public void run(String arg0){
 		
 		//Open BFMAt
@@ -84,6 +112,14 @@ public class Cell_Fluorescence implements PlugIn {
 		
 		
 	}
+	
+	/**
+	 * Gets the unique tags.
+	 *
+	 * @param collum the collum
+	 * @param table the table
+	 * @return the unique tags
+	 */
 	private List<String> getUniqueTags(String collum, ResultsTable table) {
 		List<String> list = getAllTags(collum, table);
 		HashSet<String> repeated = new HashSet<String>();
@@ -94,6 +130,13 @@ public class Cell_Fluorescence implements PlugIn {
 		
 	}
 	
+	/**
+	 * Gets the all tags.
+	 *
+	 * @param collum the collum
+	 * @param table the table
+	 * @return the all tags
+	 */
 	private List<String> getAllTags(String collum, ResultsTable table)
 	{
 		
@@ -110,6 +153,11 @@ public class Cell_Fluorescence implements PlugIn {
 		
 	}
 	
+	/**
+	 * Load table.
+	 *
+	 * @param csvFilename the csv filename
+	 */
 	private void loadTable(String csvFilename) {
 		try {
 			table = ResultsTable.open(csvFilename);
@@ -119,6 +167,13 @@ public class Cell_Fluorescence implements PlugIn {
 		}
 		
 	}
+	
+	/**
+	 * Decision_tree.
+	 *
+	 * @param labels the labels
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	private static void decision_tree(String[] labels) throws IOException {
 		int choice = ConfirmExecution(labels);
 	  	System.out.println(choice);
@@ -286,6 +341,16 @@ public class Cell_Fluorescence implements PlugIn {
 	  		
 		}
 	}
+	
+	/**
+	 * Gets the sub file list.
+	 *
+	 * @param resultstable the resultstable
+	 * @param colNameToCheckMatch the col name to check match
+	 * @param stringToMatch the string to match
+	 * @param colNameGetValuesFrom the col name get values from
+	 * @return the sub file list
+	 */
 	private static List<String> getSubFileList(ResultsTable resultstable, String colNameToCheckMatch, String stringToMatch, String colNameGetValuesFrom) {
 		List<String> list = new ArrayList<>();
 		
@@ -303,6 +368,14 @@ public class Cell_Fluorescence implements PlugIn {
 	
 		return list;
 	}
+	
+	/**
+	 * Gets the RO is.
+	 *
+	 * @param listRois the list rois
+	 * @param folder the folder
+	 * @return the RO is
+	 */
 	private static List<File> getROIs(List<File> listRois, int folder) {
 		List<File> results = new ArrayList<>();
 		
@@ -323,6 +396,14 @@ public class Cell_Fluorescence implements PlugIn {
 		return results;
 	}
 	
+	/**
+	 * Gets the average.
+	 *
+	 * @param ip the ip
+	 * @param mask the mask
+	 * @param r the r
+	 * @return the average
+	 */
 	private static double[] getAverage(ImageProcessor ip, ImageProcessor mask,
 			Rectangle r) {
 			double[] results = new double[7];
@@ -366,6 +447,12 @@ public class Cell_Fluorescence implements PlugIn {
 		return results;
 	}
 
+	/**
+	 * Gets the stddev.
+	 *
+	 * @param listOfValues the list of values
+	 * @return the stddev
+	 */
 	private static double getSTDDEV(List<Double> listOfValues) {
 		int size = listOfValues.size();
 		double sum = 0;
@@ -396,6 +483,12 @@ public class Cell_Fluorescence implements PlugIn {
 
 
 
+	/**
+	 * Confirm execution.
+	 *
+	 * @param labels the labels
+	 * @return the int
+	 */
 	private static int ConfirmExecution(String[] labels) {
 		
 		
@@ -413,6 +506,12 @@ public class Cell_Fluorescence implements PlugIn {
 	return DKSelection;// TODO Auto-generated method stub
 		
 	}
+	
+	/**
+	 * Ask to continue.
+	 *
+	 * @return the int
+	 */
 	private static int askToContinue() {
 		Object[] options2 = {"Yes","No"};
 

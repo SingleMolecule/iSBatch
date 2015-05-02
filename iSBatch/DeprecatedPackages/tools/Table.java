@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package tools;
 
 import ij.measure.ResultsTable;
@@ -5,6 +8,7 @@ import ij.measure.ResultsTable;
 import java.io.File;
 import java.io.IOException;
 
+// TODO: Auto-generated Javadoc
 /**
  * This implements an table, as an extenstion of the ResultsTable.class in imageJ.
  * 
@@ -24,8 +28,14 @@ import java.io.IOException;
 
 class Table {
 
+	/** The table. */
 	static ResultsTable table;
 	
+	/**
+	 * Loadtable.
+	 *
+	 * @param path the path
+	 */
 	private void loadtable(String path){
 		try {
 			table = ResultsTable.open(path);
@@ -35,6 +45,11 @@ class Table {
 		}
 	}
 	
+	/**
+	 * Loadtable.
+	 *
+	 * @param file the file
+	 */
 	@SuppressWarnings("unused")
 	private void loadtable(File file){
 		String path = file.getAbsolutePath();

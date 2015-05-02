@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package tools;
 //Collection of pieces of code to help file handling while developing imageJ codes. This should be well commented to have educational and reference purposes
 import java.io.BufferedReader;
@@ -7,16 +10,23 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+	// TODO: Auto-generated Javadoc
+/**
+	 * The Class Shortcut.
+	 */
 	public class Shortcut {
+		
 		/**
 		 *  public means that the method is visible and can be called from other objects of other types. 
 		 *  Other alternatives are private, protected, package and package-private. See here for more details.
-
-			static means that the method is associated with the class, not a specific instance (object) of that class. 
-			This means that you can call a static method without creating an object of the class.
-
-			void means that the method has no return value. If the method returned an int you would write int instead of void.
-
+		 * 
+		 * 			static means that the method is associated with the class, not a specific instance (object) of that class. 
+		 * 			This means that you can call a static method without creating an object of the class.
+		 * 
+		 * 			void means that the method has no return value. If the method returned an int you would write int instead of void.
+		 *
+		 * @param inputPath the input path
+		 * @return the file list
 		 */
 		public static File[] getFileList(String inputPath){ // Public = everyone can see. static = no need to create and object
 			File INPUT_DIR = new File(inputPath);           //Create a File from a input String
@@ -27,6 +37,12 @@ import java.util.regex.Pattern;
 		}
 		
 		
+		/**
+		 * Gets the tag.
+		 *
+		 * @param FileName the file name
+		 * @return the tag
+		 */
 		public static String getTag(String FileName){
 			
 			 Pattern pattern = Pattern.compile("\\[BF\\]|\\[514\\]|\\[568\\]|\\[Acquisition\\]");
@@ -40,6 +56,13 @@ import java.util.regex.Pattern;
 			  return null;
 			
 		}
+		
+		/**
+		 * Gets the time.
+		 *
+		 * @param FileName the file name
+		 * @return the time
+		 */
 		public static String getTime(String FileName){
 			
 			 Pattern pattern = Pattern.compile("min\\d{3}|day\\d{3}|min\\d{2}|day\\d{2}");
@@ -52,6 +75,13 @@ import java.util.regex.Pattern;
 			  return null;
 			
 		}
+		
+		/**
+		 * Gets the number.
+		 *
+		 * @param FileName the file name
+		 * @return the number
+		 */
 		public static String getNumber(String FileName){
 			
 			 Pattern pattern = Pattern.compile("\\d{3}|\\d{2}");
@@ -64,6 +94,13 @@ import java.util.regex.Pattern;
 			  return null;
 			
 		}
+		
+		/**
+		 * Gets the time value.
+		 *
+		 * @param FileName the file name
+		 * @return the time value
+		 */
 		public static String getTimeValue(String FileName){
 			
 			 Pattern pattern = Pattern.compile("min\\d{3}|day\\d{3}|min\\d{2}|day\\d{2}");
@@ -76,6 +113,13 @@ import java.util.regex.Pattern;
 			  return null;
 			
 		}
+		
+		/**
+		 * Gets the time stamp.
+		 *
+		 * @param FileName the file name
+		 * @return the time stamp
+		 */
 		public static String getTimeStamp(String FileName){
 			
 			 Pattern pattern = Pattern.compile("min|day");
@@ -87,6 +131,13 @@ import java.util.regex.Pattern;
 			   }
 			  return null;
 		}
+		
+		/**
+		 * Gets the sample value.
+		 *
+		 * @param FileName the file name
+		 * @return the sample value
+		 */
 		public static String getSampleValue(String FileName){
 			
 			 Pattern pattern = Pattern.compile("spl\\d{3}");
@@ -100,6 +151,13 @@ import java.util.regex.Pattern;
 			
 		}
 
+		/**
+		 * Populate.
+		 *
+		 * @param pathToCSV the path to csv
+		 * @return the string[][]
+		 * @throws IOException Signals that an I/O exception has occurred.
+		 */
 		public static String[][] Populate (String pathToCSV) throws IOException{
 			
 			 BufferedReader CSVFile = new BufferedReader(new FileReader(pathToCSV));
@@ -140,6 +198,13 @@ import java.util.regex.Pattern;
 		     return MyTable;
 		}	
 		
+		/**
+		 * Ge csv lenght.
+		 *
+		 * @param csvFile the csv file
+		 * @return the int
+		 * @throws IOException Signals that an I/O exception has occurred.
+		 */
 		public static int geCSVLenght(BufferedReader csvFile) throws IOException {
 			 int length=0;
 			 String dataRow = csvFile.readLine();
@@ -150,6 +215,13 @@ import java.util.regex.Pattern;
 		     
 			return length;
 		}
+		
+		/**
+		 * Gets the separator.
+		 *
+		 * @param dataRow the data row
+		 * @return the separator
+		 */
 		private static String[] getSeparator(String dataRow) {
 			String[] outputs = new String[2];
 			
@@ -178,12 +250,24 @@ import java.util.regex.Pattern;
 			
 		}
 		
+		/**
+		 * Gets the main name.
+		 *
+		 * @param Filename the filename
+		 * @return the main name
+		 */
 		public static String getMainName(String Filename){
 			String[] parts = Filename.split("\\[");
 			return  parts[0];
 			
 		}
 		
+		/**
+		 * Gets the main name and time.
+		 *
+		 * @param Filename the filename
+		 * @return the main name and time
+		 */
 		public static String getMainNameAndTime(String Filename){
 			String[] parts = Filename.split("\\[");
 			

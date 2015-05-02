@@ -49,21 +49,43 @@ import java.beans.*; //Property change stuff
 import java.awt.*;
 import java.awt.event.*;
 
+// TODO: Auto-generated Javadoc
 /*
  * DialogDemo.java requires these files:
  *   CustomDialog.java
  *   images/middle.gif
  */
+/**
+ * The Class testeGui.
+ */
 public class testeGui extends JPanel {
+    
+    /** The label. */
     JLabel label;
+    
+    /** The icon. */
     ImageIcon icon = createImageIcon("images/middle.gif");
+    
+    /** The frame. */
     JFrame frame;
+    
+    /** The simple dialog desc. */
     String simpleDialogDesc = "Some simple message dialogs";
+    
+    /** The icon desc. */
     String iconDesc = "A JOptionPane has its choice of icons";
+    
+    /** The more dialog desc. */
     String moreDialogDesc = "Some more dialogs";
+    
+    /** The custom dialog. */
     CustomDialog customDialog;
 
-    /** Creates the GUI shown inside the frame's content pane. */
+    /**
+     *  Creates the GUI shown inside the frame's content pane.
+     *
+     * @param frame the frame
+     */
     public testeGui(JFrame frame) {
         super(new BorderLayout());
         this.frame = frame;
@@ -100,12 +122,21 @@ public class testeGui extends JPanel {
         label.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
     }
 
-    /** Sets the text displayed at the bottom of the frame. */
+    /**
+     *  Sets the text displayed at the bottom of the frame.
+     *
+     * @param newText the new label
+     */
     void setLabel(String newText) {
         label.setText(newText);
     }
 
-    /** Returns an ImageIcon, or null if the path was invalid. */
+    /**
+     *  Returns an ImageIcon, or null if the path was invalid.
+     *
+     * @param path the path
+     * @return the image icon
+     */
     protected static ImageIcon createImageIcon(String path) {
         java.net.URL imgURL = DialogDemo.class.getResource(path);
         if (imgURL != null) {
@@ -116,7 +147,11 @@ public class testeGui extends JPanel {
         }
     }
 
-    /** Creates the panel shown by the first tab. */
+    /**
+     *  Creates the panel shown by the first tab.
+     *
+     * @return the j panel
+     */
     private JPanel createSimpleDialogBox() {
         final int numButtons = 4;
         JRadioButton[] radioButtons = new JRadioButton[numButtons];
@@ -228,6 +263,11 @@ public class testeGui extends JPanel {
      * Used by createSimpleDialogBox and createFeatureDialogBox
      * to create a pane containing a description, a single column
      * of radio buttons, and the Show it! button.
+     *
+     * @param description the description
+     * @param radioButtons the radio buttons
+     * @param showButton the show button
+     * @return the j panel
      */
     private JPanel createPane(String description,
                               JRadioButton[] radioButtons,
@@ -253,6 +293,11 @@ public class testeGui extends JPanel {
     /**
      * Like createPane, but creates a pane with 2 columns of radio
      * buttons.  The number of buttons passed in *must* be even.
+     *
+     * @param description the description
+     * @param radioButtons the radio buttons
+     * @param showButton the show button
+     * @return the j panel
      */
      private JPanel create2ColPane(String description,
                                   JRadioButton[] radioButtons,
@@ -284,6 +329,11 @@ public class testeGui extends JPanel {
      * These dialogs are implemented using showMessageDialog, but
      * you can specify the icon (using similar code) for any other
      * kind of dialog, as well.
+     */
+    /**
+     * Creates the icon dialog box.
+     *
+     * @return the j panel
      */
     private JPanel createIconDialogBox() {
         JButton showItButton = null;
@@ -379,7 +429,11 @@ public class testeGui extends JPanel {
                               showItButton);
     }
 
-    /** Creates the panel shown by the second tab. */
+    /**
+     *  Creates the panel shown by the second tab.
+     *
+     * @return the j panel
+     */
     private JPanel createFeatureDialogBox() {
         final int numButtons = 5;
         JRadioButton[] radioButtons = new JRadioButton[numButtons];
@@ -604,6 +658,11 @@ public class testeGui extends JPanel {
         frame.setVisible(true);
     }
 
+    /**
+     * The main method.
+     *
+     * @param args the arguments
+     */
     public static void main(String[] args) {
         //Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.

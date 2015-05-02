@@ -1,17 +1,36 @@
+/*
+ * 
+ */
 package table;
 
 import ij.measure.ResultsTable;
 
 import java.util.AbstractList;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ResultsTableList.
+ */
 public class ResultsTableList extends AbstractList<double[]> {
 
+	/** The table. */
 	private ResultsTable table;
 	
+	/**
+	 * Instantiates a new results table list.
+	 *
+	 * @param table the table
+	 */
 	public ResultsTableList(ResultsTable table) {
 		this.table = table;
 	}
 	
+	/**
+	 * Gets the.
+	 *
+	 * @param row the row
+	 * @return the double[]
+	 */
 	@Override
 	public double[] get(int row) {
 
@@ -23,6 +42,13 @@ public class ResultsTableList extends AbstractList<double[]> {
 		return values;
 	}
 	
+	/**
+	 * Sets the.
+	 *
+	 * @param row the row
+	 * @param values the values
+	 * @return the double[]
+	 */
 	@Override
 	public double[] set(int row, double[] values) {
 
@@ -34,11 +60,22 @@ public class ResultsTableList extends AbstractList<double[]> {
 		return old;
 	}
 
+	/**
+	 * Size.
+	 *
+	 * @return the int
+	 */
 	@Override
 	public int size() {
 		return table.getCounter();
 	}
 	
+	/**
+	 * Removes the range.
+	 *
+	 * @param fromIndex the from index
+	 * @param toIndex the to index
+	 */
 	@Override
 	public void removeRange(int fromIndex, int toIndex) {
 		
@@ -55,6 +92,11 @@ public class ResultsTableList extends AbstractList<double[]> {
 		
 	}
 	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		
 		ResultsTable table = new ResultsTable();

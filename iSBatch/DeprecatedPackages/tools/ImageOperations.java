@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package tools;
 
 import java.awt.Rectangle;
@@ -12,19 +15,43 @@ import ij.plugin.filter.PlugInFilter;
 import ij.process.ImageProcessor;
 import ij.process.ImageStatistics;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ImageOperations.
+ */
 public class ImageOperations implements PlugInFilter {
+	
+	/**
+	 * Setup.
+	 *
+	 * @param arg the arg
+	 * @param imp the imp
+	 * @return the int
+	 */
 	@Override
 	public int setup(String arg, ImagePlus imp) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
+	/**
+	 * Run.
+	 *
+	 * @param ip the ip
+	 */
 	@Override
 	public void run(ImageProcessor ip) {
 		// TODO Auto-generated method stub
 		
 	}
 	
+/**
+ * Test div.
+ *
+ * @param imp the imp
+ * @param imp2 the imp2
+ * @return the image plus
+ */
 public static ImagePlus testDiv(ImagePlus imp, ImagePlus imp2){
 		
 		
@@ -58,6 +85,13 @@ public static ImagePlus testDiv(ImagePlus imp, ImagePlus imp2){
 		return imp3;
 	}
 
+/**
+ * Test div add px.
+ *
+ * @param imp the imp
+ * @param imp2 the imp2
+ * @return the image plus
+ */
 public static ImagePlus testDivAddPx(ImagePlus imp, ImagePlus imp2){
 	
 	
@@ -89,6 +123,13 @@ public static ImagePlus testDivAddPx(ImagePlus imp, ImagePlus imp2){
 	return imp3;
 }
 
+/**
+ * Divide2 images.
+ *
+ * @param imp the imp
+ * @param imp2 the imp2
+ * @return the image plus
+ */
 public static ImagePlus divide2Images(ImagePlus imp, ImagePlus imp2){
 	ImageProcessor beamProfile = imp2.getProcessor();
 			
@@ -124,6 +165,13 @@ public static ImagePlus divide2Images(ImagePlus imp, ImagePlus imp2){
 	
 }
 
+/**
+ * Beam profile correction.
+ *
+ * @param impInput the imp input
+ * @param ipDarkCount the ip dark count
+ * @param ipBeamProfile the ip beam profile
+ */
 public static void BeamProfileCorrection(ImagePlus impInput, ImageProcessor ipDarkCount, ImageProcessor ipBeamProfile) {
 	/**
 	 * Corrected_Image = (Specimen - Darkfield) / (Brightfield - Darkfield) * 255
@@ -165,6 +213,11 @@ public static void BeamProfileCorrection(ImagePlus impInput, ImageProcessor ipDa
 
 }
 
+/**
+ * Stack_ deflicker.
+ *
+ * @param imp the imp
+ */
 public static void Stack_Deflicker(ImagePlus imp){
 	int Fram=-1;
 	/* Adapted from: Stack_Deflicker.java
@@ -232,6 +285,14 @@ public static void Stack_Deflicker(ImagePlus imp){
 	
 }
 
+/**
+ * Trimmer.
+ *
+ * @param dataImage the data image
+ * @param SlicesBegin the slices begin
+ * @param SlicesEnd the slices end
+ * @return the image plus
+ */
 public static ImagePlus trimmer(ImagePlus dataImage, int SlicesBegin, int SlicesEnd){
 	
 	ImageStack myStack = dataImage.getStack();
@@ -258,6 +319,12 @@ public static ImagePlus trimmer(ImagePlus dataImage, int SlicesBegin, int Slices
 	
 }
 
+/**
+ * Gets the stack.
+ *
+ * @param listBF the list bf
+ * @return the stack
+ */
 public static ImagePlus getStack(List<String> listBF) {
 	 ImagePlus ip = IJ.openImage(listBF.get(1));
 	
@@ -283,6 +350,12 @@ public static ImagePlus getStack(List<String> listBF) {
 	
 }	
 
+/**
+ * Gets the stack projection.
+ *
+ * @param listBF the list bf
+ * @return the stack projection
+ */
 public static ImagePlus getStackProjection(List<String> listBF) {
 	 ImagePlus ip = IJ.openImage(listBF.get(1));
 	
@@ -316,6 +389,12 @@ public static ImagePlus getStackProjection(List<String> listBF) {
 	
 }	
 
+/**
+ * Do average1.
+ *
+ * @param imp the imp
+ * @return the image plus
+ */
 public static ImagePlus doAverage1(ImagePlus imp) {
 	
 
@@ -328,6 +407,12 @@ public static ImagePlus doAverage1(ImagePlus imp) {
 	return averaged;
 }
 
+/**
+ * Do average.
+ *
+ * @param imp the imp
+ * @return the image plus
+ */
 public static ImagePlus doAverage(ImagePlus imp) {
 	
 
@@ -340,6 +425,13 @@ public static ImagePlus doAverage(ImagePlus imp) {
 	return averaged;
 }
 
+/**
+ * Beam profile correction.
+ *
+ * @param impInput the imp input
+ * @param offset the offset
+ * @param impBackGround the imp back ground
+ */
 public static void BeamProfileCorrection(ImagePlus impInput, double offset,
 		ImagePlus impBackGround) {
 	/**
@@ -379,6 +471,12 @@ public static void BeamProfileCorrection(ImagePlus impInput, double offset,
 	
 }
 
+/**
+ * Divide normalize.
+ *
+ * @param impInput the imp input
+ * @param backgroundimp the backgroundimp
+ */
 public static void DivideNormalize(ImagePlus impInput, ImagePlus backgroundimp) {
 	/**
 	 * Corrected_Image = (Specimen - Darkfield) / (Brightfield - Darkfield) * 255
@@ -414,6 +512,12 @@ public static void DivideNormalize(ImagePlus impInput, ImagePlus backgroundimp) 
 	
 }
 
+/**
+ * Subtract_ image1_ image2.
+ *
+ * @param bFStackImp the b f stack imp
+ * @param DKimp the d kimp
+ */
 public static void Subtract_Image1_Image2(ImagePlus bFStackImp, ImagePlus DKimp) {
 	ImageStack DataStack = bFStackImp.getImageStack();
 	
@@ -436,6 +540,12 @@ public static void Subtract_Image1_Image2(ImagePlus bFStackImp, ImagePlus DKimp)
 	
 }
 
+/**
+ * Subtract_ image_double.
+ *
+ * @param bFStackImp the b f stack imp
+ * @param offset the offset
+ */
 public static void Subtract_Image_double(ImagePlus bFStackImp, double offset) {
 	ImageStack DataStack = bFStackImp.getImageStack();
 	
@@ -457,6 +567,12 @@ public static void Subtract_Image_double(ImagePlus bFStackImp, double offset) {
 	
 }
 
+/**
+ * Do averagelarge.
+ *
+ * @param listchannel the listchannel
+ * @return the image plus
+ */
 public static ImagePlus doAveragelarge(List<String> listchannel) {
 	//Save all data in a array and divide
 	//Future versions would have a better way to do that 
@@ -500,6 +616,13 @@ public static ImagePlus doAveragelarge(List<String> listchannel) {
 	
 	return ArtificialBG;
 }
+
+/**
+ * Adds the pixel valuesto array.
+ *
+ * @param imp the imp
+ * @param array the array
+ */
 public static void addPixelValuestoArray(ImagePlus imp, long[] array){
 	ImageStack stack =imp.getStack();
 	
@@ -512,6 +635,14 @@ public static void addPixelValuestoArray(ImagePlus imp, long[] array){
 	}
 }
 
+/**
+ * Adds the pixel valuesto array.
+ *
+ * @param imp the imp
+ * @param array the array
+ * @param start the start
+ * @param end the end
+ */
 public static void addPixelValuestoArray(ImagePlus imp, long[] array, int start, int end){
 
 	ImageStack stackTemp = imp.getImageStack();
@@ -525,6 +656,14 @@ public static void addPixelValuestoArray(ImagePlus imp, long[] array, int start,
 	}
 }
 
+/**
+ * Convert arrayto imp.
+ *
+ * @param array the array
+ * @param width the width
+ * @param heigth the heigth
+ * @return the image plus
+ */
 public static ImagePlus convertArraytoImp(long[] array, int width, int heigth){
 
 	ImagePlus imp = IJ.createImage("MTinput", width, heigth, 1, 16);
@@ -542,6 +681,12 @@ public static ImagePlus convertArraytoImp(long[] array, int width, int heigth){
 }
 
 
+/**
+ * Gets the max pixel value.
+ *
+ * @param ip the ip
+ * @return the max pixel value
+ */
 public static float getMaxPixelValue(ImageProcessor ip){ 
 	
 	//get boundaries
@@ -563,6 +708,12 @@ public static float getMaxPixelValue(ImageProcessor ip){
 }
 
 
+/**
+ * Gets the max pixel value.
+ *
+ * @param imp the imp
+ * @return the max pixel value
+ */
 public static float getMaxPixelValue(ImagePlus imp){ 
 	
 	ImageStack stack = imp.getImageStack();
@@ -593,6 +744,15 @@ public static float getMaxPixelValue(ImagePlus imp){
 	return max;
 }
 
+/**
+ * Creates the artificial dark count.
+ *
+ * @param offset the offset
+ * @param width the width
+ * @param height the height
+ * @param slices the slices
+ * @return the image plus
+ */
 public static ImagePlus createArtificialDarkCount(double offset, int width,
 		int height, int slices) {
 
@@ -610,6 +770,14 @@ public static ImagePlus createArtificialDarkCount(double offset, int width,
 }
 
 
+/**
+ * Image correction.
+ *
+ * @param imp the imp
+ * @param impBackground the imp background
+ * @param impDarkCount the imp dark count
+ * @return the image plus
+ */
 public static ImagePlus ImageCorrection(ImagePlus imp, ImagePlus impBackground, ImagePlus impDarkCount){
 	
 	ImageProcessor ipDarkCount = impDarkCount.getProcessor();
@@ -662,6 +830,14 @@ public static ImagePlus ImageCorrection(ImagePlus imp, ImagePlus impBackground, 
 	return imp;
 }
 
+/**
+ * Image correction.
+ *
+ * @param imp the imp
+ * @param ipBackground the ip background
+ * @param doubleDarkCount the double dark count
+ * @return the image plus
+ */
 public static ImagePlus ImageCorrection(ImagePlus imp, ImageProcessor ipBackground, double doubleDarkCount){
 	ImagePlus impArtificialDarkCout = createArtificialDarkCount(doubleDarkCount,imp.getWidth(),imp.getHeight(),1);
 	ImageProcessor ipArtificialDarkCount = impArtificialDarkCout.getProcessor();
@@ -669,6 +845,14 @@ public static ImagePlus ImageCorrection(ImagePlus imp, ImageProcessor ipBackgrou
 	return impResults;
 }
 
+/**
+ * Image correction.
+ *
+ * @param imp the imp
+ * @param impBackground the imp background
+ * @param doubleDarkCount the double dark count
+ * @return the image plus
+ */
 public static ImagePlus ImageCorrection(ImagePlus imp, ImagePlus impBackground, double doubleDarkCount){
 	ImageProcessor ipBackground = impBackground.getProcessor();
 	ImagePlus impArtificialDarkCout = createArtificialDarkCount(doubleDarkCount,imp.getWidth(),imp.getHeight(),1);

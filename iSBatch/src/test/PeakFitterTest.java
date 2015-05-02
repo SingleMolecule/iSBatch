@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package test;
 
 import java.io.File;
@@ -18,9 +21,23 @@ import ij.plugin.RoiReader;
 import ij.plugin.filter.RoiWriter;
 import ij.plugin.frame.RoiManager;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class PeakFitterTest.
+ */
 public class PeakFitterTest {
+	
+	/** The roi. */
 	Roi roi;
+	
+	/** The files. */
 	static ArrayList<File> files;
+	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args ) {
 		File image = new File("D:\\TestFolderIsbatch\\image.TIF");
 		File rois = new File("D:\\TestFolderIsbatch\\rois.zip");

@@ -1,6 +1,19 @@
+/*
+ * 
+ */
 package test;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class SplitTest.
+ */
 public class SplitTest {
+
+/**
+ * The main method.
+ *
+ * @param args the arguments
+ */
 public static void main(String[] args) {
 	
 	

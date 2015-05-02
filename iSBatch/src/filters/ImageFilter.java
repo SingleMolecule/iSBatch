@@ -1,8 +1,22 @@
+/*
+ * 
+ */
 package filters;
 
 import model.Node;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ImageFilter.
+ */
 public class ImageFilter implements NodeFilterInterface{
+	
+	/**
+	 * Accept.
+	 *
+	 * @param node the node
+	 * @return true, if successful
+	 */
 	@Override
 	public boolean accept(Node node) {
 

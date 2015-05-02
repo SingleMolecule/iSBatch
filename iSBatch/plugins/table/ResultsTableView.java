@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package table;
 
 import ij.IJ;
@@ -29,29 +32,70 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.AbstractTableModel;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ResultsTableView.
+ */
 public class ResultsTableView implements ActionListener, PlugIn {
 
+	/** The results. */
 	private ResultsTable results;
 	
+	/** The frame. */
 	private JFrame frame;
+	
+	/** The table. */
 	private JTable table;
+	
+	/** The table model. */
 	private AbstractTableModel tableModel;
+	
+	/** The save as menu item. */
 	private JMenuItem saveAsMenuItem = new JMenuItem("Save As", KeyEvent.VK_S);
+	
+	/** The rename menu item. */
 	private JMenuItem renameMenuItem = new JMenuItem("Rename", KeyEvent.VK_R);
+	
+	/** The duplicate menu item. */
 	private JMenuItem duplicateMenuItem = new JMenuItem("Duplicate", KeyEvent.VK_D);
+	
+	/** The cut menu item. */
 	private JMenuItem cutMenuItem = new JMenuItem("Cut");
+	
+	/** The copy menu item. */
 	private JMenuItem copyMenuItem = new JMenuItem("Copy", KeyEvent.VK_C);;
+	
+	/** The clear menu item. */
 	private JMenuItem clearMenuItem = new JMenuItem("Clear");
+	
+	/** The select all menu item. */
 	private JMenuItem selectAllMenuItem = new JMenuItem("Select All", KeyEvent.VK_A);
+	
+	/** The sort menu item. */
 	private JMenuItem sortMenuItem = new JMenuItem("Sort", KeyEvent.VK_S);
+	
+	/** The plot menu item. */
 	private JMenuItem plotMenuItem = new JMenuItem("Plot", KeyEvent.VK_P);
+	
+	/** The filter menu item. */
 	private JMenuItem filterMenuItem = new JMenuItem("Filter", KeyEvent.VK_F);
+	
+	/** The to image j results table menu item. */
 	private JMenuItem toImageJResultsTableMenuItem = new JMenuItem("To ImageJ Results Table");
 	
+	/**
+	 * Instantiates a new results table view.
+	 */
 	public ResultsTableView() {
 		
 	}
 	
+	/**
+	 * Instantiates a new results table view.
+	 *
+	 * @param results the results
+	 * @param title the title
+	 */
 	public ResultsTableView(ResultsTable results, String title) {
 		
 		this.results = results;
@@ -80,6 +124,11 @@ public class ResultsTableView implements ActionListener, PlugIn {
 		
 	}
 	
+	/**
+	 * Creates the frame.
+	 *
+	 * @param title the title
+	 */
 	private void createFrame(String title) {
 		
 		tableModel = new AbstractTableModel() {
@@ -185,10 +234,20 @@ public class ResultsTableView implements ActionListener, PlugIn {
 		frame.setVisible(true);
 	}
 	
+	/**
+	 * Gets the results.
+	 *
+	 * @return the results
+	 */
 	public ResultsTable getResults() {
 		return results;
 	}
 	
+	/**
+	 * Run.
+	 *
+	 * @param arg0 the arg0
+	 */
 	@Override
 	public void run(String arg0) {
 		
@@ -215,6 +274,11 @@ public class ResultsTableView implements ActionListener, PlugIn {
 		new ResultsTableView(rt, title);
 	}
 	
+	/**
+	 * Action performed.
+	 *
+	 * @param e the e
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == saveAsMenuItem)
@@ -242,6 +306,9 @@ public class ResultsTableView implements ActionListener, PlugIn {
 		
 	}
 	
+	/**
+	 * Save as.
+	 */
 	protected void saveAs() {
 		try {
 			results.saveAs("");
@@ -250,6 +317,9 @@ public class ResultsTableView implements ActionListener, PlugIn {
 		}
 	}
 	
+	/**
+	 * Rename.
+	 */
 	protected void rename() {
 		String title = JOptionPane.showInputDialog("Table name", frame.getTitle());
 		
@@ -260,15 +330,24 @@ public class ResultsTableView implements ActionListener, PlugIn {
 		}
 	}
 	
+	/**
+	 * Duplicate.
+	 */
 	protected void duplicate() {
 		new ResultsTableView((ResultsTable) results.clone(), WindowManager.getUniqueName(frame.getTitle()));
 	}
 	
+	/**
+	 * Cut.
+	 */
 	protected void cut() {
 		copy();
 		clear();
 	}
 	
+	/**
+	 * Copy.
+	 */
 	protected void copy() {
 		
 		final int[] selectedRows = table.getSelectedRows();
@@ -305,6 +384,9 @@ public class ResultsTableView implements ActionListener, PlugIn {
 		Toolkit.getDefaultToolkit().getSystemClipboard().setContents(transferable, null);
 	}
 	
+	/**
+	 * Clear.
+	 */
 	protected void clear() {
 		ResultsTableUtil.delete(results, table.getSelectedRows());
 		
@@ -312,27 +394,42 @@ public class ResultsTableView implements ActionListener, PlugIn {
 		tableModel.fireTableDataChanged();
 	}
 	
+	/**
+	 * Select all.
+	 */
 	protected void selectAll() {
 		table.selectAll();
 	}
 	
+	/**
+	 * Filter.
+	 */
 	protected void filter() {
 		ResultsTableFilter filter = new ResultsTableFilter(results);
 		filter.run("");
 		tableModel.fireTableDataChanged();
 	}
 	
+	/**
+	 * Sort.
+	 */
 	protected void sort() {
 		ResultsTableSorter sorter = new ResultsTableSorter(results);
 		sorter.run("");
 		tableModel.fireTableDataChanged();
 	}
 	
+	/**
+	 * Plot.
+	 */
 	protected void plot() {
 		ResultsTablePlotter plotter = new ResultsTablePlotter(results);
 		plotter.run("");
 	}
 	
+	/**
+	 * To image j results table.
+	 */
 	protected void toImageJResultsTable() {
 		
 		WindowManager.removeWindow(frame);

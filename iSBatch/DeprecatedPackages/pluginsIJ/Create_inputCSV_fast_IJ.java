@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package Deprecated;
 
 import ij.IJ;
@@ -14,11 +17,24 @@ import java.text.SimpleDateFormat;
 
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Create_inputCSV_fast_IJ.
+ */
 public class Create_inputCSV_fast_IJ {
 
+	/** The logpath. */
 	static String logpath;
+	
+	/** The out dir. */
 	static String OUT_DIR;
 		
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static void main(String[] args) throws IOException {
 		
 		new Create_inputCSV_fast_IJ().run("");
@@ -29,6 +45,12 @@ public class Create_inputCSV_fast_IJ {
 	
 	
 
+	/**
+	 * Run.
+	 *
+	 * @param arg0 the arg0
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public void run(String arg0) throws IOException{
 		
 		
@@ -140,6 +162,11 @@ public class Create_inputCSV_fast_IJ {
 	
 	
 	
+	/**
+	 * Gets the headers.
+	 *
+	 * @return the headers
+	 */
 	private static String[] getHeaders() {
 
 		String[] Headers = new String[7];
@@ -170,7 +197,14 @@ public class Create_inputCSV_fast_IJ {
 //----------------------------------------------------------------------------------------------------------------------//
 
 	
-	public static void NewLogLine( String string, String logpath) throws IOException{
+	/**
+ * New log line.
+ *
+ * @param string the string
+ * @param logpath the logpath
+ * @throws IOException Signals that an I/O exception has occurred.
+ */
+public static void NewLogLine( String string, String logpath) throws IOException{
 		BufferedWriter output;
 		output = new BufferedWriter(new FileWriter(logpath, true));
 		
@@ -181,6 +215,13 @@ public class Create_inputCSV_fast_IJ {
 		//System.out.println(string);
 		}
 	
+	/**
+	 * Append log line.
+	 *
+	 * @param string the string
+	 * @param logpath the logpath
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static void AppendLogLine( String string, String logpath) throws IOException{
 		BufferedWriter output;
 		output = new BufferedWriter(new FileWriter(logpath, true));
@@ -192,6 +233,12 @@ public class Create_inputCSV_fast_IJ {
 		//System.out.println(string);
 		}
 	
+	/**
+	 * Gets the path.
+	 *
+	 * @param question the question
+	 * @return the path
+	 */
 	public static String getPath(String question){
 		String string = IJ.getDirectory(question);	
 			if (string==null){
@@ -203,6 +250,12 @@ public class Create_inputCSV_fast_IJ {
 		
 	}
 	
+	/**
+	 * String to file.
+	 *
+	 * @param string the string
+	 * @return the file
+	 */
 	public File StringToFile(String string){
 		File file = new File(string);
 		return file;

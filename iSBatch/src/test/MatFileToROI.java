@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package test;
 
 import ij.IJ;
@@ -21,10 +24,24 @@ import operations.microbeTrackerIO.MatlabMeshes;
 import operations.microbeTrackerIO.Mesh;
 import operations.microbeTrackerIO.Point;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class MatFileToROI.
+ */
 public class MatFileToROI {
+	
+	/** The manager. */
 	static RoiManager manager;
+	
+	/** The rois. */
 	static ArrayList<Roi> rois = new ArrayList<Roi>();
 	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static void main(String[] args) throws IOException {
 		
 		File mat = new File("D:\\TestFolderIsbatch\\DnaQ.mat");
@@ -93,6 +110,12 @@ public class MatFileToROI {
 //		System.out.println("Done");
 	}
 
+	/**
+	 * Gets the roi.
+	 *
+	 * @param m the m
+	 * @return the roi
+	 */
 	private static Roi getRoi(Mesh m) {
 		ArrayList<Point> points = m.getOutline();
 		
@@ -112,6 +135,11 @@ public class MatFileToROI {
 		return roi;
 	}
 
+	/**
+	 * Write to csv.
+	 *
+	 * @param points the points
+	 */
 	private static void writeToCsv(ArrayList<Point> points) {
 		 //Delimiter used in CSV file
 		    final String COMMA_DELIMITER = ",";
@@ -157,6 +185,13 @@ public class MatFileToROI {
 		
 	}
 
+	/**
+	 * Save rois as zip.
+	 *
+	 * @param rois the rois
+	 * @param filename the filename
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static void saveRoisAsZip(ArrayList<Roi> rois, String filename) throws IOException {
 		ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(filename));
 		

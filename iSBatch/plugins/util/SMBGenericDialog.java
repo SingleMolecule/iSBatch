@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package util;
 
 import ij.Prefs;
@@ -11,15 +14,30 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Vector;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class SMBGenericDialog.
+ */
 public class SMBGenericDialog extends ij.gui.GenericDialog {
+	
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	
+	/**
+	 * Instantiates a new SMB generic dialog.
+	 *
+	 * @param title the title
+	 */
 	public SMBGenericDialog(String title) {
 		super(title);
 	}
 	
+	/** The buttons. */
 	private ArrayList<Button> buttons = new ArrayList<Button>();
 	
+	/**
+	 * Setup.
+	 */
 	@Override
 	protected void setup() {
 		int count = getComponentCount();
@@ -49,6 +67,9 @@ public class SMBGenericDialog extends ij.gui.GenericDialog {
 		loadPreferences();
 	}
 	
+	/**
+	 * Load preferences.
+	 */
 	@SuppressWarnings("rawtypes")
 	public void loadPreferences() {
 		
@@ -78,6 +99,9 @@ public class SMBGenericDialog extends ij.gui.GenericDialog {
 		}
 	}
 	
+	/**
+	 * Save preferences.
+	 */
 	@SuppressWarnings("rawtypes")
 	public void savePreferences() {
 		

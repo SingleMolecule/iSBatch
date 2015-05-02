@@ -19,6 +19,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 
 
+// TODO: Auto-generated Javadoc
 /*
  * ATTENTION: SQL file must not contain column names, etc. including comment 
  * signs (#, --, /* etc.) like e.g. a.'#rows' etc. because every characters 

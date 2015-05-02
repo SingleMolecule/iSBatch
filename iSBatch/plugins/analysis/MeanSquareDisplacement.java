@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package analysis;
 
 import java.awt.Color;
@@ -10,11 +13,23 @@ import ij.measure.ResultsTable;
 import ij.plugin.PlugIn;
 import ij.plugin.filter.Analyzer;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class MeanSquareDisplacement.
+ */
 public class MeanSquareDisplacement implements PlugIn {
 
+	/** The time interval. */
 	private double timeInterval = 0.034;
+	
+	/** The pixel size. */
 	private double pixelSize = 0.1;
 	
+	/**
+	 * Run.
+	 *
+	 * @param arg0 the arg0
+	 */
 	@Override
 	public void run(String arg0) {
 		ResultsTable table = Analyzer.getResultsTable();

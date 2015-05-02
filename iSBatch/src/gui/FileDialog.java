@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package gui;
 
 import java.awt.BorderLayout;
@@ -20,18 +23,43 @@ import javax.swing.JTextField;
 
 import model.FileNode;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class FileDialog.
+ */
 public class FileDialog extends JDialog implements ActionListener {
+	
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/** The file node. */
 	private FileNode fileNode;
+	
+	/** The ok button. */
 	private JButton okButton = new JButton("Ok");
+	
+	/** The cancel button. */
 	private JButton cancelButton = new JButton("Cancel");
+	
+	/** The path text field. */
 	private JTextField pathTextField = new JTextField(20);
+	
+	/** The choose button. */
 	private JButton chooseButton = new JButton("Choose");
+	
+	/** The type combo box. */
 	private JComboBox<String> typeComboBox = new JComboBox<String>(
 			new String[] { "Aqcuisition", "Bright Field", "Red Channel", "Green Channel", "Blue Channel" });
+	
+	/** The canceled. */
 	private boolean canceled = false;
 	
+	/**
+	 * Instantiates a new file dialog.
+	 *
+	 * @param parent the parent
+	 * @param file the file
+	 */
 	public FileDialog(Frame parent, FileNode file) {
 		super(parent, "Field of View File", true);
 		
@@ -84,6 +112,11 @@ public class FileDialog extends JDialog implements ActionListener {
 		setVisible(true);
 	}
 
+	/**
+	 * Action performed.
+	 *
+	 * @param e the e
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
@@ -108,6 +141,11 @@ public class FileDialog extends JDialog implements ActionListener {
 
 	}
 	
+	/**
+	 * Checks if is canceled.
+	 *
+	 * @return true, if is canceled
+	 */
 	public boolean isCanceled() {
 		return canceled;
 	}

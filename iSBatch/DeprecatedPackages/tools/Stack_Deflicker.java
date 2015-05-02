@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package tools;
 
 import ij.*;
@@ -7,6 +10,7 @@ import ij.measure.*;
 import ij.gui.*;
 import java.awt.*;
 
+// TODO: Auto-generated Javadoc
 /* ImageJ plugin to remove flickering from movies by J. S. Pedersen. 
  * version 1 2008-12-30 Initial version based on Stack_Normalizer plugin by Joachim Walter
  *
@@ -21,10 +25,22 @@ import java.awt.*;
 
 public class Stack_Deflicker implements PlugInFilter {
 
+	/** The imp. */
 	ImagePlus imp;
+	
+	/** The Fram. */
 	static int Fram=-1;
+    
+    /** The verbose. */
     private  boolean           verbose = IJ.debugMode;
 
+	/**
+	 * Setup.
+	 *
+	 * @param arg the arg
+	 * @param imp the imp
+	 * @return the int
+	 */
 	public int setup(String arg, ImagePlus imp) {
 		IJ.register(Stack_Deflicker.class);
 		if (IJ.versionLessThan("1.32c"))
@@ -33,6 +49,11 @@ public class Stack_Deflicker implements PlugInFilter {
 		return DOES_8G+DOES_16+DOES_32+DOES_RGB;
 	}
 
+	/**
+	 * Run.
+	 *
+	 * @param ip the ip
+	 */
 	public void run(ImageProcessor ip) {
 
 		GenericDialog dia = new GenericDialog("Normalize to... ", IJ.getInstance());
@@ -56,6 +77,9 @@ public class Stack_Deflicker implements PlugInFilter {
 	}
 
 
+	/**
+	 * Normalize stack.
+	 */
 	void normalizeStack() {
 
 		ImageStack stack = imp.getStack();

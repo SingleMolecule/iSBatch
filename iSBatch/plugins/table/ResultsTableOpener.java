@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package table;
 
 import java.io.File;
@@ -7,8 +10,17 @@ import ij.IJ;
 import ij.measure.ResultsTable;
 import ij.plugin.PlugIn;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ResultsTableOpener.
+ */
 public class ResultsTableOpener implements PlugIn {
 
+	/**
+	 * Run.
+	 *
+	 * @param arg0 the arg0
+	 */
 	@Override
 	public void run(String arg0) {
 		

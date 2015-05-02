@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package analysis;
 
 import java.awt.BasicStroke;
@@ -43,50 +46,114 @@ import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Plot.
+ */
 public class Plot extends JComponent implements ActionListener {
 
+	/**
+	 * The Enum Type.
+	 */
 	protected enum Type {
+		
+		/** The line. */
 		LINE,
+		
+		/** The scatter. */
 		SCATTER,
+		
+		/** The histogram. */
 		HISTOGRAM,
+		
+		/** The error bars. */
 		ERROR_BARS
 	};
 	
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	
+	/** The transform. */
 	private AffineTransform transform;
 	
+	/** The plot types. */
 	protected ArrayList<Type> plotTypes = new ArrayList<Type>();
+	
+	/** The plot colors. */
 	protected ArrayList<Color> plotColors = new ArrayList<Color>();
+	
+	/** The plot line widths. */
 	protected ArrayList<Float> plotLineWidths = new ArrayList<Float>();
+	
+	/** The font. */
 	protected Font font = new Font("Courier", Font.PLAIN, 14);
+	
+	/** The x axis label. */
 	protected String xAxisLabel = "x";
+	
+	/** The y axis label. */
 	protected String yAxisLabel = "y";
+	
+	/** The caption. */
 	protected String caption = "";
+	
+	/** The left margin. */
 	protected int leftMargin = 100;
+	
+	/** The bottom margin. */
 	protected int bottomMargin = 50;
 	
+	/** The plot coordinates. */
 	protected ArrayList<double[]> plotCoordinates = new ArrayList<double[]>();
+	
+	/** The pixel coordinates. */
 	protected ArrayList<double[]> pixelCoordinates = new ArrayList<double[]>();
 	
+	/** The original bounds. */
 	protected Rectangle2D.Double originalBounds;
+	
+	/** The bounds. */
 	protected Rectangle2D.Double bounds;
+	
+	/** The mouse position. */
 	protected Point mousePosition = new Point();
 	
+	/** The menu. */
 	private JPopupMenu menu = new JPopupMenu();
+	
+	/** The zoom in menu item. */
 	private JRadioButtonMenuItem zoomInMenuItem = new JRadioButtonMenuItem("Zoom In", true);
+	
+	/** The zoom out menu item. */
 	private JRadioButtonMenuItem zoomOutMenuItem = new JRadioButtonMenuItem("Zoom Out");
 	
+	/** The save menu item. */
 	private JMenuItem saveMenuItem = new JMenuItem("Save");
+	
+	/** The copy menu item. */
 	private JMenuItem copyMenuItem = new JMenuItem("Copy");
+	
+	/** The adjust axis menu item. */
 	private JMenuItem adjustAxisMenuItem = new JMenuItem("Adjust Axis");
+	
+	/** The select region menu item. */
 	private JMenuItem selectRegionMenuItem = new JMenuItem("Select Region");
 	
+	/** The zoom factor. */
 	private double zoomFactor = 1.5;
+	
+	/** The current directory. */
 	private File currentDirectory;
+	
+	/** The is region selection. */
 	private boolean isRegionSelection = false;
+	
+	/** The region selection. */
 	private Rectangle regionSelection = new Rectangle();
 	
+	/**
+	 * Instantiates a new plot.
+	 */
 	public Plot() {
 		
 		saveMenuItem.addActionListener(this);
@@ -197,6 +264,14 @@ public class Plot extends JComponent implements ActionListener {
 		
 	}
 	
+	/**
+	 * Sets the bounds.
+	 *
+	 * @param x the x
+	 * @param y the y
+	 * @param width the width
+	 * @param height the height
+	 */
 	public void setBounds(double x, double y, double width, double height) {
 		bounds.x = x;
 		bounds.y = y;
@@ -205,6 +280,14 @@ public class Plot extends JComponent implements ActionListener {
 		repaint();
 	}
 	
+	/**
+	 * Sets the original bounds.
+	 *
+	 * @param x the x
+	 * @param y the y
+	 * @param width the width
+	 * @param height the height
+	 */
 	public void setOriginalBounds(double x, double y, double width, double height) {
 		originalBounds.x = x;
 		originalBounds.y = y;
@@ -213,27 +296,77 @@ public class Plot extends JComponent implements ActionListener {
 		setBounds(x, y, width, height);
 	}
 	
+	/**
+	 * Reset bounds.
+	 */
 	public void resetBounds() {
 		bounds = (Rectangle2D.Double)originalBounds.clone();
 		repaint();
 	}
 
+	/**
+	 * Adds the line plot.
+	 *
+	 * @param x the x
+	 * @param y the y
+	 * @param from the from
+	 * @param to the to
+	 * @param c the c
+	 * @param lineWidth the line width
+	 */
 	public void addLinePlot(double[] x, double[] y, int from, int to, Color c, float lineWidth) {
 		addLinePlot(Arrays.copyOfRange(x, from, to), Arrays.copyOfRange(y, from, to), c, lineWidth);
 	}
 	
+	/**
+	 * Adds the scatter plot.
+	 *
+	 * @param x the x
+	 * @param y the y
+	 * @param from the from
+	 * @param to the to
+	 * @param c the c
+	 * @param lineWidth the line width
+	 */
 	public void addScatterPlot(double[] x, double[] y, int from, int to, Color c, float lineWidth) {
 		addScatterPlot(Arrays.copyOfRange(x, from, to), Arrays.copyOfRange(y, from, to), c, lineWidth);
 	}
 	
+	/**
+	 * Adds the histogram.
+	 *
+	 * @param y the y
+	 * @param from the from
+	 * @param to the to
+	 * @param bins the bins
+	 * @param c the c
+	 * @param lineWidth the line width
+	 */
 	public void addHistogram(double[] y, int from, int to, int bins, Color c, float lineWidth) {
 		addHistogram(Arrays.copyOfRange(y, from, to), bins, c, lineWidth);
 	}
 	
+	/**
+	 * Adds the line plot.
+	 *
+	 * @param x the x
+	 * @param y the y
+	 * @param c the c
+	 * @param lineWidth the line width
+	 */
 	public void addLinePlot(double[] x, double[] y, Color c, float lineWidth) {
 		addPlot(x, y, Type.LINE, c, lineWidth);
 	}
 
+	/**
+	 * Adds the error bars.
+	 *
+	 * @param x the x
+	 * @param y the y
+	 * @param error the error
+	 * @param c the c
+	 * @param lineWidth the line width
+	 */
 	public void addErrorBars(double[] x, double[] y, double[] error, Color c, float lineWidth) {
 		
 		double[] x1 = new double[x.length * 2];
@@ -249,10 +382,26 @@ public class Plot extends JComponent implements ActionListener {
 		addPlot(x1, y1, Type.ERROR_BARS, c, lineWidth);
 	}
 	
+	/**
+	 * Adds the scatter plot.
+	 *
+	 * @param x the x
+	 * @param y the y
+	 * @param c the c
+	 * @param lineWidth the line width
+	 */
 	public void addScatterPlot(double[] x, double[] y, Color c, float lineWidth) {
 		addPlot(x, y, Type.SCATTER, c, lineWidth);
 	}
 	
+	/**
+	 * Adds the histogram.
+	 *
+	 * @param y the y
+	 * @param bins the bins
+	 * @param c the c
+	 * @param lineWidth the line width
+	 */
 	public void addHistogram(double[] y, int bins, Color c, float lineWidth) {
 		double min = y[0];
 		double max = min;
@@ -280,6 +429,15 @@ public class Plot extends JComponent implements ActionListener {
 		addPlot(xBins, yCounts, Type.HISTOGRAM, c, lineWidth);
 	}
 	
+	/**
+	 * Adds the plot.
+	 *
+	 * @param x the x
+	 * @param y the y
+	 * @param type the type
+	 * @param c the c
+	 * @param lineWidth the line width
+	 */
 	private void addPlot(double[] x, double[] y, Type type, Color c, float lineWidth) {
 		double[] plot = new double[x.length * 2];
 		
@@ -305,6 +463,9 @@ public class Plot extends JComponent implements ActionListener {
 		plotLineWidths.add(lineWidth);
 	}
 	
+	/**
+	 * Clear.
+	 */
 	public void clear() {
 		plotCoordinates.clear();
 		pixelCoordinates.clear();
@@ -314,22 +475,47 @@ public class Plot extends JComponent implements ActionListener {
 		bounds = null;
 	}
 	
+	/**
+	 * Sets the x axis label.
+	 *
+	 * @param xAxisLabel the new x axis label
+	 */
 	public void setxAxisLabel(String xAxisLabel) {
 		this.xAxisLabel = xAxisLabel;
 	}
 
+	/**
+	 * Sets the y axis label.
+	 *
+	 * @param yAxisLabel the new y axis label
+	 */
 	public void setyAxisLabel(String yAxisLabel) {
 		this.yAxisLabel = yAxisLabel;
 	}
 	
+	/**
+	 * Sets the caption.
+	 *
+	 * @param caption the new caption
+	 */
 	public void setCaption(String caption) {
 		this.caption = caption;
 	}
 
+	/**
+	 * Sets the font.
+	 *
+	 * @param font the new font
+	 */
 	public void setFont(Font font) {
 		this.font = font;			
 	}
 	
+	/**
+	 * Paint axis.
+	 *
+	 * @param g the g
+	 */
 	public void paintAxis(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
 		
@@ -378,6 +564,11 @@ public class Plot extends JComponent implements ActionListener {
 		g.drawRect(leftMargin, 0, width, height);
 	}
 	
+	/**
+	 * Paint plot.
+	 *
+	 * @param g the g
+	 */
 	public void paintPlot(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
 		
@@ -449,6 +640,11 @@ public class Plot extends JComponent implements ActionListener {
 		}
 	}
 	
+	/**
+	 * Paint.
+	 *
+	 * @param g the g
+	 */
 	@Override
 	public void paint(Graphics g) {
 		
@@ -473,6 +669,13 @@ public class Plot extends JComponent implements ActionListener {
 		paintPlot(g);
 	}
 	
+	/**
+	 * Gets the step size.
+	 *
+	 * @param range the range
+	 * @param steps the steps
+	 * @return the step size
+	 */
 	private double getStepSize(double range, int steps) {
 		double step = range / steps;    // e.g. 0.00321
 		double magnitude = Math.pow(10, Math.floor(Math.log10(step)));  // e.g. 0.001
@@ -486,6 +689,11 @@ public class Plot extends JComponent implements ActionListener {
             return magnitude * 2.0;
 	}
 	
+	/**
+	 * Show plot.
+	 *
+	 * @param title the title
+	 */
 	public void showPlot(String title) {
 		JFrame frame = new JFrame(title);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -495,6 +703,11 @@ public class Plot extends JComponent implements ActionListener {
 		frame.setVisible(true);
 	}
 	
+	/**
+	 * Zoom.
+	 *
+	 * @param factor the factor
+	 */
 	public void zoom(double factor) {
 		bounds.x -= bounds.width * (factor - 1) / 2;
 		bounds.y -= bounds.height * (factor - 1) / 2;
@@ -504,6 +717,11 @@ public class Plot extends JComponent implements ActionListener {
 		
 	}
 	
+	/**
+	 * Action performed.
+	 *
+	 * @param e the e
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
@@ -524,6 +742,9 @@ public class Plot extends JComponent implements ActionListener {
 		
 	}
 	
+	/**
+	 * Save plot.
+	 */
 	public void savePlot() {
 		JFileChooser fileChooser = new JFileChooser(currentDirectory);
 		fileChooser.setFileFilter(new FileNameExtensionFilter("Portable Network Graphics (*.png)", "png"));
@@ -534,6 +755,11 @@ public class Plot extends JComponent implements ActionListener {
 		}
 	}
 	
+	/**
+	 * Save plot.
+	 *
+	 * @param file the file
+	 */
 	public void savePlot(File file) {
 		currentDirectory = file.getParentFile();
 		
@@ -557,6 +783,9 @@ public class Plot extends JComponent implements ActionListener {
 		}
 	}
 	
+	/**
+	 * Copy plot.
+	 */
 	public void copyPlot() {
 		
 		Transferable transferable = new Transferable() {
@@ -605,6 +834,9 @@ public class Plot extends JComponent implements ActionListener {
 		Toolkit.getDefaultToolkit().getSystemClipboard().setContents(transferable, null);
 	}
 	
+	/**
+	 * Adjust axis.
+	 */
 	public void adjustAxis() {
 		JTextField xFromTextField = new JTextField(Double.toString(bounds.x));
 		JTextField xToTextField = new JTextField(Double.toString(bounds.x + bounds.width));
@@ -628,6 +860,9 @@ public class Plot extends JComponent implements ActionListener {
 		}
 	}
 	
+	/**
+	 * Export data.
+	 */
 	public void exportData() {
 		JFileChooser fileChooser = new JFileChooser(currentDirectory);
 		fileChooser.setFileFilter(new FileNameExtensionFilter("Comma Separated Values (*.csv)", "csv"));
@@ -638,6 +873,11 @@ public class Plot extends JComponent implements ActionListener {
 		}
 	}
 	
+	/**
+	 * Export data.
+	 *
+	 * @param file the file
+	 */
 	public void exportData(File file) {
 		currentDirectory = file.getParentFile();
 		
@@ -669,7 +909,9 @@ public class Plot extends JComponent implements ActionListener {
 	}
 	
 	/**
-	 * @param args
+	 * The main method.
+	 *
+	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
 		Plot plot = new Plot();

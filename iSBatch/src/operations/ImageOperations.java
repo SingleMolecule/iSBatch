@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package operations;
 
 import java.awt.Point;
@@ -14,21 +17,46 @@ import ij.measure.ResultsTable;
 import ij.process.ImageProcessor;
 import ij.process.ImageStatistics;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ImageOperations.
+ */
 public class ImageOperations {
 
+	/** The Constant SIGMA_TO_FWHM. */
 	public static final double SIGMA_TO_FWHM = 2.0 * Math.sqrt(2.0 * Math.log(2));
 	
+	/** The use discoidal filter. */
 	private boolean useDiscoidalFilter = true;
+	
+	/** The inner radius. */
 	private int innerRadius = 7;
+	
+	/** The outer radius. */
 	private int outerRadius = 9;
+	
+	/** The threshold. */
 	private double threshold = 1;
+	
+	/** The use standard deviation. */
 	private boolean useStandardDeviation = true;
+	
+	/** The minimum distance. */
 	private int minimumDistance = 10;
+	
+	/** The fit radius. */
 	private int fitRadius = 7;
+	
+	/** The fwhm. */
 	private double fwhm = 6;
+	
+	/** The magnification. */
 	private double magnification = 4;
+	
+	/** The fitting threshold. */
 	private double fittingThreshold = 8;
 	
+	/** The max error. */
 	private double[] maxError = new double[] {
 			5000,
 			5000,
@@ -38,6 +66,7 @@ public class ImageOperations {
 			5
 	};
 	
+	/** The lm. */
 	private LevenbergMarquardt lm = new LevenbergMarquardt() {
 		
 		@Override
@@ -67,12 +96,21 @@ public class ImageOperations {
 	
 	
 	
+	/**
+	 * Instantiates a new image operations.
+	 */
 	protected ImageOperations() {
 		
 	}
 	
+	/** The instance. */
 	private static ImageOperations instance;
 	
+	/**
+	 * Gets the single instance of ImageOperations.
+	 *
+	 * @return single instance of ImageOperations
+	 */
 	public static ImageOperations getInstance() {
 		
 		if (instance == null)
@@ -188,9 +226,9 @@ public class ImageOperations {
 	 * Find all the peaks in an image. This method first filters for peak (if useDiscoidalFilter is set). As a second step this method
 	 * searches for the pixel with the maximum intensity. The position of this 'maximum pixel' is stored and then the second largest
 	 * pixel value is searched for. This process continues until the found maximum pixel value is below the given threshold value.
-	 * 
-	 * @param ip 
-	 * @return
+	 *
+	 * @param ip the ip
+	 * @return the array list
 	 */
 	public ArrayList<Point> findPeaks(ImageProcessor ip) {
 		
@@ -241,6 +279,12 @@ public class ImageOperations {
 		return peaks;
 	}
 	
+	/**
+	 * Find peaks.
+	 *
+	 * @param imp the imp
+	 * @return the array list
+	 */
 	public ArrayList<PointRoi> findPeaks(ImagePlus imp) {
 		
 		ArrayList<PointRoi> rois = new ArrayList<PointRoi>();
@@ -264,6 +308,13 @@ public class ImageOperations {
 	}
 	
 	
+	/**
+	 * Fit peaks.
+	 *
+	 * @param table the table
+	 * @param ip the ip
+	 * @return the results table
+	 */
 	public ResultsTable fitPeaks(ResultsTable table, ImageProcessor ip) {
 		
 		int size = (int)Math.pow(fitRadius * 2 + 1, 2);
@@ -363,10 +414,23 @@ public class ImageOperations {
 		return table;
 	}
 
+	/**
+	 * Fit peaks.
+	 *
+	 * @param ip the ip
+	 * @return the results table
+	 */
 	public ResultsTable fitPeaks(ImageProcessor ip) {
 		return fitPeaks(new ResultsTable(), ip);
 	}
 	
+	/**
+	 * Fit peaks.
+	 *
+	 * @param table the table
+	 * @param imp the imp
+	 * @return the results table
+	 */
 	public ResultsTable fitPeaks(ResultsTable table, ImagePlus imp) {
 		
 		ImageStack stack = imp.getImageStack();
@@ -381,14 +445,35 @@ public class ImageOperations {
 		
 	}
 	
+	/**
+	 * Fit peaks.
+	 *
+	 * @param imp the imp
+	 * @return the results table
+	 */
 	public ResultsTable fitPeaks(ImagePlus imp) {
 		return fitPeaks(new ResultsTable(), imp);
 	}
 	
+	/**
+	 * Normal distribution.
+	 *
+	 * @param x the x
+	 * @param y the y
+	 * @param sigmaX the sigma x
+	 * @param sigmaY the sigma y
+	 * @return the double
+	 */
 	public static double normalDistribution(double x, double y, double sigmaX, double sigmaY) {
 		return Math.exp(-((x * x) / (2 * sigmaX * sigmaX) + (y * y) / (2 * sigmaY * sigmaY))) / (2 * Math.PI * sigmaX * sigmaY);
 	}
 	
+	/**
+	 * Reconstruction.
+	 *
+	 * @param table the table
+	 * @return the image plus
+	 */
 	public ImagePlus reconstruction(ResultsTable table) {
 	
 		int x0 = (int)Math.round(table.getValue("x", 0));
@@ -412,6 +497,16 @@ public class ImageOperations {
 	}
 	
 	
+	/**
+	 * Reconstruction.
+	 *
+	 * @param table the table
+	 * @param x0 the x0
+	 * @param y0 the y0
+	 * @param x1 the x1
+	 * @param y1 the y1
+	 * @return the image plus
+	 */
 	public ImagePlus reconstruction(ResultsTable table, int x0, int y0, int x1, int y1) {
 		
 		// create image stack
@@ -446,6 +541,11 @@ public class ImageOperations {
 		return imp;
 	}
 	
+	/**
+	 * Show dialog.
+	 *
+	 * @return true, if successful
+	 */
 	public boolean showDialog() {
 		
 		GenericDialog dialog = new GenericDialog("Parameters");
@@ -482,82 +582,182 @@ public class ImageOperations {
 		return true;
 	}
 
+	/**
+	 * Checks if is use discoidal filter.
+	 *
+	 * @return true, if is use discoidal filter
+	 */
 	public boolean isUseDiscoidalFilter() {
 		return useDiscoidalFilter;
 	}
 
+	/**
+	 * Sets the use discoidal filter.
+	 *
+	 * @param useDiscoidalFilter the new use discoidal filter
+	 */
 	public void setUseDiscoidalFilter(boolean useDiscoidalFilter) {
 		this.useDiscoidalFilter = useDiscoidalFilter;
 	}
 
+	/**
+	 * Gets the inner radius.
+	 *
+	 * @return the inner radius
+	 */
 	public int getInnerRadius() {
 		return innerRadius;
 	}
 
+	/**
+	 * Sets the inner radius.
+	 *
+	 * @param innerRadius the new inner radius
+	 */
 	public void setInnerRadius(int innerRadius) {
 		this.innerRadius = innerRadius;
 	}
 
+	/**
+	 * Gets the outer radius.
+	 *
+	 * @return the outer radius
+	 */
 	public int getOuterRadius() {
 		return outerRadius;
 	}
 
+	/**
+	 * Sets the outer radius.
+	 *
+	 * @param outerRadius the new outer radius
+	 */
 	public void setOuterRadius(int outerRadius) {
 		this.outerRadius = outerRadius;
 	}
 
+	/**
+	 * Gets the threshold.
+	 *
+	 * @return the threshold
+	 */
 	public double getThreshold() {
 		return threshold;
 	}
 
+	/**
+	 * Sets the threshold.
+	 *
+	 * @param threshold the new threshold
+	 */
 	public void setThreshold(double threshold) {
 		this.threshold = threshold;
 	}
 
+	/**
+	 * Checks if is use standard deviation.
+	 *
+	 * @return true, if is use standard deviation
+	 */
 	public boolean isUseStandardDeviation() {
 		return useStandardDeviation;
 	}
 
+	/**
+	 * Sets the use standard deviation.
+	 *
+	 * @param useStandardDeviation the new use standard deviation
+	 */
 	public void setUseStandardDeviation(boolean useStandardDeviation) {
 		this.useStandardDeviation = useStandardDeviation;
 	}
 
+	/**
+	 * Gets the minimum distance.
+	 *
+	 * @return the minimum distance
+	 */
 	public int getMinimumDistance() {
 		return minimumDistance;
 	}
 
+	/**
+	 * Sets the minimum distance.
+	 *
+	 * @param minimumDistance the new minimum distance
+	 */
 	public void setMinimumDistance(int minimumDistance) {
 		this.minimumDistance = minimumDistance;
 	}
 
+	/**
+	 * Gets the fit radius.
+	 *
+	 * @return the fit radius
+	 */
 	public int getFitRadius() {
 		return fitRadius;
 	}
 
+	/**
+	 * Sets the fit radius.
+	 *
+	 * @param fitRadius the new fit radius
+	 */
 	public void setFitRadius(int fitRadius) {
 		this.fitRadius = fitRadius;
 	}
 
+	/**
+	 * Gets the fwhm.
+	 *
+	 * @return the fwhm
+	 */
 	public double getFwhm() {
 		return fwhm;
 	}
 
+	/**
+	 * Sets the fwhm.
+	 *
+	 * @param fwhm the new fwhm
+	 */
 	public void setFwhm(double fwhm) {
 		this.fwhm = fwhm;
 	}
 	
+	/**
+	 * Gets the magnification.
+	 *
+	 * @return the magnification
+	 */
 	public double getMagnification() {
 		return magnification;
 	}
 
+	/**
+	 * Sets the magnification.
+	 *
+	 * @param magnification the new magnification
+	 */
 	public void setMagnification(double magnification) {
 		this.magnification = magnification;
 	}
 
+	/**
+	 * Gets the max error.
+	 *
+	 * @return the max error
+	 */
 	public double[] getMaxError() {
 		return maxError;
 	}
 
+	/**
+	 * Sets the max error.
+	 *
+	 * @param maxError the new max error
+	 */
 	public void setMaxError(double[] maxError) {
 		this.maxError = maxError;
 	}

@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package plugins_ij;
 
 import ij.IJ;
@@ -19,14 +22,31 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Trimmer_IJ.
+ */
 public class Trimmer_IJ implements PlugIn  {
 
 	 //Global Variables and configurations:
-		static int SlicesBegin; //How many slices to remove in the beginning of the movie
+		/** The Slices begin. */
+ 	static int SlicesBegin; //How many slices to remove in the beginning of the movie
+		
+		/** The Slices end. */
 		static int SlicesEnd; // How many slides to remove in the end
+		
+		/** The logpath. */
 		static String logpath;
+		
+		/** The table. */
 		static ResultsTable table;
 		
+		/**
+		 * The main method.
+		 *
+		 * @param args the arguments
+		 * @throws IOException Signals that an I/O exception has occurred.
+		 */
 		public static void main(String[] args) throws IOException {
 			
 			new Trimmer_IJ().run("");
@@ -36,6 +56,11 @@ public class Trimmer_IJ implements PlugIn  {
 		
 		
 		//Get Main Folder that contains all subfolders from Olympus Excellence Software
+		/**
+		 * Run.
+		 *
+		 * @param arg0 the arg0
+		 */
 		public void run(String arg0){
 			
 			//Get file
@@ -76,6 +101,12 @@ public class Trimmer_IJ implements PlugIn  {
 	    	    	
 	    	
 		}
+		
+		/**
+		 * Load table.
+		 *
+		 * @param csvFilename the csv filename
+		 */
 		private void loadTable(String csvFilename) {
 			try {
 				table = ResultsTable.open(csvFilename);
@@ -87,6 +118,13 @@ public class Trimmer_IJ implements PlugIn  {
 		}
 
 
+		/**
+		 * Gets the unique tags.
+		 *
+		 * @param collum the collum
+		 * @param table the table
+		 * @return the unique tags
+		 */
 		private List<String> getUniqueTags(String collum, ResultsTable table) {
 			List<String> list = getAllTags(collum, table);
 			HashSet<String> repeated = new HashSet<String>();
@@ -97,6 +135,13 @@ public class Trimmer_IJ implements PlugIn  {
 			
 		}
 		
+		/**
+		 * Gets the all tags.
+		 *
+		 * @param collum the collum
+		 * @param table the table
+		 * @return the all tags
+		 */
 		private List<String> getAllTags(String collum, ResultsTable table)
 		{
 			
@@ -116,6 +161,9 @@ public class Trimmer_IJ implements PlugIn  {
 		
 		
 
+		/**
+		 * Ask threshold.
+		 */
 		private static void askThreshold() {
 			GenericDialog gd = new GenericDialog("Trim Slices.");
 			int begin = 3;
@@ -134,6 +182,12 @@ public class Trimmer_IJ implements PlugIn  {
 	        SlicesEnd = end;
 			
 		}
+		
+		/**
+		 * Decision_tree.
+		 *
+		 * @param list the list
+		 */
 		public static void decision_tree(List<String> list) {
 			//check if collum existe
 			//int TrimColIndex = table.getColumnIndex("Trimmer");
@@ -203,6 +257,12 @@ public class Trimmer_IJ implements PlugIn  {
 			}
 		}
 
+		/**
+		 * Confirm execution.
+		 *
+		 * @param labels the labels
+		 * @return the int
+		 */
 		private static int ConfirmExecution(String[] labels) {
 			
 			
@@ -220,6 +280,12 @@ public class Trimmer_IJ implements PlugIn  {
 		return DKSelection;// TODO Auto-generated method stub
 			
 		}
+		
+		/**
+		 * Ask to continue.
+		 *
+		 * @return the int
+		 */
 		private static int askToContinue() {
 			Object[] options2 = {"Yes","No"};
 

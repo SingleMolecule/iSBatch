@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package operations.peakFitter;
 
 
@@ -42,50 +45,118 @@ import javax.swing.border.TitledBorder;
 
 import operations.peakFinder.FindPeaksGui;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class PeakFitterGui.
+ */
 public class PeakFitterGui extends JDialog implements ActionListener {
-	/**
-	 * 
-	 */
+	
+	/** The number format. */
 	NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale
 			.getDefault());
+	
+	/** The decimal format. */
 	DecimalFormat decimalFormat = (DecimalFormat) numberFormat;
 
+	/** The image type. */
 	private String imageType;
+	
+	/** The panel. */
 	private JPanel panel;
+	
+	/** The use discoidal filter chk. */
 	private JCheckBox useDiscoidalFilterChk;
+	
+	/** The inner radius txt. */
 	private JTextField innerRadiusTxt;
+	
+	/** The outer radius txt. */
 	private JTextField outerRadiusTxt;
+	
+	/** The lbl radius. */
 	private JLabel lblRadius;
+	
+	/** The lbl inner. */
 	private JLabel lblInner;
+	
+	/** The lbl outer. */
 	private JLabel lblOuter;
+	
+	/** The Discoidal filter panel. */
 	private JPanel DiscoidalFilterPanel;
+	
+	/** The Peak finder parameters. */
 	private JPanel PeakFinderParameters;
+	
+	/** The lbl threshold. */
 	private JLabel lblThreshold;
+	
+	/** The SNR txt. */
 	private JTextField SNRTxt;
+	
+	/** The lbl snr. */
 	private JLabel lblSnr;
+	
+	/** The Intensity txt. */
 	private JTextField IntensityTxt;
+	
+	/** The lbl threshold_1. */
 	private JLabel lblThreshold_1;
+	
+	/** The lbl intensity. */
 	private JLabel lblIntensity;
+	
+	/** The lbl selection radius. */
 	private JLabel lblSelectionRadius;
+	
+	/** The Selection radius txt. */
 	private JTextField SelectionRadiusTxt;
+	
+	/** The lbl min distance. */
 	private JLabel lblMinDistance;
+	
+	/** The min distance txt. */
 	private JTextField minDistanceTxt;
+	
+	/** The lbl px. */
 	private JLabel lblPx;
+	
+	/** The lbl px_1. */
 	private JLabel lblPx_1;
+	
+	/** The chckbx inside cells. */
 	private JCheckBox chckbxInsideCells;
+	
+	/** The custom search. */
 	private String customSearch;
 	// butons
 
+	/** The btn cancel. */
 	private JButton btnCancel;
+	
+	/** The btn process. */
 	private JButton btnProcess;
 
 	// Parameters
+	/** The inner radius. */
 	public String innerRadius= null;
 
+	/**
+	 * Gets the inner radius.
+	 *
+	 * @return the inner radius
+	 */
 	public double getInnerRadius() {
 		return parseDouble(innerRadius);
 	}
 
+	/**
+	 * Parses the double.
+	 *
+	 * @param str the str
+	 * @return the double
+	 * @throws NumberFormatException the number format exception
+	 */
 	private double parseDouble(String str) throws NumberFormatException {
 		double toReturn = 0;
 //		System.out.println(str);
@@ -107,22 +178,41 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 		return toReturn;
 	}
 
+	/** The outer radius. */
 	public String outerRadius= null;
 
+	/**
+	 * Gets the outer radius.
+	 *
+	 * @return the outer radius
+	 */
 	public double getOuterRadius() {
 		return parseDouble(outerRadius);
 	}
 
+	/** The SNR threshold. */
 	public String SNRThreshold = null;
+	
+	/** The threshold. */
 	public String threshold= null;
+	
+	/** The min distance. */
 	public String minDistance= null;
+	
+	/** The selection radius. */
 	public String selectionRadius= null;
 
 	// ComboBox
+	/** The file type combo box. */
 	private JComboBox<String> fileTypeComboBox;
+	
+	/** The channel combo box. */
 	private JComboBox<String> channelComboBox;
 
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+	
+	/** The channels. */
 	private String[] channels = new String[] {
 
 	"[Select Channel]", "All", "Acquisition", "Bright Field", "Red", "Green",
@@ -130,57 +220,156 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 
 //	private static final String[] methods = { "[Method]", "Load Image",
 //			"Average Images" };
-	private String[] types = new String[] { "[File Type]", "Raw", "Flat",
+	/** The types. */
+private String[] types = new String[] { "[File Type]", "Raw", "Flat",
 			"Discoidal" };
 
+	/** The canceled. */
 	private boolean canceled = false;
 
+	/** The frame. */
 	static JFrame frame;
+	
+	/** The node. */
 	private Node node;
+	
+	/** The image path. */
 	private String channel, method, imagePath;
+	
+	/** The use discoidal. */
 	public boolean useDiscoidal;
+	
+	/** The use cells. */
 	public boolean useCells;
+	
+	/** The Peak fitter panel. */
 	private JPanel PeakFitterPanel;
+	
+	/** The Error baselinetext field. */
 	private JTextField ErrorBaselinetextField;
+	
+	/** The error heightext field. */
 	private JTextField errorHeightextField;
+	
+	/** The error xtext field. */
 	private JTextField errorXtextField;
+	
+	/** The error ytext field. */
 	private JTextField errorYtextField;
+	
+	/** The error sigma xtext field. */
 	private JTextField errorSigmaXtextField;
+	
+	/** The error sigma ytext field. */
 	private JTextField errorSigmaYtextField;
+	
+	/** The Zscaletxt field. */
 	private JTextField ZscaletxtField;
+	
+	/** The lbl new label. */
 	private JLabel lblNewLabel;
+	
+	/** The lbl new label_1. */
 	private JLabel lblNewLabel_1;
+	
+	/** The lbl new label_2. */
 	private JLabel lblNewLabel_2;
+	
+	/** The lbl new label_3. */
 	private JLabel lblNewLabel_3;
+	
+	/** The lbl new label_4. */
 	private JLabel lblNewLabel_4;
+	
+	/** The lbl new label_5. */
 	private JLabel lblNewLabel_5;
+	
+	/** The lbl new label_6. */
 	private JLabel lblNewLabel_6;
+	
+	/** The z scale. */
 	protected String zScale;
+	
+	/**
+	 * Gets the z scale.
+	 *
+	 * @return the z scale
+	 */
 	public double getZScale(){
 		return parseDouble(zScale);
 	}
+	
+	/** The error sigma y. */
 	protected String errorSigmaY;
+	
+	/**
+	 * Gets the error sigma y.
+	 *
+	 * @return the error sigma y
+	 */
 	public double getErrorSigmaY(){
 		return parseDouble(errorSigmaY);
 	}
+	
+	/** The error sigma x. */
 	protected String errorSigmaX;
+	
+	/**
+	 * Gets the error sigma x.
+	 *
+	 * @return the error sigma x
+	 */
 	public double getErrorSigmaX(){
 		return parseDouble(errorSigmaX);
 	}
+	
+	/** The error y. */
 	protected String errorY;
+	
+	/**
+	 * Gets the error y.
+	 *
+	 * @return the error y
+	 */
 	public double getErrorY(){
 		return parseDouble(errorY);
 	}
+	
+	/** The error x. */
 	protected String errorX;
+	
+	/**
+	 * Gets the error x.
+	 *
+	 * @return the error x
+	 */
 	public double getErrorX(){
 		return parseDouble(errorX);
 	}
+	
+	/** The error height. */
 	protected String errorHeight;
+	
+	/**
+	 * Gets the error height.
+	 *
+	 * @return the error height
+	 */
 	public double getErrorHeight(){
 		return parseDouble(errorHeight);
 	}
+	
+	/** The error baseline. */
 	protected String errorBaseline;
+	
+	/** The custom search txt field. */
 	private JTextField customSearchTxtField;
+	
+	/**
+	 * Gets the error baseline.
+	 *
+	 * @return the error baseline
+	 */
 	public double getErrorBaseline(){
 		return parseDouble(errorBaseline);
 	}
@@ -189,6 +378,11 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 	 * Filter variables
 	 */
 
+	/**
+	 * Instantiates a new peak fitter gui.
+	 *
+	 * @param node the node
+	 */
 	public PeakFitterGui(Node node) {
 		setModal(true);
 		setTitle("Fit Peaks");
@@ -201,9 +395,15 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 	}
 
 
+	/**
+	 * Setup.
+	 */
 	private void setup() {
 	}
 
+	/**
+	 * Display.
+	 */
 	private void display() {
 		decimalFormat.setGroupingUsed(false);
 
@@ -754,9 +954,17 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 
 	}
 
+	/**
+	 * Run.
+	 */
 	private void run() {
 	}
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		frame = new JFrame();
 
@@ -764,14 +972,29 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 
 	}
 
+	/**
+	 * Error.
+	 *
+	 * @param msg the msg
+	 */
 	void error(String msg) {
 		IJ.error("Batch Processor", msg);
 	}
 
+	/**
+	 * Checks if is canceled.
+	 *
+	 * @return true, if is canceled
+	 */
 	public boolean isCanceled() {
 		return canceled;
 	}
 
+	/**
+	 * Action performed.
+	 *
+	 * @param e the e
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnCancel) {
@@ -842,38 +1065,83 @@ public class PeakFitterGui extends JDialog implements ActionListener {
 		}
 	}
 
+	/**
+	 * Gets the channel.
+	 *
+	 * @return the channel
+	 */
 	public String getChannel() {
 		return channel;
 	}
 
+	/**
+	 * Gets the method.
+	 *
+	 * @return the method
+	 */
 	public String getMethod() {
 		return method;
 	}
 
+	/**
+	 * Gets the image path.
+	 *
+	 * @return the image path
+	 */
 	public String getImagePath() {
 		return imagePath;
 	}
 
+	/**
+	 * Gets the threshold.
+	 *
+	 * @return the threshold
+	 */
 	public double getThreshold() {
 		return parseDouble(threshold);
 	}
 
+	/**
+	 * Gets the SNR threshold.
+	 *
+	 * @return the SNR threshold
+	 */
 	public double getSNRThreshold() {
 		return parseDouble(SNRThreshold);
 	}
 
+	/**
+	 * Gets the min distance.
+	 *
+	 * @return the min distance
+	 */
 	public double getMinDistance() {
 		return parseDouble(minDistance);
 	}
 
+	/**
+	 * Gets the selection radius.
+	 *
+	 * @return the selection radius
+	 */
 	public double getSelectionRadius() {
 		return parseDouble(selectionRadius);
 	}
 
+	/**
+	 * Gets the custom search.
+	 *
+	 * @return the custom search
+	 */
 	public String getCustomSearch() {
 		return this.customSearch;
 	}
 
+	/**
+	 * Gets the tags.
+	 *
+	 * @return the tags
+	 */
 	public ArrayList<String> getTags() {
 		ArrayList<String> container = new ArrayList<String>();
 		if (imageType != null) {

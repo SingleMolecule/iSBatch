@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package table;
 
 import java.awt.Frame;
@@ -9,8 +12,17 @@ import ij.measure.ResultsTable;
 import ij.text.TextPanel;
 import ij.text.TextWindow;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ResultsTableUtil.
+ */
 public class ResultsTableUtil {
 
+	/**
+	 * Gets the results table titles.
+	 *
+	 * @return the results table titles
+	 */
 	public static String[] getResultsTableTitles() {
 		
 		Frame[] nonImageWindows = WindowManager.getNonImageWindows();
@@ -35,6 +47,12 @@ public class ResultsTableUtil {
 		return Arrays.copyOf(titles, n);
 	}
 	
+	/**
+	 * Gets the results table.
+	 *
+	 * @param title the title
+	 * @return the results table
+	 */
 	public static ResultsTable getResultsTable(String title) {
 		
 		Frame frame = WindowManager.getFrame(title);
@@ -50,6 +68,12 @@ public class ResultsTableUtil {
 		return null;
 	}
 	
+	/**
+	 * Delete.
+	 *
+	 * @param table the table
+	 * @param rows the rows
+	 */
 	public static void delete(ResultsTable table, int[] rows) {
 		
 		if (rows.length == 0)

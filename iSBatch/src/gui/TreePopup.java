@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package gui;
 
 import ij.plugin.BatchProcessor;
@@ -8,10 +11,23 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.tree.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class TreePopup.
+ */
 public class TreePopup {
+    
+    /** The tree. */
     JTree tree = new JTree();
+    
+    /** The popup. */
     JPopupMenu popup;
  
+    /**
+     * Instantiates a new tree popup.
+     *
+     * @param tree the tree
+     */
     public TreePopup(JTree tree) {
     	this.tree = tree;
         popup = new JPopupMenu();
@@ -21,6 +37,9 @@ public class TreePopup {
         popup.add(getMenuItem("add sibling", handler));
     }
  
+    /**
+     * Instantiates a new tree popup.
+     */
     public TreePopup() {
         popup = new JPopupMenu();
         popup.setInvoker(tree);
@@ -32,6 +51,13 @@ public class TreePopup {
     }
  
     
+    /**
+     * Gets the menu item.
+     *
+     * @param s the s
+     * @param al the al
+     * @return the menu item
+     */
     private JMenuItem getMenuItem(String s, ActionListener al) {
         JMenuItem menuItem = new JMenuItem(s);
         menuItem.setActionCommand(s.toUpperCase());
@@ -40,12 +66,22 @@ public class TreePopup {
         return menuItem;
     }
  
+    /**
+     * Gets the tree component.
+     *
+     * @return the tree component
+     */
     private JScrollPane getTreeComponent() {
         tree.add(popup);
         expand(new TreePath(tree.getModel().getRoot()));
         return new JScrollPane(tree);
     }
  
+    /**
+     * Expand.
+     *
+     * @param path the path
+     */
     private void expand(TreePath path) {
         TreeNode node = (TreeNode)path.getLastPathComponent();
         if (node.getChildCount() >= 0) {
@@ -58,6 +94,11 @@ public class TreePopup {
         tree.expandPath(path);
     }
  
+    /**
+     * The main method.
+     *
+     * @param args the arguments
+     */
     public static void main(String[] args) {
     	System.out.println("Start");
         TreePopup test = new TreePopup();

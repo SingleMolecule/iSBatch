@@ -1,0 +1,47 @@
+To do:
+
+
+Table/Database Editor
+Create database
+Add tables to hold image information, like pixel size to mm, scale bar, 
+
+Time lapse needs cells with lineage
+Rapid acquisition does not
+
+
+Add SQL queries
+simple field, in case the user knows what he is doing. Table structure will be provided in the wiki
+
+
+
+
+Sequence os possible experiments to analyse
+
+1 - Import Files
+2 - FlatFiles and assign cell outlines
+	Show in the figure how the profile changes for one example in the BF and one in the fluorecence.
+	Point out thatcell outlines are still an service provide from outside
+	Show overlap of cells with images and also provide intensities graphs along the axis to reinforce that the images are flat
+	
+3 - For Time Lapse Database
+	SHow cell intensity over time
+	Number of foci/cell in each field - cells have to be linked in a lineage fashion
+	Diffused fluorescence - estimation of cellular concentration
+	
+
+4 - For Rapid Acquisition
+
+	Histogram of intensityes =- show when to cut 
+	Single molecule decay trace
+	Diffusion coefficient/show in the cell how the molecule is moving
+		
+	Change point analysis
+	
+5 - Example of custom macro
+	The user shows one image and make ZStacks of different bins, like a 500 frame movie is used to make a series of2x2
+	3x3 ... and so on.
+	
+	Them, peaks are counted and a plot N peaks X bin is plotted.
+	Show the best framerate acquisition
+	
+	

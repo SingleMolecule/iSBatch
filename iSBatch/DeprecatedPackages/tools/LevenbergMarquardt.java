@@ -1,15 +1,44 @@
+/*
+ * 
+ */
 package tools;
 
+// TODO: Auto-generated Javadoc
 // http://en.wikipedia.org/wiki/Levenberg%E2%80%93Marquardt_algorithm
 
+/**
+ * The Class LevenbergMarquardt.
+ */
 public abstract class LevenbergMarquardt {
 
+	/** The precision. */
 	public double precision = 1e-6;
+	
+	/** The iterations. */
 	public int iterations = 0;
+	
+	/** The max iterations. */
 	public int maxIterations = 50;
+	
+	/** The chi sq. */
 	public double chiSq = 0;
+	
+	/** The factor. */
 	public double factor = 10;
 	
+	/**
+	 * Solve.
+	 *
+	 * @param x the x
+	 * @param y the y
+	 * @param s the s
+	 * @param n the n
+	 * @param p the p
+	 * @param vary the vary
+	 * @param e the e
+	 * @param lambda the lambda
+	 * @return the double
+	 */
 	public double solve(double[][] x, double[] y, double[] s, int n, double[] p, boolean[] vary, double[] e, double lambda) {
 		
 		// determine number of parameters that can vary
@@ -117,6 +146,12 @@ public abstract class LevenbergMarquardt {
 		return lambda;
 	}
 	
+	/**
+	 * Gauss jordan.
+	 *
+	 * @param left the left
+	 * @param right the right
+	 */
 	public void gaussJordan(double[][] left, double[][] right) {
 		int n = left.length;
 		int rCols = right[0].length;
@@ -167,8 +202,21 @@ public abstract class LevenbergMarquardt {
 		}
 	}
 	
+	/**
+	 * Gets the value.
+	 *
+	 * @param x the x
+	 * @param p the p
+	 * @param dyda the dyda
+	 * @return the value
+	 */
 	public abstract double getValue(double[] x, double[] p, double[] dyda);
 	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		
 		double[][] x = {{0}, {1}, {2}, {3}, {4}, {5}, {6},

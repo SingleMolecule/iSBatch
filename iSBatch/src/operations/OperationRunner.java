@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package operations;
 
 
@@ -8,12 +11,28 @@ import model.DatabaseModel;
 import model.Node;
 import model.OperationNode;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class OperationRunner.
+ */
 public class OperationRunner implements Runnable {
 
+	/** The model. */
 	private DatabaseModel model;
+	
+	/** The operation. */
 	private Operation operation;
+	
+	/** The node. */
 	private Node node;
 	
+	/**
+	 * Instantiates a new operation runner.
+	 *
+	 * @param model the model
+	 * @param operation the operation
+	 * @param node the node
+	 */
 	public OperationRunner(DatabaseModel model, Operation operation, Node node) {
 		super();
 		this.operation = operation;
@@ -23,6 +42,9 @@ public class OperationRunner implements Runnable {
 		new Thread(this).start();
 	}
 
+	/**
+	 * Run.
+	 */
 	@Override
 	public void run() {
 		

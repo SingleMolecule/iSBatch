@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package analysis;
 
 import ij.IJ;
@@ -9,11 +12,23 @@ import ij.plugin.PlugIn;
 import ij.plugin.filter.Analyzer;
 import ij.process.ImageProcessor;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class PalmReconstructor.
+ */
 public class PalmReconstructor implements PlugIn {
 	
+	/** The z binning. */
 	private double zBinning = 0;
+	
+	/** The magnification. */
 	private double magnification = 4;
 	
+	/**
+	 * Run.
+	 *
+	 * @param arg0 the arg0
+	 */
 	@Override
 	public void run(String arg0) {
 
@@ -130,6 +145,13 @@ public class PalmReconstructor implements PlugIn {
 		imp.show();
 	}
 	
+	/**
+	 * Normal distribution3 d.
+	 *
+	 * @param x the x
+	 * @param s the s
+	 * @return the double
+	 */
 	public static double normalDistribution3D(double x, double s) {
 		double d = s * Math.sqrt(2.0 * Math.PI);
 		
@@ -137,6 +159,11 @@ public class PalmReconstructor implements PlugIn {
 		return 1.0 / (d * d * d) * Math.exp(-(x * x) / (2.0 * s * s));
 	}
 	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		
 		double s = Math.sqrt(1);

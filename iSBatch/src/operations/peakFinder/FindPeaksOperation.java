@@ -37,21 +37,46 @@ import model.OperationNode;
 import model.Root;
 import model.Sample;
 
+// TODO: Auto-generated Javadoc
 /**
- * @author VictorCaldas
+ * The Class FindPeaksOperation.
  *
+ * @author VictorCaldas
  */
 public class FindPeaksOperation implements Operation {
+	
+	/** The dialog. */
 	private FindPeaksGui dialog;
+	
+	/** The channel. */
 	private String channel;
+	
+	/** The use discoidal. */
 	private boolean useDiscoidal;
+	
+	/** The model. */
 	private DatabaseModel model;
+	
+	/** The preferences. */
 	iSBatchPreferences preferences;
+	
+	/** The peak finder. */
 	PeakFinder peakFinder;
+	
+	/** The roi manager. */
 	RoiManager roiManager;
+	
+	/** The number of operations. */
 	int NUMBER_OF_OPERATIONS;
+	
+	/** The current count. */
 	int currentCount;
 
+	/**
+	 * Instantiates a new find peaks operation.
+	 *
+	 * @param treeModel the tree model
+	 */
 	public FindPeaksOperation(DatabaseModel treeModel) {
 		this.model = treeModel;
 	}
@@ -60,6 +85,11 @@ public class FindPeaksOperation implements Operation {
 	 * (non-Javadoc)
 	 * 
 	 * @see context.ContextElement#getContext()
+	 */
+	/**
+	 * Gets the context.
+	 *
+	 * @return the context
 	 */
 	@Override
 	public String[] getContext() {
@@ -71,6 +101,11 @@ public class FindPeaksOperation implements Operation {
 	 * 
 	 * @see operations.Operation#getName()
 	 */
+	/**
+	 * Gets the name.
+	 *
+	 * @return the name
+	 */
 	@Override
 	public String getName() {
 		return "Peak Finder";
@@ -80,6 +115,12 @@ public class FindPeaksOperation implements Operation {
 	 * (non-Javadoc)
 	 * 
 	 * @see operations.Operation#setup(model.Node)
+	 */
+	/**
+	 * Setup.
+	 *
+	 * @param node the node
+	 * @return true, if successful
 	 */
 	@Override
 	public boolean setup(Node node) {
@@ -101,6 +142,11 @@ public class FindPeaksOperation implements Operation {
 	 * 
 	 * @see operations.Operation#finalize(model.Node)
 	 */
+	/**
+	 * Finalize.
+	 *
+	 * @param node the node
+	 */
 	@Override
 	public void finalize(Node node) {
 		// TODO Auto-generated method stub
@@ -113,11 +159,21 @@ public class FindPeaksOperation implements Operation {
 	 * @see operations.Operation#visit(model.Root)
 	 */
 
+	/**
+	 * Visit.
+	 *
+	 * @param root the root
+	 */
 	@Override
 	public void visit(Root root) {
 		System.out.println("Not applicable to root. ");
 	}
 
+	/**
+	 * Run.
+	 *
+	 * @param node the node
+	 */
 	private void run(Node node) {
 		// Run Peak Finder
 		//
@@ -180,6 +236,13 @@ public class FindPeaksOperation implements Operation {
 
 	}
 
+	/**
+	 * Peaks inside cells.
+	 *
+	 * @param cellsManager the cells manager
+	 * @param allPeaksManager the all peaks manager
+	 * @return the roi manager
+	 */
 	private RoiManager PeaksInsideCells(RoiManager cellsManager,
 			RoiManager allPeaksManager) {
 		RoiManager filtered = new RoiManager(true);
@@ -208,6 +271,11 @@ public class FindPeaksOperation implements Operation {
 		return filtered;
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param experiment the experiment
+	 */
 	@Override
 	public void visit(Experiment experiment) {
 		for (Sample sample : experiment.getSamples()) {
@@ -216,6 +284,11 @@ public class FindPeaksOperation implements Operation {
 		}
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param sample the sample
+	 */
 	@Override
 	public void visit(Sample sample) {
 		for (FieldOfView fov : sample.getFieldOfView()) {
@@ -223,6 +296,11 @@ public class FindPeaksOperation implements Operation {
 		}
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param fieldOfView the field of view
+	 */
 	@Override
 	public void visit(FieldOfView fieldOfView) {
 		for (FileNode fileNode : fieldOfView.getImages(channel)) {
@@ -230,6 +308,11 @@ public class FindPeaksOperation implements Operation {
 		}
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param fileNode the file node
+	 */
 	@Override
 	public void visit(FileNode fileNode) {
 		System.out.println("Peak Find: " + currentCount + " of "
@@ -242,27 +325,54 @@ public class FindPeaksOperation implements Operation {
 
 	}
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param operationNode the operation node
+	 */
 	@Override
 	public void visit(OperationNode operationNode) {
 		// TODO Auto-generated method stub
 
 	}
 
+	/**
+	 * Gets the created nodes.
+	 *
+	 * @return the created nodes
+	 */
 	@Override
 	public Node[] getCreatedNodes() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/**
+	 * Gets the parameters.
+	 *
+	 * @return the parameters
+	 */
 	@Override
 	public HashMap<String, String> getParameters() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/**
+	 * Parses the double.
+	 *
+	 * @param str the str
+	 * @return the double
+	 * @throws NumberFormatException the number format exception
+	 */
 	private double parseDouble(String str) throws NumberFormatException {
 		double toReturn = 0;
 		// System.out.println(str);
@@ -281,6 +391,12 @@ public class FindPeaksOperation implements Operation {
 		return toReturn;
 	}
 
+	/**
+	 * Run plug in filter.
+	 *
+	 * @param filter the filter
+	 * @param imp the imp
+	 */
 	public static void runPlugInFilter(PlugInFilter filter, ImagePlus imp) {
 
 		ImageStack stack = imp.getImageStack();
@@ -289,10 +405,23 @@ public class FindPeaksOperation implements Operation {
 			runPlugInFilter(filter, stack.getProcessor(slice));
 	}
 
+	/**
+	 * Run plug in filter.
+	 *
+	 * @param filter the filter
+	 * @param ip the ip
+	 */
 	public static void runPlugInFilter(PlugInFilter filter, ImageProcessor ip) {
 		filter.run(ip);
 	}
 
+	/**
+	 * Find peaks.
+	 *
+	 * @param finder the finder
+	 * @param imp the imp
+	 * @return the array list
+	 */
 	public static ArrayList<Roi> findPeaks(PeakFinder finder, ImagePlus imp) {
 
 		ArrayList<Roi> allPeaks = new ArrayList<Roi>();
@@ -312,6 +441,13 @@ public class FindPeaksOperation implements Operation {
 		return allPeaks;
 	}
 
+	/**
+	 * Save rois as zip.
+	 *
+	 * @param rois the rois
+	 * @param filename the filename
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static void saveRoisAsZip(ArrayList<Roi> rois, String filename)
 			throws IOException {
 		ZipOutputStream zos = new ZipOutputStream(

@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package process;
 
 import java.util.ArrayList;
@@ -12,18 +15,38 @@ import ij.Prefs;
 import ij.plugin.filter.PlugInFilter;
 import ij.process.ImageProcessor;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class HoughCircles.
+ */
 public class HoughCircles implements PlugInFilter {
+	
+	/** The flags. */
 	private int flags = DOES_8G | FINAL_PROCESSING;
 	
+	/** The min radius. */
 	private double minRadius = Prefs.get("HoughCircles.minRadius", 5);
+	
+	/** The max radius. */
 	private double maxRadius = Prefs.get("HoughCircles.maxRadius", 20);
+	
+	/** The step size. */
 	private double stepSize = Prefs.get("HoughCircles.stepSize", 20);
 	
+	/** The x circle offsets. */
 	private ArrayList<int[]> xCircleOffsets = new ArrayList<int[]>();
+	
+	/** The y circle offsets. */
 	private ArrayList<int[]> yCircleOffsets = new ArrayList<int[]>();
 	
+	/** The hough image. */
 	private ImagePlus houghImage;
 	
+	/**
+	 * Run.
+	 *
+	 * @param ip the ip
+	 */
 	@Override
 	public void run(ImageProcessor ip) {
 		
@@ -61,6 +84,13 @@ public class HoughCircles implements PlugInFilter {
 
 	}
 
+	/**
+	 * Setup.
+	 *
+	 * @param arg the arg
+	 * @param imp the imp
+	 * @return the int
+	 */
 	@Override
 	public int setup(String arg, ImagePlus imp) {
 		

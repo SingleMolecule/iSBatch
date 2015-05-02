@@ -1,8 +1,12 @@
+/*
+ * 
+ */
 package model;
 
 import java.io.File;
 import java.util.ArrayList;
 
+// TODO: Auto-generated Javadoc
 /**
  * The importer class takes care of importing measurement data. Depending on the
  * directory structure and filename it deduces what is an experiment, a sample,
@@ -35,14 +39,29 @@ import java.util.ArrayList;
 public class Importer {
 
 	// channel regular expressions
+	/** The acq reg ex. */
 	public static String acqRegEx = ".*acquisition.?\\.tif";
+	
+	/** The bf reg ex. */
 	public static String bfRegEx = ".*bf.?\\.tif";
+	
+	/** The red reg ex. */
 	public static String redRegEx = ".*568.?\\.tif";
+	
+	/** The green reg ex. */
 	public static String greenRegEx = ".*514.?\\.tif";
+	
+	/** The blue reg ex. */
 	public static String blueRegEx = ".*488.?\\.tif";
 	
+	/** The model. */
 	private DatabaseModel model;
 
+	/**
+	 * Instantiates a new importer.
+	 *
+	 * @param model the model
+	 */
 	public Importer(DatabaseModel model) {
 		this.model = model;
 	
@@ -63,7 +82,7 @@ public class Importer {
 	/**
 	 * For a given root (node) and folder this method will import experiments. You also need to specify if this experiment is
 	 * time lapse or time sampling. 
-	 * @param root the root node
+	 *
 	 * @param folder the folder from which all samples are imported
 	 * @param isTimeSampling determines if this experiment is time lapse or not
 	 */
@@ -79,6 +98,11 @@ public class Importer {
 		importSamples(experiment);
 	}
 
+	/**
+	 * Import samples.
+	 *
+	 * @param experiment the experiment
+	 */
 	public void importSamples(Experiment experiment) {
 
 		File folder = new File(experiment.getProperty("folder"));
@@ -98,6 +122,11 @@ public class Importer {
 
 	}
 
+	/**
+	 * Import field of views.
+	 *
+	 * @param sample the sample
+	 */
 	public void importFieldOfViews(Sample sample) {
 
 		File folder = new File(sample.getProperty("folder"));
@@ -155,6 +184,11 @@ public class Importer {
 
 	}
 
+	/**
+	 * Import files.
+	 *
+	 * @param fieldOfView the field of view
+	 */
 	public void importFiles(Node fieldOfView) {
 
 		File folder = new File(fieldOfView.getProperty("folder"));
@@ -169,6 +203,12 @@ public class Importer {
 
 	}
 	
+	/**
+	 * Import file.
+	 *
+	 * @param node the node
+	 * @param file the file
+	 */
 	public void importFile(Node node, File file) {
 		
 		FileNode fileNode = new FileNode(node);

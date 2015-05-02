@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package tools;
 
 import java.awt.AWTEvent;
@@ -13,25 +16,55 @@ import ij.plugin.filter.ExtendedPlugInFilter;
 import ij.plugin.filter.PlugInFilterRunner;
 import ij.process.ImageProcessor;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class DiscoidalAveragingFilter.
+ */
 public class DiscoidalAveragingFilter implements ExtendedPlugInFilter, DialogListener {
 
+	/** The flags. */
 	private int flags = DOES_8G | DOES_16 | DOES_32 | PARALLELIZE_STACKS;
 	
+	/** The inner radius. */
 	private int innerRadius = Prefs.getInt("DiscoidalAveragingFilter.innerRadius", 1);
+	
+	/** The outer radius. */
 	private int outerRadius = Prefs.getInt("DiscoidalAveragingFilter.outerRadius", 4);
 	
+	/** The imp. */
 	private ImagePlus imp;
+	
+	/** The inner offsets. */
 	private int[] innerOffsets;
+	
+	/** The outer offsets. */
 	private int[] outerOffsets;
 	
+	/**
+	 * Instantiates a new discoidal averaging filter.
+	 */
 	public DiscoidalAveragingFilter() {
 		
 	}
 	
+	/**
+	 * Instantiates a new discoidal averaging filter.
+	 *
+	 * @param width the width
+	 * @param innerRadius the inner radius
+	 * @param outerRadius the outer radius
+	 */
 	public DiscoidalAveragingFilter(int width, int innerRadius, int outerRadius) {
 		setCircleOffsets(width, innerRadius, outerRadius);
 	}
 	
+	/**
+	 * Sets the circle offsets.
+	 *
+	 * @param width the width
+	 * @param innerRadius the inner radius
+	 * @param outerRadius the outer radius
+	 */
 	public void setCircleOffsets(int width, int innerRadius, int outerRadius) {
 		ArrayList<Integer> innerOffsetList = new ArrayList<Integer>();
 		ArrayList<Integer> outerOffsetList = new ArrayList<Integer>();
@@ -60,6 +93,11 @@ public class DiscoidalAveragingFilter implements ExtendedPlugInFilter, DialogLis
 			outerOffsets[i] = outerOffsetList.get(i);
 	}
 	
+	/**
+	 * Run.
+	 *
+	 * @param ip the ip
+	 */
 	@Override
 	public void run(ImageProcessor ip) {
 		
@@ -120,6 +158,13 @@ public class DiscoidalAveragingFilter implements ExtendedPlugInFilter, DialogLis
 		
 	}
 
+	/**
+	 * Setup.
+	 *
+	 * @param arg the arg
+	 * @param imp the imp
+	 * @return the int
+	 */
 	@Override
 	public int setup(String arg, ImagePlus imp) {
 		this.imp = imp;
@@ -127,10 +172,23 @@ public class DiscoidalAveragingFilter implements ExtendedPlugInFilter, DialogLis
 		return flags;
 	}
 
+	/**
+	 * Sets the n passes.
+	 *
+	 * @param arg0 the new n passes
+	 */
 	@Override
 	public void setNPasses(int arg0) {
 	}
 
+	/**
+	 * Show dialog.
+	 *
+	 * @param imp the imp
+	 * @param arg the arg
+	 * @param pfr the pfr
+	 * @return the int
+	 */
 	@Override
 	public int showDialog(ImagePlus imp, String arg, PlugInFilterRunner pfr) {
 		
@@ -147,6 +205,13 @@ public class DiscoidalAveragingFilter implements ExtendedPlugInFilter, DialogLis
 		return IJ.setupDialog(imp, flags);
 	}
 
+	/**
+	 * Dialog item changed.
+	 *
+	 * @param dialog the dialog
+	 * @param arg1 the arg1
+	 * @return true, if successful
+	 */
 	@Override
 	public boolean dialogItemChanged(GenericDialog dialog, AWTEvent arg1) {
 

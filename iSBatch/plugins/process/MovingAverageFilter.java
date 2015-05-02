@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package process;
 
 import ij.*;
@@ -5,18 +8,35 @@ import ij.process.*;
 import ij.gui.*;
 import ij.plugin.filter.*;
 
+// TODO: Auto-generated Javadoc
 // This filter averages each frame with the n - 1 previous frames
 // http://en.wikipedia.org/wiki/Moving_average
 
+/**
+ * The Class MovingAverageFilter.
+ */
 public class MovingAverageFilter implements PlugInFilter, DialogListener {
+	
+	/** The flags. */
 	private int flags = DOES_16 | DOES_8G | DOES_STACKS;
 	
+	/** The images to average. */
 	private int imagesToAverage = 5;
 
+	/** The image buffer. */
 	private ImageProcessor[] imageBuffer;
+	
+	/** The current image. */
 	private int currentImage;
+	
+	/** The sum. */
 	private int[] sum;
 
+	/**
+	 * Run.
+	 *
+	 * @param ip the ip
+	 */
 	@Override
 	public void run(ImageProcessor ip) {
 		int divisor = ip.getSliceNumber();
@@ -40,6 +60,13 @@ public class MovingAverageFilter implements PlugInFilter, DialogListener {
 		}
 	}
 
+	/**
+	 * Setup.
+	 *
+	 * @param arg the arg
+	 * @param imp the imp
+	 * @return the int
+	 */
 	@Override
 	public int setup(String arg, ImagePlus imp) {
 		
@@ -70,6 +97,13 @@ public class MovingAverageFilter implements PlugInFilter, DialogListener {
 		return flags;
 	}
 
+	/**
+	 * Dialog item changed.
+	 *
+	 * @param gd the gd
+	 * @param e the e
+	 * @return true, if successful
+	 */
 	@Override
 	public boolean dialogItemChanged(GenericDialog gd, java.awt.AWTEvent e)  {
 		imagesToAverage = (int)gd.getNextNumber();

@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package test;
 //Imports are listed in full to show what's being used
 //could just import javax.swing.* and java.awt.* etc..
@@ -23,30 +26,73 @@ import java.awt.event.ActionEvent;
 import java.lang.reflect.Field;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class MessageDialogFrame.
+ */
 public class MessageDialogFrame extends JFrame{
     
+    /** The confirm opt btn panel. */
     private JPanel confirmOptBtnPanel;
+    
+    /** The msg type btn panel. */
     private JPanel msgTypeBtnPanel;
+    
+    /** The text panel. */
     private JPanel textPanel;
+    
+    /** The opt panel. */
     private JPanel optPanel;
+    
+    /** The dialog type panel. */
     private JPanel dialogTypePanel;
+    
+    /** The make dialog panel. */
     private JPanel makeDialogPanel;
+    
+    /** The option type panel. */
     private JPanel optionTypePanel;
+    
+    /** The confirm opt btn grp. */
     private ButtonGroup confirmOptBtnGrp;
+    
+    /** The msg type btn grp. */
     private ButtonGroup msgTypeBtnGrp;
+    
+    /** The choose opt pane grp. */
     private ButtonGroup chooseOptPaneGrp;
+    
+    /** The option btn grp. */
     private ButtonGroup optionBtnGrp;
+    
+    /** The message text. */
     private JTextField messageText;
+    
+    /** The title text. */
     private JTextField titleText;
+    
+    /** The tracker. */
     private JTextArea tracker;
     
     //Using some standard Java icons
+    /** The option icon. */
     private Icon optionIcon = UIManager.getIcon("FileView.computerIcon");
+    
+    /** The warning icon. */
     private Icon warningIcon = UIManager.getIcon("OptionPane.warningIcon");
+    
+    /** The info icon. */
     private Icon infoIcon = UIManager.getIcon("OptionPane.informationIcon");
+    
+    /** The error icon. */
     private Icon errorIcon = UIManager.getIcon("OptionPane.errorIcon");
     
     //Application start point   
+    /**
+     * The main method.
+     *
+     * @param args the arguments
+     */
     public static void main(String[] args) {
      
      //Use the event dispatch thread for Swing components
@@ -62,6 +108,9 @@ public class MessageDialogFrame extends JFrame{
     }
 
 
+    /**
+     * Instantiates a new message dialog frame.
+     */
     public MessageDialogFrame()
     {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -219,6 +268,13 @@ public class MessageDialogFrame extends JFrame{
     }
     
     
+    /**
+     * Make button group panel.
+     *
+     * @param btnGroup the btn group
+     * @param buttons the buttons
+     * @return the j panel
+     */
     private JPanel MakeButtonGroupPanel(ButtonGroup btnGroup, String... buttons)
     {
         JPanel btnGrpPanel = new JPanel();
@@ -241,6 +297,12 @@ public class MessageDialogFrame extends JFrame{
                
     }
     
+    /**
+     * Gets the field value.
+     *
+     * @param selected the selected
+     * @return the int
+     */
     private int GetFieldValue(String selected)
     {
         try{
@@ -258,6 +320,9 @@ public class MessageDialogFrame extends JFrame{
     }
     
     
+    /**
+     * Creates the dialog.
+     */
     private void CreateDialog()
     {
         int messageType = GetFieldValue(msgTypeBtnGrp.getSelection().getActionCommand());
@@ -288,6 +353,11 @@ public class MessageDialogFrame extends JFrame{
         }
     }
    
+    /**
+     * Gets the choices.
+     *
+     * @return the choices
+     */
     private Object[] getChoices()
     {  
         if (optionBtnGrp.getSelection().getActionCommand().equals("Icons:"))

@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package pluginsIJ;
 
 import java.awt.Component;
@@ -23,12 +26,23 @@ import ij.plugin.PlugIn;
 import ij.process.ImageProcessor;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Detect_PeaksIJ.
+ */
 public class Detect_PeaksIJ implements PlugIn{
+		
+		/** The Constant SIGMA_TO_FWHM. */
 		public static final double SIGMA_TO_FWHM = 2.0 * Math.sqrt(2.0 * Math.log(2));
 		//static double PeakFinderThreshold = 30;
 		//static String thresholdValue = "30";
+		/** The file. */
 		static File file;
+		
+		/** The CSV content. */
 		static String[][] CSVContent = null;
+		
+		/** The max error. */
 		private static double[] maxError = new double[] {
 				Prefs.getDouble("PeakFitter.maxErrorBaseline", 5000),
 				Prefs.getDouble("PeakFitter.maxErrorHeight",5000),
@@ -38,13 +52,23 @@ public class Detect_PeaksIJ implements PlugIn{
 				Prefs.getDouble("PeakFitter.maxErrorSigmaY", 1),
 		};
 		
+		/**
+		 * The main method.
+		 *
+		 * @param args the arguments
+		 */
 		public static void main(String[] args) {
 			new Detect_PeaksIJ().run("");
 			System.out.println("All peaks localized");
 		}
 
 //public static void main (String[] args){
-		public void run(String arg0){
+		/**
+ * Run.
+ *
+ * @param arg0 the arg0
+ */
+public void run(String arg0){
 	//Get file
 			String csvFilename =  IJ.getFilePath("Provide the ControlFile.csv");
 				if (csvFilename==null) return;	
@@ -80,6 +104,11 @@ public class Detect_PeaksIJ implements PlugIn{
 			
 }
 
+/**
+ * Decision_tree.
+ *
+ * @param labels the labels
+ */
 private static void decision_tree(String[] labels) {
 	int choice = ConfirmExecution(labels);
   	System.out.println(choice);
@@ -118,6 +147,11 @@ private static void decision_tree(String[] labels) {
 
 
   	
+/**
+ * Ask threshold.
+ *
+ * @return the int
+ */
 private static int askThreshold() {
 		GenericDialog gd = new GenericDialog("threshold values");
 		int offset = 0;
@@ -130,6 +164,11 @@ private static int askThreshold() {
 		return offset;
 	}
 
+/**
+ * Ask to continue.
+ *
+ * @return the int
+ */
 private static int askToContinue() {
 	Object[] options2 = {"Yes","No"};
 
@@ -147,6 +186,16 @@ return DKSelection;// TODO Auto-generated method stub
 
 }
 
+/**
+ * Gets the all peak.
+ *
+ * @param listchannel the listchannel
+ * @param INPUT_DIR the input dir
+ * @param channel the channel
+ * @param thresholdValue the threshold value
+ * @param PeakFinderThreshold the peak finder threshold
+ * @return the all peak
+ */
 public static void getAllPeak(List<String> listchannel,String INPUT_DIR, String channel, int thresholdValue, int PeakFinderThreshold){
 		if (listchannel.isEmpty()) 
 			return;
@@ -327,6 +376,13 @@ public static void getAllPeak(List<String> listchannel,String INPUT_DIR, String 
 	
 }
 
+/**
+ * Gets the BF slice.
+ *
+ * @param cSVContent2 the c sv content2
+ * @param name the name
+ * @return the BF slice
+ */
 private static int getBFSlice(String[][] cSVContent2, String name) {
 	int Index = iSBOps.getCol("BFIndex", cSVContent2[0]);
 	int Input = iSBOps.getCol("Input", cSVContent2[0]);
@@ -346,6 +402,14 @@ private static int getBFSlice(String[][] cSVContent2, String name) {
 	return 0;
 }
 
+/**
+ * Gets the all peaks.
+ *
+ * @param imp the imp
+ * @param filePath the file path
+ * @param PeakFinderThreshold the peak finder threshold
+ * @return the all peaks
+ */
 public static void getAllPeaks(ImagePlus imp, String filePath, int PeakFinderThreshold){
 	
 	int width = imp.getWidth();
@@ -478,6 +542,12 @@ public static void getAllPeaks(ImagePlus imp, String filePath, int PeakFinderThr
 }
 
 
+/**
+ * Confirm execution.
+ *
+ * @param labels the labels
+ * @return the int
+ */
 private static int ConfirmExecution(String[] labels) {
 	
 	

@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package Deprecated;
 
 import ij.IJ;
@@ -19,15 +22,33 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Create_inputCSV_full_IJ.
+ */
 public class Create_inputCSV_full_IJ implements PlugIn {
 
+	/** The logpath. */
 	static String logpath;
+	
+	/** The out dir. */
 	static String OUT_DIR;
 	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		new Create_inputCSV_full_IJ().run("");
 		System.out.println("Create_inputCSV_full_IJ");
 	}
+	
+	/**
+	 * Run.
+	 *
+	 * @param arg0 the arg0
+	 */
 	public void run(String arg0){
 		
 		//Get Main Folder that contains all subfolders from Olympus Excellence Software
@@ -107,6 +128,13 @@ public class Create_inputCSV_full_IJ implements PlugIn {
 	}
 
 
+	/**
+	 * Write array.
+	 *
+	 * @param headers the headers
+	 * @param logpath2 the logpath2
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	private static void WriteArray(String[] headers, String logpath2) throws IOException {
 		for (int i=0; i<headers.length; i++){
 			if(i==headers.length-1){
@@ -122,6 +150,11 @@ public class Create_inputCSV_full_IJ implements PlugIn {
 			
 		}
 		
+	/**
+	 * Gets the headers.
+	 *
+	 * @return the headers
+	 */
 	private static String[] getHeaders() {
 		String[] Headers = new String[17];
 		
@@ -151,6 +184,14 @@ public class Create_inputCSV_full_IJ implements PlugIn {
 		return Headers;
 	}
 
+	/**
+	 * Parses the name.
+	 *
+	 * @param fileName the file name
+	 * @param FolderName the folder name
+	 * @return the string[]
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	static String[] ParseName(String fileName, String FolderName) throws IOException {
 		String[] sOutput = new String[17];
 				
@@ -264,6 +305,12 @@ public class Create_inputCSV_full_IJ implements PlugIn {
 
 	}
 	
+	/**
+	 * Gets the FP data.
+	 *
+	 * @param parts the parts
+	 * @return the FP data
+	 */
 	private static String getFPData(List<String> parts) {
 		Pattern pattern = Pattern.compile("^\\b[mkate2]|^\\b[ypet]", Pattern.CASE_INSENSITIVE);
 		String index = null;
@@ -284,12 +331,14 @@ public class Create_inputCSV_full_IJ implements PlugIn {
 	}
 
 /**
-	private static String getODData(List<String> parts) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-*/
+ * 	private static String getODData(List<String> parts) {
+ * 		// TODO Auto-generated method stub
+ * 		return null;
+ * 	}.
+ *
+ * @param tag the tag
+ * @return the string[]
+ */
 	private static String[] splitTags(String tag){
 						
 		/**
@@ -383,6 +432,12 @@ public class Create_inputCSV_full_IJ implements PlugIn {
 		return tags;
 	}
 
+	/**
+	 * Gets the plasmid data.
+	 *
+	 * @param parts the parts
+	 * @return the plasmid data
+	 */
 	private static String getPlasmidData(List<String> parts) {
 		Pattern pattern = Pattern.compile("\\b[pBAD]", Pattern.CASE_INSENSITIVE);
 		String index = null;
@@ -403,6 +458,12 @@ public class Create_inputCSV_full_IJ implements PlugIn {
 		return index;	
 	}
 	
+	/**
+	 * Gets the damager data.
+	 *
+	 * @param parts the parts
+	 * @return the damager data
+	 */
 	private static String getDamagerData(List<String> parts) {
 		Pattern pattern = Pattern.compile("\\b[UVL]{2,4}|\\b[NFZ]{2,4}", Pattern.CASE_INSENSITIVE);
 		String index = null;
@@ -422,6 +483,12 @@ public class Create_inputCSV_full_IJ implements PlugIn {
 		return index;	
 	}
 
+	/**
+	 * Gets the inducer data.
+	 *
+	 * @param parts the parts
+	 * @return the inducer data
+	 */
 	private static String[] getInducerData(List<String> parts) {
 		
 		//Pattern pattern = Pattern.compile("\\b[Ara]{2,4}", Pattern.CASE_INSENSITIVE);
@@ -443,6 +510,12 @@ public class Create_inputCSV_full_IJ implements PlugIn {
 		return index;	
 	}
 
+	/**
+	 * Gets the time stamp.
+	 *
+	 * @param parts the parts
+	 * @return the time stamp
+	 */
 	private static String[] getTimeStamp(List<String> parts) {
 		
 		Pattern pattern = Pattern.compile("\\b[min]{2,4}", Pattern.CASE_INSENSITIVE);
@@ -465,6 +538,12 @@ public class Create_inputCSV_full_IJ implements PlugIn {
 		return index;	
 	}
 
+	/**
+	 * Separate string from int.
+	 *
+	 * @param string the string
+	 * @return the string[]
+	 */
 	private static String[] SeparateStringFromInt(String string) {
 		String[] tags = new String[2];
 		
@@ -485,6 +564,12 @@ public class Create_inputCSV_full_IJ implements PlugIn {
 		return tags;
 	}
 
+	/**
+	 * Gets the replicate.
+	 *
+	 * @param parts the parts
+	 * @return the replicate
+	 */
 	private static String getReplicate(List<String> parts) {
 		Pattern pattern = Pattern.compile("^\\d{3}");
 		String index = null;
@@ -502,6 +587,12 @@ public class Create_inputCSV_full_IJ implements PlugIn {
 		return index;	
 	}
 
+	/**
+	 * Check condition.
+	 *
+	 * @param date the date
+	 * @return true, if successful
+	 */
 	private static boolean checkCondition(String date) {
 		boolean condition;
 		if (date==null){
@@ -513,6 +604,12 @@ public class Create_inputCSV_full_IJ implements PlugIn {
 		return condition;
 	}
 
+	/**
+	 * Gets the date.
+	 *
+	 * @param parts the parts
+	 * @return the date
+	 */
 	private static String getDate(List<String> parts) {
 		Pattern pattern = Pattern.compile("\\d{6,8}");
 		String index = null;
@@ -530,6 +627,12 @@ public class Create_inputCSV_full_IJ implements PlugIn {
 		return index;		
 	}
 	
+	/**
+	 * Gets the parts.
+	 *
+	 * @param Folderdame the folderdame
+	 * @return the parts
+	 */
 	public static List<String> getParts(String Folderdame){
 		String[] parts = Folderdame.split("_");
 		List<String> myList = new LinkedList<String>();
@@ -544,13 +647,31 @@ public class Create_inputCSV_full_IJ implements PlugIn {
 	
 //----------------------------------------------------------------------------------------------------------------------//
 //----------------------------------------------------------------------------------------------------------------------//
-	public static void print(String string){
+	/**
+ * Prints the.
+ *
+ * @param string the string
+ */
+public static void print(String string){
 		System.out.println(string);
 	}
+	
+	/**
+	 * Prints the.
+	 *
+	 * @param string the string
+	 */
 	public static void print(int string){
 		System.out.println(string);
 	}
 	
+	/**
+	 * New log line.
+	 *
+	 * @param string the string
+	 * @param logpath the logpath
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static void NewLogLine( String string, String logpath) throws IOException{
 		BufferedWriter output;
 		output = new BufferedWriter(new FileWriter(logpath, true));
@@ -562,6 +683,13 @@ public class Create_inputCSV_full_IJ implements PlugIn {
 		//System.out.println(string);
 		}
 	
+	/**
+	 * Append log line.
+	 *
+	 * @param string the string
+	 * @param logpath the logpath
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static void AppendLogLine( String string, String logpath) throws IOException{
 		BufferedWriter output;
 		output = new BufferedWriter(new FileWriter(logpath, true));
@@ -573,6 +701,12 @@ public class Create_inputCSV_full_IJ implements PlugIn {
 		//System.out.println(string);
 		}
 	
+	/**
+	 * Gets the path.
+	 *
+	 * @param question the question
+	 * @return the path
+	 */
 	public static String getPath(String question){
 		String string = IJ.getDirectory(question);	
 			if (string==null){
@@ -584,11 +718,25 @@ public class Create_inputCSV_full_IJ implements PlugIn {
 		
 	}
 	
+	/**
+	 * String to file.
+	 *
+	 * @param string the string
+	 * @return the file
+	 */
 	public File StringToFile(String string){
 		File file = new File(string);
 		return file;
 				
 	}
+	
+	/**
+	 * Gets the col.
+	 *
+	 * @param string the string
+	 * @param headers the headers
+	 * @return the col
+	 */
 	private static int getCol(String string, String[] headers) {
 		int col = 0;
 		for(int i=0; i<headers.length; i++){
@@ -601,6 +749,12 @@ public class Create_inputCSV_full_IJ implements PlugIn {
 		return col;
 	}
 
+	/**
+	 * Split csv line.
+	 *
+	 * @param string the string
+	 * @return the string[]
+	 */
 	private static String[] splitCSVLine(String string) {
 		String[] parts = string.split(",");
 		return parts;

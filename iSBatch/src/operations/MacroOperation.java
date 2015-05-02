@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package operations;
 
 import java.io.File;
@@ -18,56 +21,113 @@ import model.OperationNode;
 import model.Root;
 import model.Sample;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class MacroOperation.
+ */
 public class MacroOperation implements Operation {
 	
+	/** The macro file. */
 	private String macroFile = "";
+	
+	/** The filter. */
 	private NodeFilterInterface filter;
+	
+	/** The frame. */
 	private JFrame frame;
+	
+	/** The model. */
 	private DatabaseModel model;
 	
+	/**
+	 * Instantiates a new macro operation.
+	 *
+	 * @param frame the frame
+	 * @param model the model
+	 */
 	public MacroOperation(JFrame frame, DatabaseModel model) {
 		this.frame = frame;
 		this.model = model;
 	}
 	
+	/**
+	 * Gets the name.
+	 *
+	 * @return the name
+	 */
 	@Override
 	public String getName() {
 		return "Run Macro";
 	}
 
+	/**
+	 * Gets the context.
+	 *
+	 * @return the context
+	 */
 	@Override
 	public String[] getContext() {
 		return new String[]{"All"};	
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param root the root
+	 */
 	@Override
 	public void visit(Root root) {
 		for (Node childNode: root.getChildren())
 			childNode.accept(this);
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param experiment the experiment
+	 */
 	@Override
 	public void visit(Experiment experiment) {
 		for (Node childNode: experiment.getChildren())
 			childNode.accept(this);
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param sample the sample
+	 */
 	@Override
 	public void visit(Sample sample) {
 		for (Node childNode: sample.getChildren())
 			childNode.accept(this);
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param fieldOfView the field of view
+	 */
 	@Override
 	public void visit(FieldOfView fieldOfView) {
 		runMacro(fieldOfView);
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param fileNode the file node
+	 */
 	@Override
 	public void visit(FileNode fileNode) {
 		runMacro(fileNode);
 	}
 	
+	/**
+	 * Run macro.
+	 *
+	 * @param node the node
+	 */
 	public void runMacro(Node node) {
 		
 		String arg = node.getType();
@@ -95,6 +155,12 @@ public class MacroOperation implements Operation {
 		
 	}
 	
+	/**
+	 * Setup.
+	 *
+	 * @param node the node
+	 * @return true, if successful
+	 */
 	@Override
 	public boolean setup(Node node) {
 		
@@ -120,23 +186,43 @@ public class MacroOperation implements Operation {
 		return true;
 	}
 
+	/**
+	 * Finalize.
+	 *
+	 * @param node the node
+	 */
 	@Override
 	public void finalize(Node node) {
 		macroFile = null;
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param operationNode the operation node
+	 */
 	@Override
 	public void visit(OperationNode operationNode) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	/**
+	 * Gets the created nodes.
+	 *
+	 * @return the created nodes
+	 */
 	@Override
 	public Node[] getCreatedNodes() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/**
+	 * Gets the parameters.
+	 *
+	 * @return the parameters
+	 */
 	@Override
 	public HashMap<String, String> getParameters() {
 		// TODO Auto-generated method stub

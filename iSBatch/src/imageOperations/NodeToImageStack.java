@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package imageOperations;
 
 import ij.IJ;
@@ -10,9 +13,22 @@ import java.util.ArrayList;
 
 import model.Node;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class NodeToImageStack.
+ */
 public class NodeToImageStack {
+	
+	/** The imp. */
 	ImagePlus imp;
 	
+	/**
+	 * Instantiates a new node to image stack.
+	 *
+	 * @param nodes the nodes
+	 * @param channel the channel
+	 * @param tag the tag
+	 */
 	public NodeToImageStack(ArrayList<Node> nodes, String channel, String tag) {
 //		System.out.println(nodes.get(0).getPath());
 		ImagePlus ip = IJ.openImage(nodes.get(0).getPath());
@@ -36,9 +52,21 @@ public class NodeToImageStack {
 		this.imp = imp2;
 	}
 
+	/**
+	 * Gets the image plus.
+	 *
+	 * @return the image plus
+	 */
 	public ImagePlus getImagePlus() {
 		return imp;
 	}
+	
+	/**
+	 * Gets the slice.
+	 *
+	 * @param imp the imp
+	 * @return the slice
+	 */
 	private ImageProcessor getSlice(ImagePlus imp) {
 		ImageProcessor ip = imp.getProcessor();
 		if(imp.getStack().getSize()!=1){

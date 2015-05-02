@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package test;
 
 import ij.IJ;
@@ -29,21 +32,53 @@ import model.FileNode;
 import model.Node;
 import model.Sample;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class MacroOperationTest.
+ */
 public class MacroOperationTest implements ActionListener, Runnable {
 
+	/** The frame. */
 	private JFrame frame = new JFrame("Macro Operation Test");
+	
+	/** The model. */
 	private DatabaseModel model;
+	
+	/** The tree. */
 	private JTree tree;
+	
+	/** The text pane. */
 	private CodeTextPane textPane = new CodeTextPane(); 
+	
+	/** The add node button. */
 	private JButton addNodeButton = new JButton("Add");
+	
+	/** The remove node button. */
 	private JButton removeNodeButton = new JButton("Remove");
+	
+	/** The edit button. */
 	private JButton editButton = new JButton("Edit");
+	
+	/** The load button. */
 	private JButton loadButton = new JButton("Load");
+	
+	/** The save button. */
 	private JButton saveButton = new JButton("Save");
+	
+	/** The run button. */
 	private JButton runButton = new JButton("Run");
+	
+	/** The stop button. */
 	private JButton stopButton = new JButton("Stop");
+	
+	/** The macro thread. */
 	private Thread macroThread;
 	
+	/**
+	 * Instantiates a new macro operation test.
+	 *
+	 * @param model the model
+	 */
 	public MacroOperationTest(DatabaseModel model) {
 		this.model = model;
 		this.tree = new JTree(model);
@@ -85,6 +120,11 @@ public class MacroOperationTest implements ActionListener, Runnable {
 		textPane.setText(readTestMacro());
 	}
 	
+	/**
+	 * Read test macro.
+	 *
+	 * @return the string
+	 */
 	public String readTestMacro() {
 		
 		String macro = "";
@@ -109,12 +149,20 @@ public class MacroOperationTest implements ActionListener, Runnable {
 		return macro;
 	}
 	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		DatabaseModel model = TreeGenerator.generate("e:\\test", "e:\\temp", 2);
 		new MacroOperationTest(model);
 	}
 
 
+	/**
+	 * Run.
+	 */
 	@Override
 	public void run() {
 		runButton.setEnabled(false);
@@ -132,6 +180,11 @@ public class MacroOperationTest implements ActionListener, Runnable {
 	}
 
 
+	/**
+	 * Action performed.
+	 *
+	 * @param e the e
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
@@ -152,6 +205,9 @@ public class MacroOperationTest implements ActionListener, Runnable {
 		
 	}
 	
+	/**
+	 * Adds the node.
+	 */
 	public void addNode() {
 		
 		Node parent = (Node)tree.getLastSelectedPathComponent();
@@ -226,6 +282,9 @@ public class MacroOperationTest implements ActionListener, Runnable {
 		
 	}
 	
+	/**
+	 * Removes the node.
+	 */
 	public void removeNode() {
 		Node node = (Node)tree.getLastSelectedPathComponent();
 		
@@ -237,6 +296,9 @@ public class MacroOperationTest implements ActionListener, Runnable {
 		model.removeNode(node.getParent(), node);
 	}
 	
+	/**
+	 * Edits the node.
+	 */
 	public void editNode() {
 		
 		Node node = (Node)tree.getLastSelectedPathComponent();
@@ -287,6 +349,9 @@ public class MacroOperationTest implements ActionListener, Runnable {
 		
 	}
 	
+	/**
+	 * Load macro.
+	 */
 	public void loadMacro() {
 		
 		String macro = IJ.openAsString(null);
@@ -296,15 +361,24 @@ public class MacroOperationTest implements ActionListener, Runnable {
 		
 	}
 	
+	/**
+	 * Save macro.
+	 */
 	public void saveMacro() {
 		IJ.saveString(textPane.getText(), null);
 	}
 	
+	/**
+	 * Run macro.
+	 */
 	public void runMacro() {
 		macroThread = new Thread(this);
 		macroThread.start();
 	}
 	
+	/**
+	 * Stop macro.
+	 */
 	public void stopMacro() {
 		Macro.abort();
 		runButton.setEnabled(true);

@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package plugins_ij;
 
 import java.io.IOException;
@@ -8,19 +11,40 @@ import ij.ImageStack;
 import ij.plugin.PlugIn;
 import ij.process.ImageProcessor;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class BeamProfileCorrection.
+ */
 public class BeamProfileCorrection implements PlugIn{
 	
+	/** The imp background. */
 	ImagePlus impBackground;
+	
+	/** The imp dark count. */
 	ImagePlus impDarkCount;
+	
+	/** The ip. */
 	ImageProcessor ip;
 	
 
+/**
+ * The main method.
+ *
+ * @param args the arguments
+ * @throws IOException Signals that an I/O exception has occurred.
+ */
 public static void main(String[] args) throws IOException {
 		
 		new BeamProfileCorrection().run("");
 		
 		
 	}
+	
+	/**
+	 * Run.
+	 *
+	 * @param arg0 the arg0
+	 */
 	public void run(String arg0) {
 		ImagePlus imp2 = new ImagePlus("D:\\UmuC-DnaX\\set2\\TestArea\\DnaX-YPet-UmuC-mKate2_dinB-_001_Acquisition2.tif");
 		ImagePlus imp = new ImagePlus("D:\\UmuC-DnaX\\set2\\TestArea\\Corrected_Stack[BF].tif");

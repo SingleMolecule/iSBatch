@@ -1,0 +1,39 @@
+#
+# create tables
+#
+
+//Change test
+
+
+create table experiments (
+	id integer primary key,
+	name text,
+	path text
+)
+
+
+create table samples (
+	id integer primary key,
+	experiment_id integer not null,
+	name text,
+	path text,
+	foreign key (experiment_id) references experiments(id)
+)
+
+create table field_of_view (
+	id integer primary key,
+	samples_id integer not null,
+	name text,
+	path text,
+	brightFieldPath text,
+	greenPath text,
+	redPath text,
+	bluePath text,
+	foreign key (experiment_id) references experiments(id)
+)
+
+#
+# insert data
+#
+
+insert into experiments values 

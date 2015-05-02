@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package tools;
 
 import ij.IJ;
@@ -7,18 +10,30 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
+// TODO: Auto-generated Javadoc
 /*
  * This table structure is based on the ImageJ results table, adapted to the needs of this code.
  * http://rsb.info.nih.gov/ij/developer/source/ij/measure/DataTable.java.html
  */
+/**
+ * The Class DataTable.
+ */
 public class DataTable implements Cloneable {
-	 public static final int MAX_COLUMNS = 150;
+	 
+ 	/** The Constant MAX_COLUMNS. */
+ 	public static final int MAX_COLUMNS = 150;
 	    
-	    public static final int COLUMN_NOT_FOUND = -1;
-	    public static final int COLUMN_IN_USE = -2;
-	    public static final int TABLE_FULL = -3; // no longer used
+	    /** The Constant COLUMN_NOT_FOUND. */
+    	public static final int COLUMN_NOT_FOUND = -1;
 	    
-	    public static final int AREA=0, MEAN=1, STD_DEV=2, MODE=3, MIN=4, MAX=5,
+    	/** The Constant COLUMN_IN_USE. */
+    	public static final int COLUMN_IN_USE = -2;
+	    
+    	/** The Constant TABLE_FULL. */
+    	public static final int TABLE_FULL = -3; // no longer used
+	    
+	    /** The Constant LAST_HEADING. */
+    	public static final int AREA=0, MEAN=1, STD_DEV=2, MODE=3, MIN=4, MAX=5,
 	        X_CENTROID=6, Y_CENTROID=7, X_CENTER_OF_MASS=8, Y_CENTER_OF_MASS=9,
 	        PERIMETER=10, ROI_X=11, ROI_Y=12, ROI_WIDTH=13, ROI_HEIGHT=14,
 	        MAJOR=15, MINOR=16, ANGLE=17, CIRCULARITY=18, FERET=19, 
@@ -26,31 +41,71 @@ public class DataTable implements Cloneable {
 	        AREA_FRACTION=24, RAW_INTEGRATED_DENSITY=25, CHANNEL=26, SLICE=27, FRAME=28, 
 	        FERET_X=29, FERET_Y=30, FERET_ANGLE=31, MIN_FERET=32, ASPECT_RATIO=33,
 	        ROUNDNESS=34, SOLIDITY=35, LAST_HEADING=35;
-	    private static final String[] defaultHeadings = {"Area","Mean","StdDev","Mode","Min","Max",
+	    
+    	/** The Constant defaultHeadings. */
+    	private static final String[] defaultHeadings = {"Area","Mean","StdDev","Mode","Min","Max",
 	        "X","Y","XM","YM","Perim.","BX","BY","Width","Height","Major","Minor","Angle",
 	        "Circ.", "Feret", "IntDen", "Median","Skew","Kurt", "%Area", "RawIntDen", "Ch", "Slice", "Frame", 
 	         "FeretX", "FeretY", "FeretAngle", "MinFeret", "AR", "Round", "Solidity"};
 
-	    private int maxRows = 100; // will be increased as needed
-	    private int maxColumns = MAX_COLUMNS; // will be increased as needed
-	    private String[] headings = new String[maxColumns];
-	    private boolean[] keep = new boolean[maxColumns];
-	    private int counter;
-	    private double[][] columns = new double[maxColumns][];
-	    private String[] rowLabels;
-	    private int lastColumn = -1;
-	    private StringBuilder sb;
-	    private int precision = 3;
-	    private String rowLabelHeading = "";
-	    private char delimiter = '\t';
-	    private boolean headingSet; 
-	    private boolean showRowNumbers = true;
-	    private boolean autoFormat = true;
-	    private Hashtable stringColumns;
+	    /** The max rows. */
+    	private int maxRows = 100; // will be increased as needed
+	    
+    	/** The max columns. */
+    	private int maxColumns = MAX_COLUMNS; // will be increased as needed
+	    
+    	/** The headings. */
+    	private String[] headings = new String[maxColumns];
+	    
+    	/** The keep. */
+    	private boolean[] keep = new boolean[maxColumns];
+	    
+    	/** The counter. */
+    	private int counter;
+	    
+    	/** The columns. */
+    	private double[][] columns = new double[maxColumns][];
+	    
+    	/** The row labels. */
+    	private String[] rowLabels;
+	    
+    	/** The last column. */
+    	private int lastColumn = -1;
+	    
+    	/** The sb. */
+    	private StringBuilder sb;
+	    
+    	/** The precision. */
+    	private int precision = 3;
+	    
+    	/** The row label heading. */
+    	private String rowLabelHeading = "";
+	    
+    	/** The delimiter. */
+    	private char delimiter = '\t';
+	    
+    	/** The heading set. */
+    	private boolean headingSet; 
+	    
+    	/** The show row numbers. */
+    	private boolean showRowNumbers = true;
+	    
+    	/** The auto format. */
+    	private boolean autoFormat = true;
+	    
+    	/** The string columns. */
+    	private Hashtable stringColumns;
 
     
     
     
+    /**
+     * Open.
+     *
+     * @param path the path
+     * @return the data table
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     public static DataTable open(String path) throws IOException {
         final String lineSeparator =  "\n";
         final String cellSeparator =  ",\t";
@@ -110,6 +165,16 @@ public class DataTable implements Cloneable {
         }
         return rt;
     }
+    
+    /**
+     * Gets the table type.
+     *
+     * @param path the path
+     * @param lines the lines
+     * @param firstRow the first row
+     * @param cellSeparator the cell separator
+     * @return the table type
+     */
     private static int getTableType(String path, String[] lines, int firstRow, String cellSeparator) {
         if (lines.length<2) return 0;
         String[] items=Tools.split(lines[1], cellSeparator);
@@ -131,7 +196,12 @@ public class DataTable implements Cloneable {
         return 3;
     }
     
-    /** Adds a value to the end of the given column. Counter must be >0.*/
+    /**
+     *  Adds a value to the end of the given column. Counter must be >0.
+     *
+     * @param column the column
+     * @param value the value
+     */
     public void addValue(int column, double value) {
         if (column>=maxColumns)
             addColumns();
@@ -164,11 +234,18 @@ public class DataTable implements Cloneable {
          keep = tmp3;
          maxColumns *= 2;
      }
-     /** Sets the value of the given column and row, where
-     where 0&lt;=row&lt;counter. If the specified column does 
-     not exist, it is created. When adding columns, 
-     <code>show()</code> must be called to update the 
-     window that displays the table.*/
+     
+     /**
+      *  Sets the value of the given column and row, where
+      *      where 0&lt;=row&lt;counter. If the specified column does 
+      *      not exist, it is created. When adding columns, 
+      *      <code>show()</code> must be called to update the 
+      *      window that displays the table.
+      *
+      * @param column the column
+      * @param row the row
+      * @param value the value
+      */
  public void setValue(String column, int row, double value) {
      if (column==null)
          throw new IllegalArgumentException("Column is null");
@@ -179,8 +256,14 @@ public class DataTable implements Cloneable {
      setValue(col, row, value);
  }
 
- /** Sets the value of the given column and row, where
-     where 0&lt;=column&lt;=(lastRow+1 and 0&lt;=row&lt;=counter. */
+ /**
+  *  Sets the value of the given column and row, where
+  *      where 0&lt;=column&lt;=(lastRow+1 and 0&lt;=row&lt;=counter.
+  *
+  * @param column the column
+  * @param row the row
+  * @param value the value
+  */
  public void setValue(int column, int row, double value) {
      if (column>=maxColumns)
          addColumns();
@@ -199,11 +282,17 @@ public class DataTable implements Cloneable {
      columns[column][row] = value;
  }
 
- /** Sets the string value of the given column and row, where
-     where 0&lt;=row&lt;counter. If the specified column does 
-     not exist, it is created. When adding columns, 
-     <code>show()</code> must be called to update the 
-     window that displays the table.*/
+ /**
+  *  Sets the string value of the given column and row, where
+  *      where 0&lt;=row&lt;counter. If the specified column does 
+  *      not exist, it is created. When adding columns, 
+  *      <code>show()</code> must be called to update the 
+  *      window that displays the table.
+  *
+  * @param column the column
+  * @param row the row
+  * @param value the value
+  */
  public void setValue(String column, int row, String value) {
      if (column==null)
          throw new IllegalArgumentException("Column is null");
@@ -213,8 +302,14 @@ public class DataTable implements Cloneable {
      setValue(col, row, value);
  }
 
- /** Sets the string value of the given column and row, where
-     where 0&lt;=column&lt;=(lastRow+1 and 0&lt;=row&lt;=counter. */
+ /**
+  *  Sets the string value of the given column and row, where
+  *      where 0&lt;=column&lt;=(lastRow+1 and 0&lt;=row&lt;=counter.
+  *
+  * @param column the column
+  * @param row the row
+  * @param value the value
+  */
  public void setValue(int column, int row, String value) {
      setValue(column, row, Double.NaN);
      if (stringColumns==null)
@@ -234,13 +329,24 @@ public class DataTable implements Cloneable {
      else
          stringColumn.set(row, value);
  }
-     /** Returns the current value of the measurement counter. */
+     
+     /**
+      *  Returns the current value of the measurement counter.
+      *
+      * @return the counter
+      */
      public int getCounter() {
          return counter;
      }
-    /** Sets the heading of the the first available column and
-    returns that column's index. Returns COLUMN_IN_USE
-     if this is a duplicate heading. */
+    
+    /**
+     *  Sets the heading of the the first available column and
+     *     returns that column's index. Returns COLUMN_IN_USE
+     *      if this is a duplicate heading.
+     *
+     * @param heading the heading
+     * @return the free column
+     */
 public int getFreeColumn(String heading) {
     for(int i=0; i<headings.length; i++) {
         if (headings[i]==null) {
@@ -258,11 +364,16 @@ public int getFreeColumn(String heading) {
     headings[lastColumn] = heading;
     return lastColumn;
 }
-    /** Adds a value to the end of the given column. If the column
-        does not exist, it is created.  Counter must be >0.
-        There is an example at:<br>
-        http://imagej.nih.gov/ij/plugins/sine-cosine.html
-        */
+    
+    /**
+     *  Adds a value to the end of the given column. If the column
+     *         does not exist, it is created.  Counter must be >0.
+     *         There is an example at:<br>
+     *         http://imagej.nih.gov/ij/plugins/sine-cosine.html
+     *
+     * @param column the column
+     * @param value the value
+     */
     public void addValue(String column, double value) {
         if (column==null)
             throw new IllegalArgumentException("Column is null");
@@ -273,8 +384,13 @@ public int getFreeColumn(String heading) {
         keep[index] = true;
     }
     
-    /** Adds a string value to the end of the given column. If the column
-        does not exist, it is created.  Counter must be >0. */
+    /**
+     *  Adds a string value to the end of the given column. If the column
+     *         does not exist, it is created.  Counter must be >0.
+     *
+     * @param column the column
+     * @param value the value
+     */
     public void addValue(String column, String value) {
         if (column==null)
             throw new IllegalArgumentException("Column is null");
@@ -285,8 +401,14 @@ public int getFreeColumn(String heading) {
         setValue(column, getCounter()-1, value);
         keep[index] = true;
     }
-    /** Returns the index of the first column with the given heading.
-    heading. If not found, returns COLUMN_NOT_FOUND. */
+    
+    /**
+     *  Returns the index of the first column with the given heading.
+     *     heading. If not found, returns COLUMN_NOT_FOUND.
+     *
+     * @param heading the heading
+     * @return the column index
+     */
 public int getColumnIndex(String heading) {
     for (int i=0; i<headings.length; i++) {
         if (headings[i]==null)
@@ -296,13 +418,24 @@ public int getColumnIndex(String heading) {
     }
     return COLUMN_NOT_FOUND;
 }
+    
+    /**
+     * Adds the label.
+     *
+     * @param label the label
+     */
     public void addLabel(String label) {
         if (rowLabelHeading.equals(""))
             rowLabelHeading = "Label";
         addLabel(rowLabelHeading, label);
     }
 
-    /** Adds a label to the beginning of the current row. Counter must be >0. */
+    /**
+     *  Adds a label to the beginning of the current row. Counter must be >0.
+     *
+     * @param columnHeading the column heading
+     * @param label the label
+     */
     public void addLabel(String columnHeading, String label) {
         if (counter==0)
             throw new IllegalArgumentException("Counter==0");
@@ -312,6 +445,10 @@ public int getColumnIndex(String heading) {
         if (columnHeading!=null)
             rowLabelHeading = columnHeading;
     }
+    
+    /**
+     * Increment counter.
+     */
     public synchronized void incrementCounter() {
         counter++;
         if (counter==maxRows) {

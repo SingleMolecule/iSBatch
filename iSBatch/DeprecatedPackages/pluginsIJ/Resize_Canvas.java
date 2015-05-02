@@ -1,17 +1,29 @@
+/*
+ * 
+ */
 package plugins_ij;
 import ij.*;
 import ij.plugin.filter.*;
 import ij.process.*;
 import ij.gui.*;
 
+// TODO: Auto-generated Javadoc
 /**
 	Changes the canvas size of an image or stack without resizing the image.
 	The border is filled with the current background color.
 */
 public class Resize_Canvas implements PlugInFilter {
 
+	/** The imp. */
 	ImagePlus imp;
 		
+	/**
+	 * Setup.
+	 *
+	 * @param arg the arg
+	 * @param imp the imp
+	 * @return the int
+	 */
 	public int setup(String arg, ImagePlus imp) {
 		this.imp = imp;
 		if (IJ.versionLessThan("1.17y"))
@@ -20,6 +32,11 @@ public class Resize_Canvas implements PlugInFilter {
 			return DOES_ALL;
 	}
 
+	/**
+	 * Run.
+	 *
+	 * @param ip the ip
+	 */
 	public void run(ImageProcessor ip) {
 		int wOld, hOld, wNew, hNew;
 		boolean fIsStack = false;
@@ -90,6 +107,16 @@ public class Resize_Canvas implements PlugInFilter {
 		}
 	}
 	
+	/**
+	 * Expand stack.
+	 *
+	 * @param stackOld the stack old
+	 * @param wNew the w new
+	 * @param hNew the h new
+	 * @param xOff the x off
+	 * @param yOff the y off
+	 * @return the image stack
+	 */
 	public ImageStack expandStack(ImageStack stackOld, int wNew, int hNew, int xOff, int yOff) {
 		int nFrames = stackOld.getSize();
 		ImageProcessor ipOld = stackOld.getProcessor(1);
@@ -109,6 +136,16 @@ public class Resize_Canvas implements PlugInFilter {
 		return stackNew;
 	}
 	
+	/**
+	 * Expand image.
+	 *
+	 * @param ipOld the ip old
+	 * @param wNew the w new
+	 * @param hNew the h new
+	 * @param xOff the x off
+	 * @param yOff the y off
+	 * @return the image processor
+	 */
 	public ImageProcessor expandImage(ImageProcessor ipOld, int wNew, int hNew, int xOff, int yOff) {
 		ImageProcessor ipNew = ipOld.createProcessor(wNew, hNew);
 		ipNew.setColor(Toolbar.getBackgroundColor());

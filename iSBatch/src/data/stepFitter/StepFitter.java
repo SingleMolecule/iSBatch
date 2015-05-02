@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package data.stepFitter;
 
 
@@ -7,19 +10,50 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class StepFitter.
+ */
 public class StepFitter {
+	
+	/** The data. */
 	private double[] data;
+	
+	/** The sigma. */
 	private double sigma;
+	
+	/** The steps. */
 	private LinkedList<Step> steps = new LinkedList<Step>();
+	
+	/** The counter steps. */
 	private LinkedList<Step> counterSteps = new LinkedList<Step>();
+	
+	/** The total chi squared. */
 	private double totalChiSquared;
+	
+	/** The counter chi squared. */
 	private double counterChiSquared;
 	
+	/**
+	 * The Class Split.
+	 */
 	private class Split {
+		
+		/** The left. */
 		public Step left;
+		
+		/** The right. */
 		public Step right;
+		
+		/** The chi squared. */
 		private double chiSquared;
 		
+		/**
+		 * Instantiates a new split.
+		 *
+		 * @param left the left
+		 * @param right the right
+		 */
 		public Split(Step left, Step right) {
 			this.left = left;
 			this.right = right;
@@ -27,12 +61,29 @@ public class StepFitter {
 		}
 	}
 	
+	/**
+	 * The Class Step.
+	 */
 	private class Step {
+		
+		/** The from. */
 		public int from;
+		
+		/** The to. */
 		public int to;
+		
+		/** The mean. */
 		public double mean;
+		
+		/** The chi squared. */
 		public double chiSquared;
 		
+		/**
+		 * Instantiates a new step.
+		 *
+		 * @param from the from
+		 * @param to the to
+		 */
 		public Step(int from, int to) {
 			this.from = from;
 			this.to = to;
@@ -51,6 +102,11 @@ public class StepFitter {
 			}
 		}
 		
+		/**
+		 * Gets the split point.
+		 *
+		 * @return the split point
+		 */
 		public Split getSplitPoint() {
 			double minChiSquared = chiSquared;
 			Split bestSplit = null;
@@ -70,6 +126,12 @@ public class StepFitter {
 		}
 	}
 	
+	/**
+	 * Instantiates a new step fitter.
+	 *
+	 * @param data the data
+	 * @param sigma the sigma
+	 */
 	public StepFitter(double[] data, double sigma) {
 		this.data = data;
 		this.sigma = sigma;
@@ -77,6 +139,9 @@ public class StepFitter {
 		clear();
 	}
 	
+	/**
+	 * Clear.
+	 */
 	public void clear() {
 		steps.clear();
 		
@@ -88,6 +153,11 @@ public class StepFitter {
 		setCounterSteps();
 	}
 	
+	/**
+	 * Gets the steps x.
+	 *
+	 * @return the steps x
+	 */
 	public double[] getStepsX() {
 		double[] x = new double[steps.size() * 2];
 		
@@ -100,6 +170,11 @@ public class StepFitter {
 		return x;
 	}
 	
+	/**
+	 * Gets the steps y.
+	 *
+	 * @return the steps y
+	 */
 	public double[] getStepsY() {
 		double[] y = new double[steps.size() * 2];
 		
@@ -112,6 +187,11 @@ public class StepFitter {
 		return y;
 	}
 	
+	/**
+	 * Gets the counter steps x.
+	 *
+	 * @return the counter steps x
+	 */
 	public double[] getCounterStepsX() {
 		double[] x = new double[counterSteps.size() * 2];
 		
@@ -124,6 +204,11 @@ public class StepFitter {
 		return x;
 	}
 	
+	/**
+	 * Gets the counter steps y.
+	 *
+	 * @return the counter steps y
+	 */
 	public double[] getCounterStepsY() {
 		double[] y = new double[counterSteps.size() * 2];
 		
@@ -136,6 +221,9 @@ public class StepFitter {
 		return y;
 	}
 	
+	/**
+	 * Adds the step.
+	 */
 	public void addStep() {
 		double minChiSquared = totalChiSquared;
 		Split bestSplit = null;
@@ -166,6 +254,9 @@ public class StepFitter {
 		totalChiSquared = minChiSquared;
 	}
 	
+	/**
+	 * Sets the counter steps.
+	 */
 	private void setCounterSteps() {
 		counterChiSquared = 0;
 		counterSteps.clear();
@@ -188,14 +279,29 @@ public class StepFitter {
 		counterChiSquared += step.chiSquared;
 	}
 	
+	/**
+	 * Gets the chi squared.
+	 *
+	 * @return the chi squared
+	 */
 	public double getChiSquared() {
 		return totalChiSquared;
 	}
 	
+	/**
+	 * Gets the counter chi squared.
+	 *
+	 * @return the counter chi squared
+	 */
 	public double getCounterChiSquared() {
 		return counterChiSquared;
 	}
 	
+	/**
+	 * To string.
+	 *
+	 * @return the string
+	 */
 	@Override
 	public String toString() {
 		String str = Integer.toString(steps.getFirst().from);
@@ -207,7 +313,9 @@ public class StepFitter {
 	}
 
 	/**
-	 * @param args
+	 * The main method.
+	 *
+	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
 		

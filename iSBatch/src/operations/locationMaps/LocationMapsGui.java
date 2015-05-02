@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package operations.locationMaps;
 
 
@@ -33,37 +36,61 @@ import java.awt.event.KeyEvent;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class LocationMapsGui.
+ */
 public class LocationMapsGui extends JDialog implements ActionListener {
-	/**
-	 * 
-	 */
+	
+	/** The btn cancel. */
 
 	// butons
 
 	private JButton btnCancel;
+	
+	/** The btn process. */
 	private JButton btnProcess;
 
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+	
+	/** The channels. */
 	private String[] channels = new String[] {
 
 	"[Select Channel]", "All", "Acquisition", "Bright Field", "Red", "Green",
 			"Blue", };
 
+	/** The types. */
 	private String[] types = new String[] { "[File Type]", "Raw", "Flat",
 			"Discoidal" };
 
+	/** The canceled. */
 	private boolean canceled = false;
 
+	/** The frame. */
 	static JFrame frame;
+	
+	/** The node. */
 	private Node node;
+	
+	/** The image path. */
 	private String channel, method, imagePath;
+	
+	/** The mat file path. */
 	protected String matFilePath;
+	
+	/** The custom fiter. */
 	protected String customFiter;
 
 	/*
 	 * Filter variables
 	 */
 
+	/**
+	 * Instantiates a new location maps gui.
+	 *
+	 * @param node the node
+	 */
 	public LocationMapsGui(Node node) {
 		setModal(true);
 		setTitle("Location Maps");
@@ -75,9 +102,15 @@ public class LocationMapsGui extends JDialog implements ActionListener {
 
 	}
 
+	/**
+	 * Setup.
+	 */
 	private void setup() {
 	}
 
+	/**
+	 * Display.
+	 */
 	private void display() {
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -256,6 +289,9 @@ public class LocationMapsGui extends JDialog implements ActionListener {
 
 	}
 
+	/**
+	 * Run.
+	 */
 	private void run() {
 		//
 		// // get array of Images
@@ -266,6 +302,11 @@ public class LocationMapsGui extends JDialog implements ActionListener {
 				+ " , " + method);
 	}
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		frame = new JFrame();
 
@@ -273,26 +314,62 @@ public class LocationMapsGui extends JDialog implements ActionListener {
 
 	}
 
+	/**
+	 * Error.
+	 *
+	 * @param msg the msg
+	 */
 	void error(String msg) {
 		IJ.error("Batch Processor", msg);
 	}
 
+	/**
+	 * Checks if is canceled.
+	 *
+	 * @return true, if is canceled
+	 */
 	public boolean isCanceled() {
 		return canceled;
 	}
 
+	/** The image type. */
 	private String imageType;
+	
+	/** The panel. */
 	private JPanel panel;
+	
+	/** The panel_1. */
 	private JPanel panel_1;
+	
+	/** The Import panel. */
 	private JPanel ImportPanel;
+	
+	/** The Create input panel. */
 	private JPanel CreateInputPanel;
+	
+	/** The file type combo box. */
 	private JComboBox<String> fileTypeComboBox;
+	
+	/** The channel combo box. */
 	private JComboBox<String> channelComboBox;
+	
+	/** The lbl customfilter. */
 	private JLabel lblCustomfilter;
+	
+	/** The custom filter text field. */
 	private JTextField customFilterTextField;
+	
+	/** The btn loadmat. */
 	private JButton btnLoadmat;
+	
+	/** The math path text field. */
 	private JTextField mathPathTextField;
 
+	/**
+	 * Action performed.
+	 *
+	 * @param e the e
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnCancel) {
@@ -325,22 +402,47 @@ public class LocationMapsGui extends JDialog implements ActionListener {
 	
 	
 	
+	/**
+	 * Gets the channel.
+	 *
+	 * @return the channel
+	 */
 	public String getChannel() {
 		return channel;
 	}
 
+	/**
+	 * Gets the method.
+	 *
+	 * @return the method
+	 */
 	public String getMethod() {
 		return method;
 	}
 
+	/**
+	 * Gets the image path.
+	 *
+	 * @return the image path
+	 */
 	public String getImagePath() {
 		return imagePath;
 	}
 
+	/**
+	 * Gets the custom filter.
+	 *
+	 * @return the custom filter
+	 */
 	public String getCustomFilter() {
 		return customFiter;
 	}
 
+	/**
+	 * Gets the mat file path.
+	 *
+	 * @return the mat file path
+	 */
 	public String getMatFilePath() {
 		return matFilePath;
 	}

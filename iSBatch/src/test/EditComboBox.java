@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package test;
 
 import java.awt.BorderLayout;
@@ -11,7 +14,17 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class EditComboBox.
+ */
 public class EditComboBox {
+  
+  /**
+   * The main method.
+   *
+   * @param args the arguments
+   */
   public static void main(String args[]) {
     String labels[] = { "A", "B", "C", "D","E", "F", "G", "H","I", "J" };
     JFrame frame = new JFrame("Editable JComboBox");

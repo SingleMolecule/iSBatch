@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package test;
 
 import java.awt.Point;
@@ -19,8 +22,17 @@ import ij.plugin.filter.PlugInFilter;
 import ij.plugin.frame.RoiManager;
 import ij.process.ImageProcessor;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class PeakFinderTest.
+ */
 public class PeakFinderTest {
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		File image = new File("D:\\TestFolderIsbatch\\image.TIF");
 		
@@ -46,6 +58,13 @@ public class PeakFinderTest {
 		
 		
 	}
+	
+	/**
+	 * Run plug in filter.
+	 *
+	 * @param filter the filter
+	 * @param imp the imp
+	 */
 	public static void runPlugInFilter(PlugInFilter filter, ImagePlus imp) {
 		
 		ImageStack stack = imp.getImageStack();
@@ -54,9 +73,23 @@ public class PeakFinderTest {
 			runPlugInFilter(filter, stack.getProcessor(slice));
 	}
 	
+	/**
+	 * Run plug in filter.
+	 *
+	 * @param filter the filter
+	 * @param ip the ip
+	 */
 	public static void runPlugInFilter(PlugInFilter filter, ImageProcessor ip) {
 		filter.run(ip);
 	}
+	
+	/**
+	 * Find peaks.
+	 *
+	 * @param finder the finder
+	 * @param imp the imp
+	 * @return the array list
+	 */
 	public static ArrayList<Roi> findPeaks(PeakFinder finder, ImagePlus imp) {
 		
 		ArrayList<Roi> allPeaks = new ArrayList<Roi>();
@@ -76,6 +109,13 @@ public class PeakFinderTest {
 		return allPeaks;
 	}
 	
+	/**
+	 * Save rois as zip.
+	 *
+	 * @param rois the rois
+	 * @param filename the filename
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static void saveRoisAsZip(ArrayList<Roi> rois, String filename) throws IOException {
 		File file = new File(filename);
 		if(file.exists()){

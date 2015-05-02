@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package gui;
 
 import java.awt.BorderLayout;
@@ -21,25 +24,54 @@ import javax.swing.JTextField;
 
 import model.Importer;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ChannelsDialog.
+ */
 public class ChannelsDialog extends JDialog implements ActionListener {
 
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	
+	/** The folder. */
 	private File folder;
 	
+	/** The acquisition text field. */
 	private JTextField acquisitionTextField = new JTextField(Importer.acqRegEx);
+	
+	/** The bright field text field. */
 	private JTextField brightFieldTextField = new JTextField(Importer.bfRegEx);
+	
+	/** The green text field. */
 	private JTextField greenTextField = new JTextField(Importer.greenRegEx);
+	
+	/** The red text field. */
 	private JTextField redTextField = new JTextField(Importer.redRegEx);
+	
+	/** The blue text field. */
 	private JTextField blueTextField = new JTextField(Importer.blueRegEx);
 	
+	/** The found files text area. */
 	private JTextArea foundFilesTextArea = new JTextArea(10, 40);
+	
+	/** The search button. */
 	private JButton searchButton = new JButton("Search");
+	
+	/** The ok button. */
 	private JButton okButton = new JButton("Ok");
+	
+	/** The cancel button. */
 	private JButton cancelButton = new JButton("Cancel");
 
+	/** The canceled. */
 	private boolean canceled = false;
 	
+	/**
+	 * Instantiates a new channels dialog.
+	 *
+	 * @param parent the parent
+	 * @param folder the folder
+	 */
 	public ChannelsDialog(JFrame parent, File folder) {
 		super(parent, "Database", true);
 
@@ -132,6 +164,14 @@ public class ChannelsDialog extends JDialog implements ActionListener {
 
 	}
 
+	/**
+	 * Gets the channel files.
+	 *
+	 * @param file the file
+	 * @param files the files
+	 * @param regularExpressions the regular expressions
+	 * @return the channel files
+	 */
 	public void getChannelFiles(File file, ArrayList<File> files,
 			String... regularExpressions) {
 
@@ -155,6 +195,11 @@ public class ChannelsDialog extends JDialog implements ActionListener {
 
 	}
 
+	/**
+	 * Action performed.
+	 *
+	 * @param e the e
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
@@ -191,6 +236,11 @@ public class ChannelsDialog extends JDialog implements ActionListener {
 
 	}
 	
+	/**
+	 * Checks if is canceled.
+	 *
+	 * @return true, if is canceled
+	 */
 	public boolean isCanceled() {
 		return canceled;
 	}

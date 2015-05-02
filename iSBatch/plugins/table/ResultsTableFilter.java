@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package table;
 
 import java.awt.AWTEvent;
@@ -10,24 +13,51 @@ import ij.measure.ResultsTable;
 import ij.plugin.PlugIn;
 import ij.plugin.filter.Analyzer;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ResultsTableFilter.
+ */
 public class ResultsTableFilter implements PlugIn, DialogListener {
 	
+	/** The table. */
 	private ResultsTable table;
 	
+	/** The columns. */
 	private String[] columns;
+	
+	/** The column. */
 	private String column;
+	
+	/** The column index. */
 	private int columnIndex = 0;
+	
+	/** The min. */
 	private double min = 0;
+	
+	/** The max. */
 	private double max = 1;
 	
+	/**
+	 * Instantiates a new results table filter.
+	 */
 	public ResultsTableFilter() {
 		table = Analyzer.getResultsTable();
 	}
 	
+	/**
+	 * Instantiates a new results table filter.
+	 *
+	 * @param table the table
+	 */
 	public ResultsTableFilter(ResultsTable table) {
 		this.table = table;
 	}
 	
+	/**
+	 * Run.
+	 *
+	 * @param arg0 the arg0
+	 */
 	@Override
 	public void run(String arg0) {
 		
@@ -57,6 +87,13 @@ public class ResultsTableFilter implements PlugIn, DialogListener {
 		table.updateResults();
 	}
 
+	/**
+	 * Dialog item changed.
+	 *
+	 * @param dialog the dialog
+	 * @param arg1 the arg1
+	 * @return true, if successful
+	 */
 	@Override
 	public boolean dialogItemChanged(GenericDialog dialog, AWTEvent arg1) {
 		

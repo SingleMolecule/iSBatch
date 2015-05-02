@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package operation.tracking;
 
 import ij.gui.PolygonRoi;
@@ -28,27 +31,66 @@ import operation.cellIntensity.CellIntensityGUI;
 import operations.Operation;
 import table.ResultsTableSorter;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Tracking.
+ */
 public class Tracking implements Operation {
+	
+	/** The dialog. */
 	private TrackingGUI dialog;
+	
+	/** The channel. */
 	private String channel;
+	
+	/** The custom search. */
 	private String customSearch;
+	
+	/** The tags. */
 	private ArrayList<String> tags;
+	
+	/** The maxdistance. */
 	private int maxdistance;
+	
+	/** The look ahead. */
 	private int lookAhead = 1;
+	
+	/** The max step size. */
 	private double maxStepSize = 8;
+	
+	/** The minimum width. */
 	private double minimumWidth = 0;
+	
+	/** The minimum height. */
 	private double minimumHeight = 0;
+	
+	/** The show trajectories. */
 	private boolean showTrajectories = true;
 
+	/**
+	 * Instantiates a new tracking.
+	 *
+	 * @param treeModel the tree model
+	 */
 	public Tracking(DatabaseModel treeModel) {
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * Gets the context.
+	 *
+	 * @return the context
+	 */
 	@Override
 	public String[] getContext() {
 		return new String[] { "All" };
 	}
 
+	/**
+	 * Run.
+	 *
+	 * @param node the node
+	 */
 	public void run(Node node) {
 		// First, get a list of all files to execute
 		String extention = null;
@@ -70,6 +112,11 @@ public class Tracking implements Operation {
 		}
 	}
 
+	/**
+	 * Track.
+	 *
+	 * @param currentNode the current node
+	 */
 	@SuppressWarnings("static-access")
 	private void track(Node currentNode) {
 		// Open the results Table with peaks
@@ -284,12 +331,23 @@ public class Tracking implements Operation {
 
 	}
 
+	/**
+	 * Gets the name.
+	 *
+	 * @return the name
+	 */
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
 		return "Tracking";
 	}
 
+	/**
+	 * Setup.
+	 *
+	 * @param node the node
+	 * @return true, if successful
+	 */
 	@Override
 	public boolean setup(Node node) {
 		dialog = new TrackingGUI(node);
@@ -304,53 +362,98 @@ public class Tracking implements Operation {
 		return true;
 	}
 
+	/**
+	 * Finalize.
+	 *
+	 * @param node the node
+	 */
 	@Override
 	public void finalize(Node node) {
 		// TODO Auto-generated method stub
 
 	}
 
+	/**
+	 * Gets the created nodes.
+	 *
+	 * @return the created nodes
+	 */
 	@Override
 	public Node[] getCreatedNodes() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/**
+	 * Gets the parameters.
+	 *
+	 * @return the parameters
+	 */
 	@Override
 	public HashMap<String, String> getParameters() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param root the root
+	 */
 	@Override
 	public void visit(Root root) {
 		// TODO Auto-generated method stub
 
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param experiment the experiment
+	 */
 	@Override
 	public void visit(Experiment experiment) {
 		run(experiment);
 
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param sample the sample
+	 */
 	@Override
 	public void visit(Sample sample) {
 		run(sample);
 
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param fieldOfView the field of view
+	 */
 	@Override
 	public void visit(FieldOfView fieldOfView) {
 		run(fieldOfView);
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param fileNode the file node
+	 */
 	@Override
 	public void visit(FileNode fileNode) {
 		run(fileNode);
 
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param operationNode the operation node
+	 */
 	@Override
 	public void visit(OperationNode operationNode) {
 		// TODO Auto-generated method stub

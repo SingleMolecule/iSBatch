@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package process;
 
 import java.awt.AWTEvent;
@@ -13,13 +16,26 @@ import ij.plugin.filter.ExtendedPlugInFilter;
 import ij.plugin.filter.PlugInFilterRunner;
 import ij.process.ImageProcessor;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class BackgroundRemover.
+ */
 public class BackgroundRemover implements ExtendedPlugInFilter, DialogListener {
 
+	/** The flags. */
 	private int flags = DOES_8G | DOES_16 | DOES_32 | PARALLELIZE_STACKS | NO_CHANGES | FINAL_PROCESSING;
 	
+	/** The background ip. */
 	private ImageProcessor backgroundIp;
+	
+	/** The normalize. */
 	private boolean normalize = true;
 	
+	/**
+	 * Run.
+	 *
+	 * @param ip the ip
+	 */
 	@Override
 	public void run(ImageProcessor ip) {
 		
@@ -38,12 +54,26 @@ public class BackgroundRemover implements ExtendedPlugInFilter, DialogListener {
 		
 	}
 
+	/**
+	 * Setup.
+	 *
+	 * @param arg the arg
+	 * @param imp the imp
+	 * @return the int
+	 */
 	@Override
 	public int setup(String arg, ImagePlus imp) {
 		
 		return flags;
 	}
 
+	/**
+	 * Dialog item changed.
+	 *
+	 * @param dialog the dialog
+	 * @param arg1 the arg1
+	 * @return true, if successful
+	 */
 	@Override
 	public boolean dialogItemChanged(GenericDialog dialog, AWTEvent arg1) {
 		
@@ -87,11 +117,24 @@ public class BackgroundRemover implements ExtendedPlugInFilter, DialogListener {
 		return true;
 	}
 
+	/**
+	 * Sets the n passes.
+	 *
+	 * @param arg0 the new n passes
+	 */
 	@Override
 	public void setNPasses(int arg0) {
 		
 	}
 
+	/**
+	 * Show dialog.
+	 *
+	 * @param imp the imp
+	 * @param arg the arg
+	 * @param pfr the pfr
+	 * @return the int
+	 */
 	@Override
 	public int showDialog(ImagePlus imp, String arg, PlugInFilterRunner pfr) {
 		

@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package analysis;
 
 import java.awt.Color;
@@ -10,13 +13,29 @@ import ij.measure.ResultsTable;
 import ij.plugin.PlugIn;
 import ij.plugin.filter.Analyzer;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class StepSizeDistribution.
+ */
 public class StepSizeDistribution implements PlugIn {
 
+	/** The time interval. */
 	private double timeInterval = 0.034;
+	
+	/** The pixel size. */
 	private double pixelSize = 0.1;
+	
+	/** The binning. */
 	private double binning = pixelSize / 10;
+	
+	/** The min step size. */
 	private double minStepSize = 0; 
 	
+	/**
+	 * Run.
+	 *
+	 * @param arg0 the arg0
+	 */
 	@Override
 	public void run(String arg0) {
 		ResultsTable table = Analyzer.getResultsTable();
@@ -162,6 +181,13 @@ public class StepSizeDistribution implements PlugIn {
 
 	}
 	
+	/**
+	 * Func.
+	 *
+	 * @param r the r
+	 * @param msd the msd
+	 * @return the double
+	 */
 	public double func(double r, double msd) {
 		// obtained from "A Wide-Field View at Single Molecules and Single Particles" by F. Lusitani (p. 43)
 		return ((2 * r) / msd) * Math.exp(-((r * r) / msd));

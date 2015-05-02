@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package plugins_ij;
 
 import ij.IJ;
@@ -20,23 +23,54 @@ import javax.swing.JOptionPane;
 import tools.ImageOperations;
 import tools.iSBOps;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Fluorescence_Correction_IJ.
+ */
 public class Fluorescence_Correction_IJ implements PlugIn{
+		
+		/** The Constant DOES_16. */
 		private static final int DOES_16 = 0;
+		
+		/** The table. */
 		static ResultsTable table;
+		
+		/** The file. */
 		static File file;
+		
+		/** The channel. */
 		private static String channel;
 	//public static void main(String[] args){
-		public static void main(String[] args) {
+		/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
+	public static void main(String[] args) {
 			new Fluorescence_Correction_IJ().run("");
 			
 				}
 
+	/** The imp. */
 	private ImagePlus imp;	
+	
+	/**
+	 * Setup.
+	 *
+	 * @param arg the arg
+	 * @param imp the imp
+	 * @return the int
+	 */
 	public int setup(String arg, ImagePlus imp) {
 			this.imp = imp;
 			return DOES_16;
 			}
 		
+	/**
+	 * Run.
+	 *
+	 * @param arg0 the arg0
+	 */
 	public void run(String arg0) {
 		
 		String csvFilename =  IJ.getFilePath("Provide ControlFile.CSV");	
@@ -70,6 +104,14 @@ public class Fluorescence_Correction_IJ implements PlugIn{
 		
 		
 	}
+	
+	/**
+	 * Gets the unique tags.
+	 *
+	 * @param collum the collum
+	 * @param table the table
+	 * @return the unique tags
+	 */
 	private List<String> getUniqueTags(String collum, ResultsTable table) {
 		List<String> list = getAllTags(collum, table);
 		HashSet<String> repeated = new HashSet<String>();
@@ -79,6 +121,14 @@ public class Fluorescence_Correction_IJ implements PlugIn{
 		return list;
 		
 	}
+	
+	/**
+	 * Gets the all tags.
+	 *
+	 * @param collum the collum
+	 * @param table the table
+	 * @return the all tags
+	 */
 	private List<String> getAllTags(String collum, ResultsTable table)
 	{
 		
@@ -96,6 +146,15 @@ public class Fluorescence_Correction_IJ implements PlugIn{
 	}
 	
 	
+	/**
+	 * Gets the sub file list.
+	 *
+	 * @param resultstable the resultstable
+	 * @param colNameToCheckMatch the col name to check match
+	 * @param stringToMatch the string to match
+	 * @param colNameGetValuesFrom the col name get values from
+	 * @return the sub file list
+	 */
 	private List<String> getSubFileList(ResultsTable resultstable, String colNameToCheckMatch, String stringToMatch, String colNameGetValuesFrom) {
 		List<String> list = new ArrayList<>();
 		
@@ -113,6 +172,11 @@ public class Fluorescence_Correction_IJ implements PlugIn{
 		return list;
 	}
 
+	/**
+	 * Correct image.
+	 *
+	 * @param listchannel the listchannel
+	 */
 	private static void correctImage(List<String> listchannel) {
 		//Ask User 
 		// Ask the Background File/Create
@@ -327,6 +391,11 @@ public class Fluorescence_Correction_IJ implements PlugIn{
 		
 
 
+	/**
+	 * Ask back ground.
+	 *
+	 * @return the int
+	 */
 	private static int askBackGround() {
 		Object[] options1 = {"Load BackGround Image", "Create Background from AVG", "Ignore Background"};
         Component frame1 = null;
@@ -341,6 +410,11 @@ public class Fluorescence_Correction_IJ implements PlugIn{
 		return BGSelection;
 	}
 
+	/**
+	 * Ask offset.
+	 *
+	 * @return the double
+	 */
 	private static double askOffset() {
 		GenericDialog gd = new GenericDialog("Offset Value");
 		double offset = 0;
@@ -356,6 +430,11 @@ public class Fluorescence_Correction_IJ implements PlugIn{
 
 	
 	
+	/**
+	 * Ask dark count.
+	 *
+	 * @return the int
+	 */
 	private static int askDarkCount() {
 		Object[] options2 = {"Load DarkCount Image", "Create DarkCount Image", "Ignore DarkCount"};
         Component frame2 = null;
@@ -370,6 +449,11 @@ public class Fluorescence_Correction_IJ implements PlugIn{
 	return DKSelection;
 }
 	
+	/**
+	 * Load table.
+	 *
+	 * @param csvFilename the csv filename
+	 */
 	private void loadTable(String csvFilename) {
 		try {
 			table = ResultsTable.open(csvFilename);

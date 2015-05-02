@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package tools;
 
 import ij.IJ;
@@ -21,12 +24,21 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
+// TODO: Auto-generated Javadoc
 /**
- * @author vcaldas
+ * The Class iSBOps.
  *
+ * @author vcaldas
  */
 public class iSBOps {
 	
+	/**
+	 * Gets the col.
+	 *
+	 * @param string the string
+	 * @param headers the headers
+	 * @return the col
+	 */
 	public static int getCol(String string, String[] headers) {
 		int col = -1;
 		for(int i=0; i<headers.length; i++){
@@ -39,6 +51,14 @@ public class iSBOps {
 		
 		return col;
 	}
+	
+	/**
+	 * New log line.
+	 *
+	 * @param string the string
+	 * @param logpath the logpath
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static void NewLogLine( String string, String logpath) throws IOException{
 		BufferedWriter output;
 		output = new BufferedWriter(new FileWriter(logpath, true));
@@ -50,6 +70,13 @@ public class iSBOps {
 		//System.out.println(string);
 		}
 	
+	/**
+	 * Append log line.
+	 *
+	 * @param string the string
+	 * @param logpath the logpath
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static void AppendLogLine( String string, String logpath) throws IOException{
 		BufferedWriter output;
 		output = new BufferedWriter(new FileWriter(logpath, true));
@@ -61,6 +88,13 @@ public class iSBOps {
 		//System.out.println(string);
 		}
 	
+	/**
+	 * Gets the number of lines.
+	 *
+	 * @param cSVFile the c sv file
+	 * @return the int
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static int GetNumberOfLines(BufferedReader cSVFile) throws IOException{
 		int lines = 0;
 		while (cSVFile.readLine() != null) lines++;
@@ -69,6 +103,13 @@ public class iSBOps {
 		
 	}
 	
+	/**
+	 * Count lines.
+	 *
+	 * @param reader the reader
+	 * @return the int
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static int countLines(LineNumberReader reader) throws IOException {
 		   
 	    try {
@@ -81,6 +122,14 @@ public class iSBOps {
 	            reader.close();
 	    }
 	}
+	
+	/**
+	 * Gets the CSV content2.
+	 *
+	 * @param csvFilename the csv filename
+	 * @return the CSV content2
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static String[][] getCSVContent2(String csvFilename) throws IOException {
 		//OpenFile
 		String delimiter = ",";
@@ -118,6 +167,12 @@ public class iSBOps {
 		return Content;
 }
 		
+	/**
+	 * The main method.
+	 *
+	 * @param arg the arguments
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public	static void main (String[] arg) throws IOException{
 	 
 		String INPUT_DIR = "D:\\DevFolder";
@@ -159,6 +214,13 @@ public class iSBOps {
 		System.out.println("Done in "+ totalTime +"ms");
 	}
 
+	/**
+	 * Organize.
+	 *
+	 * @param fileList the file list
+	 * @param supportFiles the support files
+	 * @param READY_DIR the ready dir
+	 */
 	private static void Organize(File[] fileList, String supportFiles, String READY_DIR) {
 			//get offsetlist of files
 			for (File targetFile:fileList){
@@ -169,6 +231,12 @@ public class iSBOps {
 		
 	}
 	
+	/**
+	 * Std file name.
+	 *
+	 * @param dummy2 the dummy2
+	 * @return the string
+	 */
 	public static String stdFileName(File dummy2) {
 		/**
 		 * 1 - get parental folder name
@@ -188,6 +256,12 @@ public class iSBOps {
 		return name;
 	}
 
+	/**
+	 * Gets the tag.
+	 *
+	 * @param FileName the file name
+	 * @return the tag
+	 */
 	public static String getTag(String FileName){
 		
 		 Pattern pattern = Pattern.compile("\\[BF\\]|\\[514\\]|\\[568\\]|\\[Acquisition\\]|\\[TAMRA1\\]|\\[GFP\\]");
@@ -202,6 +276,13 @@ public class iSBOps {
 		
 	}
 	
+	/**
+	 * Gets the new name.
+	 *
+	 * @param oldName the old name
+	 * @param SourceFolder the source folder
+	 * @return the new name
+	 */
 	public static String getNewName(File oldName, File SourceFolder){
 		
 		String NewName = "["+oldName.getName().replace(".","].");
@@ -212,6 +293,13 @@ public class iSBOps {
 		
 	}	
 	
+	/**
+	 * Fishfrom pool.
+	 *
+	 * @param arFile the ar file
+	 * @param bait the bait
+	 * @return the file
+	 */
 	public static File fishfromPool(File[] arFile, String bait){
 		for (File dummy:arFile){
 			if (dummy.getName().contains(bait)){
@@ -222,6 +310,12 @@ public class iSBOps {
 		return null;
 	}
 	
+	/**
+	 * Gets the file list.
+	 *
+	 * @param inputPath the input path
+	 * @return the file list
+	 */
 	public static File[] getFileList(String inputPath){ // Public = everyone can see. static = no need to create and object
 		File INPUT_DIR = new File(inputPath);           //Create a File from a input String
 		File[] directories = INPUT_DIR.listFiles(new FilenameFilter() {
@@ -245,6 +339,12 @@ public class iSBOps {
 		
 		}
 	
+	/**
+	 * Gets the image list.
+	 *
+	 * @param inputPath the input path
+	 * @return the image list
+	 */
 	public static File[] getImageList(String inputPath){ // Public = everyone can see. static = no need to create and object
 		File INPUT_DIR = new File(inputPath);           //Create a File from a input String
 		
@@ -259,6 +359,13 @@ public class iSBOps {
 		return fListINPUT_DIR;						//otherwise, return a File[] with all files and directories under the input string path
 		}
 	
+	/**
+	 * Check create sub dir.
+	 *
+	 * @param INPUT_DIR the input dir
+	 * @param SubfolderName the subfolder name
+	 * @return the string
+	 */
 	public static String checkCreateSubDir(String INPUT_DIR, String SubfolderName){
 		String OUTPUT_DIR = INPUT_DIR + File.separator + SubfolderName;
 			
@@ -277,6 +384,12 @@ public class iSBOps {
 		return theDir.getAbsolutePath();
 	}
 
+	/**
+	 * Check create dir.
+	 *
+	 * @param INPUT_DIR the input dir
+	 * @return the string
+	 */
 	public static String checkCreateDir(String INPUT_DIR){
 
 				
@@ -299,6 +412,13 @@ public class iSBOps {
 	}
 	
 
+	/**
+	 * Gets the f list type filter.
+	 *
+	 * @param inputPath the input path
+	 * @param filetype the filetype
+	 * @return the f list type filter
+	 */
 	public static File[] getfListTypeFilter(String inputPath, final String filetype){ // Public = everyone can see. static = no need to create and object
 		File INPUT_DIR = new File(inputPath);           //Create a File from a input String
 			
@@ -311,6 +431,13 @@ public class iSBOps {
 		return fListINPUT_DIR;						//otherwise, return a File[] with all files and directories under the input string path+
 	}
 		
+	/**
+	 * Gets the f list tag filter.
+	 *
+	 * @param inputPath the input path
+	 * @param filetype the filetype
+	 * @return the f list tag filter
+	 */
 	public static File[] getfListTagFilter(String inputPath, final String filetype){ // Public = everyone can see. static = no need to create and object
 		filetype.toLowerCase();
 		
@@ -324,6 +451,13 @@ public class iSBOps {
 		return fListINPUT_DIR;						//otherwise, return a File[] with all files and directories under the input string path+
 	}
 	
+	/**
+	 * Gets the sub file list.
+	 *
+	 * @param myList the my list
+	 * @param tag the tag
+	 * @return the sub file list
+	 */
 	public static List<String> getSubFileList(File[] myList, String tag){ // Public = everyone can see. static = no need to create and object
 		int size = myList.length;
 		System.out.println(size);
@@ -346,6 +480,12 @@ public class iSBOps {
 	           
 	}
 	
+	/**
+	 * Gets the listof files.
+	 *
+	 * @param directory the directory
+	 * @return the listof files
+	 */
 	public static List<File> getListofFiles(File directory){ // Public = everyone can see. static = no need to create and object
 		File[] tempArray = directory.listFiles();
 		int size = tempArray.length;
@@ -361,6 +501,13 @@ public class iSBOps {
 	           
 	}
 	
+	/**
+	 * Gets the listof files.
+	 *
+	 * @param directory the directory
+	 * @param FileExtention the file extention
+	 * @return the listof files
+	 */
 	public static List<File> getListofFiles(File directory,String FileExtention){ // Public = everyone can see. static = no need to create and object
 		FileExtention.toLowerCase();
 		File[] tempArray = directory.listFiles();
@@ -378,6 +525,12 @@ public class iSBOps {
 	           
 	}
 
+	/**
+	 * Copy file.
+	 *
+	 * @param file the file
+	 * @param saveFileat the save fileat
+	 */
 	public static void CopyFile(File file, File saveFileat) {
 		
 		try{
@@ -401,6 +554,12 @@ public class iSBOps {
 		}	
 	}
 	
+	/**
+	 * Gets the core name.
+	 *
+	 * @param string the string
+	 * @return the core name
+	 */
 	public static String getCoreName(String string){
 		
 		String output = string.replace(getTag(string), "");
@@ -411,11 +570,28 @@ public class iSBOps {
 		
 		
 	}
+	
+	/**
+	 * Gets the target file.
+	 *
+	 * @param INPUT_DIR the input dir
+	 * @param channel the channel
+	 * @param threshold the threshold
+	 * @return the target file
+	 */
 	public static String getTargetFile(String INPUT_DIR, String channel, String threshold){
 		String outFile = INPUT_DIR+ File.separator+ "Peaks"+ "["+ channel+ "]"+"_"+threshold +".csv";;
 		return outFile;
 		
 	}
+	
+	/**
+	 * Gets the sub file list.
+	 *
+	 * @param cSVContent the c sv content
+	 * @param tag the tag
+	 * @return the sub file list
+	 */
 	public static List<String> getSubFileList(String[][] cSVContent, String tag) {
 		
 		int inputCol = 	getCol("Input",cSVContent[0]);
@@ -437,6 +613,14 @@ public class iSBOps {
 		}
 		return imagesList;
 	}
+	
+	/**
+	 * Gets the sub file list2.
+	 *
+	 * @param cSVContent the c sv content
+	 * @param tag the tag
+	 * @return the sub file list2
+	 */
 	public static List<String> getSubFileList2(String[][] cSVContent, String tag) {
 		
 		
@@ -461,6 +645,14 @@ public class iSBOps {
 		
 		return imagesList;
 	}
+	
+	/**
+	 * Gets the sub file list uniques.
+	 *
+	 * @param cSVContent the c sv content
+	 * @param string the string
+	 * @return the sub file list uniques
+	 */
 	public static List<String> getSubFileListUniques(String[][] cSVContent,
 			String string) {
 		//get header index
@@ -479,6 +671,14 @@ public class iSBOps {
 		
 		return null;
 	}
+	
+	/**
+	 * Gets the collum data.
+	 *
+	 * @param cSVContent the c sv content
+	 * @param index the index
+	 * @return the collum data
+	 */
 	public static List<String> getCollumData(String[][] cSVContent,
 			int index) {
 		
@@ -493,6 +693,14 @@ public class iSBOps {
 		// TODO Auto-generated method stub
 		return ItemsList;
 	}	
+	
+	/**
+	 * Gets the collum data no header.
+	 *
+	 * @param cSVContent the c sv content
+	 * @param index the index
+	 * @return the collum data no header
+	 */
 	public static List<String> getCollumDataNoHeader(String[][] cSVContent,
 			int index) {
 		
@@ -511,6 +719,13 @@ public class iSBOps {
 	
 	
 	
+	/**
+	 * Gets the collum data uniques.
+	 *
+	 * @param cSVContent the c sv content
+	 * @param string the string
+	 * @return the collum data uniques
+	 */
 	public static List<String> getCollumDataUniques(String[][] cSVContent,
 			String string) {
 		int inputCol = 	getCol(string,cSVContent[0]);
@@ -520,6 +735,13 @@ public class iSBOps {
 		return newList;
 	}
 	
+	/**
+	 * Gets the collum data uniques no header.
+	 *
+	 * @param cSVContent the c sv content
+	 * @param string the string
+	 * @return the collum data uniques no header
+	 */
 	public static List<String> getCollumDataUniquesNoHeader(String[][] cSVContent,
 			String string) {
 		int inputCol = 	getCol(string,cSVContent[0]);
@@ -529,6 +751,13 @@ public class iSBOps {
 		return newList;
 	}
 	
+	/**
+	 * Gets the collum data.
+	 *
+	 * @param cSVContent the c sv content
+	 * @param string the string
+	 * @return the collum data
+	 */
 	public static List<String> getCollumData(String[][] cSVContent,
 			String string) {
 		int inputCol = 	getCol("Channel",cSVContent[0]);
@@ -537,12 +766,27 @@ public class iSBOps {
 		
 		return Results;
 	}
+	
+	/**
+	 * Check box labes.
+	 *
+	 * @param listchannel the listchannel
+	 * @return the string[]
+	 */
 	public static String[] CheckBoxLabes(List<String> listchannel) {
 		//listchannel.remove(0);
 		java.util.Collections.sort(listchannel);
 		String[] array = listchannel.toArray(new String[listchannel.size()]);
 		return array;
 	}
+	
+	/**
+	 * Gets the BF position.
+	 *
+	 * @param cSVContent the c sv content
+	 * @param listchannel the listchannel
+	 * @return the BF position
+	 */
 	public static List<String> getBFPosition(String[][] cSVContent,
 			List<String> listchannel) {
 		
@@ -555,11 +799,27 @@ public class iSBOps {
 		
 		return null;
 	}
+	
+	/**
+	 * Gets the col.
+	 *
+	 * @param string the string
+	 * @param controlTableArray the control table array
+	 * @return the col
+	 */
 	public static int getCol(String string, String[][] controlTableArray) {
 		int inputCol = getCol(string, controlTableArray[0]);
 		
 		return inputCol;
 	}
+	
+	/**
+	 * Gets the CSV content2 tab.
+	 *
+	 * @param csvFilename the csv filename
+	 * @return the CSV content2 tab
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static String[][] getCSVContent2TAB(String csvFilename) throws IOException {
 		//OpenFile
 		String delimiter = "\t";

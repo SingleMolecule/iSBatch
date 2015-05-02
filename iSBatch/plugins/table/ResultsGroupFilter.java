@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package table;
 
 import ij.IJ;
@@ -6,8 +9,17 @@ import ij.measure.ResultsTable;
 import ij.plugin.PlugIn;
 import ij.plugin.filter.Analyzer;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ResultsGroupFilter.
+ */
 public class ResultsGroupFilter implements PlugIn {
 
+	/**
+	 * Run.
+	 *
+	 * @param arg0 the arg0
+	 */
 	@Override
 	public void run(String arg0) {
 		

@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package pluginsIJ;
 
 import ij.IJ;
@@ -13,9 +16,20 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class BFStacks_IJ.
+ */
 public class BFStacks_IJ implements PlugIn{
 
+		/** The file. */
 		File file;
+		
+		/**
+		 * The main method.
+		 *
+		 * @param args the arguments
+		 */
 		public static void main(String[] args) {
 			new BFStacks_IJ().run("");
 			System.out.println("Create BF");
@@ -33,6 +47,11 @@ public class BFStacks_IJ implements PlugIn{
 		
 	//public static void main(String[] args){
 
+	/**
+	 * Run.
+	 *
+	 * @param arg0 the arg0
+	 */
 	public void run(String arg0) {
 		
 		//Get file
@@ -59,6 +78,11 @@ public class BFStacks_IJ implements PlugIn{
 		java.awt.Toolkit.getDefaultToolkit().beep(); 
 	}
 
+	/**
+	 * Correct image.
+	 *
+	 * @param listBF the list bf
+	 */
 	private void correctImage(List<String> listBF) {
 		//Ask User 
     	Object[] options = {"Create raw BF Stack", "Create raw BF Stack + Deflicker", "Create Corrected BF Stack"};
@@ -195,6 +219,11 @@ public class BFStacks_IJ implements PlugIn{
 		
 	}
 
+	/**
+	 * Ask back ground.
+	 *
+	 * @return the int
+	 */
 	private static int askBackGround() {
 		Object[] options1 = {"Load BackGround Image", "Create Background from AVG", "Ignore Background"};
         Component frame1 = null;
@@ -209,6 +238,11 @@ public class BFStacks_IJ implements PlugIn{
 		return BGSelection;
 	}
 
+	/**
+	 * Ask offset.
+	 *
+	 * @return the double
+	 */
 	private static double askOffset() {
 		GenericDialog gd = new GenericDialog("Offset Value");
 		double offset = 0;
@@ -221,6 +255,11 @@ public class BFStacks_IJ implements PlugIn{
 		return offset;
 	}
 
+	/**
+	 * Ask dark count.
+	 *
+	 * @return the int
+	 */
 	private static int askDarkCount() {
 		Object[] options2 = {"Load DarkCount Image", "Create DarkCount Image", "Ignore DarkCount"};
         Component frame2 = null;

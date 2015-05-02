@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package model;
 
 import iSBatch.iSBatchPreferences;
@@ -10,61 +13,133 @@ import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class DatabaseModel.
+ */
 public class DatabaseModel implements TreeModel {
 
+	/** The root. */
 	private Node root;
+	
+	/** The listeners. */
 	private ArrayList<TreeModelListener> listeners = new ArrayList<TreeModelListener>();
+	
+	/** The preferences. */
 	public iSBatchPreferences preferences = new iSBatchPreferences();
 
+	/**
+	 * Instantiates a new database model.
+	 *
+	 * @param root the root
+	 */
 	public DatabaseModel(Node root) {
 		this.root = root;
 	}
 
+	/**
+	 * Adds the tree model listener.
+	 *
+	 * @param l the l
+	 */
 	@Override
 	public void addTreeModelListener(TreeModelListener l) {
 		listeners.add(l);
 	}
 
+	/**
+	 * Gets the child.
+	 *
+	 * @param parent the parent
+	 * @param index the index
+	 * @return the child
+	 */
 	@Override
 	public Node getChild(Object parent, int index) {
 		return ((Node) parent).getChildren().get(index);
 	}
 
+	/**
+	 * Gets the child count.
+	 *
+	 * @param parent the parent
+	 * @return the child count
+	 */
 	@Override
 	public int getChildCount(Object parent) {
 		return ((Node) parent).getChildren().size();
 	}
 
+	/**
+	 * Gets the index of child.
+	 *
+	 * @param parent the parent
+	 * @param child the child
+	 * @return the index of child
+	 */
 	@Override
 	public int getIndexOfChild(Object parent, Object child) {
 		return ((Node) parent).getChildren().indexOf(child);
 	}
 
+	/**
+	 * Gets the root.
+	 *
+	 * @return the root
+	 */
 	@Override
 	public Node getRoot() {
 		return root;
 	}
 
+	/**
+	 * Sets the root.
+	 *
+	 * @param root the new root
+	 */
 	public void setRoot(Node root) {
 		this.root = root;
 	}
 
+	/**
+	 * Checks if is leaf.
+	 *
+	 * @param node the node
+	 * @return true, if is leaf
+	 */
 	@Override
 	public boolean isLeaf(Object node) {
 		return getChildCount(node) == 0;
 	}
 
+	/**
+	 * Removes the tree model listener.
+	 *
+	 * @param l the l
+	 */
 	@Override
 	public void removeTreeModelListener(TreeModelListener l) {
 		listeners.remove(l);
 	}
 
+	/**
+	 * Value for path changed.
+	 *
+	 * @param path the path
+	 * @param newValue the new value
+	 */
 	@Override
 	public void valueForPathChanged(TreePath path, Object newValue) {
 		for (TreeModelListener l : listeners)
 			l.treeNodesChanged(new TreeModelEvent(this, path));
 	}
 
+	/**
+	 * Adds the node.
+	 *
+	 * @param parent the parent
+	 * @param child the child
+	 */
 	public void addNode(Node parent, Node child) {
 		parent.getChildren().add(child);
 
@@ -76,6 +151,12 @@ public class DatabaseModel implements TreeModel {
 
 	}
 
+	/**
+	 * Removes the node.
+	 *
+	 * @param parent the parent
+	 * @param child the child
+	 */
 	public void removeNode(Node parent, Node child) {
 		parent.getChildren().add(child);
 
@@ -87,6 +168,12 @@ public class DatabaseModel implements TreeModel {
 
 	}
 
+	/**
+	 * Gets the path to root.
+	 *
+	 * @param aNode the a node
+	 * @return the path to root
+	 */
 	public Object[] getPathToRoot(Node aNode) {
 		ArrayList<Object> nodes = new ArrayList<Object>();
 
@@ -96,6 +183,11 @@ public class DatabaseModel implements TreeModel {
 		return nodes.toArray();
 	}
 
+	/**
+	 * Node changed.
+	 *
+	 * @param lastPathComponent the last path component
+	 */
 	public void nodeChanged(TreeNode lastPathComponent) {
 		// TODO Auto-generated method stub
 

@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package analysis;
 
 import java.awt.AWTEvent;
@@ -20,19 +23,40 @@ import ij.plugin.filter.ExtendedPlugInFilter;
 import ij.plugin.filter.PlugInFilterRunner;
 import ij.process.ImageProcessor;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class PeakFitter.
+ */
 public class PeakFitter implements ExtendedPlugInFilter, DialogListener {
+	
+	/** The Constant SIGMA_TO_FWHM. */
 	public static final double SIGMA_TO_FWHM = 2.0 * Math.sqrt(2.0 * Math.log(2));
 	
+	/** The flags. */
 	private int flags = DOES_8G | DOES_16 | DOES_32 | PARALLELIZE_STACKS | NO_CHANGES | FINAL_PROCESSING;
 	
+	/** The use discoidal averaging. */
 	private boolean useDiscoidalAveraging = Prefs.getBoolean("PeakFitter.useDiscoidalAveraging", true);
+	
+	/** The inner radius. */
 	private int innerRadius = Prefs.getInt("PeakFitter.innerRadius", 1);
+	
+	/** The outer radius. */
 	private int outerRadius = Prefs.getInt("PeakFitter.outerRadius", 3);
+	
+	/** The threshold. */
 	private double threshold = Prefs.getDouble("PeakFitter.threshold", 6.0);
+	
+	/** The threshold value. */
 	private double thresholdValue = Prefs.getDouble("PeakFitter.thresholdValue", 0);
+	
+	/** The minimum distance. */
 	private int minimumDistance = Prefs.getInt("PeakFitter.minimumDistance", 8);
+	
+	/** The fit radius. */
 	private int fitRadius = Prefs.getInt("PeakFitter.fitRadius", 4);
 	
+	/** The max error. */
 	private double[] maxError = new double[] {
 			Prefs.getDouble("PeakFitter.maxErrorBaseline", 5000),
 			Prefs.getDouble("PeakFitter.maxErrorHeight", 5000),
@@ -42,10 +66,13 @@ public class PeakFitter implements ExtendedPlugInFilter, DialogListener {
 			Prefs.getDouble("PeakFitter.maxErrorSigmaY", 1),
 	};
 	
+	/** The z scale. */
 	private double zScale = Prefs.getDouble("PeakFitter.zScale", 1.25);	// 80 nm per pixel
 	
+	/** The peak finder. */
 	private PeakFinder peakFinder;
 	
+	/** The lm. */
 	private static LevenbergMarquardt lm = new LevenbergMarquardt() {
 		
 		@Override
@@ -66,15 +93,30 @@ public class PeakFitter implements ExtendedPlugInFilter, DialogListener {
 		
 	};
 	
+	/** The table. */
 	private ResultsTable table;
+	
+	/** The imp. */
 	private ImagePlus imp;
 	
+	/**
+	 * Gets the results.
+	 *
+	 * @return the results
+	 */
 	public ResultsTable getResults(){
 		return table;
 				
 	}
+	
+	/** The is preview. */
 	private boolean isPreview = false;
 	
+	/**
+	 * Run.
+	 *
+	 * @param ip the ip
+	 */
 	@Override
 	public void run(ImageProcessor ip) {
 		
@@ -182,6 +224,13 @@ public class PeakFitter implements ExtendedPlugInFilter, DialogListener {
 		
 	}
 	
+	/**
+	 * Fit peak.
+	 *
+	 * @param ip the ip
+	 * @param p the p
+	 * @param e the e
+	 */
 	public static void fitPeak(ImageProcessor ip, double[] p, double[] e) {
 		Rectangle roi = ip.getRoi();
 		
@@ -221,6 +270,13 @@ public class PeakFitter implements ExtendedPlugInFilter, DialogListener {
 		lm.solve(xs, ys, null, n, p, null, e, 0.001);
 	}
 
+	/**
+	 * Setup.
+	 *
+	 * @param arg the arg
+	 * @param imp the imp
+	 * @return the int
+	 */
 	@Override
 	public int setup(String arg, ImagePlus imp) {
 		
@@ -240,6 +296,13 @@ public class PeakFitter implements ExtendedPlugInFilter, DialogListener {
 		return flags;
 	}
 
+	/**
+	 * Dialog item changed.
+	 *
+	 * @param dialog the dialog
+	 * @param e the e
+	 * @return true, if successful
+	 */
 	@Override
 	public boolean dialogItemChanged(GenericDialog dialog, AWTEvent e) {
 		
@@ -266,11 +329,24 @@ public class PeakFitter implements ExtendedPlugInFilter, DialogListener {
 		return true;
 	}
 
+	/**
+	 * Sets the n passes.
+	 *
+	 * @param arg0 the new n passes
+	 */
 	@Override
 	public void setNPasses(int arg0) {
 		
 	}
 
+	/**
+	 * Show dialog.
+	 *
+	 * @param imp the imp
+	 * @param arg the arg
+	 * @param pfr the pfr
+	 * @return the int
+	 */
 	@Override
 	public int showDialog(ImagePlus imp, String arg, PlugInFilterRunner pfr) {
 		

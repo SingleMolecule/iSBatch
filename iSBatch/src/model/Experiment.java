@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package model;
 
 import java.util.ArrayList;
@@ -5,6 +8,7 @@ import java.util.ArrayList;
 import filters.NodeFilter;
 import operations.Operation;
 
+// TODO: Auto-generated Javadoc
 /**
  * The experiment class represents an experiment which contains samples, field
  * of views and files. An experiment can have samples, channels and file nodes
@@ -23,17 +27,33 @@ import operations.Operation;
  */
 public class Experiment extends Node {
 
+	/** The Constant type. */
 	public static final String type = "Experiment";
 
+	/**
+	 * Instantiates a new experiment.
+	 *
+	 * @param parent the parent
+	 */
 	public Experiment(Root parent) {
 		super(parent, type);
 	}
 
+	/**
+	 * Accept.
+	 *
+	 * @param operation the operation
+	 */
 	@Override
 	public void accept(Operation operation) {
 		operation.visit(this);
 	}
 
+	/**
+	 * Gets the samples.
+	 *
+	 * @return the samples
+	 */
 	public ArrayList<Sample> getSamples() {
 		ArrayList<Node> nodes = this.getChildren(new NodeFilter(Sample.type));
 
@@ -45,6 +65,11 @@ public class Experiment extends Node {
 		return samples;
 	}
 
+	/**
+	 * Gets the number of fo v.
+	 *
+	 * @return the number of fo v
+	 */
 	@Override
 	public int getNumberOfFoV() {
 		int total = 0;
@@ -54,6 +79,11 @@ public class Experiment extends Node {
 		return total;
 	}
 
+	/**
+	 * Gets the field of view.
+	 *
+	 * @return the field of view
+	 */
 	@Override
 	public ArrayList<FieldOfView> getFieldOfView() {
 		ArrayList<FieldOfView> fovs = new ArrayList<FieldOfView>();
@@ -63,10 +93,21 @@ public class Experiment extends Node {
 		return fovs;
 	}
 
+	/**
+	 * Gets the beam profile.
+	 *
+	 * @param channel the channel
+	 * @return the beam profile
+	 */
 	public String getBeamProfile(String channel) {
 		return this.getProperty(channel + "_BeamProfile");
 	}
 	
+	/**
+	 * Gets the experiment name.
+	 *
+	 * @return the experiment name
+	 */
 	public String getExperimentName(){
 		return this.getName();
 	}

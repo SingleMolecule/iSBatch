@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package iSBatch;
 
 import javax.swing.JPanel;
@@ -8,12 +11,18 @@ import com.jgoodies.forms.layout.RowSpec;
 import com.jgoodies.forms.factories.FormFactory;
 import javax.swing.JButton;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class AboutPanel.
+ */
 public class AboutPanel extends JPanel {
-	/**
-	 * 
-	 */
+	
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Instantiates a new about panel.
+	 */
 	public AboutPanel() {
 		setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("113px"),

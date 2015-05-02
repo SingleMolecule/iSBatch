@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package operation.diffusion;
 
 import iSBatch.iSBatchPreferences;
@@ -35,43 +38,88 @@ import java.util.List;
 
 import javax.swing.JCheckBox;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class DiffusionOperationGUI.
+ */
 public class DiffusionOperationGUI extends JDialog implements ActionListener {
+	
+	/** The look ahead. */
 	private String lookAhead;
+	
+	/** The btn cancel. */
 	private JButton btnCancel;
+	
+	/** The btn process. */
 	private JButton btnProcess;
 
 	// ComboBox
+	/** The file type combo box. */
 	private JComboBox<String> fileTypeComboBox;
+	
+	/** The channel combo box. */
 	private JComboBox<String> channelComboBox;
+	
+	/** The method combo box. */
 	private JComboBox<String> methodComboBox;
 
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+	
+	/** The channels. */
 	private String[] channels = new String[] {
 
 	"[Select Channel]", "All", "Acquisition", "Bright Field", "Red", "Green",
 			"Blue", };
 
+	/** The Constant methods. */
 	private static final String[] methods = { "[Method]", "Average Images" };
+	
+	/** The Constant dimensions. */
 	private static final String[] dimensions = { "1D", "2D" };
+	
+	/** The types. */
 	private String[] types = new String[] { "[File Type]", "Raw", "Flat" };
 
+	/** The custom search txt field. */
 	private JTextField customSearchTxtField;
 
+	/** The canceled. */
 	private boolean canceled = false;
 
+	/** The frame. */
 	static JFrame frame;
+	
+	/** The node. */
 	private Node node;
+	
+	/** The image path. */
 	private String channel, method, imagePath;
+	
+	/** The max steps. */
 	private String maxSteps;
+	
+	/** The time interval. */
 	private String timeInterval;
+	
+	/** The pixel size. */
 	private String pixelSize;
+	
+	/** The number of points. */
 	private String numberOfPoints;
+	
+	/** The fit until. */
 	private String fitUntil;
 
 	/*
 	 * Filter variables
 	 */
 
+	/**
+	 * Instantiates a new diffusion operation gui.
+	 *
+	 * @param node the node
+	 */
 	public DiffusionOperationGUI(Node node) {
 		setModal(true);
 		setTitle("Focus Lifetimes");
@@ -83,9 +131,15 @@ public class DiffusionOperationGUI extends JDialog implements ActionListener {
 
 	}
 
+	/**
+	 * Setup.
+	 */
 	private void setup() {
 	}
 
+	/**
+	 * Display.
+	 */
 	private void display() {
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -369,6 +423,9 @@ public class DiffusionOperationGUI extends JDialog implements ActionListener {
 
 	}
 
+	/**
+	 * Run.
+	 */
 	private void run() {
 		//
 		// // get array of Images
@@ -376,6 +433,11 @@ public class DiffusionOperationGUI extends JDialog implements ActionListener {
 
 	}
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		frame = new JFrame();
 
@@ -383,30 +445,73 @@ public class DiffusionOperationGUI extends JDialog implements ActionListener {
 
 	}
 
+	/**
+	 * Error.
+	 *
+	 * @param msg the msg
+	 */
 	void error(String msg) {
 		IJ.error("Batch Processor", msg);
 	}
 
+	/**
+	 * Checks if is canceled.
+	 *
+	 * @return true, if is canceled
+	 */
 	public boolean isCanceled() {
 		return canceled;
 	}
 
+	/** The image type. */
 	private String imageType = null;
+	
+	/** The custom search. */
 	private String customSearch;
+	
+	/** The lbl look ahead. */
 	private JLabel lblLookAhead;
+	
+	/** The time intervaltext field. */
 	private JTextField timeIntervaltextField;
+	
+	/** The lbl slices. */
 	private JLabel lblSlices;
+	
+	/** The lbl max step size. */
 	private JLabel lblMaxStepSize;
+	
+	/** The Pixel size text field. */
 	private JTextField PixelSizeTextField;
+	
+	/** The lbl pixels. */
 	private JLabel lblPixels;
+	
+	/** The lbl minimum number of. */
 	private JLabel lblMinimumNumberOf;
+	
+	/** The Number of pointstext field. */
 	private JTextField NumberOfPointstextField;
+	
+	/** The F it limittext field_1. */
 	private JTextField FItLimittextField_1;
+	
+	/** The lbl fit untilall. */
 	private JLabel lblFitUntilall;
+	
+	/** The lbl s. */
 	private JLabel lblS;
+	
+	/** The lbl diffusion dimensionality. */
 	private JLabel lblDiffusionDimensionality;
+	
+	/** The dimension combo box. */
 	private JComboBox dimensionComboBox;
+	
+	/** The chckbx average all trajectories. */
 	private JCheckBox chckbxAverageAllTrajectories;
+	
+	/** The do average. */
 	private boolean doAverage;
 
 	
@@ -414,6 +519,11 @@ public class DiffusionOperationGUI extends JDialog implements ActionListener {
 
 	
 	
+	/**
+	 * Action performed.
+	 *
+	 * @param e the e
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnCancel) {
@@ -476,22 +586,47 @@ public class DiffusionOperationGUI extends JDialog implements ActionListener {
 		}
 	}
 
+	/**
+	 * Gets the channel.
+	 *
+	 * @return the channel
+	 */
 	public String getChannel() {
 		return channel;
 	}
 
+	/**
+	 * Gets the method.
+	 *
+	 * @return the method
+	 */
 	public String getMethod() {
 		return method;
 	}
 
+	/**
+	 * Gets the image path.
+	 *
+	 * @return the image path
+	 */
 	public String getImagePath() {
 		return imagePath;
 	}
 
+	/**
+	 * Gets the image tag.
+	 *
+	 * @return the image tag
+	 */
 	public String getImageTag() {
 		return imageType;
 	}
 
+	/**
+	 * Gets the tags.
+	 *
+	 * @return the tags
+	 */
 	public ArrayList<String> getTags() {
 		ArrayList<String> container = new ArrayList<String>();
 		if (imageType != null) {
@@ -509,40 +644,93 @@ public class DiffusionOperationGUI extends JDialog implements ActionListener {
 
 	}
 
+	/**
+	 * Gets the extention.
+	 *
+	 * @return the extention
+	 */
 	public String getExtention() {
 		return method;
 	}
 
+	/**
+	 * Gets the custom.
+	 *
+	 * @return the custom
+	 */
 	public String getCustom() {
 		return imagePath;
 	}
 
+	/**
+	 * Gets the custom search.
+	 *
+	 * @return the custom search
+	 */
 	public String getCustomSearch() {
 		return this.customSearch;
 	}
 
 
+	/**
+	 * Gets the max step size.
+	 *
+	 * @return the max step size
+	 */
 	public int getMaxStepSize() {
 		return Integer.parseInt(maxSteps);
 	}
 	
+	/**
+	 * Gets the pixel size.
+	 *
+	 * @return the pixel size
+	 */
 	public double getPixelSize(){
 		return Double.parseDouble(pixelSize);
 	}
+	
+	/**
+	 * Gets the time interval.
+	 *
+	 * @return the time interval
+	 */
 	public double gettimeInterval(){
 		return Double.parseDouble(timeInterval);
 	}
 	
+	/**
+	 * Gets the time interval.
+	 *
+	 * @return the time interval
+	 */
 	public double getTimeInterval(){
 		return Double.parseDouble(timeInterval);
 	}
+	
+	/**
+	 * Gets the number of points.
+	 *
+	 * @return the number of points
+	 */
 	public int getNumberOfPoints(){
 		return Integer.parseInt(numberOfPoints);
 	}
+	
+	/**
+	 * Gets the fit until.
+	 *
+	 * @return the fit until
+	 */
 	public double getFitUntil(){
 		return Double.parseDouble(fitUntil);
 	}
 
+	/**
+	 * Gets the do average.
+	 *
+	 * @return the do average
+	 */
 	public boolean getDoAverage() {
 	
 		return doAverage;

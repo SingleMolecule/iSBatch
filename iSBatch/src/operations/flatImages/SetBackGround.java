@@ -23,17 +23,31 @@ import model.Root;
 import model.Sample;
 import operations.Operation;
 
+// TODO: Auto-generated Javadoc
 /**
- * @author VictorCaldas
+ * The Class SetBackGround.
  *
+ * @author VictorCaldas
  */
 public class SetBackGround implements Operation {
+	
+	/** The dialog. */
 	SetBackgroundGui dialog;
 
+	/** The channel. */
 	private String channel;
+	
+	/** The method. */
 	private String method;
+	
+	/** The image tag. */
 	private String imageTag;
 
+	/**
+	 * Instantiates a new sets the back ground.
+	 *
+	 * @param treeModel the tree model
+	 */
 	public SetBackGround(DatabaseModel treeModel) {
 	}
 
@@ -41,6 +55,11 @@ public class SetBackGround implements Operation {
 	 * (non-Javadoc)
 	 * 
 	 * @see context.ContextElement#getContext()
+	 */
+	/**
+	 * Gets the context.
+	 *
+	 * @return the context
 	 */
 	@Override
 	public String[] getContext() {
@@ -52,6 +71,11 @@ public class SetBackGround implements Operation {
 	 * 
 	 * @see operations.Operation#getName()
 	 */
+	/**
+	 * Gets the name.
+	 *
+	 * @return the name
+	 */
 	@Override
 	public String getName() {
 		return "Set BackGround";
@@ -61,6 +85,12 @@ public class SetBackGround implements Operation {
 	 * (non-Javadoc)
 	 * 
 	 * @see operations.Operation#setup(model.Node)
+	 */
+	/**
+	 * Setup.
+	 *
+	 * @param node the node
+	 * @return true, if successful
 	 */
 	@Override
 	public boolean setup(Node node) {
@@ -79,6 +109,11 @@ public class SetBackGround implements Operation {
 	 * 
 	 * @see operations.Operation#finalize(model.Node)
 	 */
+	/**
+	 * Finalize.
+	 *
+	 * @param node the node
+	 */
 	@Override
 	public void finalize(Node node) {
 		System.out.println("Operation finalized");
@@ -91,17 +126,32 @@ public class SetBackGround implements Operation {
 	 * @see operations.Operation#visit(model.Root)
 	 */
 
+	/**
+	 * Visit.
+	 *
+	 * @param root the root
+	 */
 	@Override
 	public void visit(Root root) {
 		// Does not apply to ROOT.
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param experiment the experiment
+	 */
 	@Override
 	public void visit(Experiment experiment) {
 		run(experiment);
 
 	}
 
+	/**
+	 * Run.
+	 *
+	 * @param node the node
+	 */
 	private void run(Node node) {
 		System.out.println("Run class: " + channel + " using the method "
 				+ method);
@@ -133,6 +183,12 @@ public class SetBackGround implements Operation {
 
 	}
 
+	/**
+	 * Save.
+	 *
+	 * @param node the node
+	 * @param imp the imp
+	 */
 	private void save(Node node, ImagePlus imp) {
 		// Properly save and keep track of that file now.
 //		System.out.println(node.getOutputFolder());
@@ -148,34 +204,64 @@ public class SetBackGround implements Operation {
 		node.getProperties().put(channel+"_BeamProfile", node.getOutputFolder() + File.separator + imp.getTitle());
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param sample the sample
+	 */
 	@Override
 	public void visit(Sample sample) {
 		run(sample);
 
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param fieldOfView the field of view
+	 */
 	@Override
 	public void visit(FieldOfView fieldOfView) {
 		System.out.println("Call load image or ignore");
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param fileNode the file node
+	 */
 	@Override
 	public void visit(FileNode fileNode) {
 		run(fileNode);
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param operationNode the operation node
+	 */
 	@Override
 	public void visit(OperationNode operationNode) {
 		// TODO Auto-generated method stub
 
 	}
 
+	/**
+	 * Gets the created nodes.
+	 *
+	 * @return the created nodes
+	 */
 	@Override
 	public Node[] getCreatedNodes() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/**
+	 * Gets the parameters.
+	 *
+	 * @return the parameters
+	 */
 	@Override
 	public HashMap<String, String> getParameters() {
 		// TODO Auto-generated method stub

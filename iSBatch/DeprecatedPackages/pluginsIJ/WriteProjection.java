@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package plugins;
 
 
@@ -16,8 +19,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class WriteProjection.
+ */
 public class WriteProjection {
 
+	/**
+	 * The main method.
+	 *
+	 * @param arg the arguments
+	 * @throws Exception the exception
+	 */
 	@SuppressWarnings("resource")
 	public static void main(String[] arg) throws Exception {
 		
@@ -357,6 +370,13 @@ public class WriteProjection {
       } //main()
 	
 	
+	/**
+	 * Save file.
+	 *
+	 * @param Array the array
+	 * @param outputName the output name
+	 * @param DIRECTORY the directory
+	 */
 	public static void SaveFile(String[][] Array, String outputName, File DIRECTORY){
 		
 		 try (
@@ -379,6 +399,12 @@ public class WriteProjection {
 	        }
 	}
 	
+	/**
+	 * Average as string.
+	 *
+	 * @param m the m
+	 * @return the string
+	 */
 	private static String averageAsString(ArrayList<Float> m) {
 		 float sum = 0;
 		    for(int i = 0; i < m.size(); i++)
@@ -391,6 +417,12 @@ public class WriteProjection {
 
 	}
 	
+	/**
+	 * Average as float.
+	 *
+	 * @param m the m
+	 * @return the float
+	 */
 	private static Float averageAsFloat(ArrayList<Float> m) {
 		 float sum = 0;
 		    for(int i = 0; i < m.size(); i++)
@@ -402,6 +434,12 @@ public class WriteProjection {
 
 	}
 	
+	/**
+	 * Std dev.
+	 *
+	 * @param m the m
+	 * @return the string
+	 */
 	private static String stdDev(ArrayList<Float> m) {
 		float mean = averageAsFloat(m);
 		 float sum = 0;
@@ -417,6 +455,12 @@ public class WriteProjection {
 
 	}
 		
+	/**
+	 * All experiments.
+	 *
+	 * @param BFPath the BF path
+	 * @return the string[][]
+	 */
 	public static String[][] AllExperiments(String BFPath){
 		ImagePlus imp = IJ.openImage(BFPath);
 		ImageStack stack = imp.getStack();
@@ -445,6 +489,12 @@ public class WriteProjection {
 		
 	}
 	
+	/**
+	 * BF ref shortener.
+	 *
+	 * @param bFRef the b f ref
+	 * @return the string[][]
+	 */
 	public static String[][] BFRefShortener(String[][] bFRef){
 		String[][] all = bFRef;
 		String[] UniqueNames = OneOfEach(getColumnValues(all, 4));
@@ -478,6 +528,13 @@ public class WriteProjection {
 		
 	}
 	
+	/**
+	 * Start end.
+	 *
+	 * @param dummy the dummy
+	 * @param all the all
+	 * @return the string[]
+	 */
 	public static String[] StartEnd(String dummy,String[][] all){
 		int[] index = new int[2];
 		index[0] = (all.length);
@@ -505,6 +562,13 @@ public class WriteProjection {
 		
 	}
 
+	/**
+	 * Gets the column values.
+	 *
+	 * @param AllData the all data
+	 * @param Column the column
+	 * @return the column values
+	 */
 	public static String[] getColumnValues(String[][] AllData, int Column){
 		String[] column = new String[AllData.length];
 		column[0] = AllData[0][Column];
@@ -513,6 +577,12 @@ public class WriteProjection {
 		return column;
 	}
 
+	/**
+	 * One of each.
+	 *
+	 * @param AllData the all data
+	 * @return the string[]
+	 */
 	public static String[] OneOfEach(String[] AllData){
 		List<String> UniqueList = new ArrayList<String>();
 		UniqueList.add(AllData[0]);
@@ -540,14 +610,31 @@ public class WriteProjection {
 		
 	}
 	
+	/**
+	 * Prints the.
+	 *
+	 * @param string the string
+	 */
 	public static void print(String string){
 		System.out.println(string);
 	}
 	
+	/**
+	 * Prints the.
+	 *
+	 * @param string the string
+	 */
 	public static void print(int string){
 		System.out.println(string);
 	}
 
+	/**
+	 * Boundaries spots.
+	 *
+	 * @param alldata the alldata
+	 * @param Sample the sample
+	 * @return the string[][]
+	 */
 	public static String[][] boundariesSpots(String[][] alldata, int Sample) {
 		List<String> SubDatasetsTime = getUniqueSubDatasetTimeStamp(alldata[Sample]);
 		String[][] BoundariesFix = new String[SubDatasetsTime.size()][2];
@@ -592,6 +679,12 @@ public class WriteProjection {
 		return BoundariesFixComplete;
 	}
 
+	/**
+	 * Gets the unique sub dataset time stamp.
+	 *
+	 * @param AllData the all data
+	 * @return the unique sub dataset time stamp
+	 */
 	public static List<String> getUniqueSubDatasetTimeStamp(String[] AllData){
 		List<String> UniqueList = new ArrayList<String>();
 		//System.out.println(UniqueList.size());
@@ -615,6 +708,13 @@ public class WriteProjection {
 		return UniqueList;
 	}
 	
+	/**
+	 * Check match split.
+	 *
+	 * @param toCheck the to check
+	 * @param ListOfValues the list of values
+	 * @return true, if successful
+	 */
 	public static boolean checkMatchSplit(String toCheck, List<String> ListOfValues){
 		for (int i=0; i<ListOfValues.size(); i++){
 			String[] parts = ListOfValues.get(i).split("\\[");
@@ -630,6 +730,12 @@ public class WriteProjection {
 		
 	}	
 	
+	/**
+	 * Gets the unique dataset names.
+	 *
+	 * @param AllData the all data
+	 * @return the unique dataset names
+	 */
 	public static List<String> getUniqueDatasetNames(String[] AllData){
 		List<String> UniqueList = new ArrayList<String>();
 		UniqueList.add(AllData[0]);
@@ -654,6 +760,13 @@ public class WriteProjection {
 		return UniqueList;
 	}
 	
+	/**
+	 * Check match.
+	 *
+	 * @param toCheck the to check
+	 * @param ListOfValues the list of values
+	 * @return true, if successful
+	 */
 	public static boolean checkMatch(String toCheck, List<String> ListOfValues){
 		//System.out.println("Im here");
 		for (int i=0; i<ListOfValues.size(); i++){
@@ -671,6 +784,12 @@ public class WriteProjection {
 		
 	}
 
+	/**
+	 * Gets the unique sub dataset names.
+	 *
+	 * @param AllData the all data
+	 * @return the unique sub dataset names
+	 */
 	public static List<String> getUniqueSubDatasetNames(String[] AllData){
 		List<String> UniqueList = new ArrayList<String>();
 
@@ -694,6 +813,13 @@ public class WriteProjection {
 		return UniqueList;
 	}
 	
+	/**
+	 * Gets the unique sub dataset names.
+	 *
+	 * @param AllData the all data
+	 * @param alldata2 the alldata2
+	 * @return the unique sub dataset names
+	 */
 	public static List<String> getUniqueSubDatasetNames(String[] AllData, String[] alldata2){
 		List<String> UniqueList = new ArrayList<String>();
 		List<String> UniqueListwithSlice = new ArrayList<String>();
@@ -720,6 +846,13 @@ public class WriteProjection {
 		return UniqueListwithSlice;
 	}
 	
+	/**
+	 * Gets the index.
+	 *
+	 * @param inputString the input string
+	 * @param ColumnName the column name
+	 * @return the index
+	 */
 	public static int getIndex(String[] inputString, String ColumnName){
 		int length = inputString.length;
 		for (int i=0; i<length; i++){
@@ -733,6 +866,13 @@ public class WriteProjection {
 		
 	}
 	
+	/**
+	 * Gets the head.
+	 *
+	 * @param pathToCSV the path to csv
+	 * @return the string[]
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static String[] GetHead(String pathToCSV) throws IOException{
 		 BufferedReader CSVFile = new BufferedReader(new FileReader(pathToCSV));
 
@@ -746,6 +886,13 @@ public class WriteProjection {
 		
 	}
 	
+	/**
+	 * Gets the cs vlenght.
+	 *
+	 * @param CSVFilePath the CSV file path
+	 * @return the int
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static int GetCSVlenght(String CSVFilePath) throws IOException{
         BufferedReader CSVFile = new BufferedReader(new FileReader(CSVFilePath));
 	    String dataRow = CSVFile.readLine();

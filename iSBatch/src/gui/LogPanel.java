@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package gui;
 
 import java.awt.BorderLayout;
@@ -15,17 +18,33 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class LogPanel.
+ */
 public class LogPanel extends JPanel implements ActionListener {
+	
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	
+	/** The instance. */
 	private static LogPanel instance;
 	
+	/** The list model. */
 	private DefaultListModel<String> listModel = new DefaultListModel<String>();
+	
+	/** The list. */
 	private JList<String> list = new JList<String>(listModel);
 	
+	/** The clear button. */
 	private JButton clearButton = new JButton("Clear");
+	
+	/** The save button. */
 	private JButton saveButton = new JButton("Save");
 	
+	/**
+	 * Instantiates a new log panel.
+	 */
 	protected LogPanel() {
 		super(new BorderLayout());
 		
@@ -42,6 +61,11 @@ public class LogPanel extends JPanel implements ActionListener {
 		add(new JScrollPane(list), BorderLayout.CENTER);
 	}
 	
+	/**
+	 * Gets the single instance of LogPanel.
+	 *
+	 * @return single instance of LogPanel
+	 */
 	public static LogPanel getInstance() {
 		
 		if (instance == null)
@@ -50,6 +74,11 @@ public class LogPanel extends JPanel implements ActionListener {
 		return instance;
 	}
 
+	/**
+	 * Action performed.
+	 *
+	 * @param e the e
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
@@ -75,11 +104,21 @@ public class LogPanel extends JPanel implements ActionListener {
 		
 	}
 	
+	/**
+	 * Log.
+	 *
+	 * @param str the str
+	 */
 	public static void log(String str) {
 		LogPanel panel = LogPanel.getInstance();
 		panel.listModel.add(0, str);
 	}
 	
+	/**
+	 * Save.
+	 *
+	 * @param file the file
+	 */
 	public void save(File file) {
 		
 		try {

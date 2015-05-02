@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package plugins_ij;
 
 import java.awt.Component;
@@ -19,15 +22,33 @@ import ij.measure.ResultsTable;
 import ij.plugin.PlugIn;
 import ij.process.ImageProcessor;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Make_Location_Maps.
+ */
 public class Make_Location_Maps implements PlugIn{
+		
+		/** The Control table. */
 		ResultsTable ControlTable;
+		
+		/** The Peaks table. */
 		ResultsTable PeaksTable;
+		
+		/** The Projection table. */
 		ResultsTable ProjectionTable;
+		
+		/** The Projection array. */
 		String[][] ProjectionArray;
 		
 	
 	
 	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static void main(String[] args) throws IOException{
 		new Make_Location_Maps().run("");
 		IJ.log("Location Maps done!");
@@ -35,6 +56,11 @@ public class Make_Location_Maps implements PlugIn{
 	}
 
 
+	/**
+	 * Run.
+	 *
+	 * @param arg0 the arg0
+	 */
 	public void run(String arg0) {
 		/**
 		 * Files Needed:
@@ -266,6 +292,14 @@ public class Make_Location_Maps implements PlugIn{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	/**
+	 * Save file.
+	 *
+	 * @param Array the array
+	 * @param outputName the output name
+	 * @param DIRECTORY the directory
+	 */
 	public static void SaveFile(String[][] Array, String outputName, File DIRECTORY){
 		
 		 try (
@@ -288,6 +322,11 @@ public class Make_Location_Maps implements PlugIn{
 	        }
 	}
 	
+	/**
+	 * Ask to continue.
+	 *
+	 * @return the int
+	 */
 	private static int askToContinue() {
 		Object[] options2 = {"Yes","No - Create one"};
 
@@ -303,6 +342,15 @@ public class Make_Location_Maps implements PlugIn{
 	return DKSelection;// TODO Auto-generated method stub
 	}
 	
+	/**
+	 * Gaussian.
+	 *
+	 * @param x the x
+	 * @param y the y
+	 * @param h the h
+	 * @param s the s
+	 * @return the double
+	 */
 	public double gaussian (double x , double y, double  h, double s) {
 
 		return h * Math.exp(-(x * x + y * y) / (2 * s * s));

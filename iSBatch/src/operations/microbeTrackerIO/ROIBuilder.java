@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package operations.microbeTrackerIO;
 
 // Adapted from http://rsb.info.nih.gov/ij/plugins/download/ROI_Importer.java
@@ -13,13 +16,32 @@ import ij.plugin.*;
 import ij.measure.*;
 import ij.plugin.TextReader;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ROIBuilder.
+ */
 public class ROIBuilder implements PlugIn {
+	
+	/** The points. */
 	private ArrayList<Point> points;
+	
+	/** The roi. */
 	private Roi roi;
+	
+	/** The number of points. */
 	private int numberOfPoints;
+	
+	/** The max int x. */
 	int maxIntX;
+	
+	/** The max int y. */
 	int maxIntY;
 	
+	/**
+	 * Instantiates a new ROI builder.
+	 *
+	 * @param points the points
+	 */
 	public ROIBuilder(ArrayList<Point> points) {
 		this.points = points;
 		this.numberOfPoints = points.size();
@@ -28,6 +50,9 @@ public class ROIBuilder implements PlugIn {
 		
 	}
 
+	/**
+	 * Creates the roi.
+	 */
 	private void createROI() {
 		//Get maximun X Value
 		setMax();
@@ -47,6 +72,9 @@ public class ROIBuilder implements PlugIn {
 		
 	}
 
+	/**
+	 * Sets the max.
+	 */
 	private void setMax() {
 		for(Point point : points){
 			if (point.x >= maxIntX){
@@ -60,6 +88,13 @@ public class ROIBuilder implements PlugIn {
 		
 	}
 
+	/**
+	 * Gets the max.
+	 *
+	 * @param points the points
+	 * @param i the i
+	 * @return the max
+	 */
 	private int getMax(ArrayList<Point> points, int i) {
 
 
@@ -69,6 +104,11 @@ public class ROIBuilder implements PlugIn {
 		return 0;
 	}
 
+	/**
+	 * Run.
+	 *
+	 * @param arg the arg
+	 */
 	@SuppressWarnings("deprecation")
 	public void run(String arg) {
 		if (IJ.versionLessThan("1.26f"))
@@ -112,6 +152,11 @@ public class ROIBuilder implements PlugIn {
 //			imp.setRoi(roi);
 	}
 
+	/**
+	 * Gets the roi.
+	 *
+	 * @return the roi
+	 */
 	public Roi getRoi() {
 		// TODO Auto-generated method stub
 		return roi;

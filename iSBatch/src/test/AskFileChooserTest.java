@@ -1,11 +1,23 @@
+/*
+ * 
+ */
 package test;
 
 import java.io.File;
 
 import javax.swing.JFileChooser;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class AskFileChooserTest.
+ */
 public class AskFileChooserTest {
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		File directory = new File("C:\\Users\\VictorCaldas\\Documents\\Thesis\\Chapter 02 - iSBToolsPaper");
 		File file = new File("C:\\Users\\VictorCaldas\\Documents\\Thesis\\Chapter 02 - iSBToolsPaper\\26-Lamprecht_Biotech_2007.pdf");

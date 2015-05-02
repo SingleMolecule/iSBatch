@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package analysis;
 
 import java.awt.AWTEvent;
@@ -15,8 +18,13 @@ import ij.measure.ResultsTable;
 import ij.plugin.PlugIn;
 import ij.plugin.filter.Analyzer;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ResultsFitter.
+ */
 public class ResultsFitter implements PlugIn, DialogListener {
 
+	/** The functions. */
 	private String[] functions = {
 			"line",
 			"2nd degree polynomial",
@@ -30,6 +38,7 @@ public class ResultsFitter implements PlugIn, DialogListener {
 			"gaussian"
 	};
 	
+	/** The function definitions. */
 	private String[] functionDefinitions = {
 			"y = a + b * x",
 			"y = a + x * (b + x * c)",
@@ -43,6 +52,7 @@ public class ResultsFitter implements PlugIn, DialogListener {
 			"y = a * Math.exp(-((x - b) * (x - b)) / (2 * c * c))"
 	};
 	
+	/** The intial parameter values. */
 	private String[] intialParameterValues = {
 		"1,1",
 		"1,1,1",
@@ -56,18 +66,41 @@ public class ResultsFitter implements PlugIn, DialogListener {
 		"1,1,1",
 	};
 	
+	/** The table. */
 	private ResultsTable table;
+	
+	/** The function. */
 	private int function = 0;
+	
+	/** The x column. */
 	private String xColumn = "";
+	
+	/** The y column. */
 	private String yColumn = "";
+	
+	/** The first. */
 	private int first = 0;
+	
+	/** The last. */
 	private int last = 0;
+	
+	/** The function definition. */
 	private String functionDefinition;
+	
+	/** The initial. */
 	private String initial = "";
+	
+	/** The p. */
 	private double[] p;
 	
+	/** The engine. */
 	private ScriptEngine engine = new ScriptEngineManager().getEngineByName("JavaScript");
 	
+	/**
+	 * Run.
+	 *
+	 * @param arg0 the arg0
+	 */
 	@Override
 	public void run(String arg0) {
 
@@ -164,6 +197,13 @@ public class ResultsFitter implements PlugIn, DialogListener {
 		IJ.log("sum of squares = " + lm.chiSq);
 	}
 	
+	/**
+	 * Dialog item changed.
+	 *
+	 * @param dialog the dialog
+	 * @param e the e
+	 * @return true, if successful
+	 */
 	@Override
 	public boolean dialogItemChanged(GenericDialog dialog, AWTEvent e) {
 		

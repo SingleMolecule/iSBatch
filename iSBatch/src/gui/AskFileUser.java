@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package gui;
 
 /*
@@ -36,20 +39,30 @@ import java.io.*;
 
 import javax.swing.*;
 
+// TODO: Auto-generated Javadoc
 /*
  * FileChooserDemo.java uses these files:
  *   images/Open16.gif
  *   images/Save16.gif
  */
+/**
+ * The Class AskFileUser.
+ */
 public class AskFileUser extends JPanel
                              {
-    /**
-	 * 
-	 */
+    
+    /** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+    
+    /** The fc. */
     JFileChooser fc;
+	
+	/** The path. */
 	public String path;
 
+    /**
+     * Instantiates a new ask file user.
+     */
     public AskFileUser() {
         fc = new JFileChooser();
        
@@ -69,6 +82,11 @@ public class AskFileUser extends JPanel
     }
 
 
+    /**
+     * The main method.
+     *
+     * @param args the arguments
+     */
     public static void main(String[] args) {
     	 JFrame frame = new JFrame();
          frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

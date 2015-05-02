@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package plugins_ij;
 
 import ij.IJ;
@@ -17,24 +20,51 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class BatchZProjector.
+ */
 public class BatchZProjector implements PlugIn{
 	
-	/** Defining Variables **/
+	/**  Defining Variables *. */
 	/** Input files and folders */
 	static String[] labels;
+	
+	/** The CSV content. */
 	static String[][] CSVContent;
+	
+	/** The table. */
 	static ResultsTable table;
+	
+	/** The Images folder. */
 	static String ImagesFolder;
+	
+	/** The csv filename. */
 	String csvFilename;
+	
+	/** The file. */
 	File file;
+	
+	/** The uniques. */
 	List<String> uniques;
 	//sync test
 	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static void main(String[] args) throws IOException{
 		new BatchZProjector().run("");
 		IJ.log("BatchZProjector Done");
 	}
 	
+	/**
+	 * Run.
+	 *
+	 * @param arg0 the arg0
+	 */
 	public void run(String arg0){
 		
 		
@@ -61,6 +91,11 @@ public class BatchZProjector implements PlugIn{
 	
 
 
+	/**
+	 * Gets the file from user.
+	 *
+	 * @return the file from user
+	 */
 	private String getFileFromUser() {
 		this.csvFilename =  IJ.getFilePath("Provide ControlFile.CSV");
 		
@@ -75,6 +110,11 @@ public class BatchZProjector implements PlugIn{
 		
 	}
 
+	/**
+	 * Decision_tree.
+	 *
+	 * @param list the list
+	 */
 	public static void decision_tree(List<String> list) {
 		//check if collum existe
 		//int TrimColIndex = table.getColumnIndex("Trimmer");
@@ -163,10 +203,19 @@ public class BatchZProjector implements PlugIn{
 		}
 	}
 
+	/**
+	 * Creates the images folder.
+	 */
 	private void createImagesFolder() {
 		ImagesFolder = tools.iSBOps.checkCreateDir(file.getParent()+File.separator+"Projections");
 	}
 	
+	/**
+	 * Confirm execution.
+	 *
+	 * @param labels the labels
+	 * @return the int
+	 */
 	private static int ConfirmExecution(String[] labels) {
 		
 		
@@ -185,6 +234,11 @@ public class BatchZProjector implements PlugIn{
 		
 	}
 
+	/**
+	 * Ask to continue.
+	 *
+	 * @return the int
+	 */
 	private static int askToContinue() {
 		Object[] options2 = {"Yes","No"};
 
@@ -202,6 +256,11 @@ public class BatchZProjector implements PlugIn{
 
 	}
 
+	/**
+	 * Load table.
+	 *
+	 * @param csvFilename the csv filename
+	 */
 	private void loadTable(String csvFilename) {
 		try {
 			table = ResultsTable.open(csvFilename);
@@ -213,6 +272,13 @@ public class BatchZProjector implements PlugIn{
 	}
 
 
+	/**
+	 * Gets the unique tags.
+	 *
+	 * @param collum the collum
+	 * @param table the table
+	 * @return the unique tags
+	 */
 	private List<String> getUniqueTags(String collum, ResultsTable table) {
 		List<String> list = getAllTags(collum, table);
 		HashSet<String> repeated = new HashSet<String>();
@@ -223,6 +289,13 @@ public class BatchZProjector implements PlugIn{
 		
 	}
 	
+	/**
+	 * Gets the all tags.
+	 *
+	 * @param collum the collum
+	 * @param table the table
+	 * @return the all tags
+	 */
 	private List<String> getAllTags(String collum, ResultsTable table)
 	{
 		

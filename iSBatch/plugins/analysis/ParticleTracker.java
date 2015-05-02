@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package analysis;
 
 import java.awt.Polygon;
@@ -18,14 +21,32 @@ import ij.plugin.frame.RoiManager;
 
 import table.ResultsTableSorter;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ParticleTracker.
+ */
 public class ParticleTracker implements PlugIn {
 
+	/** The look ahead. */
 	private int lookAhead = 1;
+	
+	/** The max step size. */
 	private double maxStepSize = 8;
+	
+	/** The minimum width. */
 	private double minimumWidth = 0;
+	
+	/** The minimum height. */
 	private double minimumHeight = 0;
+	
+	/** The show trajectories. */
 	private boolean showTrajectories = true;
 	
+	/**
+	 * Run.
+	 *
+	 * @param arg0 the arg0
+	 */
 	@Override
 	public void run(String arg0) {
 		

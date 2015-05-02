@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package operation.focusLifetime;
 
 import filters.GenericFilter;
@@ -37,19 +40,44 @@ import operations.Operation;
 import operations.peakFitter.PeakFitterGui;
 import process.DiscoidalAveragingFilter;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class FocusLifetimes.
+ */
 public class FocusLifetimes implements Operation {
+	
+	/** The dialog. */
 	private FocusLifetimeGUI dialog;
+	
+	/** The channel. */
 	private String channel;
+	
+	/** The custom search. */
 	private String customSearch;
+	
+	/** The tags. */
 	private ArrayList<String> tags;
 
+	/**
+	 * Instantiates a new focus lifetimes.
+	 *
+	 * @param treeModel the tree model
+	 */
 	public FocusLifetimes(DatabaseModel treeModel) {
 		// TODO Auto-generated constructor stub
 	}
 
+	/** The traces. */
 	ResultsTable traces = new ResultsTable();
+	
+	/** The traces corrected. */
 	ResultsTable tracesCorrected = new ResultsTable();
 
+	/**
+	 * Run.
+	 *
+	 * @param node the node
+	 */
 	private void run(Node node) {
 
 		// First, get a list of all files to execute
@@ -202,6 +230,13 @@ public class FocusLifetimes implements Operation {
 		
 	}
 
+	/**
+	 * Peaks inside cells.
+	 *
+	 * @param cellsManager the cells manager
+	 * @param allPeaksManager the all peaks manager
+	 * @return the roi manager
+	 */
 	private RoiManager PeaksInsideCells(RoiManager cellsManager,
 			RoiManager allPeaksManager) {
 		RoiManager filtered = new RoiManager(true);
@@ -229,6 +264,14 @@ public class FocusLifetimes implements Operation {
 		return filtered;
 	}
 
+	/**
+	 * Gets the average.
+	 *
+	 * @param ip the ip
+	 * @param mask the mask
+	 * @param r the r
+	 * @return the average
+	 */
 	private static double[] getAverage(ImageProcessor ip, ImageProcessor mask,
 			Rectangle r) {
 		double[] results = new double[7];
@@ -267,6 +310,12 @@ public class FocusLifetimes implements Operation {
 		return results;
 	}
 
+	/**
+	 * Gets the stddev.
+	 *
+	 * @param listOfValues the list of values
+	 * @return the stddev
+	 */
 	private static double getSTDDEV(List<Double> listOfValues) {
 		int size = listOfValues.size();
 		double sum = 0;
@@ -294,17 +343,33 @@ public class FocusLifetimes implements Operation {
 		return s2;
 	}
 
+	/**
+	 * Gets the context.
+	 *
+	 * @return the context
+	 */
 	@Override
 	public String[] getContext() {
 		return new String[] { "All" };
 	}
 
+	/**
+	 * Gets the name.
+	 *
+	 * @return the name
+	 */
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
 		return "Focus Lifetimes";
 	}
 
+	/**
+	 * Setup.
+	 *
+	 * @param node the node
+	 * @return true, if successful
+	 */
 	@Override
 	public boolean setup(Node node) {
 		dialog = new FocusLifetimeGUI(node);
@@ -317,24 +382,44 @@ public class FocusLifetimes implements Operation {
 		return true;
 	}
 
+	/**
+	 * Finalize.
+	 *
+	 * @param node the node
+	 */
 	@Override
 	public void finalize(Node node) {
 		// TODO Auto-generated method stub
 
 	}
 
+	/**
+	 * Gets the created nodes.
+	 *
+	 * @return the created nodes
+	 */
 	@Override
 	public Node[] getCreatedNodes() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/**
+	 * Gets the parameters.
+	 *
+	 * @return the parameters
+	 */
 	@Override
 	public HashMap<String, String> getParameters() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param root the root
+	 */
 	@Override
 	public void visit(Root root) {
 
@@ -342,34 +427,66 @@ public class FocusLifetimes implements Operation {
 
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param experiment the experiment
+	 */
 	@Override
 	public void visit(Experiment experiment) {
 		run(experiment);
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param sample the sample
+	 */
 	@Override
 	public void visit(Sample sample) {
 		run(sample);
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param fieldOfView the field of view
+	 */
 	@Override
 	public void visit(FieldOfView fieldOfView) {
 		run(fieldOfView);
 
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param fileNode the file node
+	 */
 	@Override
 	public void visit(FileNode fileNode) {
 		run(fileNode);
 
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param operationNode the operation node
+	 */
 	@Override
 	public void visit(OperationNode operationNode) {
 		// TODO Auto-generated method stub
 
 	}
 
+	/**
+	 * Parses the double.
+	 *
+	 * @param str the str
+	 * @return the double
+	 * @throws NumberFormatException the number format exception
+	 */
 	private double parseDouble(String str) throws NumberFormatException {
 		double toReturn = 0;
 		// System.out.println(str);
@@ -388,6 +505,13 @@ public class FocusLifetimes implements Operation {
 		return toReturn;
 	}
 
+	/**
+	 * Find peaks.
+	 *
+	 * @param finder the finder
+	 * @param imp the imp
+	 * @return the array list
+	 */
 	public static ArrayList<PointRoi> findPeaks(PeakFinder finder, ImagePlus imp) {
 
 		ArrayList<PointRoi> allPeaks = new ArrayList<PointRoi>();

@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package operations;
 
 import gui.ExperimentDialog;
@@ -21,12 +24,27 @@ import model.OperationNode;
 import model.Root;
 import model.Sample;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class AddNodeOperation.
+ */
 public class AddNodeOperation implements Operation {
 
+	/** The frame. */
 	private JFrame frame;
+	
+	/** The model. */
 	private DatabaseModel model;
+	
+	/** The importer. */
 	private Importer importer;
 	
+	/**
+	 * Instantiates a new adds the node operation.
+	 *
+	 * @param frame the frame
+	 * @param model the model
+	 */
 	public AddNodeOperation(JFrame frame, DatabaseModel model) {
 		super();
 		this.frame = frame;
@@ -34,16 +52,31 @@ public class AddNodeOperation implements Operation {
 		importer = new Importer(model);
 	}
 
+	/**
+	 * Gets the name.
+	 *
+	 * @return the name
+	 */
 	@Override
 	public String getName() {
 		return "Add";
 	}
 
+	/**
+	 * Gets the context.
+	 *
+	 * @return the context
+	 */
 	@Override
 	public String[] getContext() {
 		return new String[]{"All"};
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param root the root
+	 */
 	@Override
 	public void visit(Root root) {
 		
@@ -73,6 +106,11 @@ public class AddNodeOperation implements Operation {
 		}
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param experiment the experiment
+	 */
 	@Override
 	public void visit(Experiment experiment) {
 		
@@ -102,6 +140,11 @@ public class AddNodeOperation implements Operation {
 		
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param sample the sample
+	 */
 	@Override
 	public void visit(Sample sample) {
 		
@@ -130,6 +173,11 @@ public class AddNodeOperation implements Operation {
 		}
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param fieldOfView the field of view
+	 */
 	@Override
 	public void visit(FieldOfView fieldOfView) {
 		
@@ -140,33 +188,64 @@ public class AddNodeOperation implements Operation {
 			model.addNode(fieldOfView, fileNode);
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param fileNode the file node
+	 */
 	@Override
 	public void visit(FileNode fileNode) {
 	}
 
+	/**
+	 * Setup.
+	 *
+	 * @param node the node
+	 * @return true, if successful
+	 */
 	@Override
 	public boolean setup(Node node) {
 
 		return true;
 	}
 
+	/**
+	 * Finalize.
+	 *
+	 * @param node the node
+	 */
 	@Override
 	public void finalize(Node node) {
 		
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param operationNode the operation node
+	 */
 	@Override
 	public void visit(OperationNode operationNode) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	/**
+	 * Gets the created nodes.
+	 *
+	 * @return the created nodes
+	 */
 	@Override
 	public Node[] getCreatedNodes() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/**
+	 * Gets the parameters.
+	 *
+	 * @return the parameters
+	 */
 	@Override
 	public HashMap<String, String> getParameters() {
 		// TODO Auto-generated method stub

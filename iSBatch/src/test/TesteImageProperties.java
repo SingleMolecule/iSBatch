@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package test;
 
 import ij.IJ;
@@ -5,7 +8,17 @@ import ij.ImagePlus;
 import ij.ImageStack;
 import ij.process.ImageProcessor;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class TesteImageProperties.
+ */
 public class TesteImageProperties {
+	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		
 		ImagePlus imp = IJ.openImage("D:\\TestFolderIsbatch\\BFTeste.tif");

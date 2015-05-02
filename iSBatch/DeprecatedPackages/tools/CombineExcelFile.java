@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 import ij.IJ;
 
 import java.awt.event.ActionEvent;
@@ -23,38 +26,66 @@ import com.jgoodies.forms.layout.RowSpec;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CombineExcelFile.
+ */
 public class CombineExcelFile extends JDialog{
 	
 	
 	
-	/**
-	 * 
-	 */
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
 
 
 
 
+	/**
+	 * Instantiates a new combine excel file.
+	 */
 	public CombineExcelFile() {
 
 		
 	}
 	
+	/** The folder. */
 	static File fFolder;
+	
+	/** The Data summary. */
 	static String[][] DataSummary; 
+	
+	/** The writer. */
 	static CSVWriter writer;
+	
+	/** The data. */
 	static String[] data = new String[5];
+	
+	/** The txt bgintensityavgcsv. */
 	private static JTextField txtBgintensityavgcsv;
+	
+	/** The txt cellintensitybguncorravgcsv. */
 	private static JTextField txtCellintensitybguncorravgcsv;
+	
+	/** The txt resultspeakfitpercelltxt. */
 	private static JTextField txtResultspeakfitpercelltxt;
+	
+	/** The text field_3. */
 	private JTextField textField_3;
+	
+	/** The txt output. */
 	private JTextField txtOutput;
 	
 	
 	
 	
 	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static void main(String[] args) throws IOException {
 		CombineExcelFile cada = new CombineExcelFile();
 		cada.display();
@@ -64,6 +95,10 @@ public class CombineExcelFile extends JDialog{
 	
 
 	}
+	
+	/**
+	 * Display.
+	 */
 	private  void display() {
 		getContentPane().setLayout(new FormLayout(new ColumnSpec[] {
 				FormFactory.RELATED_GAP_COLSPEC,
@@ -171,6 +206,12 @@ public class CombineExcelFile extends JDialog{
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setVisible(true);
 	}
+	
+	/**
+	 * Run.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	private void run() throws IOException {
 		File[] directories = fFolder.listFiles(File::isDirectory);
 		
@@ -249,6 +290,15 @@ public class CombineExcelFile extends JDialog{
 	
 	
 
+	/**
+	 * Gets the cell data.
+	 *
+	 * @param CellIntensity the cell intensity
+	 * @param CellPeak the cell peak
+	 * @param backGround the back ground
+	 * @return the cell data
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	private static List<String[]> getCellData(File CellIntensity, File CellPeak, Double backGround) throws IOException {
 		List<String[]> currentFolderData = new ArrayList<String[]>();
 		String[][] cellData = null;
@@ -303,6 +353,12 @@ public class CombineExcelFile extends JDialog{
 		return currentFolderData;
 	}
 
+	/**
+	 * Count cells.
+	 *
+	 * @param folder the folder
+	 * @return the int
+	 */
 	private static int countCells(File folder) {
 		String RoiFolder = "BFcellROI";
 		int totalCells = 0;
@@ -320,6 +376,13 @@ public class CombineExcelFile extends JDialog{
 		return totalCells;
 	}
 
+	/**
+	 * Count peaks.
+	 *
+	 * @param peakata the peakata
+	 * @param collum the collum
+	 * @return the int
+	 */
 	private static int countPeaks(String[][] peakata, int collum) {
 		int totalPeaks = 0;
 		
@@ -329,6 +392,13 @@ public class CombineExcelFile extends JDialog{
 		return totalPeaks;
 	}
 
+	/**
+	 * Gets the collum.
+	 *
+	 * @param toMatch the to match
+	 * @param header the header
+	 * @return the collum
+	 */
 	private static int getCollum(String toMatch, String[] header) {
 		int collum = 0;
 		for (int i = 0; i < header.length; i++) {
@@ -339,6 +409,12 @@ public class CombineExcelFile extends JDialog{
 		return collum;
 	}
 
+	/**
+	 * Removes the crap string.
+	 *
+	 * @param string the string
+	 * @return the string
+	 */
 	private static String removeCrapString(String string) {
 		string = string.replace("Mean(", "");
 		string =string.replace(")", "");
@@ -346,6 +422,14 @@ public class CombineExcelFile extends JDialog{
 	}
 
 
+	/**
+	 * Convert to array.
+	 *
+	 * @param file the file
+	 * @param string the string
+	 * @return the string[][]
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@SuppressWarnings("resource")
 	private static String[][] convertToArray(File file, String string) throws IOException {
 		CSVReader reader;
@@ -365,6 +449,13 @@ public class CombineExcelFile extends JDialog{
 		
 		return cellinformation;
 	}
+	
+	/**
+	 * Gets the average bg.
+	 *
+	 * @param Files the files
+	 * @return the average bg
+	 */
 	private static ArrayList<Double> getAverageBG(List<File> Files) {
 		// Get list of Values
 
@@ -382,11 +473,23 @@ public class CombineExcelFile extends JDialog{
 
 	}
 
+	/**
+	 * Average.
+	 *
+	 * @param list the list
+	 * @return the double
+	 */
 	public static double average(ArrayList<Double> list) {  
 	    double average = sum(list)/list.size();
 	    return average;
 	}
 
+	/**
+	 * Sum.
+	 *
+	 * @param list the list
+	 * @return the double
+	 */
 	public static double sum(ArrayList<Double> list) {
 	    double sum = 0;        
 	    for(int i=0; i<list.size(); i++ ){
@@ -395,6 +498,12 @@ public class CombineExcelFile extends JDialog{
 	    return sum;
 	}
 	
+	/**
+	 * Variance.
+	 *
+	 * @param list the list
+	 * @return the double
+	 */
 	public static double variance(ArrayList<Double> list) {
 		   double sumDiffsSquared = 0.0;
 		   double avg = average(list);
@@ -407,6 +516,12 @@ public class CombineExcelFile extends JDialog{
 		   return sumDiffsSquared  / (list.size()-1);
 		}
 
+	/**
+	 * Gets the list of values.
+	 *
+	 * @param file the file
+	 * @return the list of values
+	 */
 	private static ArrayList<Double> getListOfValues(File file) {
 		// Get list of Values
 
@@ -454,6 +569,12 @@ public class CombineExcelFile extends JDialog{
 		return values;
 	}
 
+	/**
+	 * Gets the excel files.
+	 *
+	 * @param string the string
+	 * @return the excel files
+	 */
 	private static List<File> getExcelFiles(String string) {
 		// LIst containing the directories
 		File[] list = fFolder.listFiles();

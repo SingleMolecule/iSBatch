@@ -1,13 +1,41 @@
+/*
+ * 
+ */
 package operations;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class LevenbergMarquardt.
+ */
 public abstract class LevenbergMarquardt {
 
+	/** The max iterations. */
 	public static int maxIterations = 100;
+	
+	/** The iterations. */
 	public int iterations;
+	
+	/** The sum of squares. */
 	public double sumOfSquares = 0;
+	
+	/** The precision. */
 	public double precision = 1e-6;
+	
+	/** The r squared. */
 	public double rSquared = 0;
 	
+	/**
+	 * Solve.
+	 *
+	 * @param x the x
+	 * @param y the y
+	 * @param s the s
+	 * @param n the n
+	 * @param parameters the parameters
+	 * @param vary the vary
+	 * @param error the error
+	 * @param lambda the lambda
+	 */
 	public void solve(double[][] x, double[] y, double[] s, int n, double[] parameters, boolean[] vary, double[] error, double lambda) {
 		
 		// determine the number of parameters that can vary
@@ -188,6 +216,12 @@ public abstract class LevenbergMarquardt {
 		sumOfSquares = sumOfSquaresAfter;
 	}
 	
+	/**
+	 * Gauss jordan.
+	 *
+	 * @param left the left
+	 * @param right the right
+	 */
 	public void gaussJordan(double[][] left, double[][] right) {
 		int n = left.length;
 		int rCols = right[0].length;
@@ -238,9 +272,30 @@ public abstract class LevenbergMarquardt {
 		}
 	}
 	
+	/**
+	 * Gets the value.
+	 *
+	 * @param x the x
+	 * @param parameters the parameters
+	 * @return the value
+	 */
 	public abstract double getValue(double[] x, double[] parameters);
+	
+	/**
+	 * Gets the gradient.
+	 *
+	 * @param x the x
+	 * @param parameters the parameters
+	 * @param dyda the dyda
+	 * @return the gradient
+	 */
 	public abstract void getGradient(double[] x, double[] parameters, double[] dyda);
 	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		
 		double[][] x = {{0}, {1}, {2}, {3}, {4}, {5}, {6},

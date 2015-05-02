@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package operations.microbeTrackerIO;
 
 import java.io.IOException;
@@ -7,12 +10,22 @@ import ij.IJ;
 import ij.measure.ResultsTable;
 import ij.plugin.PlugIn;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Main.
+ */
 public class Main implements PlugIn {
 
 	//private String matFilename;
 	//private String tableFilename;
+	/** The max distance. */
 	private double maxDistance = 12;
 	
+	/**
+	 * Run.
+	 *
+	 * @param arg0 the arg0
+	 */
 	@Override
 	public void run(String arg0) {
 		String matFilename =  IJ.getFilePath("Load meshes file, BF.mat");
@@ -92,6 +105,11 @@ public class Main implements PlugIn {
 		
 	}
 	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		new Main().run("");
 		System.out.println("All peaks localized");

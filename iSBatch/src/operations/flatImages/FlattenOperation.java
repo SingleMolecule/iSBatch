@@ -98,6 +98,11 @@ public class FlattenOperation implements Operation {
 	/* (non-Javadoc)
 	 * @see context.ContextElement#getContext()
 	 */
+	/**
+	 * Gets the context.
+	 *
+	 * @return the context
+	 */
 	@Override
 	public String[] getContext() {
 		return new String[]{"Experiment", "Sample", "FieldOfView"};
@@ -106,6 +111,11 @@ public class FlattenOperation implements Operation {
 	/* (non-Javadoc)
 	 * @see operations.Operation#getName()
 	 */
+	/**
+	 * Gets the name.
+	 *
+	 * @return the name
+	 */
 	@Override
 	public String getName() {
 		return "Flatten";
@@ -113,6 +123,12 @@ public class FlattenOperation implements Operation {
 
 	/* (non-Javadoc)
 	 * @see operations.Operation#setup(model.Node)
+	 */
+	/**
+	 * Setup.
+	 *
+	 * @param node the node
+	 * @return true, if successful
 	 */
 	@Override
 	public boolean setup(Node node) {
@@ -167,6 +183,11 @@ public class FlattenOperation implements Operation {
 	/* (non-Javadoc)
 	 * @see operations.Operation#finalize(model.Node)
 	 */
+	/**
+	 * Finalize.
+	 *
+	 * @param node the node
+	 */
 	@Override
 	public void finalize(Node node) {
 		// TODO Auto-generated method stub
@@ -176,12 +197,22 @@ public class FlattenOperation implements Operation {
 	/* (non-Javadoc)
 	 * @see operations.Operation#visit(model.Root)
 	 */
+	/**
+	 * Visit.
+	 *
+	 * @param root the root
+	 */
 	@Override
 	public void visit(Root root) {
 	}
 
 	/* (non-Javadoc)
 	 * @see operations.Operation#visit(model.Experiment)
+	 */
+	/**
+	 * Visit.
+	 *
+	 * @param experiment the experiment
 	 */
 	@Override
 	public void visit(Experiment experiment) {
@@ -195,6 +226,11 @@ public class FlattenOperation implements Operation {
 	/* (non-Javadoc)
 	 * @see operations.Operation#visit(model.Sample)
 	 */
+	/**
+	 * Visit.
+	 *
+	 * @param sample the sample
+	 */
 	@Override
 	public void visit(Sample sample) {
 		
@@ -207,6 +243,11 @@ public class FlattenOperation implements Operation {
 	/* (non-Javadoc)
 	 * @see operations.Operation#visit(model.FieldOfView)
 	 */
+	/**
+	 * Visit.
+	 *
+	 * @param fieldOfView the field of view
+	 */
 	@Override
 	public void visit(FieldOfView fieldOfView) {
 		
@@ -218,6 +259,11 @@ public class FlattenOperation implements Operation {
 
 	/* (non-Javadoc)
 	 * @see operations.Operation#visit(model.FileNode)
+	 */
+	/**
+	 * Visit.
+	 *
+	 * @param fileNode the file node
 	 */
 	@Override
 	public void visit(FileNode fileNode) {
@@ -290,18 +336,34 @@ public class FlattenOperation implements Operation {
 		LogPanel.log("adding to tree");
 		importer.importFile(fileNode.getParent(), outputFile);
 	}
+	
+	/**
+	 * Visit.
+	 *
+	 * @param operationNode the operation node
+	 */
 	@Override
 	public void visit(OperationNode operationNode) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	/**
+	 * Gets the created nodes.
+	 *
+	 * @return the created nodes
+	 */
 	@Override
 	public Node[] getCreatedNodes() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/**
+	 * Gets the parameters.
+	 *
+	 * @return the parameters
+	 */
 	@Override
 	public HashMap<String, String> getParameters() {
 		// TODO Auto-generated method stub

@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package table;
 
 import java.util.Collections;
@@ -9,18 +12,36 @@ import ij.measure.ResultsTable;
 import ij.plugin.PlugIn;
 import ij.plugin.filter.Analyzer;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ResultsTableSorter.
+ */
 public class ResultsTableSorter implements PlugIn {
 	
+	/** The table. */
 	private ResultsTable table;
 	
+	/**
+	 * Instantiates a new results table sorter.
+	 */
 	public ResultsTableSorter() {
 		table = Analyzer.getResultsTable();
 	}
 	
+	/**
+	 * Instantiates a new results table sorter.
+	 *
+	 * @param table the table
+	 */
 	public ResultsTableSorter(ResultsTable table) {
 		this.table = table;
 	}
 	
+	/**
+	 * Run.
+	 *
+	 * @param arg0 the arg0
+	 */
 	@Override
 	public void run(String arg0) {
 		
@@ -55,6 +76,13 @@ public class ResultsTableSorter implements PlugIn {
 		table.updateResults();
 	}
 	
+	/**
+	 * Sort.
+	 *
+	 * @param table the table
+	 * @param ascending the ascending
+	 * @param columns the columns
+	 */
 	public static void sort(ResultsTable table, final boolean ascending, String... columns) {
 		
 		ResultsTableList list = new ResultsTableList(table);

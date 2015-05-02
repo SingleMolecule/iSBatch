@@ -39,20 +39,43 @@ import model.Root;
 import model.Sample;
 import operations.Operation;
 
+// TODO: Auto-generated Javadoc
 /**
- * @author VictorCaldas
+ * The Class MicrobeTrackerIO.
  *
+ * @author VictorCaldas
  */
 public class MicrobeTrackerIO implements Operation {
+	
+	/** The dialog. */
 	MicrobeTrackerIOGui dialog;
+	
+	/** The manager. */
 	private RoiManager manager;
+	
+	/** The channel. */
 	private String channel;
+	
+	/** The method. */
 	private String method;
+	
+	/** The custom filter. */
 	private String customFilter;
+	
+	/** The mat file path. */
 	private String matFilePath;
+	
+	/** The BFF ile input path. */
 	private String BFFIleInputPath;
+	
+	/** The image type. */
 	private Object imageType;
 
+	/**
+	 * Instantiates a new microbe tracker io.
+	 *
+	 * @param treeModel the tree model
+	 */
 	public MicrobeTrackerIO(DatabaseModel treeModel) {
 	}
 
@@ -60,6 +83,11 @@ public class MicrobeTrackerIO implements Operation {
 	 * (non-Javadoc)
 	 * 
 	 * @see context.ContextElement#getContext()
+	 */
+	/**
+	 * Gets the context.
+	 *
+	 * @return the context
 	 */
 	@Override
 	public String[] getContext() {
@@ -71,6 +99,11 @@ public class MicrobeTrackerIO implements Operation {
 	 * 
 	 * @see operations.Operation#getName()
 	 */
+	/**
+	 * Gets the name.
+	 *
+	 * @return the name
+	 */
 	@Override
 	public String getName() {
 		return "MicrobeTracker I/O";
@@ -80,6 +113,12 @@ public class MicrobeTrackerIO implements Operation {
 	 * (non-Javadoc)
 	 * 
 	 * @see operations.Operation#setup(model.Node)
+	 */
+	/**
+	 * Setup.
+	 *
+	 * @param node the node
+	 * @return true, if successful
 	 */
 	@Override
 	public boolean setup(Node node) {
@@ -100,6 +139,11 @@ public class MicrobeTrackerIO implements Operation {
 	 * 
 	 * @see operations.Operation#finalize(model.Node)
 	 */
+	/**
+	 * Finalize.
+	 *
+	 * @param node the node
+	 */
 	@Override
 	public void finalize(Node node) {
 		System.out.println("Operation finalized");
@@ -112,11 +156,21 @@ public class MicrobeTrackerIO implements Operation {
 	 * @see operations.Operation#visit(model.Root)
 	 */
 
+	/**
+	 * Visit.
+	 *
+	 * @param root the root
+	 */
 	@Override
 	public void visit(Root root) {
 
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param experiment the experiment
+	 */
 	@Override
 	public void visit(Experiment experiment) {
 		System.out.println(experiment.getProperty("type"));
@@ -124,6 +178,11 @@ public class MicrobeTrackerIO implements Operation {
 
 	}
 
+	/**
+	 * Run.
+	 *
+	 * @param node the node
+	 */
 	private void run(Node node) {
 		File matFile = new File(matFilePath);
 
@@ -135,6 +194,12 @@ public class MicrobeTrackerIO implements Operation {
 
 	}
 
+	/**
+	 * Import files.
+	 *
+	 * @param node the node
+	 * @param matFile the mat file
+	 */
 	private void importFiles(Node node, File matFile) {
 		// Get the MicrobeTracker Reference Image
 		ImagePlus referenceImp = IJ.openImage(BFFIleInputPath);
@@ -204,11 +269,23 @@ public class MicrobeTrackerIO implements Operation {
 
 	}
 
+	/**
+	 * Gets the reference.
+	 *
+	 * @param node the node
+	 * @return the reference
+	 */
 	private ImagePlus getReference(Node node) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/**
+	 * Gets the stack for mt.
+	 *
+	 * @param node the node
+	 * @return the stack for mt
+	 */
 	private void getStackForMT(Node node) {
 		System.out.println("--- Start ----");
 		ArrayList<Node> nodes = node.getDescendents(filter(channel));
@@ -234,6 +311,12 @@ public class MicrobeTrackerIO implements Operation {
 
 	}
 
+	/**
+	 * Gets the stack size.
+	 *
+	 * @param meshes the meshes
+	 * @return the stack size
+	 */
 	private int getStackSize(ArrayList<Mesh> meshes) {
 		int size = 0;
 		for (Mesh mesh : meshes) {
@@ -244,6 +327,12 @@ public class MicrobeTrackerIO implements Operation {
 		return size;
 	}
 
+	/**
+	 * Filter.
+	 *
+	 * @param channel the channel
+	 * @return the node filter interface
+	 */
 	private NodeFilterInterface filter(String channel) {
 		final String selectedChannel = channel;
 		String[] channels = { "Acquisition", "Bright Field", "Red", "Green",
@@ -300,48 +389,94 @@ public class MicrobeTrackerIO implements Operation {
 
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param sample the sample
+	 */
 	@Override
 	public void visit(Sample sample) {
 		run(sample);
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param fieldOfView the field of view
+	 */
 	@Override
 	public void visit(FieldOfView fieldOfView) {
 		run(fieldOfView);
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param fileNode the file node
+	 */
 	@Override
 	public void visit(FileNode fileNode) {
 		run(fileNode);
 	}
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 
 	}
 
+	/**
+	 * Visit.
+	 *
+	 * @param operationNode the operation node
+	 */
 	@Override
 	public void visit(OperationNode operationNode) {
 		// TODO Auto-generated method stub
 
 	}
 
+	/**
+	 * Gets the channel.
+	 *
+	 * @return the channel
+	 */
 	private String getChannel() {
 
 		return channel;
 	}
 
+	/**
+	 * Gets the created nodes.
+	 *
+	 * @return the created nodes
+	 */
 	@Override
 	public Node[] getCreatedNodes() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/**
+	 * Gets the parameters.
+	 *
+	 * @return the parameters
+	 */
 	@Override
 	public HashMap<String, String> getParameters() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/**
+	 * Gets the roi.
+	 *
+	 * @param m the m
+	 * @return the roi
+	 */
 	private static Roi getRoi(Mesh m) {
 		ArrayList<Point> points = m.getOutline();
 
@@ -361,6 +496,12 @@ public class MicrobeTrackerIO implements Operation {
 
 		return roi;
 	}
+	
+	/**
+	 * Stack_ deflicker.
+	 *
+	 * @param imp the imp
+	 */
 	public static void Stack_Deflicker(ImagePlus imp){
 		int Fram=-1;
 		/* Adapted from: Stack_Deflicker.java

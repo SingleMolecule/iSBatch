@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package table;
 
 import java.awt.BorderLayout;
@@ -18,33 +21,72 @@ import ij.measure.ResultsTable;
 import ij.plugin.PlugIn;
 import ij.plugin.filter.Analyzer;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ResultsTablePlotter.
+ */
 public class ResultsTablePlotter implements PlugIn, ActionListener {
 
+	/** The plot types. */
 	private String[] plotTypes = {"Line Plot", "Scatter Plot", "Histogram"};
 	
+	/** The x column. */
 	private String xColumn;
+	
+	/** The y column. */
 	private String yColumn;
+	
+	/** The group by column. */
 	private String groupByColumn;
+	
+	/** The plot type. */
 	private int plotType;
+	
+	/** The bins. */
 	private int bins;
 	
+	/** The frame. */
 	private JFrame frame = new JFrame("Curve Plotter");
+	
+	/** The plot. */
 	private Plot plot = new Plot();
+	
+	/** The previous button. */
 	private JButton previousButton = new JButton("Previous");
+	
+	/** The next button. */
 	private JButton nextButton = new JButton("Next");
 	
+	/** The table. */
 	private ResultsTable table;
+	
+	/** The group offset. */
 	private ArrayList<Integer> groupOffset = new ArrayList<Integer>();
+	
+	/** The group. */
 	private int group = 0;
 	
+	/**
+	 * Instantiates a new results table plotter.
+	 */
 	public ResultsTablePlotter() {
 		table = Analyzer.getResultsTable();
 	}
 	
+	/**
+	 * Instantiates a new results table plotter.
+	 *
+	 * @param table the table
+	 */
 	public ResultsTablePlotter(ResultsTable table) {
 		this.table = table;
 	}
 	
+	/**
+	 * Run.
+	 *
+	 * @param arg0 the arg0
+	 */
 	@Override
 	public void run(String arg0) {
 		
@@ -116,6 +158,9 @@ public class ResultsTablePlotter implements PlugIn, ActionListener {
 		setPlot();
 	}
 
+	/**
+	 * Sets the plot.
+	 */
 	private void setPlot() {
 		
 		int rowFrom = groupOffset.get(group);
@@ -152,6 +197,11 @@ public class ResultsTablePlotter implements PlugIn, ActionListener {
 		plot.repaint();
 	}
 	
+	/**
+	 * Action performed.
+	 *
+	 * @param e the e
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		

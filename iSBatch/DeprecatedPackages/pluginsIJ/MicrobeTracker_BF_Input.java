@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package plugins_ij;
 /** 
  * Victor Caldas
@@ -20,6 +23,7 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+// TODO: Auto-generated Javadoc
 /** This code takes Bright Field images and combine them in one single stack.
  * As Input, yous should have a control File with all paths.
  * The operantiosn performed are:
@@ -31,17 +35,33 @@ import javax.swing.JOptionPane;
  *
  */
 public class MicrobeTracker_BF_Input implements PlugIn{
+	
+	/** The logpath. */
 	static String logpath;
+	
+	/** The table. */
 	static ResultsTable table;
+	
+	/** The Images folder. */
 	static String ImagesFolder;
 	
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		new MicrobeTracker_BF_Input().run("");
 		IJ.log("MicrobeTracker input created!");
 		
 	}
 
+	/**
+	 * Run.
+	 *
+	 * @param arg0 the arg0
+	 */
 	public void run(String arg0) {
 		
 		//Get file
@@ -219,6 +239,15 @@ public class MicrobeTracker_BF_Input implements PlugIn{
 	
 	
 
+	/**
+	 * Gets the sub file list.
+	 *
+	 * @param resultstable the resultstable
+	 * @param colNameToCheckMatch the col name to check match
+	 * @param stringToMatch the string to match
+	 * @param colNameGetValuesFrom the col name get values from
+	 * @return the sub file list
+	 */
 	private List<String> getSubFileList(ResultsTable resultstable, String colNameToCheckMatch, String stringToMatch, String colNameGetValuesFrom) {
 		List<String> list = new ArrayList<String>();
 		
@@ -237,6 +266,11 @@ public class MicrobeTracker_BF_Input implements PlugIn{
 		return list;
 	}
 
+	/**
+	 * Ask back ground.
+	 *
+	 * @return the int
+	 */
 	private static int askBackGround() {
 		Object[] options1 = {"Load BackGround Image", "Create Background from AVG", "Ignore Background"};
         Component frame1 = null;
@@ -251,6 +285,11 @@ public class MicrobeTracker_BF_Input implements PlugIn{
 		return BGSelection;
 	}
 
+	/**
+	 * Ask offset.
+	 *
+	 * @return the double
+	 */
 	private static double askOffset() {
 		GenericDialog gd = new GenericDialog("Offset Value");
 		double offset = 0;
@@ -263,6 +302,11 @@ public class MicrobeTracker_BF_Input implements PlugIn{
 		return offset;
 	}
 
+	/**
+	 * Ask dark count.
+	 *
+	 * @return the int
+	 */
 	private static int askDarkCount() {
 		Object[] options2 = {"Load DarkCount Image", "Create DarkCount Image", "Ignore DarkCount"};
         Component frame2 = null;
@@ -276,6 +320,12 @@ public class MicrobeTracker_BF_Input implements PlugIn{
         		options2[0]); //default button title
 	return DKSelection;
 }
+	
+	/**
+	 * Load table.
+	 *
+	 * @param csvFilename the csv filename
+	 */
 	private void loadTable(String csvFilename) {
 		try {
 			table = ResultsTable.open(csvFilename);

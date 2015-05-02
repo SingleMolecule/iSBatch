@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package operations.flatImages;
 
 import ij.IJ;
@@ -29,44 +32,72 @@ import javax.swing.DefaultComboBoxModel;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class SetBackgroundGui.
+ */
 public class SetBackgroundGui extends JDialog implements ActionListener {
-	/**
-	 * 
-	 */
+	
+	/** The btn cancel. */
 
 	// butons
 
 	private JButton btnCancel;
+	
+	/** The btn process. */
 	private JButton btnProcess;
 
 	// ComboBox
+	/** The file type combo box. */
 	private JComboBox<String> fileTypeComboBox;
+	
+	/** The channel combo box. */
 	private JComboBox<String> channelComboBox;
+	
+	/** The method combo box. */
 	private JComboBox<String> methodComboBox;
 
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+	
+	/** The channels. */
 	private String[] channels = new String[] {
 
 	"[Select Channel]", "All", "Acquisition", "Bright Field", "Red", "Green",
 			"Blue", };
 
+	/** The Constant methods. */
 	private static final String[] methods = { "[Method]", "Load Image",
 			"Average Images" };
+	
+	/** The types. */
 	private String[] types = new String[] { "[File Type]", "Raw", "Flat",
 			"Discoidal" };
 
+	/** The path to image. */
 	private JTextField pathToImage;
 
+	/** The canceled. */
 	private boolean canceled = false;
 
+	/** The frame. */
 	static JFrame frame;
+	
+	/** The node. */
 	private Node node;
+	
+	/** The image path. */
 	private String channel, method, imagePath;
 
 	/*
 	 * Filter variables
 	 */
 
+	/**
+	 * Instantiates a new sets the background gui.
+	 *
+	 * @param node the node
+	 */
 	public SetBackgroundGui(Node node) {
 		setModal(true);
 		setTitle("Set Background Image");
@@ -78,9 +109,15 @@ public class SetBackgroundGui extends JDialog implements ActionListener {
 
 	}
 
+	/**
+	 * Setup.
+	 */
 	private void setup() {
 	}
 
+	/**
+	 * Display.
+	 */
 	private void display() {
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -209,6 +246,9 @@ public class SetBackgroundGui extends JDialog implements ActionListener {
 
 	}
 
+	/**
+	 * Run.
+	 */
 	private void run() {
 		//
 		// // get array of Images
@@ -219,6 +259,11 @@ public class SetBackgroundGui extends JDialog implements ActionListener {
 				+ " , " + method);
 	}
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		frame = new JFrame();
 
@@ -226,16 +271,32 @@ public class SetBackgroundGui extends JDialog implements ActionListener {
 
 	}
 
+	/**
+	 * Error.
+	 *
+	 * @param msg the msg
+	 */
 	void error(String msg) {
 		IJ.error("Batch Processor", msg);
 	}
 
+	/**
+	 * Checks if is canceled.
+	 *
+	 * @return true, if is canceled
+	 */
 	public boolean isCanceled() {
 		return canceled;
 	}
 
+	/** The image type. */
 	private String imageType;
 
+	/**
+	 * Action performed.
+	 *
+	 * @param e the e
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnCancel) {
@@ -257,18 +318,38 @@ public class SetBackgroundGui extends JDialog implements ActionListener {
 		}
 	}
 
+	/**
+	 * Gets the channel.
+	 *
+	 * @return the channel
+	 */
 	public String getChannel() {
 		return channel;
 	}
 
+	/**
+	 * Gets the method.
+	 *
+	 * @return the method
+	 */
 	public String getMethod() {
 		return method;
 	}
 
+	/**
+	 * Gets the image path.
+	 *
+	 * @return the image path
+	 */
 	public String getImagePath() {
 		return imagePath;
 	}
 
+	/**
+	 * Gets the image tag.
+	 *
+	 * @return the image tag
+	 */
 	public String getImageTag() {
 		return imageType;
 	}

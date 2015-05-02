@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package filters;
 
 import java.util.ArrayList;
@@ -5,13 +8,30 @@ import java.util.ArrayList;
 import model.FileNode;
 import model.Node;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class GenericFilter.
+ */
 public class GenericFilter implements NodeFilterInterface {
 
+	/** The channel. */
 	private String channel;
+	
+	/** The tags. */
 	private ArrayList<String> tags;
+	
+	/** The extension. */
 	private String extension;
+	
+	/** The custom. */
 	private String custom;
 
+	/**
+	 * Instantiates a new generic filter.
+	 *
+	 * @param channel the channel
+	 * @param custom the custom
+	 */
 	public GenericFilter(String channel, String custom) {
 		this.channel = channel;
 
@@ -21,6 +41,14 @@ public class GenericFilter implements NodeFilterInterface {
 		}
 	}
 
+	/**
+	 * Instantiates a new generic filter.
+	 *
+	 * @param channel the channel
+	 * @param tags the tags
+	 * @param extension the extension
+	 * @param custom the custom
+	 */
 	public GenericFilter(String channel, ArrayList<String> tags,
 			String extension, String custom) {
 		this.channel = channel;
@@ -30,6 +58,12 @@ public class GenericFilter implements NodeFilterInterface {
 
 	}
 
+	/**
+	 * Accept.
+	 *
+	 * @param node the node
+	 * @return true, if successful
+	 */
 	@Override
 	public boolean accept(Node node) {
 		

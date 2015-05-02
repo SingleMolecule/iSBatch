@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package operations.microbeTrackerIO;
 
 import java.io.File;
@@ -7,17 +10,35 @@ import java.util.ArrayList;
 
 import ij.gui.Roi;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CellROI.
+ */
 public class CellROI{
+	
+	/** The roi. */
 	Roi roi;
+	
+	/** The points. */
 	ArrayList<Point> points;
+	
+	/** The temp. */
 	static File temp;
 	
+	/**
+	 * Instantiates a new cell roi.
+	 *
+	 * @param points the points
+	 */
 	public CellROI(ArrayList<Point> points){
 		this.points = points;
 
 		parseROI();
 	}
 
+	/**
+	 * Parses the roi.
+	 */
 	private void parseROI() {
 		//List of XY coordinates
 		writeToCsv(points);
@@ -28,6 +49,12 @@ public class CellROI{
 		
 		
 	}
+	
+	/**
+	 * Write to csv.
+	 *
+	 * @param points the points
+	 */
 	private static void writeToCsv(ArrayList<Point> points) {
 		 //Delimiter used in CSV file
 		    final String COMMA_DELIMITER = ",";
