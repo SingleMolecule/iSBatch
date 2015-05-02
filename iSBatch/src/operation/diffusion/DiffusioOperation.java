@@ -5,17 +5,21 @@ import ij.gui.PolygonRoi;
 import ij.measure.ResultsTable;
 import ij.plugin.frame.RoiManager;
 
+import java.awt.Color;
 import java.awt.Polygon;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+import analysis.LevenbergMarquardt;
+import analysis.Plot;
 import filters.GenericFilter;
 import model.DatabaseModel;
 import model.Experiment;
@@ -89,200 +93,179 @@ public class DiffusioOperation implements Operation {
 		
 			try {
 				table = ResultsTable.open(currentNode.getOutputFolder() + File.separator
-						+ "514_flat.tif_PeakTable.csv");
+						+ "514_flat.tiftracks.csv");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		
-
+			ResultsTable rawTable = new ResultsTable();
+			
+			
 		// Table loaded. Just to solve the proble
+			// determine which rows belong to which trajectory
+			ArrayList<Integer> offsets = new ArrayList<Integer>();
+			offsets.add(0);
+			
+			for (int row = 1; row < table.getCounter(); row++) {
+				int s0 = (int)table.getValue("trajectory", row - 1);
+				int s1 = (int)table.getValue("trajectory", row);
+				
+				if (s0 != s1)
+					offsets.add(row);
+			}
+			
+			offsets.add(table.getCounter());
+			
+			ArrayList<Integer> trajectories = new ArrayList<Integer>();
+			ArrayList<Integer> deltat = new ArrayList<Integer>();
+			ArrayList<Double> displacementsSq = new ArrayList<Double>();
+			
+			for (int i = 0; i < offsets.size() - 1; i++) {
+				
+				int from = offsets.get(i);
+				int to = offsets.get(i + 1);
+				int trajectory = (int)table.getValue("trajectory", from);
+				
+				if (trajectory >= 0) {
+					for (int row1 = from; row1 < to; row1++) {
+						
+						int s1 = (int)table.getValue("slice", row1);
+						double x1 = table.getValue("x", row1);
+						double y1 = table.getValue("y", row1);
+								
+						for (int row2 = row1 + 1; row2 < to; row2++) { 
+							
+							int s2 = (int)table.getValue("slice", row2);
+							double x2 = table.getValue("x", row2);
+							double y2 = table.getValue("y", row2);
+							int dt = s2 - s1;
+							double dx = x2 - x1;
+							double dy = y2 - y1;
+							double dsq = dx * dx + dy * dy; 
+							
+							trajectories.add(trajectory);
+							deltat.add(dt);
+							displacementsSq.add(dsq);
+						}
+					}
+				}
+			}
+			
+			
+			// show raw values
+			if (showRawValues) {
+				ResultsTable rawTable = new ResultsTable();
+				
+				for (int i = 0; i < trajectories.size(); i++) {
+					rawTable.incrementCounter();
+					rawTable.addValue("trajectory", trajectories.get(i));
+					rawTable.addValue("dt", deltat.get(i) * timeInterval);
+					rawTable.addValue("sd", displacementsSq.get(i) * pixelSize * pixelSize);
+				}
+				
+				rawTable.show("MSD - Raw Values");
+			}
+			
+			
+			// calculate mean and standard deviation per delta t
+			int[] counts = new int[table.getCounter()];
+			double[] mean = new double[table.getCounter()];
+			double[] stdDev = new double[table.getCounter()];
+			int n = 0;
+			
+			for (int i = 0; i < trajectories.size(); i++) {
+				int dt = deltat.get(i);
+				counts[dt]++;
+				mean[dt] += displacementsSq.get(i);
+				
+				if (dt > n)
+					n = dt;
+			}
+
+			for (int i = 0; i < n; i++)
+				if (counts[i] > 0)
+					mean[i] /= counts[i];
+			
+			// standard deviation
+			for (int i = 0; i < trajectories.size(); i++) {
+				int dt = deltat.get(i);
+				double d = displacementsSq.get(i) - mean[dt];
+				stdDev[dt] += d * d;
+			}
+			
+			for (int i = 0; i < n; i++)
+				if (counts[i] > 0)
+					stdDev[i] = Math.sqrt(stdDev[i] / counts[i]);
+			
+			// set mean and standard deviation to the correct pixel size
+			for (int i = 0; i < n; i++) {
+				mean[i] *= pixelSize * pixelSize;
+				stdDev[i] *= pixelSize * pixelSize;
+			}
+			
+			
+			// plot everything
+			mean = Arrays.copyOf(mean, n);
+			stdDev = Arrays.copyOf(stdDev, n);
+			
+			double[] dt = new double[n];
+			double[][] dt2 = new double[n][1];
+			
+			for (int i = 0; i < n; i++) {
+				dt[i] = i * timeInterval;
+				dt2[i][0] = i * timeInterval;
+			}
+			
+			// fit data
+			LevenbergMarquardt lm = new LevenbergMarquardt() {
+				
+				@Override
+				public double getValue(double[] x, double[] p, double[] dyda) {
+					dyda[0] = 4 * x[0];
+					return 4 * p[0] * x[0];
+				}
+			};
+			
+			double msd = mean[mean.length - 1];
+			double t = dt[dt.length - 1];
+			
+			double[] p = new double[]{msd / (4 * t)};
+			double[] e = new double[1];
+			
+			lm.solve(dt2, mean, stdDev, n, p, null, e, 0.001);
+			
+			double[] fx = new double[2];
+			double[] fy = new double[2];
+			
+			fx[0] = 0;
+			fy[0] = 0;
+			
+			fx[1] = t;
+			fy[1] = 4 * p[0] * t;
+			
+			Plot plot = new Plot();
+			plot.addErrorBars(dt, mean, stdDev, Color.GRAY, 1f);
+			plot.addScatterPlot(dt, mean, Color.BLACK, 1f);
+			plot.addLinePlot(fx, fy, Color.RED, 1f);
+			plot.setCaption("D = " + p[0] + " µm^2/s  fitting error = " + e[0]);
+			plot.setxAxisLabel("Time Step (s)");
+			plot.setyAxisLabel("Mean Square Displacement (µm)");
+			plot.showPlot("Mean Square Displacement");
+			
+			
+			
+			
+			
 		// TODO: Implement it properly
 
-		ResultsTableSorter.sort(table, true, "slice");
-
-		// initialize trajectory column and set step size to 0
-		for (int row = 0; row < table.getCounter(); row++) {
-			table.setValue("trajectory", row, -1);
-			table.setValue("step_size", row, 0);
-		}
-
-		// determine which rows belong to which slice
-		ArrayList<Integer> offsets = new ArrayList<Integer>();
-		offsets.add(0);
-
-		for (int row = 1; row < table.getCounter(); row++) {
-			int s0 = (int) table.getValue("slice", row - 1);
-			int s1 = (int) table.getValue("slice", row);
-
-			if (s0 != s1)
-				offsets.add(row);
-		}
-
-		offsets.add(table.getCounter());
-
-		// find all trajectories
-		int trajectoryCount = 0;
-
-		for (int i = 0; i < offsets.size() - 1; i++) {
-
-			int from = offsets.get(i);
-			int to = offsets.get(i + 1);
-
-			// make a list of all possible links
-			ArrayList<double[]> links = new ArrayList<double[]>();
-
-			for (int row1 = from; row1 < to; row1++) {
-
-				int s1 = (int) table.getValue("slice", row1);
-				double x1 = table.getValue("x", row1);
-				double y1 = table.getValue("y", row1);
-
-				for (int row2 = to; row2 < table.getCounter(); row2++) {
-
-					int s2 = (int) table.getValue("slice", row2);
-					double x2 = table.getValue("x", row2);
-					double y2 = table.getValue("y", row2);
-
-					if (s2 - s1 > lookAhead)
-						break;
-
-					double dx = x2 - x1;
-					double dy = y2 - y1;
-					double dsq = dx * dx + dy * dy;
-
-					if (dsq < maxStepSize * maxStepSize)
-						links.add(new double[] { s2 - s1, dsq, row1, row2, dx,
-								dy });
-
-				}
-
-			}
-
-			// sort all possible links on distance (or slice number)
-			Collections.sort(links, new Comparator<double[]>() {
-
-				@Override
-				public int compare(double[] o1, double[] o2) {
-					if (o1[0] != o2[0])
-						return Double.compare(o1[0], o2[0]);
-
-					return Double.compare(o1[1], o2[1]);
-				}
-
-			});
-
-			// filter out all links that are not possible
-			Set<Integer> linked = new HashSet<Integer>();
-
-			for (double[] link : links) {
-
-				int r1 = (int) link[2];
-				int r2 = (int) link[3];
-				int t1 = (int) table.getValue("trajectory", r1);
-
-				if (!linked.contains(r1) && !linked.contains(r2)) {
-
-					if (t1 == -1) {
-						t1 = trajectoryCount++;
-						table.setValue("trajectory", r1, t1);
-					}
-
-					table.setValue("trajectory", r2, t1);
-					table.setValue("dx", r2, link[4]);
-					table.setValue("dy", r2, link[5]);
-					table.setValue("step_size", r2, Math.sqrt(link[1]));
-					table.setValue("displacement_sq", r2, link[1]);
-
-					linked.add(r1);
-					linked.add(r2);
-				}
-
-			}
-
-		}
-
-		// sort on slice column
-		ResultsTableSorter.sort(table, true, "slice", "trajectory");
-
-		// filter out trajectories based on minimum/maximum bounding box
-		int from = table.getCounter() - 1;
-		double x = table.getValue("x", from);
-		double y = table.getValue("y", from);
-		Rectangle2D.Double boundingBox = new Rectangle2D.Double(x, y, 0, 0);
-
-		for (int row = from - 1; row >= 0; row--) {
-
-			x = table.getValue("x", row);
-			y = table.getValue("y", row);
-
-			if (table.getValue("trajectory", row) == table.getValue(
-					"trajectory", row + 1)) {
-				boundingBox.add(x, y);
-			} else {
-
-				if (boundingBox.getWidth() < minimumWidth
-						|| boundingBox.getHeight() < minimumHeight) {
-
-					// delete rows
-					for (int r = from; r > row; r--)
-						table.deleteRow(r);
-
-				}
-
-				from = row;
-				boundingBox = new Rectangle2D.Double(x, y, 0, 0);
-			}
-
-		}
-
-		// delete particles (rows) that don't belong to any trajectory
-		for (int row = table.getCounter() - 1; row >= 0; row--) {
-			if (table.getValue("trajectory", row) == -1)
-				table.deleteRow(row);
-		}
-		showTrajectories = false;
-		if (showTrajectories) {
-
-			RoiManager roiManager = RoiManager.getInstance();
-
-			if (roiManager == null)
-				roiManager = new RoiManager();
-
-			Polygon poly = new Polygon();
-			x = table.getValue("x", 0);
-			y = table.getValue("y", 0);
-			poly.addPoint((int) x, (int) y);
-
-			for (int row = 1; row < table.getCounter(); row++) {
-
-				x = table.getValue("x", row);
-				y = table.getValue("y", row);
-
-				if (table.getValue("trajectory", row) == table.getValue(
-						"trajectory", row - 1)) {
-					poly.addPoint((int) x, (int) y);
-				} else {
-					roiManager
-							.addRoi(new PolygonRoi(poly, PolygonRoi.POLYLINE));
-
-					poly = new Polygon();
-					poly.addPoint((int) x, (int) y);
-				}
-			}
-
-			roiManager.addRoi(new PolygonRoi(poly, PolygonRoi.POLYLINE));
-			roiManager.run("Show All");
-			roiManager.runCommand("Save", currentNode.getOutputFolder() + File.separator + currentNode.getName()+ ".track.zip" );
-			roiManager.removeAll();
-		}
-
-		// table.show("Results");
+		
 		try {
 
 			table.saveAs(currentNode.getOutputFolder() + File.separator + currentNode.getName()
-					+ "tracks.csv");
-			
+					+ "Diffusion.csv");
+			rawTable.saveAs(currentNode.getOutputFolder() + File.separator + currentNode.getName()
+					+ "DiffusionRaw.csv");
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -290,6 +273,7 @@ public class DiffusioOperation implements Operation {
 		}
 
 		table.reset();
+		rawTable.reset();
 
 	}
 
