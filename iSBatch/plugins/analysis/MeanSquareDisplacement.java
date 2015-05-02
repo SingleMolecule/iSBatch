@@ -178,14 +178,14 @@ public class MeanSquareDisplacement implements PlugIn {
 		fx[1] = t;
 		fy[1] = 4 * p[0] * t;
 		
-		Plot plot = new Plot();
-		plot.addErrorBars(dt, mean, stdDev, Color.GRAY, 1f);
-		plot.addScatterPlot(dt, mean, Color.BLACK, 1f);
-		plot.addLinePlot(fx, fy, Color.RED, 1f);
-		plot.setCaption("D = " + p[0] + " µm^2/s  fitting error = " + e[0]);
-		plot.setxAxisLabel("Time Step (s)");
-		plot.setyAxisLabel("Mean Square Displacement (µm)");
-		plot.showPlot("Mean Square Displacement");
+//		Plot plot = new Plot();
+//		plot.addErrorBars(dt, mean, stdDev, Color.GRAY, 1f);
+//		plot.addScatterPlot(dt, mean, Color.BLACK, 1f);
+//		plot.addLinePlot(fx, fy, Color.RED, 1f);
+//		plot.setCaption("D = " + p[0] + " µm^2/s  fitting error = " + e[0]);
+//		plot.setxAxisLabel("Time Step (s)");
+//		plot.setyAxisLabel("Mean Square Displacement (µm)");
+//		plot.showPlot("Mean Square Displacement");
 		
 	}
 
