@@ -10,7 +10,9 @@
  * @version 1.0
  */
 
-package utils;
+package iSBatch.src.utils;
+
+import java.io.File;
 
 import java.io.BufferedReader;
 
