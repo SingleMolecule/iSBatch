@@ -1,6 +1,12 @@
 # iSBatch
 
-    iSBatch is a Java-based plugin for ImageJ (Abràmoff, Magalhães, and Ram 2005) (version 1.49d) or its distribution Fiji (Schindelin et al. 2012). iSBatch is designed for quick evaluation of analysis pipelines and visual exploration of datasets. It is distributed under an open open-source(Prlić and Procter 2012) license (GNU General Public License, version 3). iSBatch handles the data in a hierarchical fashion based on a source folder containing all data and little guidance provided by the user. The software is designed for rapid exploration of large datasets and it includes an internal SQLite database (http://sqljet.com/) for convenience.
+    iSBatch is a Java-based plugin for ImageJ (Abràmoff, Magalhães, and Ram 2005) (version 1.49d)
+    or its distribution Fiji (Schindelin et al. 2012). iSBatch is designed for quick evaluation of 
+    analysis pipelines and visual exploration of datasets. It is distributed under an open open-source
+    license (GNU General Public License, version 3). iSBatch handles the data in a hierarchical fashion
+    based on a source folder containing all data and little guidance provided by the user. 
+    The software is designed for rapid exploration of large datasets and it includes an internal 
+    SQLite database (http://sqljet.com/) for convenience.
 
 ## Installation
 
