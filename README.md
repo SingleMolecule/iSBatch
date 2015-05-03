@@ -1,6 +1,6 @@
-# iSBatch
+# Welcome to 	iSBatch
 
-    iSBatch is a Java-based plugin for ImageJ (Abràmoff, Magalhães, and Ram 2005) (version 1.49d)
+    iSBatch is a Java-based plugin for ImageJ (AbrÃ moff, MagalhÃ£es, and Ram 2005) (version 1.49d)
     or its distribution Fiji (Schindelin et al. 2012). iSBatch is designed for quick evaluation of 
     analysis pipelines and visual exploration of datasets. It is distributed under an open open-source
     license (GNU General Public License, version 3). iSBatch handles the data in a hierarchical fashion
@@ -10,12 +10,13 @@
 
 ## Installation
 
-    Copy the iSBatch.jar file to the ImageJ/Plugins folder
-    Go to Help>Refresh Menus or (better) restart ImageJ.
+	- Copy the iSBatch.jar file to the ImageJ/Plugins folder
+	- Go to Help>Refresh Menus or (better) restart ImageJ.
 
 The menus will automatically appear as "Single Molecule Biophysics".
 
 ## Disclaimer
+    
     iSBatch  Copyright (C) 2015  
     Victor E. A. Caldas -  v.e.a.caldas at rug.nl
     C. Michiel Punter - c.m.punter at rug.nl
@@ -29,11 +30,6 @@ The menus will automatically appear as "Single Molecule Biophysics".
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-
-## Usage
-
-TODO: Write usage instructions
-
 ## Contributing
 
 1. Fork it!
@@ -45,7 +41,7 @@ TODO: Write usage instructions
 
  - If you are in the list of collaborators, follow this video:
 https://www.youtube.com/watch?v=VL3PKLHuWtk
-  The video teachs you how to proper inport the code and develop into Eclipse.
+  The video teaches you how to proper import the code and develop into Eclipse.
 
 To solve issues:
 
@@ -72,4 +68,7 @@ TODO: Write credits
 ## Note
 IN NO EVENT SHALL THE AUTHORS ARE LIABLE TO ANY PARTY FOR DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES, INCLUDING LOST PROFITS, ARISING OUT OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN IF THE AUTHORS WERE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. THE AUTHORS SPECIFICALLY DISCLAIMS ANY WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE SOFTWARE PROVIDED HEREUNDER IS ON AN "AS IS" BASIS, AND THE AUTHORS HAVE NO OBLIGATIONS TO PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
 
+##Issues
+
+If you find a bug or want a new feature you can ask in the [Issues section](https://github.com/vcaldas/iSBatch/issues) on github. 
 
