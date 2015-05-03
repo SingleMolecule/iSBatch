@@ -1,5 +1,4 @@
 package model.parameters;
-package model.parameters;
 
 /**
  *  Types of Results Table
