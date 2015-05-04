@@ -84,7 +84,7 @@ public class DiffusioOperation implements Operation {
 	}
 
 	@SuppressWarnings("static-access")
-	private void track(Node currentNode) {
+	private void track(Node currentNode, boolean showRawValues) {
 		// Open the results Table with peaks
 		// Just peaks inside cells
 
@@ -155,7 +155,7 @@ public class DiffusioOperation implements Operation {
 			
 			// show raw values
 			if (showRawValues) {
-				ResultsTable rawTable = new ResultsTable();
+				ResultsTable rawTable2 = new ResultsTable();
 				
 				for (int i = 0; i < trajectories.size(); i++) {
 					rawTable.incrementCounter();
@@ -267,9 +267,9 @@ public class DiffusioOperation implements Operation {
 			rawTable.saveAs(currentNode.getOutputFolder() + File.separator + currentNode.getName()
 					+ "DiffusionRaw.csv");
 
-		} catch (IOException e) {
+		} catch (IOException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e1.printStackTrace();
 		}
 
 		table.reset();
