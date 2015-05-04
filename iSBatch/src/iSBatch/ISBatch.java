@@ -578,8 +578,8 @@ public class ISBatch implements TreeSelectionListener {
 				new DiffusioOperation(treeModel),
 				new LocationMaps(treeModel),
 				new ChangePoint(treeModel),
-				new DebugProperties(treeModel),
-				new FilterTestOperation(treeModel),
+//				new DebugProperties(treeModel),
+//				new FilterTestOperation(treeModel),
 				 };
 	}
 
