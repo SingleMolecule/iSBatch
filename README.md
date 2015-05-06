@@ -1,12 +1,14 @@
 # Welcome to 	iSBatch
 
-    iSBatch is a Java-based plugin for ImageJ (AbrÃ moff, MagalhÃ£es, and Ram 2005) (version 1.49d)
-    or its distribution Fiji (Schindelin et al. 2012). iSBatch is designed for quick evaluation of 
-    analysis pipelines and visual exploration of datasets. It is distributed under an open open-source
-    license (GNU General Public License, version 3). iSBatch handles the data in a hierarchical fashion
-    based on a source folder containing all data and little guidance provided by the user. 
-    The software is designed for rapid exploration of large datasets and it includes an internal 
-    SQLite database (http://sqljet.com/) for convenience.
+    iSBatch is a Java-based plugin for ImageJ (version 1.49d) or 
+    its distribution Fiji. iSBatch is designed for quick evaluation
+    of analysis pipelines and visual exploration of datasets. It is 
+    distributed under an open open-source license
+    (GNU General Public License, version 3). The plugin handles the data
+    in a hierarchical fashion based on a source folder
+    containing all data and little guidance provided by the user. 
+    The software is designed for rapid exploration of large datasets
+    and it includes an internal SQLite database (http://sqljet.com/) for convenience.
 
 ## Installation
 
@@ -71,4 +73,18 @@ IN NO EVENT SHALL THE AUTHORS ARE LIABLE TO ANY PARTY FOR DIRECT, INDIRECT, SPEC
 ##Issues
 
 If you find a bug or want a new feature you can ask in the [Issues section](https://github.com/vcaldas/iSBatch/issues) on github. 
+
+If you wish to submit a bug, issue, or feature request, then you can find the [issue tracker here](https://github.com/vcaldas/iSBatch/issues) and you can [create an issue here](https://github.com/vcaldas/iSBatch/issues/new).  Note that there are several details which are very important to include.
+
+## Bug Reports
+
+**Provide the following information:**
+
+1. Your operating system (and version)
+2. The version of Scriptish you are using
+3. Your language and/or locale (e.g. "en-US")
+4. Clear steps to reproduce the bug.
+5. Any error messages seen in the Error Console
+6. A description of **what you expected to happen**
+7. A description of **what actually happened**
 
