@@ -72,3 +72,17 @@ IN NO EVENT SHALL THE AUTHORS ARE LIABLE TO ANY PARTY FOR DIRECT, INDIRECT, SPEC
 
 If you find a bug or want a new feature you can ask in the [Issues section](https://github.com/vcaldas/iSBatch/issues) on github. 
 
+If you wish to submit a bug, issue, or feature request, then you can find the [issue tracker here](https://github.com/vcaldas/iSBatch/issues) and you can [create an issue here](https://github.com/vcaldas/iSBatch/issues/new).  Note that there are several details which are very important to include.
+
+## Bug Reports
+
+**Provide the following information:**
+
+1. Your operating system (and version)
+2. The version of Scriptish you are using
+3. Your language and/or locale (e.g. "en-US")
+4. Clear steps to reproduce the bug.
+5. Any error messages seen in the Error Console
+6. A description of **what you expected to happen**
+7. A description of **what actually happened**
+
