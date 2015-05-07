@@ -14,7 +14,6 @@ package utils;
 
 import ij.IJ;
 
-import java.io.File;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -48,7 +47,7 @@ public class SQLReader {
 
 	public void runner(SQLReader reader){
 		
-		InputStream is = getClass().getResourceAsStream("iSBatch/src/model/template.txt");
+		InputStream is = getClass().getResourceAsStream("src/model/template.txt");
 		IJ.showMessage(is.toString());
 		InputStreamReader isr = new InputStreamReader(is);
 		BufferedReader br = new BufferedReader(isr);
