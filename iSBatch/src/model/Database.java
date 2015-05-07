@@ -3,7 +3,14 @@
  */
 package model;
 
+import ij.IJ;
+
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Map.Entry;
 
@@ -32,15 +39,19 @@ public class Database {
 	 * @throws SqlJetException the sql jet exception
 	 */
 	public Database(File file) throws SqlJetException {
-
+		
 		if (!file.exists()) {
+	
 			database = SqlJetDb.open(file, true);
-			createTablesFromFile();
-//			createTables();
+			IJ.showMessage("Open File");
+			//createTablesFromFile();
+			
+			createTables();
 
 		}
-		
-		database = SqlJetDb.open(file, true);
+		else{
+			database = SqlJetDb.open(file, true);
+		}
 
 	}
 
@@ -50,20 +61,35 @@ public class Database {
 	 * @throws SqlJetException the sql jet exception
 	 */
 	private void createTablesFromFile() throws SqlJetException {
-
 		database.getOptions().setAutovacuum(true);
 		database.beginTransaction(SqlJetTransactionMode.WRITE);
 		database.getOptions().setUserVersion(1);
-		File test = new File("src//model//template");
+		
+//		File test = new File("src//model//template");
+		
+//		InputStream is = this.getClass().getResourceAsStream("src//model//template");
+//		File test = new File(is);
+		
+		InputStream is = getClass().getResourceAsStream("/template.txt");
+		IJ.showMessage("Try stream3");
+//		URL urlToDictionary = this.getClass().getResource("/template.txt");
+//		IJ.showMessage(urlToDictionary.getFile());
 
+	
+		
+		InputStreamReader isr = new InputStreamReader(is);
+		BufferedReader br = new BufferedReader(isr);
+		
+//		IJ.showMessage(test.getAbsolutePath());
 		SQLReader reader = new SQLReader();
-		ArrayList<String> listOfQueries = reader.createQueries(test
-				.getAbsolutePath());
+		ArrayList<String> listOfQueries = reader.createQueries(br);
 
 		for (String string : listOfQueries) {
+			IJ.showMessage(string);
 
 			if (string.contains("CREATE TABLE")) {
-				System.out.println("Creating table");
+				
+				
 				database.createTable(string);
 
 			}
