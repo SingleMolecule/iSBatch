@@ -3,6 +3,7 @@
  */
 package imageOperations;
 
+import gui.LogPanel;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.ImageStack;
@@ -38,7 +39,11 @@ public class NodeToImageStack {
 		ImagePlus imp2 = IJ.createImage(str, ip.getWidth(), ip.getHeight(), nodes.size(), 16);
 		ImageStack stack = imp2.getStack();
 		
-		for (int i=0; i<nodes.size(); i++){
+		int total = nodes.size();
+		
+		for (int i=0; i<total; i++){
+//			IJ.showProgress(i + 1, total);
+			LogPanel.log("Averaging files:" + Integer.toString(i)+ " of " + total);
 			System.out.println(nodes.get(i));
 			ImagePlus imp = IJ.openImage(nodes.get(i).getPath());
 			
