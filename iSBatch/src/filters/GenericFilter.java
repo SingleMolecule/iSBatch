@@ -66,32 +66,41 @@ public class GenericFilter implements NodeFilterInterface {
 	 */
 	@Override
 	public boolean accept(Node node) {
+		System.out.println("Filter image: " + node.getPath());
+		System.out.println(node.getChannel() + " " + node.getType());
 		
 		// Just for files
 		if (!node.getType().equalsIgnoreCase(FileNode.type)) {
+			System.out.println("Not the rigth type");
 			return false;
 		}
 		
 		boolean isChannel = false;
 		if(channel==null || channel.equalsIgnoreCase("All")|| node.getChannel().equalsIgnoreCase(channel)){
 			isChannel = true;
+			System.out.println("Channel true");
 		}
 
 
 		boolean matchTag = false;
+		System.out.println("Matchtag" + matchTag);
+		System.out.println("//////");
+		System.out.println(tags.size());
+		System.out.println("/////");
 		if(tags.isEmpty() || tags==null || tags.size()==0){
 			matchTag = true;
-//			System.out.println("tags null");
+			System.out.println("tags null");
 		}
 		else{
+			System.out.println("convert fileNode");
 			FileNode fNode = (FileNode) node;
+			System.out.println("Fnode Info: "+ fNode.getTag().get(0));
 			for (String currentTag : fNode.getTag()) {
 				if (tags.contains(currentTag)) {
 					matchTag = true;
 				}
 			}
 		}
-
 		
 //		if (!(extension == null)) {
 //			// Check Extension
@@ -117,7 +126,7 @@ public class GenericFilter implements NodeFilterInterface {
 			
 			}
 		}
-//		System.out.println(isChannel +"|"+matchTag+ "|" + containsCustomTag);
+		System.out.println(isChannel +"|"+matchTag+ "|" + containsCustomTag);
 		if (isChannel && matchTag && containsCustomTag) {
 			return true;
 		}
