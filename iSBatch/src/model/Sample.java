@@ -5,7 +5,6 @@ package model;
 
 import java.util.ArrayList;
 
-import filters.NodeFilter;
 import operations.Operation;
 
 // TODO: Auto-generated Javadoc

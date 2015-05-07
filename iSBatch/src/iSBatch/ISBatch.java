@@ -11,6 +11,8 @@ import gui.OperationButton;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.measure.ResultsTable;
+import ij.plugin.PlugIn;
+import ij.plugin.filter.PlugInFilter;
 
 import java.awt.BorderLayout;
 import java.awt.Cursor;
@@ -70,7 +72,7 @@ import operations.peakFitter.FitPeaksOperation;
 /**
  * The Class ISBatch.
  */
-public class ISBatch implements TreeSelectionListener {
+public class ISBatch implements TreeSelectionListener  {
 
 	/** The instance. */
 	private static ISBatch instance;
@@ -153,12 +155,12 @@ public class ISBatch implements TreeSelectionListener {
 	 * @throws SqlJetException the sql jet exception
 	 */
 	public ISBatch() throws SqlJetException {
+		
 		DatabaseDialog dialog = new DatabaseDialog(frame);
 		database = dialog.getDatabase();
-
-		if (database == null)
+		
+			if (database == null)
 			return;
-
 		setTree();
 
 		JPanel treePanel = createTreePanel();
@@ -184,7 +186,7 @@ public class ISBatch implements TreeSelectionListener {
 	 * @return single instance of ISBatch
 	 */
 	public static ISBatch getInstance() {
-
+		IJ.log("Getting Instance");
 		if (instance == null) {
 			try {
 				instance = new ISBatch();
@@ -715,5 +717,6 @@ public class ISBatch implements TreeSelectionListener {
 		iSBatchPreferences.loadPreferences(treeModel.getRoot());
 
 	}
+
 
 }

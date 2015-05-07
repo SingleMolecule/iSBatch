@@ -10,14 +10,14 @@
  * @version 1.0
  */
 
-package iSBatch.src.utils;
+package utils;
+
+import ij.IJ;
 
 import java.io.File;
-
 import java.io.BufferedReader;
-
-import java.io.File;
-import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 
@@ -40,11 +40,20 @@ public class SQLReader {
 	 * @param args the arguments
 	 */
 	public static void main(final String[] args) {
-		File test = new File("src//model//template");
-		System.out.println(test.exists());
+	
 		SQLReader reader = new SQLReader();
-		listOfQueries = reader.createQueries(test.getAbsolutePath());
+		reader.runner(reader);
 
+	}
+
+	public void runner(SQLReader reader){
+		
+		InputStream is = getClass().getResourceAsStream("iSBatch/src/model/template.txt");
+		IJ.showMessage(is.toString());
+		InputStreamReader isr = new InputStreamReader(is);
+		BufferedReader br = new BufferedReader(isr);
+//		listOfQueries = reader.createQueries(test.getAbsolutePath());
+		listOfQueries = reader.createQueries(br);
 		for (String string : listOfQueries) {
 			System.out.println(string);
 
@@ -52,9 +61,11 @@ public class SQLReader {
 				System.out.println("Detect Table");
 			}
 		}
-
+		
+		
+		
+		
 	}
-
 	/** The list of queries. */
 	private static ArrayList<String> listOfQueries = null;
 
@@ -66,17 +77,16 @@ public class SQLReader {
 	/**
 	 * Creates the queries.
 	 *
-	 * @param path Path to the file
+	 * @param br Path to the file
 	 * @return the ArrayList of SQL Commands
 	 */
-	public ArrayList<String> createQueries(String path) {
+	public ArrayList<String> createQueries(BufferedReader br) {
+		IJ.showMessage("reading queries");
 		String queryLine = new String();
 		StringBuffer sBuffer = new StringBuffer();
 		listOfQueries = new ArrayList<String>();
 
 		try {
-			FileReader fr = new FileReader(new File(path));
-			BufferedReader br = new BufferedReader(fr);
 
 			// read the SQL file line by line
 			while ((queryLine = br.readLine()) != null) {

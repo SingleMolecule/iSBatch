@@ -4,6 +4,7 @@
 package gui;
 
 import iSBatch.iSBatchPreferences;
+import ij.IJ;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -116,7 +117,10 @@ public class DatabaseDialog extends JDialog implements ActionListener {
 				String path = pathTextField.getText();
 				
 				File file = new File(path);
+				
 				iSBatchPreferences.lastSelectedPath = file.getPath();
+				file.setWritable(true);
+				
 				database = new Database(file);
 			}
 			catch (SqlJetException exception) {

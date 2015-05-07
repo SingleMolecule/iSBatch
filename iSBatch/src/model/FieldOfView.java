@@ -3,7 +3,6 @@
  */
 package model;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import filters.ChannelFilter;
