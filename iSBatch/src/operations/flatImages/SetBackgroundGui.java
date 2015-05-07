@@ -6,6 +6,7 @@ package operations.flatImages;
 import ij.IJ;
 
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
 import java.awt.GridBagLayout;
@@ -31,6 +32,9 @@ import javax.swing.DefaultComboBoxModel;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -224,6 +228,15 @@ public class SetBackgroundGui extends JDialog implements ActionListener {
 		gbc_pathToImage.gridy = 3;
 		getContentPane().add(pathToImage, gbc_pathToImage);
 		pathToImage.setColumns(1);
+		
+		btnLoadImage = new JButton("Load Image");
+		btnLoadImage.addActionListener(this);
+		
+		GridBagConstraints gbc_btnLoadImage = new GridBagConstraints();
+		gbc_btnLoadImage.insets = new Insets(0, 0, 5, 5);
+		gbc_btnLoadImage.gridx = 5;
+		gbc_btnLoadImage.gridy = 3;
+		getContentPane().add(btnLoadImage, gbc_btnLoadImage);
 		GridBagConstraints gbc_btnProcess = new GridBagConstraints();
 		gbc_btnProcess.insets = new Insets(0, 0, 0, 5);
 		gbc_btnProcess.gridx = 4;
@@ -291,6 +304,7 @@ public class SetBackgroundGui extends JDialog implements ActionListener {
 
 	/** The image type. */
 	private String imageType;
+	private JButton btnLoadImage;
 
 	/**
 	 * Action performed.
@@ -303,19 +317,30 @@ public class SetBackgroundGui extends JDialog implements ActionListener {
 			canceled = true;
 			dispose();
 		} else if (e.getSource() == btnProcess) {
+			imagePath = pathToImage.getText();
 			run();
 			dispose();
 		} else if (e.getSource() == channelComboBox) {
 			this.channel = channels[channelComboBox.getSelectedIndex()];
-			System.out.println(channel);
 		} else if (e.getSource() == methodComboBox) {
 			this.method = (String) methodComboBox.getSelectedItem();
-			System.out.println(method);
 		} else if (e.getSource() == fileTypeComboBox) {
-			this.imageType = (String) fileTypeComboBox.getSelectedItem();
-			System.out.println(imageType);
-
+			String foo = (String) fileTypeComboBox.getSelectedItem();
+			if (foo.equalsIgnoreCase("[File Type]")) {
+				
+				this.imageType = null;
+			} else {
+				this.imageType = (String) fileTypeComboBox.getSelectedItem();
+			}		} else if (e.getSource() ==btnLoadImage){
+			JFileChooser fileChooser = new JFileChooser();
+			fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+	
+			if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
+				imagePath = fileChooser.getSelectedFile().getPath();
+				pathToImage.setText(imagePath);
+				methodComboBox.setSelectedIndex(1);
 		}
+		
 	}
 
 	/**
@@ -352,5 +377,22 @@ public class SetBackgroundGui extends JDialog implements ActionListener {
 	 */
 	public String getImageTag() {
 		return imageType;
+	}
+	
+	public ArrayList<String> getTags() {
+		ArrayList<String> container = new ArrayList<String>();
+		if (imageType != null) {
+			
+			List<String> list = Arrays.asList(imageType.split("\\s*,\\s*"));
+			for (String foo : list) {
+				container.add(foo);
+			}
+			return container;
+		}
+
+		else
+			
+			return container;
+
 	}
 }

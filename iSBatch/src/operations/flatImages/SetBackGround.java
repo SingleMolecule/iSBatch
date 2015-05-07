@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import filters.GenericFilter;
+import gui.LogPanel;
 import model.DatabaseModel;
 import model.Experiment;
 import model.FieldOfView;
@@ -30,23 +31,26 @@ import operations.Operation;
  * @author VictorCaldas
  */
 public class SetBackGround implements Operation {
-	
+
 	/** The dialog. */
 	SetBackgroundGui dialog;
 
 	/** The channel. */
 	private String channel;
-	
+
 	/** The method. */
 	private String method;
-	
+
 	/** The image tag. */
-	private String imageTag;
+	private ArrayList<String> imageTag;
+
+	private String imagePath = "";
 
 	/**
 	 * Instantiates a new sets the back ground.
 	 *
-	 * @param treeModel the tree model
+	 * @param treeModel
+	 *            the tree model
 	 */
 	public SetBackGround(DatabaseModel treeModel) {
 	}
@@ -89,7 +93,8 @@ public class SetBackGround implements Operation {
 	/**
 	 * Setup.
 	 *
-	 * @param node the node
+	 * @param node
+	 *            the node
 	 * @return true, if successful
 	 */
 	@Override
@@ -98,8 +103,9 @@ public class SetBackGround implements Operation {
 		if (dialog.isCanceled())
 			return false;
 		this.channel = dialog.getChannel();
-		this.imageTag = dialog.getImageTag();
+		this.imageTag = dialog.getTags();
 		this.method = dialog.getMethod();
+		this.imagePath = dialog.getImagePath();
 
 		return true;
 	}
@@ -112,7 +118,8 @@ public class SetBackGround implements Operation {
 	/**
 	 * Finalize.
 	 *
-	 * @param node the node
+	 * @param node
+	 *            the node
 	 */
 	@Override
 	public void finalize(Node node) {
@@ -129,7 +136,8 @@ public class SetBackGround implements Operation {
 	/**
 	 * Visit.
 	 *
-	 * @param root the root
+	 * @param root
+	 *            the root
 	 */
 	@Override
 	public void visit(Root root) {
@@ -139,7 +147,8 @@ public class SetBackGround implements Operation {
 	/**
 	 * Visit.
 	 *
-	 * @param experiment the experiment
+	 * @param experiment
+	 *            the experiment
 	 */
 	@Override
 	public void visit(Experiment experiment) {
@@ -150,64 +159,76 @@ public class SetBackGround implements Operation {
 	/**
 	 * Run.
 	 *
-	 * @param node the node
+	 * @param node
+	 *            the node
 	 */
 	private void run(Node node) {
-		System.out.println("Run class: " + channel + " using the method "
-				+ method);
+		LogPanel.log("Run class: " + channel + " using the method " + method);
 		// Get all images with the same characteristics
-
+		
 		if (method.equalsIgnoreCase("Load Image")) {
-			// TODO: add gui to ask file from the user
+			LogPanel.log("Debug info: LoadImage");
 
-			ImagePlus imp = null;
-			save(node, imp);
+			File f = new File(imagePath);
 
+			if (f.exists() && channel != null) {
+				// Test if the file exist
+				ImagePlus imp = IJ.openImage(imagePath);
+				save(node, imp);
+				imp.close();
+				LogPanel.log("Background set to channel " + channel);
+			}
 		} else if (method.equalsIgnoreCase("Average Images")) {
-
+			LogPanel.log("Debug info: Average Images");
 			ArrayList<Node> filenodes = node.getDescendents(new GenericFilter(
-					channel, imageTag));
+					channel, imageTag, null, null));
+//			ArrayList<Node> filenodes = node.getDescendents(new GenericFilter(
+//					channel, imageTag));
 			// get ImageStack from the ArrayList
 
-			NodeToImageStack temp = new NodeToImageStack(filenodes, channel, "BeamProfile");
+			NodeToImageStack temp = new NodeToImageStack(filenodes, channel,
+					"BeamProfile");
 
 			ImagePlus imp = temp.getImagePlus();
-			
-			//GetProjection
+
+			// GetProjection
 			ZProjector projector = new ZProjector(imp);
 			projector.setMethod(ZProjector.AVG_METHOD);
 			projector.doProjection();
-			
-			save(node, imp);
-		}
 
+			save(node, imp);
+		} else {
+			IJ.log("Operation failed");
+		}
 	}
 
 	/**
 	 * Save.
 	 *
-	 * @param node the node
-	 * @param imp the imp
+	 * @param node
+	 *            the node
+	 * @param imp
+	 *            the imp
 	 */
 	private void save(Node node, ImagePlus imp) {
 		// Properly save and keep track of that file now.
-//		System.out.println(node.getOutputFolder());
-//		System.out.println(imp.getTitle());
 		ZProjector projector = new ZProjector(imp);
 		projector.setMethod(ZProjector.AVG_METHOD);
 		projector.doProjection();
 		File folder = new File(node.getOutputFolder());
 		folder.mkdirs();
-		
-		IJ.saveAsTiff(projector.getProjection(),
+
+		IJ.saveAsTiff(projector.getProjection(), node.getOutputFolder()
+				+ File.separator + imp.getTitle());
+		node.getProperties().put(channel + "_BeamProfile",
 				node.getOutputFolder() + File.separator + imp.getTitle());
-		node.getProperties().put(channel+"_BeamProfile", node.getOutputFolder() + File.separator + imp.getTitle());
 	}
 
 	/**
 	 * Visit.
 	 *
-	 * @param sample the sample
+	 * @param sample
+	 *            the sample
 	 */
 	@Override
 	public void visit(Sample sample) {
@@ -218,7 +239,8 @@ public class SetBackGround implements Operation {
 	/**
 	 * Visit.
 	 *
-	 * @param fieldOfView the field of view
+	 * @param fieldOfView
+	 *            the field of view
 	 */
 	@Override
 	public void visit(FieldOfView fieldOfView) {
@@ -228,7 +250,8 @@ public class SetBackGround implements Operation {
 	/**
 	 * Visit.
 	 *
-	 * @param fileNode the file node
+	 * @param fileNode
+	 *            the file node
 	 */
 	@Override
 	public void visit(FileNode fileNode) {
@@ -238,7 +261,8 @@ public class SetBackGround implements Operation {
 	/**
 	 * Visit.
 	 *
-	 * @param operationNode the operation node
+	 * @param operationNode
+	 *            the operation node
 	 */
 	@Override
 	public void visit(OperationNode operationNode) {
