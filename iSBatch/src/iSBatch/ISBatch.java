@@ -53,20 +53,20 @@ import model.DatabaseModel;
 import model.FileNode;
 import model.Node;
 import context.ContextHandler;
-import operation.cellIntensity.CellIntensity;
-import operation.cellOutlines.CellOutlines;
-import operation.cellularConcentration.CellularConcentration;
-import operation.changePoint.ChangePoint;
-import operation.diffusion.DiffusioOperation;
-import operation.focusLifetime.FocusLifetimes;
-import operation.tracking.Tracking;
 import operations.*;
+import operations.cellIntensity.CellIntensity;
+import operations.cellOutlines.CellOutlines;
+import operations.cellularConcentration.CellularConcentration;
+import operations.changePoint.ChangePoint;
+import operations.diffusion.DiffusioOperation;
 import operations.flatImages.FlattenOperation;
 import operations.flatImages.SetBackGround;
+import operations.focusLifetime.FocusLifetimes;
 import operations.locationMaps.LocationMaps;
 import operations.microbeTrackerIO.MicrobeTrackerIO;
 import operations.peakFinder.FindPeaksOperation;
 import operations.peakFitter.FitPeaksOperation;
+import operations.tracking.Tracking;
 
 // TODO: Auto-generated Javadoc
 /**
