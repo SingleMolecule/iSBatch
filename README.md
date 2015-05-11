@@ -72,9 +72,9 @@ IN NO EVENT SHALL THE AUTHORS ARE LIABLE TO ANY PARTY FOR DIRECT, INDIRECT, SPEC
 
 ##Issues
 
-If you find a bug or want a new feature you can ask in the [Issues section](https://github.com/vcaldas/iSBatch/issues) on github. 
+If you find a bug or want a new feature you can ask in the [Issues section](https://github.com/SingleMolecule/iSBatch/issues) on github. 
 
-If you wish to submit a bug, issue, or feature request, then you can find the [issue tracker here](https://github.com/vcaldas/iSBatch/issues) and you can [create an issue here](https://github.com/vcaldas/iSBatch/issues/new).  Note that there are several details which are very important to include.
+If you wish to submit a bug, issue, or feature request, then you can find the [issue tracker here](https://github.com/SingleMolecule/iSBatch/issues) and you can [create an issue here](https://github.com/SingleMolecule/iSBatch/issues/new).  Note that there are several details which are very important to include.
 
 ## Bug Reports
 
