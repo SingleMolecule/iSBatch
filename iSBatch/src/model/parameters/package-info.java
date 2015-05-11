@@ -5,4 +5,4 @@
  * @author VictorCaldas
  *
  */
-package model.types;
+package model.parameters;

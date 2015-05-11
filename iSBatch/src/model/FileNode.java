@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import ij.IJ;
 import ij.ImagePlus;
-import model.types.Channel;
+import model.parameters.Channel;
 import operations.Operation;
 
 // TODO: Auto-generated Javadoc
@@ -120,7 +120,7 @@ public class FileNode extends Node implements FileInterface{
 	public String getChannel() {
 		if (channel == null) {
 			this.channel = getProperty("channel");
-			this.channel1 = new Channel(getProperty("channel"));
+//			this.channel1 = new Channel(getProperty("channel"));
 		}
 		
 		return channel;
