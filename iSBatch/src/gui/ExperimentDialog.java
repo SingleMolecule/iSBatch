@@ -1,6 +1,3 @@
-/*
- * 
- */
 package gui;
 
 import iSBatch.iSBatchPreferences;
@@ -25,46 +22,19 @@ import javax.swing.JTextField;
 
 import model.Experiment;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class ExperimentDialog.
- */
 public class ExperimentDialog extends JDialog implements ActionListener {
-	
-	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** The experiment. */
 	private Experiment experiment;
-	
-	/** The ok button. */
 	private JButton okButton = new JButton("Ok");
-	
-	/** The cancel button. */
 	private JButton cancelButton = new JButton("Cancel");
-	
-	/** The name text field. */
 	private JTextField nameTextField = new JTextField(20);
-	
-	/** The folder text field. */
 	private JTextField folderTextField = new JTextField(20);
-	
-	/** The choose button. */
 	private JButton chooseButton = new JButton("Choose");
-	
-	/** The type combo box. */
 	private JComboBox<String> typeComboBox = new JComboBox<String>(
 			new String[] { "Time Sampling", "Time Lapse" });
-	
-	/** The canceled. */
 	private boolean canceled = false;
 	
-	/**
-	 * Instantiates a new experiment dialog.
-	 *
-	 * @param parent the parent
-	 * @param experiment the experiment
-	 */
 	public ExperimentDialog(Frame parent, Experiment experiment) {
 		super(parent, "Experiment", true);
 
@@ -127,11 +97,6 @@ public class ExperimentDialog extends JDialog implements ActionListener {
 		setVisible(true);
 	}
 
-	/**
-	 * Action performed.
-	 *
-	 * @param e the e
-	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
@@ -158,11 +123,6 @@ public class ExperimentDialog extends JDialog implements ActionListener {
 
 	}
 
-	/**
-	 * Checks if is canceled.
-	 *
-	 * @return true, if is canceled
-	 */
 	public boolean isCanceled() {
 		return canceled;
 	}

@@ -1,10 +1,6 @@
-/*
- * 
- */
 package gui;
 
 import iSBatch.iSBatchPreferences;
-import ij.IJ;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -28,39 +24,19 @@ import org.tmatesoft.sqljet.core.SqlJetException;
 
 import model.Database;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class DatabaseDialog.
- */
 public class DatabaseDialog extends JDialog implements ActionListener {
 
-	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** The database. */
 	private Database database;
-	
-	/** The path text field. */
 	private JTextField pathTextField = new JTextField(System.getProperty("user.home") + File.separator + "database", 20);
 	//private JTextField pathTextField = new JTextField("D:\\CurrentAnalysis\\current", 20);
 
-	/** The choose button. */
 	private JButton chooseButton = new JButton("Choose database");
-	
-	/** The ok button. */
 	private JButton okButton = new JButton("Ok");
-	
-	/** The cancel button. */
 	private JButton cancelButton = new JButton("Cancel");
-	
-	/** The canceled. */
 	private boolean canceled = false;
 	
-	/**
-	 * Instantiates a new database dialog.
-	 *
-	 * @param parent the parent
-	 */
 	public DatabaseDialog(Frame parent) {
 		super(parent, "Database", true);
 		
@@ -103,11 +79,6 @@ public class DatabaseDialog extends JDialog implements ActionListener {
 		setVisible(true);
 	}
 
-	/**
-	 * Action performed.
-	 *
-	 * @param e the e
-	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
@@ -117,10 +88,7 @@ public class DatabaseDialog extends JDialog implements ActionListener {
 				String path = pathTextField.getText();
 				
 				File file = new File(path);
-				
 				iSBatchPreferences.lastSelectedPath = file.getPath();
-				file.setWritable(true);
-				
 				database = new Database(file);
 			}
 			catch (SqlJetException exception) {
@@ -144,29 +112,14 @@ public class DatabaseDialog extends JDialog implements ActionListener {
 		
 	}
 	
-	/**
-	 * Gets the database.
-	 *
-	 * @return the database
-	 */
 	public Database getDatabase() {
 		return database;
 	}
 	
-	/**
-	 * Checks if is canceled.
-	 *
-	 * @return true, if is canceled
-	 */
 	public boolean isCanceled() {
 		return canceled;
 	}
 
-	/**
-	 * The main method.
-	 *
-	 * @param args the arguments
-	 */
 	public static void main(String[] args) {
 		new DatabaseDialog(null);
 	}

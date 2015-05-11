@@ -1,6 +1,3 @@
-/*
- * 
- */
 package gui;
 
 import iSBatch.iSBatchPreferences;
@@ -24,42 +21,17 @@ import javax.swing.JTextField;
 
 import model.FieldOfView;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class FieldOfViewDialog.
- */
 public class FieldOfViewDialog extends JDialog implements ActionListener {
-	
-	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** The field of view. */
 	private FieldOfView fieldOfView;
-	
-	/** The ok button. */
 	private JButton okButton = new JButton("Ok");
-	
-	/** The cancel button. */
 	private JButton cancelButton = new JButton("Cancel");
-	
-	/** The name text field. */
 	private JTextField nameTextField = new JTextField(20);
-	
-	/** The folder text field. */
 	private JTextField folderTextField = new JTextField(20);
-	
-	/** The choose button. */
 	private JButton chooseButton = new JButton("Choose");
-	
-	/** The canceled. */
 	private boolean canceled = false;
 	
-	/**
-	 * Instantiates a new field of view dialog.
-	 *
-	 * @param parent the parent
-	 * @param fieldOfView the field of view
-	 */
 	public FieldOfViewDialog(Frame parent, FieldOfView fieldOfView) {
 		super(parent, "Field of View", true);
 
@@ -114,11 +86,6 @@ public class FieldOfViewDialog extends JDialog implements ActionListener {
 
 	}
 
-	/**
-	 * Action performed.
-	 *
-	 * @param e the e
-	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == okButton) {
@@ -140,11 +107,6 @@ public class FieldOfViewDialog extends JDialog implements ActionListener {
 		}
 	}
 
-	/**
-	 * Checks if is canceled.
-	 *
-	 * @return true, if is canceled
-	 */
 	public boolean isCanceled() {
 		return canceled;
 	}
