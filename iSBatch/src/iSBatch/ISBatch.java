@@ -11,8 +11,6 @@ import gui.OperationButton;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.measure.ResultsTable;
-import ij.plugin.PlugIn;
-import ij.plugin.filter.PlugInFilter;
 
 import java.awt.BorderLayout;
 import java.awt.Cursor;
@@ -581,12 +579,9 @@ public class ISBatch implements TreeSelectionListener  {
 				new LocationMaps(treeModel),
 				new ChangePoint(treeModel),
 //				new DebugProperties(treeModel),
-<<<<<<< HEAD
 //				new FilterTestOperation(treeModel),
-=======
 //				new FilterTestOperation(treeModel)
 //				,
->>>>>>> refs/heads/Victor
 				 };
 	}
 
