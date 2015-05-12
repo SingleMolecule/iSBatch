@@ -83,7 +83,7 @@ public class AddNodeOperation implements Operation {
 		Experiment experiment = new Experiment(root);
 		experiment.setProperty("name", "experiment");
 		experiment.setProperty("folder", "");
-		experiment.setProperty("type", "Time Sampling");
+		experiment.setProperty("type", "Rapid Acquisition");
 		ExperimentDialog dialog = new ExperimentDialog(frame, experiment);
 
 		if (dialog.isCanceled())
