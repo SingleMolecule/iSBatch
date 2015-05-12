@@ -91,7 +91,7 @@ public class Importer {
 		Experiment experiment = new Experiment((Root)model.getRoot());
 		experiment.setProperty("name", folder.getName());
 		experiment.setProperty("folder", folder.getPath());
-		experiment.setProperty("type", isTimeSampling ? "Time Sampling"
+		experiment.setProperty("type", isTimeSampling ? "Rapid Acquisition"
 				: "Time Lapse");
 		model.addNode((Root)model.getRoot(), experiment);
 
