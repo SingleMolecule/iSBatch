@@ -23,14 +23,10 @@ public enum TableType {
 	 */
 	public String toString() {
 		switch (this) {
-		case TRACK:
-			return "Track";
-		case TRACE:
-			return "Trace";
-		case PEAK:
-			return "Peak";
-		default:
-			return "Generic";
+		case TRACK:	return "Track";
+		case TRACE:	return "Trace";
+		case PEAK:	return "Peak";
+		default:	return "Generic";
 		}
 	}
 

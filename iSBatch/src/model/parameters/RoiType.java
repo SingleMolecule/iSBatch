@@ -4,7 +4,7 @@ package model.parameters;
  *  Categories of Regions of interest (ROI).
  *  <li>{@link #CELL}</li>
  *  <li>{@link #BACKGROUND}</li>
- *  <li>{@link #FRAP_SPOT}</li>
+ *  <li>{@link #FRAP_REGION}</li>
  */
 public enum RoiType {
 
@@ -13,7 +13,7 @@ public enum RoiType {
 	/** Background ROI. */
 	BACKGROUND, 
 	/** Red channel. */
-	FRAP_SPOT;
+	FRAP_REGION;
 	
 	/*
 	 * (non-Javadoc)
@@ -22,14 +22,10 @@ public enum RoiType {
 	 */
 	public String toString() {
 		switch (this) {
-		case CELL:
-			return "Cell";
-		case BACKGROUND:
-			return "Background";
-		case FRAP_SPOT:
-			return "Frap spot";
-		default:
-			return "Unspecified";
+		case CELL:			return "Cell";
+		case BACKGROUND:	return "Background";
+		case FRAP_REGION:		return "Frap region";
+		default:			return "Unspecified";
 		}
 	}
 

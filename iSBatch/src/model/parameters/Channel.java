@@ -28,16 +28,11 @@ public enum Channel {
 	 */
 	public String toString() {
 		switch (this) {
-		case GREEN:
-			return "Green";
-		case BLUE:
-			return "Blue";
-		case RED:
-			return "Red";
-		case BRIGHT_FIELD:
-			return "Bright Field";
-		default:
-			return "Acquisition";
+		case GREEN:			return "Green";
+		case BLUE:			return "Blue";
+		case RED:			return "Red";
+		case BRIGHT_FIELD: 	return "Bright Field";
+		default:			return "Acquisition";
 		}
 	}
 
