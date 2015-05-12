@@ -1,6 +1,3 @@
-/*
- * 
- */
 package iSBatch;
 // Comment
 import filters.NodeFilterInterface;
@@ -51,58 +48,37 @@ import model.DatabaseModel;
 import model.FileNode;
 import model.Node;
 import context.ContextHandler;
-import operations.*;
 import operations.cellIntensity.CellIntensity;
 import operations.cellOutlines.CellOutlines;
 import operations.cellularConcentration.CellularConcentration;
 import operations.changePoint.ChangePoint;
 import operations.diffusion.DiffusioOperation;
+import operations.focusLifetime.FocusLifetimes;
+import operations.tracking.Tracking;
+import operations.*;
 import operations.flatImages.FlattenOperation;
 import operations.flatImages.SetBackGround;
-import operations.focusLifetime.FocusLifetimes;
 import operations.locationMaps.LocationMaps;
 import operations.microbeTrackerIO.MicrobeTrackerIO;
 import operations.peakFinder.FindPeaksOperation;
 import operations.peakFitter.FitPeaksOperation;
-import operations.tracking.Tracking;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class ISBatch.
- */
-public class ISBatch implements TreeSelectionListener  {
+public class ISBatch implements TreeSelectionListener {
 
-	/** The instance. */
 	private static ISBatch instance;
 	
-	/** The database. */
 	private Database database;
-	
-	/** The tree model. */
 	private DatabaseModel treeModel;
-	
-	/** The context handler. */
 	private ContextHandler contextHandler = new ContextHandler();
 
-	/** The selected node. */
 	private Node selectedNode;
 
-	/** The tree. */
 	private JTree tree;
-	
-	/** The list model. */
 	private DefaultListModel<Node> listModel = new DefaultListModel<Node>();
-	
-	/** The list. */
 	private JList<Node> list = new JList<Node>(listModel);
-	
-	/** The frame. */
 	private JFrame frame = new JFrame("iSBatch");
-	
-	/** The tree buttonspanel. */
 	private JPanel treeButtonspanel = new JPanel();
 	
-	/** The about. */
 	private JMenu menu, preferences, about;
 
 	/** The menu bar. */
@@ -128,37 +104,21 @@ public class ISBatch implements TreeSelectionListener  {
 
 	/** The about menu item. */
 	private JMenuItem aboutMenuItem;
-	
-	/** The current selected. */
 	protected TreePath currentSelected;
-	
-	/** The old selected path. */
 	protected Object oldSelectedPath;
-	
-	/** The source menu item. */
 	private JMenuItem sourceMenuItem;
 	
-	/**
-	 * The main method.
-	 *
-	 * @param args the arguments
-	 */
 	public static void main(String[] args) {
 		getInstance();
 	}
 
-	/**
-	 * Instantiates a new checks if is batch.
-	 *
-	 * @throws SqlJetException the sql jet exception
-	 */
-	public ISBatch() throws SqlJetException {
-		
+	protected ISBatch() throws SqlJetException {
 		DatabaseDialog dialog = new DatabaseDialog(frame);
 		database = dialog.getDatabase();
-		
-			if (database == null)
+
+		if (database == null)
 			return;
+
 		setTree();
 
 		JPanel treePanel = createTreePanel();
@@ -178,13 +138,8 @@ public class ISBatch implements TreeSelectionListener  {
 		iSBatchPreferences.loadPreferences(treeModel.getRoot());
 	}
 
-	/**
-	 * Gets the single instance of ISBatch.
-	 *
-	 * @return single instance of ISBatch
-	 */
 	public static ISBatch getInstance() {
-		IJ.log("Getting Instance");
+
 		if (instance == null) {
 			try {
 				instance = new ISBatch();
@@ -197,9 +152,6 @@ public class ISBatch implements TreeSelectionListener  {
 		return instance;
 	}
 
-	/**
-	 * Sets the tree.
-	 */
 	private void setTree() {
 
 		try {
@@ -216,13 +168,6 @@ public class ISBatch implements TreeSelectionListener  {
 		tree.setCellRenderer(new DatabaseTreeCellRenderer());
 	}
 
-	/**
-	 * Layout panels.
-	 *
-	 * @param treePanel the tree panel
-	 * @param operationsPanel the operations panel
-	 * @param listPanel the list panel
-	 */
 	private void layoutPanels(JPanel treePanel, JPanel operationsPanel,
 			JPanel listPanel) {
 		createMenus();
@@ -236,9 +181,6 @@ public class ISBatch implements TreeSelectionListener  {
 		frame.setVisible(true);
 	}
 
-	/**
-	 * Creates the menus.
-	 */
 	private void createMenus() {
 		menuBar = new JMenuBar();
 
@@ -332,9 +274,6 @@ public class ISBatch implements TreeSelectionListener  {
 
 	}
 
-	/**
-	 * Go to source code.
-	 */
 	protected void goToSourceCode() {
 		try {
 			Desktop.getDesktop().browse(
@@ -344,9 +283,6 @@ public class ISBatch implements TreeSelectionListener  {
 
 	}
 
-	/**
-	 * Show help.
-	 */
 	protected void showHelp() {
 		try {
 			Desktop.getDesktop().browse(
@@ -356,9 +292,6 @@ public class ISBatch implements TreeSelectionListener  {
 
 	}
 
-	/**
-	 * Show about.
-	 */
 	protected void showAbout() {
 		JFrame AboutFrame = new JFrame("About iSBatch");
 		// JPanel AboutPanel = new AboutPanel();
@@ -368,11 +301,6 @@ public class ISBatch implements TreeSelectionListener  {
 
 	}
 
-	/**
-	 * Creates the list panel.
-	 *
-	 * @return the j panel
-	 */
 	private JPanel createListPanel() {
 		JPanel listPanel = new JPanel(new BorderLayout());
 		listPanel.add(new JScrollPane(list), BorderLayout.CENTER);
@@ -422,11 +350,6 @@ public class ISBatch implements TreeSelectionListener  {
 		return listPanel;
 	}
 
-	/**
-	 * Creates the tree panel.
-	 *
-	 * @return the j panel
-	 */
 	private JPanel createTreePanel() {
 		JPanel treePanel = new JPanel(new BorderLayout());
 		for (Operation operation : getTreeOperations()) {
@@ -442,11 +365,6 @@ public class ISBatch implements TreeSelectionListener  {
 		return treePanel;
 	}
 
-	/**
-	 * Creates the operations panel.
-	 *
-	 * @return the j panel
-	 */
 	private JPanel createOperationsPanel() {
 		JPanel operationsPanel = new JPanel(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -472,11 +390,6 @@ public class ISBatch implements TreeSelectionListener  {
 		
 	}
 
-	/**
-	 * Gets the mouse listener.
-	 *
-	 * @return the mouse listener
-	 */
 	private MouseListener getMouseListener() {
 
 		return new MouseAdapter() {
@@ -499,11 +412,6 @@ public class ISBatch implements TreeSelectionListener  {
 		};
 	}
 
-	/**
-	 * Gets the mouse motion adapter.
-	 *
-	 * @return the mouse motion adapter
-	 */
 	private MouseMotionAdapter getMouseMotionAdapter() {
 		return new MouseMotionAdapter() {
 			@Override
@@ -528,11 +436,6 @@ public class ISBatch implements TreeSelectionListener  {
 
 	}
 
-	/**
-	 * Gets the pop up menu.
-	 *
-	 * @return the pop up menu
-	 */
 	private JPopupMenu getPopUpMenu() {
 
 		JPopupMenu menu = new JPopupMenu();
@@ -547,21 +450,11 @@ public class ISBatch implements TreeSelectionListener  {
 		return menu;
 	}
 
-	/**
-	 * Gets the tree operations.
-	 *
-	 * @return the tree operations
-	 */
 	public Operation[] getTreeOperations() {
 		return new Operation[] { new AddNodeOperation(frame, treeModel),
 				new ImportOperation(treeModel) };
 	}
 
-	/**
-	 * Gets the operations.
-	 *
-	 * @return the operations
-	 */
 	public Operation[] getOperations() {
 		return new Operation[] {
 				// new MacroOperation2(frame, treeModel),
@@ -570,7 +463,7 @@ public class ISBatch implements TreeSelectionListener  {
 				new MicrobeTrackerIO(treeModel), new CellOutlines(treeModel),
 				new FindPeaksOperation(treeModel),
 				new FitPeaksOperation(treeModel),
-				new macros.MacroOperation(),
+				new macros.MacroOperation(treeModel),
 				new CellularConcentration(treeModel),
 				new CellIntensity(treeModel),
 				new FocusLifetimes(treeModel),
@@ -579,17 +472,11 @@ public class ISBatch implements TreeSelectionListener  {
 				new LocationMaps(treeModel),
 				new ChangePoint(treeModel),
 //				new DebugProperties(treeModel),
-//				new FilterTestOperation(treeModel),
 //				new FilterTestOperation(treeModel)
 //				,
 				 };
 	}
 
-	/**
-	 * Value changed.
-	 *
-	 * @param e the e
-	 */
 	@Override
 	public void valueChanged(TreeSelectionEvent e) {
 
@@ -602,11 +489,6 @@ public class ISBatch implements TreeSelectionListener  {
 
 	}
 
-	/**
-	 * Sets the context.
-	 *
-	 * @param node the new context
-	 */
 	public void setContext(Node node) {
 
 		contextHandler.setContext(node);
@@ -626,11 +508,6 @@ public class ISBatch implements TreeSelectionListener  {
 
 	}
 
-	/**
-	 * Gets the edits the action listener.
-	 *
-	 * @return the edits the action listener
-	 */
 	private ActionListener getEditActionListener() {
 		return new ActionListener() {
 
@@ -644,11 +521,6 @@ public class ISBatch implements TreeSelectionListener  {
 		};
 	}
 
-	/**
-	 * Gets the run macro action listener.
-	 *
-	 * @return the run macro action listener
-	 */
 	private ActionListener getRunMacroActionListener() {
 		return new ActionListener() {
 
@@ -663,9 +535,6 @@ public class ISBatch implements TreeSelectionListener  {
 		};
 	}
 
-	/**
-	 * Save database.
-	 */
 	public void saveDatabase() {
 
 		// save preferences
@@ -681,9 +550,6 @@ public class ISBatch implements TreeSelectionListener  {
 
 	}
 
-	/**
-	 * New database.
-	 */
 	public void newDatabase() {
 
 		int option = JOptionPane.showConfirmDialog(frame,
@@ -717,6 +583,5 @@ public class ISBatch implements TreeSelectionListener  {
 		iSBatchPreferences.loadPreferences(treeModel.getRoot());
 
 	}
-
 
 }
