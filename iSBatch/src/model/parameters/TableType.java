@@ -1,15 +1,16 @@
 package model.parameters;
 
+// TODO: Auto-generated Javadoc
 /**
  *  Types of Results Table
  *  <li>{@link #TRACK}</li>
  *  <li>{@link #TRACE}</li>
  *  <li>{@link #PEAK}</li>
- *  <li>{@link #BRIGHT_FIELD}</li>
+ *  <li>{@link #BRIGHT_FIELD}</li>.
  */
 public enum TableType {
 
-	/** Track table */
+	/**  Track table. */
 	TRACK,
 	/** TRACE table. */
 	TRACE, 

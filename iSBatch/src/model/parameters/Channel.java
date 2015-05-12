@@ -1,12 +1,13 @@
 package model.parameters;
 
+// TODO: Auto-generated Javadoc
 /**
  *  Colors that can be used
  *  <li>{@link #GREEN}</li>
  *  <li>{@link #RED}</li>
  *  <li>{@link #BLUE}</li>
  *  <li>{@link #BRIGHT_FIELD}</li>
- *  <li>{@link #ACQUISITION}</li>
+ *  <li>{@link #ACQUISITION}</li>.
  */
 public enum Channel {
 

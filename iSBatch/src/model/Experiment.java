@@ -1,6 +1,15 @@
-/*
- * 
- */
+/************************************************************************
+ * 				iSBatch  Copyright (C) 2015  							*
+ *		Victor E. A. Caldas -  v.e.a.caldas at rug.nl					*
+ *		C. Michiel Punter - c.m.punter at rug.nl						*
+ *																		*
+ *	This program is distributed in the hope that it will be useful,		*
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of		*
+ * 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the		*
+ *	GNU General Public License for more details.						*
+ *	You should have received a copy of the GNU General Public License	*
+ *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ***********************************************************************/
 package model;
 
 import java.util.ArrayList;
@@ -33,16 +42,19 @@ public class Experiment extends Node {
 	/**
 	 * Instantiates a new experiment.
 	 *
-	 * @param parent the parent
+	 * @param parent
+	 *            the parent
 	 */
 	public Experiment(Root parent) {
 		super(parent, type);
 	}
 
+	
 	/**
 	 * Accept.
 	 *
-	 * @param operation the operation
+	 * @param operation
+	 *            the operation
 	 */
 	@Override
 	public void accept(Operation operation) {
@@ -96,26 +108,21 @@ public class Experiment extends Node {
 	/**
 	 * Gets the beam profile.
 	 *
-	 * @param channel the channel
+	 * @param channel
+	 *            the channel
 	 * @return the beam profile
 	 */
 	public String getBeamProfile(String channel) {
 		return this.getProperty(channel + "_BeamProfile");
 	}
-	
+
 	/**
 	 * Gets the experiment name.
 	 *
 	 * @return the experiment name
 	 */
-	public String getExperimentName(){
+	public String getExperimentName() {
 		return this.getName();
 	}
-	
-	
-	
-	
-	
-	
 
 }

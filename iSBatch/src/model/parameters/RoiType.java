@@ -1,5 +1,6 @@
 package model.parameters;
 
+// TODO: Auto-generated Javadoc
 /**
  *  Categories of Regions of interest (ROI).
  *  <li>{@link #CELL}</li>
