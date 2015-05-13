@@ -11,15 +11,6 @@ import model.Node;
  */
 public class FilterSet  {
 		
-		/** The channel. */
-		private String channel;
-		
-		/** The type. */
-		private String type;
-		
-		/** The custom. */
-		private String custom;
-		
 		/** The node. */
 		Node node;
 		
@@ -31,9 +22,6 @@ public class FilterSet  {
 	 * @param custom the custom
 	 */
 	public FilterSet(String channel, String type, String custom){
-		this.channel = channel;
-		this.type = type;
-		this.custom = custom;
 	}
 	
 	/**

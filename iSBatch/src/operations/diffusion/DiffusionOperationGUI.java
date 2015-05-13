@@ -3,7 +3,6 @@
  */
 package operations.diffusion;
 
-import iSBatch.iSBatchPreferences;
 import ij.IJ;
 
 import javax.swing.JDialog;
@@ -43,9 +42,6 @@ import javax.swing.JCheckBox;
  * The Class DiffusionOperationGUI.
  */
 public class DiffusionOperationGUI extends JDialog implements ActionListener {
-	
-	/** The look ahead. */
-	private String lookAhead;
 	
 	/** The btn cancel. */
 	private JButton btnCancel;
@@ -506,7 +502,7 @@ public class DiffusionOperationGUI extends JDialog implements ActionListener {
 	private JLabel lblDiffusionDimensionality;
 	
 	/** The dimension combo box. */
-	private JComboBox dimensionComboBox;
+	private JComboBox<String> dimensionComboBox;
 	
 	/** The chckbx average all trajectories. */
 	private JCheckBox chckbxAverageAllTrajectories;

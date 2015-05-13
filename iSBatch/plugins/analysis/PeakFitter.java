@@ -17,7 +17,6 @@ import ij.gui.DialogListener;
 import ij.gui.GenericDialog;
 import ij.gui.PointRoi;
 import ij.measure.ResultsTable;
-import ij.plugin.ResultsSorter;
 import ij.plugin.filter.Analyzer;
 import ij.plugin.filter.ExtendedPlugInFilter;
 import ij.plugin.filter.PlugInFilterRunner;

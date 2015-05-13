@@ -20,9 +20,6 @@ public class GenericFilter implements NodeFilterInterface {
 	/** The tags. */
 	private ArrayList<String> tags;
 	
-	/** The extension. */
-	private String extension;
-	
 	/** The custom. */
 	private String custom;
 
@@ -53,7 +50,6 @@ public class GenericFilter implements NodeFilterInterface {
 			String extension, String custom) {
 		this.channel = channel;
 		this.tags = tags;
-		this.extension = extension;
 		this.custom = custom;
 
 	}

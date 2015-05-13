@@ -45,6 +45,11 @@ public class SQLReader {
 
 	}
 
+	/**
+	 * Runner.
+	 *
+	 * @param reader the reader
+	 */
 	public void runner(SQLReader reader){
 		
 		InputStream is = getClass().getResourceAsStream("src/model/template.txt");

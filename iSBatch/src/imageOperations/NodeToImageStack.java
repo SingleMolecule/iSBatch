@@ -43,7 +43,7 @@ public class NodeToImageStack {
 		
 		for (int i=0; i<total; i++){
 //			IJ.showProgress(i + 1, total);
-			LogPanel.log("Averaging files:" + Integer.toString(i)+ " of " + total);
+			LogPanel.log("Averaging files:" + Integer.toString(i+1)+ " of " + total);
 			System.out.println(nodes.get(i));
 			ImagePlus imp = IJ.openImage(nodes.get(i).getPath());
 			

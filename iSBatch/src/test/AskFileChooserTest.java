@@ -5,8 +5,6 @@ package test;
 
 import java.io.File;
 
-import javax.swing.JFileChooser;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class AskFileChooserTest.

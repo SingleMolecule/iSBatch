@@ -173,7 +173,7 @@ public class MacroOperationTest implements ActionListener, Runnable {
 			node = model.getRoot();
 		
 		String macro = textPane.getText();
-		MacroOperation op = new MacroOperation();
+		MacroOperation op = new MacroOperation(model);
 		op.runMacro(macro, node);
 		
 		runButton.setEnabled(true);

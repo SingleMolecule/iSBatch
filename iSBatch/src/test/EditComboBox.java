@@ -8,7 +8,6 @@ import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.print.attribute.TextSyntax;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -31,7 +30,7 @@ public class EditComboBox {
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     Container contentPane = frame.getContentPane();
 
-    final JComboBox comboBox = new JComboBox(labels);
+    final JComboBox<String> comboBox = new JComboBox<String>(labels);
     comboBox.setMaximumRowCount(5);
     comboBox.setEditable(true);
     contentPane.add(comboBox, BorderLayout.NORTH);

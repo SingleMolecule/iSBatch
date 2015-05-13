@@ -28,7 +28,6 @@ import model.OperationNode;
 import model.Root;
 import model.Sample;
 import operations.Operation;
-import operations.cellIntensity.CellIntensityGUI;
 import table.ResultsTableSorter;
 
 // TODO: Auto-generated Javadoc
@@ -48,9 +47,6 @@ public class Tracking implements Operation {
 	
 	/** The tags. */
 	private ArrayList<String> tags;
-	
-	/** The maxdistance. */
-	private int maxdistance;
 	
 	/** The look ahead. */
 	private int lookAhead = 1;
@@ -117,7 +113,6 @@ public class Tracking implements Operation {
 	 *
 	 * @param currentNode the current node
 	 */
-	@SuppressWarnings("static-access")
 	private void track(Node currentNode) {
 		// Open the results Table with peaks
 		// Just peaks inside cells

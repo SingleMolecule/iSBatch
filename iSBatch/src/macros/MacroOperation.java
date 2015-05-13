@@ -22,16 +22,34 @@ import model.OperationNode;
 import model.Root;
 import model.Sample;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class MacroOperation.
+ */
 public class MacroOperation implements Operation {
 
+	/** The model. */
 	private DatabaseModel model;
+	
+	/** The importer. */
 	private Importer importer;
 	
+	/**
+	 * Instantiates a new macro operation.
+	 *
+	 * @param model the model
+	 */
 	public MacroOperation(DatabaseModel model) {
 		this.model = model;
 	 	this.importer = new Importer(model);
 	}
 	
+	/**
+	 * Escape.
+	 *
+	 * @param str the str
+	 * @return the string
+	 */
 	public String escape(String str) {
 
 		str = str.replaceAll("\\\\", "\\\\\\\\");
@@ -43,6 +61,12 @@ public class MacroOperation implements Operation {
 		return str;
 	}
 
+	/**
+	 * Gets the argument.
+	 *
+	 * @param node the node
+	 * @return the argument
+	 */
 	public String getArgument(Node node) {
 
 		String argument = "";
@@ -63,6 +87,12 @@ public class MacroOperation implements Operation {
 
 	}
 
+	/**
+	 * Run macro.
+	 *
+	 * @param macro the macro
+	 * @param node the node
+	 */
 	public void runMacro(String macro, Node node) {
 
 		if (node.getType() == FileNode.type) {
@@ -121,57 +151,93 @@ public class MacroOperation implements Operation {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see context.ContextElement#getContext()
+	 */
 	@Override
 	public String[] getContext() {
 		return new String[]{ "All" };
 	}
 
+	/* (non-Javadoc)
+	 * @see operations.Operation#getName()
+	 */
 	@Override
 	public String getName() {
 		return "Run Macro";
 	}
 
+	/* (non-Javadoc)
+	 * @see operations.Operation#setup(model.Node)
+	 */
 	@Override
 	public boolean setup(Node node) {
 		new MacroDialog(null, model, node);
 		return false;
 	}
 
+	/* (non-Javadoc)
+	 * @see operations.Operation#finalize(model.Node)
+	 */
 	@Override
 	public void finalize(Node node) {
 	}
 
+	/* (non-Javadoc)
+	 * @see operations.Operation#getCreatedNodes()
+	 */
 	@Override
 	public Node[] getCreatedNodes() {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see operations.Operation#getParameters()
+	 */
 	@Override
 	public HashMap<String, String> getParameters() {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see operations.Operation#visit(model.Root)
+	 */
 	@Override
 	public void visit(Root root) {
 	}
 
+	/* (non-Javadoc)
+	 * @see operations.Operation#visit(model.Experiment)
+	 */
 	@Override
 	public void visit(Experiment experiment) {
 	}
 
+	/* (non-Javadoc)
+	 * @see operations.Operation#visit(model.Sample)
+	 */
 	@Override
 	public void visit(Sample sample) {
 	}
 
+	/* (non-Javadoc)
+	 * @see operations.Operation#visit(model.FieldOfView)
+	 */
 	@Override
 	public void visit(FieldOfView fieldOfView) {
 	}
 
+	/* (non-Javadoc)
+	 * @see operations.Operation#visit(model.FileNode)
+	 */
 	@Override
 	public void visit(FileNode fileNode) {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see operations.Operation#visit(model.OperationNode)
+	 */
 	@Override
 	public void visit(OperationNode operationNode) {
 

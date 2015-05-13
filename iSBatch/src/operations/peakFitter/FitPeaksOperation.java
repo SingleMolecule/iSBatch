@@ -56,12 +56,6 @@ public class FitPeaksOperation implements Operation {
 	/** The channel. */
 	private String channel;
 	
-	/** The use discoidal. */
-	private boolean useDiscoidal;
-	
-	/** The model. */
-	private DatabaseModel model;
-	
 	/** The preferences. */
 	iSBatchPreferences preferences;
 	
@@ -76,9 +70,6 @@ public class FitPeaksOperation implements Operation {
 	
 	/** The current count. */
 	int currentCount;
-	
-	/** The image tag. */
-	private String imageTag;
 	
 	/** The custom search. */
 	private String customSearch;
@@ -101,7 +92,6 @@ public class FitPeaksOperation implements Operation {
 	 * @param treeModel the tree model
 	 */
 	public FitPeaksOperation(DatabaseModel treeModel) {
-		this.model = treeModel;
 	}
 
 	/** The Constant SIGMA_TO_FWHM. */
@@ -369,17 +359,6 @@ public class FitPeaksOperation implements Operation {
 	}
 
 	/**
-	 * Peaks inside cells.
-	 *
-	 * @param imp the imp
-	 * @return the results table
-	 */
-	private ResultsTable peaksInsideCells(ImagePlus imp) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
 	 * Visit.
 	 *
 	 * @param experiment the experiment
@@ -457,31 +436,6 @@ public class FitPeaksOperation implements Operation {
 	public HashMap<String, String> getParameters() {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	/**
-	 * Parses the double.
-	 *
-	 * @param str the str
-	 * @return the double
-	 * @throws NumberFormatException the number format exception
-	 */
-	private double parseDouble(String str) throws NumberFormatException {
-		double toReturn = 0;
-		// System.out.println(str);
-		if (!str.equalsIgnoreCase("") || !str.equals(null)) {
-			try {
-				toReturn = Double.parseDouble(str);
-				// System.out.println("Value parsed :" + toReturn);
-			} catch (NumberFormatException ex) {
-				System.err.println("Ilegal input");
-				toReturn = 0;
-				// Discard input or request new input ...
-				// clean up if necessary
-			}
-		}
-
-		return toReturn;
 	}
 
 	/**

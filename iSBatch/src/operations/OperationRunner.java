@@ -17,9 +17,6 @@ import model.OperationNode;
  */
 public class OperationRunner implements Runnable {
 
-	/** The model. */
-	private DatabaseModel model;
-	
 	/** The operation. */
 	private Operation operation;
 	
@@ -37,8 +34,6 @@ public class OperationRunner implements Runnable {
 		super();
 		this.operation = operation;
 		this.node = node;
-		this.model = model;
-		
 		new Thread(this).start();
 	}
 

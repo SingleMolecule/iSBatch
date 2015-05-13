@@ -6,8 +6,6 @@ package operations.diffusion;
 
 import ij.gui.PolygonRoi;
 import ij.measure.ResultsTable;
-import ij.plugin.frame.RoiManager;
-
 import java.awt.Color;
 import java.awt.Polygon;
 import java.awt.geom.Rectangle2D;
@@ -209,18 +207,19 @@ public class DiffusioOperation implements Operation {
 			}
 			
 			
+			boolean showRawValues = false;
 			// show raw values
 			if (showRawValues) {
-				ResultsTable rawTable = new ResultsTable();
+				ResultsTable rawTable1 = new ResultsTable();
 				
 				for (int i = 0; i < trajectories.size(); i++) {
-					rawTable.incrementCounter();
-					rawTable.addValue("trajectory", trajectories.get(i));
-					rawTable.addValue("dt", deltat.get(i) * timeInterval);
-					rawTable.addValue("sd", displacementsSq.get(i) * pixelSize * pixelSize);
+					rawTable1.incrementCounter();
+					rawTable1.addValue("trajectory", trajectories.get(i));
+					rawTable1.addValue("dt", deltat.get(i) * timeInterval);
+					rawTable1.addValue("sd", displacementsSq.get(i) * pixelSize * pixelSize);
 				}
 				
-				rawTable.show("MSD - Raw Values");
+				rawTable1.show("MSD - Raw Values");
 			}
 			
 			
@@ -323,9 +322,9 @@ public class DiffusioOperation implements Operation {
 			rawTable.saveAs(currentNode.getOutputFolder() + File.separator + currentNode.getName()
 					+ "DiffusionRaw.csv");
 
-		} catch (IOException e) {
+		} catch (IOException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e1.printStackTrace();
 		}
 
 		table.reset();

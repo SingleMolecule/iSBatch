@@ -21,17 +21,42 @@ import javax.swing.JTextField;
 
 import model.Sample;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class SampleDialog.
+ */
 public class SampleDialog extends JDialog implements ActionListener {
+	
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/** The sample. */
 	private Sample sample;
+	
+	/** The ok button. */
 	private JButton okButton = new JButton("Ok");
+	
+	/** The cancel button. */
 	private JButton cancelButton = new JButton("Cancel");
+	
+	/** The name text field. */
 	private JTextField nameTextField = new JTextField(20);
+	
+	/** The folder text field. */
 	private JTextField folderTextField = new JTextField(20);
+	
+	/** The choose button. */
 	private JButton chooseButton = new JButton("Choose");
+	
+	/** The canceled. */
 	private boolean canceled = false;
 	
+	/**
+	 * Instantiates a new sample dialog.
+	 *
+	 * @param parent the parent
+	 * @param sample the sample
+	 */
 	public SampleDialog(Frame parent, Sample sample) {
 		super(parent, "Sample", true);
 
@@ -86,6 +111,9 @@ public class SampleDialog extends JDialog implements ActionListener {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == okButton) {
@@ -108,6 +136,11 @@ public class SampleDialog extends JDialog implements ActionListener {
 		}
 	}
 	
+	/**
+	 * Checks if is canceled.
+	 *
+	 * @return true, if is canceled
+	 */
 	public boolean isCanceled() {
 		return canceled;
 	}
