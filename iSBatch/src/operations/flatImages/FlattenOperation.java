@@ -1,6 +1,15 @@
-/*
- * 
- */
+/************************************************************************
+ * 				iSBatch  Copyright (C) 2015  							*
+ *		Victor E. A. Caldas -  v.e.a.caldas at rug.nl					*
+ *		C. Michiel Punter - c.m.punter at rug.nl						*
+ *																		*
+ *	This program is distributed in the hope that it will be useful,		*
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of		*
+ * 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the		*
+ *	GNU General Public License for more details.						*
+ *	You should have received a copy of the GNU General Public License	*
+ *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ***********************************************************************/
 package operations.flatImages;
 
 import java.io.File;
@@ -38,11 +47,11 @@ public class FlattenOperation implements Operation {
 	
 	/** The channels. */
 	private String[] channels = new String[] {
-			"acquisition",
+			"Acquisition",
 			"Bright Field",
-			"red",
-			"green",
-			"blue",
+			"Red",
+			"Green",
+			"Blue",
 	};
 			
 	/** The channel. */
@@ -169,8 +178,8 @@ public class FlattenOperation implements Operation {
 //		int option = fileChooser.showOpenDialog(null);
 //				
 //		if (option == JFileChooser.APPROVE_OPTION) {
-			
-			backgroundImage = IJ.openImage(node.getBeamProfile(channel));//IJ.openImage(fileChooser.getSelectedFile().getPath());
+		backgroundImage = node.getBeamProfileAsImage(channel);
+		
 		if(backgroundImage == null)	{
 			return false;
 		}

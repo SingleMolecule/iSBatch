@@ -1,6 +1,15 @@
-/**
- * 
- */
+/************************************************************************
+ * 				iSBatch  Copyright (C) 2015  							*
+ *		Victor E. A. Caldas -  v.e.a.caldas at rug.nl					*
+ *		C. Michiel Punter - c.m.punter at rug.nl						*
+ *																		*
+ *	This program is distributed in the hope that it will be useful,		*
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of		*
+ * 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the		*
+ *	GNU General Public License for more details.						*
+ *	You should have received a copy of the GNU General Public License	*
+ *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ***********************************************************************/
 package operations.flatImages;
 
 import ij.IJ;
@@ -44,6 +53,7 @@ public class SetBackGround implements Operation {
 	/** The image tag. */
 	private ArrayList<String> imageTag;
 
+	/** The image path. */
 	private String imagePath = "";
 
 	/**
@@ -124,7 +134,7 @@ public class SetBackGround implements Operation {
 	@Override
 	public void finalize(Node node) {
 		System.out.println("Operation finalized");
-
+		LogPanel.log("Background image created and stored.");
 	}
 
 	/*
@@ -182,6 +192,9 @@ public class SetBackGround implements Operation {
 			LogPanel.log("Debug info: Average Images");
 			ArrayList<Node> filenodes = node.getDescendents(new GenericFilter(
 					channel, imageTag, null, null));
+			if(filenodes.size() == 0){
+				LogPanel.log("No image found for averaging");
+			}
 //			ArrayList<Node> filenodes = node.getDescendents(new GenericFilter(
 //					channel, imageTag));
 			// get ImageStack from the ArrayList
@@ -217,9 +230,11 @@ public class SetBackGround implements Operation {
 		projector.doProjection();
 		File folder = new File(node.getOutputFolder());
 		folder.mkdirs();
-
-		IJ.saveAsTiff(projector.getProjection(), node.getOutputFolder()
+	
+		File f = new File(node.getOutputFolder()
 				+ File.separator + imp.getTitle());
+		
+		IJ.saveAsTiff(projector.getProjection(), f.getAbsolutePath());
 		node.getProperties().put(channel + "_BeamProfile",
 				node.getOutputFolder() + File.separator + imp.getTitle());
 	}
