@@ -24,22 +24,26 @@ import java.util.Map;
 public class Metadata {
 	
 	/** The metadata. */
-	private Map<Object, Object> metadata;
+	private Map<String, Object> metadata;
 	
 	/**
 	 * Instantiates a new metadata.
 	 *
 	 * @param metadata the metadata
 	 */
-	public Metadata(Map<?, ?> metadata){
+	public Metadata(Map<String, Object> metadata){
 		if(metadata==null){
-			this.metadata = new HashMap<Object, Object>();
+			this.metadata = new HashMap<String, Object>();
 		}
 		else{
-			this.metadata = new HashMap<Object, Object>(metadata);
+			this.metadata = new HashMap<String, Object>(metadata);
 		}
 	}
 	
+	public Metadata() {
+		this.metadata = new HashMap<String, Object>();
+	}
+
 	/**
 	 * Gets the property.
 	 *
@@ -55,7 +59,7 @@ public class Metadata {
 	 *
 	 * @return the properties
 	 */
-	public Map<Object, Object> getProperties(){
+	public Map<String, Object> getProperties(){
 		return metadata;
 	}
 	
@@ -66,7 +70,7 @@ public class Metadata {
 	 * @return true, if successful
 	 */
 	public boolean matches(Metadata otherProperties){
-		Iterator<Object> i = ((Map<Object, Object>) otherProperties.getProperties()).keySet().iterator(); i.hasNext(); {
+		Iterator<String> i = ((Map<String, Object>) otherProperties.getProperties()).keySet().iterator(); i.hasNext(); {
 		      String propertyName = (String)i.next();
 		      if (!metadata.get(propertyName).equals(
 		    		  otherProperties.getProperty(propertyName))) {

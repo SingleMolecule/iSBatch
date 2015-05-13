@@ -12,10 +12,18 @@
  ***********************************************************************/
 package model;
 
+import ij.IJ;
+import ij.ImagePlus;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
+import javax.swing.JFileChooser;
+
+import model.parameters.Channel;
+import model.parameters.NodeType;
 import context.ContextElement;
 import filters.NodeFilterInterface;
 import operations.OperationElement;
@@ -36,6 +44,8 @@ public abstract class Node implements OperationElement, ContextElement,
 	/** The type. */
 	private String type;
 
+	public NodeType nodeType;
+	
 	/** The properties. */
 	private HashMap<String, String> properties = new HashMap<String, String>();
 
@@ -78,6 +88,15 @@ public abstract class Node implements OperationElement, ContextElement,
 		this.type = type;
 	}
 	
+	public Node(Node parent, NodeType nodeType) {
+		super();
+		this.parent = parent;
+		this.nodeType = nodeType;
+		this.type = nodeType.toString();
+
+	}
+	
+	
 	/**
 	 * Instantiates a new node.
 	 *
@@ -91,6 +110,15 @@ public abstract class Node implements OperationElement, ContextElement,
 		this.type = type;
 		this.metadata = metadata;
 	}
+	
+	public Node(Node parent, NodeType nodeType, Metadata metadata) {
+		super();
+		this.type = nodeType.toString();
+		this.parent = parent;
+		this.nodeType = nodeType;
+		this.metadata = metadata;
+	}
+	
 
 	/**
 	 * Gets the parent.
@@ -120,6 +148,8 @@ public abstract class Node implements OperationElement, ContextElement,
 
 		return type;
 	}
+	
+	
 
 	/**
 	 * Sets the type.
@@ -179,7 +209,7 @@ public abstract class Node implements OperationElement, ContextElement,
 	 */
 	@Override
 	public String[] getContext() {
-		return new String[] { type, "All" };
+		return new String[]{ type, "All" };
 	}
 
 	/**
@@ -338,7 +368,7 @@ public abstract class Node implements OperationElement, ContextElement,
 	 * @return the beam profile
 	 */
 	public String getBeamProfile(String channel) {
-		return this.getProperty(channel + "_BeamProfile");
+		return getProperty(channel + "_BeamProfile");
 	}
 
 	/**
@@ -401,4 +431,30 @@ public abstract class Node implements OperationElement, ContextElement,
 	public Metadata getMetadata(){
 		return metadata;
 	}
+	
+	public ImagePlus getBeamProfileAsImage(String channel){
+		ImagePlus imp = null;
+		System.out.println("Background Image: " + getBeamProfile(channel));
+		if(!getBeamProfile(channel).isEmpty()){
+			File f = new File(getBeamProfile(channel));
+			imp = new ImagePlus(f.getAbsolutePath());
+		}
+		else{
+			JFileChooser fileChooser = new JFileChooser(getProperty("folder"));
+			fileChooser.setDialogTitle("Select the Bright Field Image");
+			fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+			int option = fileChooser.showOpenDialog(null);
+					
+			if (option == JFileChooser.APPROVE_OPTION)
+				imp = IJ.openImage(fileChooser.getSelectedFile().getPath());
+			}
+		return imp;
+		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void addProperty(String string, Object obj){
+
+	}
+	
 }

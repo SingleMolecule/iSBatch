@@ -15,6 +15,8 @@ package model;
 import java.io.File;
 import java.util.ArrayList;
 
+import model.parameters.Channel;
+
 // TODO: Auto-generated Javadoc
 /**
  * The importer class takes care of importing measurement data. Depending on the
@@ -221,25 +223,38 @@ public class Importer {
 	public void importFile(Node node, File file) {
 		
 		FileNode fileNode = new FileNode(node);
-
+		@SuppressWarnings("unused")
+		Channel channelType = null;
 		String channel = "";
 		String name = file.getName().toLowerCase();
 
-		if (name.matches(acqRegEx))
-			channel = "acquisition";
-		else if (name.matches(bfRegEx))
+		if (name.matches(acqRegEx)){
+			channel = "Acquisition"; 
+			channelType = Channel.ACQUISITION;
+		}
+			
+		else if (name.matches(bfRegEx)){
 			channel = "Bright Field";
-		else if (name.matches(redRegEx))
-			channel = "red";
-		else if (name.matches(greenRegEx))
-			channel = "green";
-		else if (name.matches(blueRegEx))
-			channel = "blue";
+			channelType = Channel.BRIGHT_FIELD;
+		}
+		else if (name.matches(redRegEx)){
+			channel = "Red";
+			channelType = Channel.RED;
+		}
+		else if (name.matches(greenRegEx)){
+			channel = "Green";
+			channelType = Channel.GREEN;
+		}
+		else if (name.matches(blueRegEx)){
+			channel = "Blue";
+			channelType = Channel.BLUE;
+		}
 		
 		fileNode.setProperty("channel", channel);
 		fileNode.setProperty("name", file.getName());
 		fileNode.setProperty("path", file.getPath());
-
+		fileNode.addProperty("channelType", channelType);
+		
 		model.addNode(node, fileNode);
 	}
 	

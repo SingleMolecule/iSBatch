@@ -12,14 +12,10 @@
  ***********************************************************************/
 package model;
 
-import ij.IJ;
-
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.Map.Entry;
+
+import model.parameters.NodeType;
 
 import org.tmatesoft.sqljet.core.SqlJetException;
 import org.tmatesoft.sqljet.core.SqlJetTransactionMode;
@@ -27,96 +23,78 @@ import org.tmatesoft.sqljet.core.table.ISqlJetCursor;
 import org.tmatesoft.sqljet.core.table.ISqlJetTable;
 import org.tmatesoft.sqljet.core.table.SqlJetDb;
 
-import utils.SQLReader;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class Database.
- */
 public class Database {
 
 	/** The database. */
 	private SqlJetDb database;
+	private File file;
 
 	// private static File defaultdb = new File("src//model//template.db");
 	/**
 	 * Instantiates a new database.
 	 *
-	 * @param file the file
-	 * @throws SqlJetException the sql jet exception
+	 * @param file
+	 *            the file
+	 * @throws SqlJetException
+	 *             the sql jet exception
 	 */
 	public Database(File file) throws SqlJetException {
-		
+		this.file = file;
+
 		if (!file.exists()) {
-	
 			database = SqlJetDb.open(file, true);
-			IJ.showMessage("Open File");
-			//createTablesFromFile();
-			
-			createTables();
+//			createTablesFromFile();
+			 createTables();
 
 		}
-		else{
-			database = SqlJetDb.open(file, true);
-		}
+
+		database = SqlJetDb.open(file, true);
 
 	}
 
 	/**
 	 * Creates the tables from file.
 	 *
-	 * @throws SqlJetException the sql jet exception
+	 * @throws SqlJetException
+	 *             the sql jet exception
 	 */
-	private void createTablesFromFile() throws SqlJetException {
-		database.getOptions().setAutovacuum(true);
-		database.beginTransaction(SqlJetTransactionMode.WRITE);
-		database.getOptions().setUserVersion(1);
-		
+//	private void createTablesFromFile() throws SqlJetException {
+//
+//		database.getOptions().setAutovacuum(true);
+//		database.beginTransaction(SqlJetTransactionMode.WRITE);
+//		database.getOptions().setUserVersion(1);
 //		File test = new File("src//model//template");
-		
-//		InputStream is = this.getClass().getResourceAsStream("src//model//template");
-//		File test = new File(is);
-		
-		InputStream is = getClass().getResourceAsStream("/template.txt");
-		IJ.showMessage("Try stream3");
-//		URL urlToDictionary = this.getClass().getResource("/template.txt");
-//		IJ.showMessage(urlToDictionary.getFile());
-
-	
-		
-		InputStreamReader isr = new InputStreamReader(is);
-		BufferedReader br = new BufferedReader(isr);
-		
-//		IJ.showMessage(test.getAbsolutePath());
-		SQLReader reader = new SQLReader();
-		ArrayList<String> listOfQueries = reader.createQueries(br);
-
-		for (String string : listOfQueries) {
-			IJ.showMessage(string);
-
-			if (string.contains("CREATE TABLE")) {
-				
-				
-				database.createTable(string);
-
-			}
-			if (string.contains("CREATE INDEX")) {
-				System.out.println("Creating index");
-				database.createIndex(string);
-
-			} else {
-				System.out.println(string);
-			}
-
-		}
-		database.commit();
-
-	}
+//
+//		SQLReader reader = new SQLReader();
+//		ArrayList<String> listOfQueries = reader.createQueries(test
+//				.getAbsolutePath());
+//
+//		for (String string : listOfQueries) {
+//
+//			if (string.contains("CREATE TABLE")) {
+//				System.out.println("Creating table");
+//				database.createTable(string);
+//
+//			}
+//			if (string.contains("CREATE INDEX")) {
+//				System.out.println("Creating index");
+//				database.createIndex(string);
+//
+//			} else {
+//				System.out.println(string);
+//			}
+//
+//		}
+//		database.commit();
+//
+//	}
 
 	/**
 	 * The main method.
 	 *
-	 * @param args the arguments
+	 * @param args
+	 *            the arguments
 	 */
 	public static void main(String[] args) {
 
@@ -125,7 +103,8 @@ public class Database {
 	/**
 	 * Creates the tables.
 	 *
-	 * @throws SqlJetException the sql jet exception
+	 * @throws SqlJetException
+	 *             the sql jet exception
 	 */
 	public void createTables() throws SqlJetException {
 
@@ -157,8 +136,10 @@ public class Database {
 	/**
 	 * Write.
 	 *
-	 * @param root the root
-	 * @throws SqlJetException the sql jet exception
+	 * @param root
+	 *            the root
+	 * @throws SqlJetException
+	 *             the sql jet exception
 	 */
 	public void write(Node root) throws SqlJetException {
 		database.beginTransaction(SqlJetTransactionMode.WRITE);
@@ -174,9 +155,12 @@ public class Database {
 	/**
 	 * Write.
 	 *
-	 * @param node the node
-	 * @param parentId the parent id
-	 * @throws SqlJetException the sql jet exception
+	 * @param node
+	 *            the node
+	 * @param parentId
+	 *            the parent id
+	 * @throws SqlJetException
+	 *             the sql jet exception
 	 */
 	public void write(Node node, long parentId) throws SqlJetException {
 
@@ -199,7 +183,8 @@ public class Database {
 	 * Read.
 	 *
 	 * @return the node
-	 * @throws SqlJetException the sql jet exception
+	 * @throws SqlJetException
+	 *             the sql jet exception
 	 */
 	public Node getRoot() throws SqlJetException {
 
@@ -223,9 +208,12 @@ public class Database {
 	/**
 	 * Read.
 	 *
-	 * @param parentNode the parent node
-	 * @param parentId the parent id
-	 * @throws SqlJetException the sql jet exception
+	 * @param parentNode
+	 *            the parent node
+	 * @param parentId
+	 *            the parent id
+	 * @throws SqlJetException
+	 *             the sql jet exception
 	 */
 	public void read(Node parentNode, long parentId) throws SqlJetException {
 
@@ -239,7 +227,7 @@ public class Database {
 			String type = cursor.getString("type");
 			Node node = createNode(parentNode, type);
 			node.setProperty("type", type);
-			
+
 			// read properties
 			table = database.getTable("node_properties");
 			ISqlJetCursor propertyCursor = table.lookup("node_index", id);
@@ -263,52 +251,79 @@ public class Database {
 	/**
 	 * Creates the node.
 	 *
-	 * @param parent the parent
-	 * @param type the type
+	 * @param parent
+	 *            the parent
+	 * @param type
+	 *            the type
 	 * @return the node
 	 */
-//Java 1.7+ version
-//	public Node createNode(Node parent, String type) {
-//
-//		switch (type) {
-//		case Root.type:
-//			return new Root(database.getFile().getParent());
-//		case Experiment.type:
-//			return new Experiment((Root) parent);
-//		case Sample.type:
-//			return new Sample((Experiment) parent);
-//		case FieldOfView.type:
-//			return new FieldOfView((Sample) parent);
-//		case FileNode.type:
-//			return new FileNode(parent);
-//		}
-//
-//		return null;
-//	}
-//	
-	
+	// Java 1.7+ version
+	// public Node createNode(Node parent, String type) {
+	//
+	// switch (type) {
+	// case Root.type:
+	// return new Root(database.getFile().getParent());
+	// case Experiment.type:
+	// return new Experiment((Root) parent);
+	// case Sample.type:
+	// return new Sample((Experiment) parent);
+	// case FieldOfView.type:
+	// return new FieldOfView((Sample) parent);
+	// case FileNode.type:
+	// return new FileNode(parent);
+	// }
+	//
+	// return null;
+	// }
+	//
+
 	public Node createNode(Node parent, String type) {
-		if(type.equalsIgnoreCase(Root.type)) {
-			return new Root(database.getFile().getParent());}
-		
-		else if(type.equalsIgnoreCase(Experiment.type)) {
-			return new Experiment((Root) parent);}
-		
-		else if(type.equalsIgnoreCase(Sample.type)) {
-			return new Sample((Experiment) parent);}
-		
-		else if(type.equalsIgnoreCase(FieldOfView.type))	{
-			return new FieldOfView((Sample) parent);}
-		else if(type.equalsIgnoreCase(FileNode.type))	{
-			return new FileNode(parent);
+		if (type.equalsIgnoreCase(Root.type)) {
+			return new Root(database.getFile().getParent(), file.getName());
 		}
-		else if (type.equalsIgnoreCase(OperationNode.type)) {
+
+		else if (type.equalsIgnoreCase(Experiment.type)) {
+			return new Experiment((Root) parent);
+		}
+
+		else if (type.equalsIgnoreCase(Sample.type)) {
+			return new Sample((Experiment) parent);
+		}
+
+		else if (type.equalsIgnoreCase(FieldOfView.type)) {
+			return new FieldOfView((Sample) parent);
+		} else if (type.equalsIgnoreCase(FileNode.type)) {
+			return new FileNode(parent);
+		} else if (type.equalsIgnoreCase(OperationNode.type)) {
 			return new OperationNode(parent);
 		}
+
+		return null;
+	}
+	
+	public Node createNode(Node parent, NodeType nodeType) {
+		if(nodeType == NodeType.ROOT) {
+			return new Root(database.getFile().getParent(),file.getName());}
+		
+		else if(nodeType == NodeType.EXPERIMENT) {
+			return new Experiment((Root) parent);}
+		
+		else if(nodeType == NodeType.SAMPLE) {
+			return new Sample((Experiment) parent);}
+		
+		else if(nodeType == NodeType.FOV)	{
+			return new FieldOfView((Sample) parent);}
+		else if(nodeType == NodeType.FILE)	{
+			return new FileNode(parent);
+		}
+//		else if (nodeType == OperationNode.type) {
+//			return new OperationNode(parent);
+//		}
 		
 
 		return null;
 	}
+
 	
 
 }
