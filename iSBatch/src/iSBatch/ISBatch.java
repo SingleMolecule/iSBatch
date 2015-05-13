@@ -45,8 +45,8 @@ import org.tmatesoft.sqljet.core.SqlJetException;
 
 import model.Database;
 import model.DatabaseModel;
-import model.FileNode;
 import model.Node;
+import model.parameters.NodeType;
 import context.ContextHandler;
 import operations.cellIntensity.CellIntensity;
 import operations.cellOutlines.CellOutlines;
@@ -472,8 +472,7 @@ public class ISBatch implements TreeSelectionListener {
 				new LocationMaps(treeModel),
 				new ChangePoint(treeModel),
 //				new DebugProperties(treeModel),
-//				new FilterTestOperation(treeModel)
-//				,
+//				new FilterTestOperation(treeModel),
 				 };
 	}
 
@@ -498,7 +497,7 @@ public class ISBatch implements TreeSelectionListener {
 
 			@Override
 			public boolean accept(Node node) {
-				return node.getType().equals(FileNode.type);
+				return node.getType().equals(NodeType.FILE);
 			}
 
 		};
