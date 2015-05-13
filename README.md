@@ -31,6 +31,8 @@ The menus will automatically appear as "Single Molecule Biophysics".
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+## Contact us!
+[Contact Form](https://vcaldas.wufoo.com/forms/m101ztdq04mv8o8/)
 
 ## Contributing
 
