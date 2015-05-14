@@ -279,6 +279,7 @@ public class ISBatch implements TreeSelectionListener {
 			Desktop.getDesktop().browse(
 					new URL("https://github.com/SingleMolecule/iSBatch").toURI());
 		} catch (Exception e) {
+			LogPanel.log(e.getMessage());
 		}
 
 	}
@@ -286,8 +287,9 @@ public class ISBatch implements TreeSelectionListener {
 	protected void showHelp() {
 		try {
 			Desktop.getDesktop().browse(
-					new URL("http://www.google.com").toURI());
+					new URL("https://github.com/SingleMolecule/iSBatch/wiki").toURI());
 		} catch (Exception e) {
+			LogPanel.log(e.getMessage());
 		}
 
 	}
