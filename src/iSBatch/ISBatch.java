@@ -5,6 +5,7 @@ import gui.DatabaseDialog;
 import gui.DatabaseTreeCellRenderer;
 import gui.LogPanel;
 import gui.OperationButton;
+import iSBatch.iSBatchPreferences;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.measure.ResultsTable;
@@ -109,7 +110,6 @@ public class ISBatch implements TreeSelectionListener {
 	private JMenuItem sourceMenuItem;
 	
 	public static void main(String[] args) {
-		System.out.println("start");
 		getInstance();
 	}
 
@@ -174,7 +174,7 @@ public class ISBatch implements TreeSelectionListener {
 		createMenus();
 		frame.setLayout(new BorderLayout());
 		frame.add(treePanel, BorderLayout.WEST);
-		frame.add(new JScrollPane(operationsPanel), BorderLayout.EAST);
+		frame.add(new JScrollPane(operationsPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER), BorderLayout.EAST);
 		frame.add(LogPanel.getInstance(), BorderLayout.SOUTH);
 		frame.add(listPanel, BorderLayout.CENTER);
 		frame.setSize(800, 500);
@@ -374,6 +374,7 @@ public class ISBatch implements TreeSelectionListener {
 		gbc.insets = new Insets(5, 5, 5, 5);
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 
+		
 		for (Operation operation : getOperations()) {
 
 			OperationButton opButton = new OperationButton(treeModel, operation);
@@ -386,9 +387,7 @@ public class ISBatch implements TreeSelectionListener {
 		
 		// add all the operations that are specified as macros
 		//
-		
-		
-		
+				
 		return operationsPanel;
 		
 	}

@@ -40,7 +40,7 @@ public class Root extends Node {
 		if (!new File(outputFolder).exists())
 			new File(outputFolder).mkdirs();
 		
-		setProperty("name", "Database");
+		setProperty("name", name);
 		setProperty("outputFolder", outputFolder);
 	}
 	

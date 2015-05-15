@@ -12,7 +12,10 @@
  ***********************************************************************/
 package model;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import ij.IJ;
 import ij.ImagePlus;
@@ -34,17 +37,6 @@ public class FileNode extends Node implements FileInterface{
 	/** The channel1. */
 	Channel channel1 = null;
 	
-	/** The tag. */
-	private ArrayList<String> tag = new ArrayList<String>();
-	
-	/** The extension. */
-	private String extension;
-	
-	
-	
-	
-	
-	
 	/**
 	 * Instantiates a new file node.
 	 *
@@ -54,37 +46,7 @@ public class FileNode extends Node implements FileInterface{
 		super(parent, type);
 	}
 
-	/**
-	 * Adds the tag.
-	 *
-	 * @param tag the tag
-	 */
-	public void addTag(String tag){
-		this.tag.add(tag);
-		
-	}
 	
-	/**
-	 * Sets the extension.
-	 *
-	 * @param extention the new extension
-	 */
-	public void setExtension(String extention){
-		this.extension = extention;
-	}
-	
-	/**
-	 * Gets the extension.
-	 *
-	 * @return the extension
-	 */
-	public String getExtension(){
-		return extension;
-	}
-
-	
-	
-
 	/**
 	 * Accept.
 	 *
@@ -127,12 +89,8 @@ public class FileNode extends Node implements FileInterface{
 	 * @return the channel
 	 */
 	public String getChannel() {
-		if (channel == null) {
-			this.channel = getProperty("channel");
-//			this.channel1 = new Channel(getProperty("channel"));
-		}
-		
-		return channel;
+		String channel = getProperty("channel");
+		return channel != null ? channel : "";
 	}
 
 	/**
@@ -186,25 +144,6 @@ public class FileNode extends Node implements FileInterface{
 	}
 
 	/**
-	 * Gets the tag.
-	 *
-	 * @return the tag
-	 */
-	public ArrayList<String> getTag() {
-		
-		if(this.tag.isEmpty()){
-			this.tag = new ArrayList<String>();
-			this.tag.add("Raw");
-		}
-		if(this.getName().contains("flat")){
-			this.tag.add("Flat");
-		}
-		//check if there are underscores
-
-		return this.tag;
-	}
-	
-	/**
 	 * Count occurrences.
 	 *
 	 * @param haystack the haystack
@@ -237,7 +176,46 @@ public class FileNode extends Node implements FileInterface{
 		return null;
 	}
 	
-
+	/**
+	 * Extracts the filename from the file path.
+	 * 
+	 * @return The filename of the file to which this file node refers.
+	 */
+	public String getFilename() {
+		String path = getProperty("path");
+		return path != null ? new File(path).getName() : "";
+	}
 	
+	/**
+	 * Extracts the file extension from the file path.
+	 * 
+	 * @return The extension of the file to which this file node refers.
+	 */
+	public String getExtension() {
+		String filename = getFilename();
+		return filename.contains(".") ? filename.substring(filename.indexOf(".")) : "";
+	}
+	
+	/**
+	 * Get all the tags that are assigned to this file node. A tag is defined as '_tagname'.
+	 * A file node can have multiple tags, e.g. file_tag1_tag2_tag3.tif.
+	 * 
+	 * @return Tags that are assigned to this file node (which is specified by the filename)
+	 */
+	public ArrayList<String> getTags() {
+		
+		ArrayList<String> tags = new ArrayList<String>();
+		
+		String filename = getFilename();
+			
+		Pattern pattern = Pattern.compile("(?<=_)[a-zA-Z0-9]+");
+		Matcher matcher = pattern.matcher(filename);
+	
+		while (matcher.find())
+			tags.add(matcher.group());
+			
+		return tags;
+		
+	}
 	
 }

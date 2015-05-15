@@ -34,7 +34,7 @@ public class TreeGenerator {
 	 */
 	public static DatabaseModel generate(String outputFolder, String tempFolder, int size) {
 		
-		Root root = new Root(outputFolder);
+		Root root = new Root(outputFolder, "test");
 		DatabaseModel model = new DatabaseModel(root);
 		
 		Random random = new Random();
