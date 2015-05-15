@@ -109,6 +109,7 @@ public class ISBatch implements TreeSelectionListener {
 	private JMenuItem sourceMenuItem;
 	
 	public static void main(String[] args) {
+		System.out.println("start");
 		getInstance();
 	}
 
