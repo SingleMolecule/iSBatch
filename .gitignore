@@ -1,1 +1,5 @@
 /bin/
+/.externalToolBuilders/
+/.project
+/ISBatch_.jar
+/deps.jar
