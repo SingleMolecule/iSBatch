@@ -12,6 +12,14 @@
     The software is designed for rapid exploration of large datasets
     and it includes an internal SQLite database (http://sqljet.com/) for convenience.
 
+
+## Release and Night Build
+
+[Last Release](https://github.com/SingleMolecule/iSBatch/releases)
+
+[Night Build](https://github.com/SingleMolecule/iSBatch/raw/master/iSBatch/Nighty-Built-ISBatch_.jar)
+
+
 ## Installation
 
 	- Copy the iSBatch.jar file to the ImageJ/Plugins folder
