@@ -15,7 +15,6 @@ package model;
 import java.io.File;
 import java.util.Map.Entry;
 
-import model.parameters.NodeType;
 
 import org.tmatesoft.sqljet.core.SqlJetException;
 import org.tmatesoft.sqljet.core.SqlJetTransactionMode;
@@ -301,28 +300,28 @@ public class Database {
 		return null;
 	}
 	
-	public Node createNode(Node parent, NodeType nodeType) {
-		if(nodeType == NodeType.ROOT) {
-			return new Root(database.getFile().getParent(),file.getName());}
-		
-		else if(nodeType == NodeType.EXPERIMENT) {
-			return new Experiment((Root) parent);}
-		
-		else if(nodeType == NodeType.SAMPLE) {
-			return new Sample((Experiment) parent);}
-		
-		else if(nodeType == NodeType.FOV)	{
-			return new FieldOfView((Sample) parent);}
-		else if(nodeType == NodeType.FILE)	{
-			return new FileNode(parent);
-		}
-//		else if (nodeType == OperationNode.type) {
-//			return new OperationNode(parent);
+//	public Node createNode(Node parent, NodeType nodeType) {
+//		if(nodeType == NodeType.ROOT) {
+//			return new Root(database.getFile().getParent(),file.getName());}
+//		
+//		else if(nodeType == NodeType.EXPERIMENT) {
+//			return new Experiment((Root) parent);}
+//		
+//		else if(nodeType == NodeType.SAMPLE) {
+//			return new Sample((Experiment) parent);}
+//		
+//		else if(nodeType == NodeType.FOV)	{
+//			return new FieldOfView((Sample) parent);}
+//		else if(nodeType == NodeType.FILE)	{
+//			return new FileNode(parent);
 //		}
-		
-
-		return null;
-	}
+////		else if (nodeType == OperationNode.type) {
+////			return new OperationNode(parent);
+////		}
+//		
+//
+//		return null;
+//	}
 
 	
 

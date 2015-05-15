@@ -15,7 +15,6 @@ package model;
 import java.io.File;
 import java.util.ArrayList;
 
-import model.parameters.NodeType;
 import operations.Operation;
 
 
@@ -32,7 +31,6 @@ import operations.Operation;
 public class Root extends Node {
 
 	public static final String type = "Root";
-	public static final NodeType nodeType = NodeType.ROOT;
 	
 	public Root(String outputFolder, String name) {
 		super(null, type);

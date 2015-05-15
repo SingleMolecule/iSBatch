@@ -44,7 +44,6 @@ public abstract class Node implements OperationElement, ContextElement,
 	/** The type. */
 	private String type;
 
-	public NodeType nodeType;
 	
 	/** The properties. */
 	private HashMap<String, String> properties = new HashMap<String, String>();
@@ -54,6 +53,8 @@ public abstract class Node implements OperationElement, ContextElement,
 
 	/** The file. */
 	private File file;
+
+	private NodeType nodeType;
 
 	/**
 	 * Gets the cell roi path.
@@ -91,7 +92,7 @@ public abstract class Node implements OperationElement, ContextElement,
 	public Node(Node parent, NodeType nodeType) {
 		super();
 		this.parent = parent;
-		this.nodeType = nodeType;
+//		this.nodeType = nodeType;
 		this.type = nodeType.toString();
 
 	}
