@@ -1,5 +1,5 @@
 package iSBatch;
-// Comment
+
 import filters.NodeFilterInterface;
 import gui.DatabaseDialog;
 import gui.DatabaseTreeCellRenderer;
@@ -63,7 +63,7 @@ import operations.locationMaps.LocationMaps;
 import operations.microbeTrackerIO.MicrobeTrackerIO;
 import operations.peakFinder.FindPeaksOperation;
 import operations.peakFitter.FitPeaksOperation;
-
+ 
 public class ISBatch implements TreeSelectionListener {
 
 	private static ISBatch instance;
@@ -71,39 +71,19 @@ public class ISBatch implements TreeSelectionListener {
 	private Database database;
 	private DatabaseModel treeModel;
 	private ContextHandler contextHandler = new ContextHandler();
-
 	private Node selectedNode;
-
 	private JTree tree;
 	private DefaultListModel<Node> listModel = new DefaultListModel<Node>();
 	private JList<Node> list = new JList<Node>(listModel);
 	private JFrame frame = new JFrame("iSBatch");
 	private JPanel treeButtonspanel = new JPanel();
-	
 	private JMenu menu, preferences, about;
-
-	/** The menu bar. */
 	private JMenuBar menuBar;
-
-	/** The Newt menu item. */
 	private JMenuItem NewtMenuItem;
-
-	/** The Load menu item. */
 	private JMenuItem LoadMenuItem;
-
-	/** The save menu item. */
 	private JMenuItem saveMenuItem;
-
-	/** The save as menu item. */
-	// private JMenuItem saveAsMenuItem;
-
-	/** The prefs menu item. */
 	private JMenuItem prefsMenuItem;
-
-	/** The help menu item. */
 	private JMenuItem helpMenuItem;
-
-	/** The about menu item. */
 	private JMenuItem aboutMenuItem;
 	protected TreePath currentSelected;
 	protected Object oldSelectedPath;
