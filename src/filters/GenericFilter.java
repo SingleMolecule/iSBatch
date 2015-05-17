@@ -79,7 +79,7 @@ public class GenericFilter implements NodeFilterInterface {
 
 
 		boolean matchTag = false;
-		System.out.println("Matchtag" + matchTag);
+		System.out.println("Matchtag" + node.getTag());
 		System.out.println("//////");
 		System.out.println(tags.size());
 		System.out.println("/////");
@@ -89,12 +89,20 @@ public class GenericFilter implements NodeFilterInterface {
 		}
 		else{
 			System.out.println("convert fileNode");
+			
 			FileNode fNode = (FileNode) node;
-			System.out.println("Fnode Info: "+ fNode.getTag().get(0));
-			for (String currentTag : fNode.getTag()) {
-				if (tags.contains(currentTag)) {
-					matchTag = true;
-				}
+			System.out.println("convertion done");
+//			System.out.println("Fnode Info: "+ fNode.getTag().get(0));
+			if(fNode.getTag().size()==0 && tags.get(0).equalsIgnoreCase("Raw")){
+				matchTag = true;
+			}
+			else {
+				for (String currentTag : fNode.getTag()) {
+					if (tags.contains(currentTag)) {
+						matchTag = true;
+					}
+			}
+			
 			}
 		}
 		
