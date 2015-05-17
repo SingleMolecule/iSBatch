@@ -41,6 +41,7 @@ import javax.swing.DefaultComboBoxModel;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -277,8 +278,8 @@ public class SetBackgroundGui extends JDialog implements ActionListener {
 		// ArrayList<Node> images = node.getDescendents(imageFileNodeFilter);
 
 		
-		System.out.println("Parameters will be: " + channel + " , " + imagePath
-				+ " , " + method);
+		System.out.println("Parameters will be: " + channel + " , " + 
+				imageType + " , " + method);
 	}
 
 	/**
@@ -329,6 +330,8 @@ public class SetBackgroundGui extends JDialog implements ActionListener {
 			dispose();
 		} else if (e.getSource() == btnProcess) {
 			imagePath = pathToImage.getText();
+			this.method = (String) methodComboBox.getSelectedItem();
+			
 			run();
 			dispose();
 		} else if (e.getSource() == channelComboBox) {
@@ -338,8 +341,7 @@ public class SetBackgroundGui extends JDialog implements ActionListener {
 		} else if (e.getSource() == fileTypeComboBox) {
 			String foo = (String) fileTypeComboBox.getSelectedItem();
 			if (foo.equalsIgnoreCase("[File Type]")) {
-				
-				this.imageType = null;
+					this.imageType = null;
 			} else {
 				this.imageType = (String) fileTypeComboBox.getSelectedItem();
 			}		} else if (e.getSource() ==btnLoadImage){
@@ -386,8 +388,10 @@ public class SetBackgroundGui extends JDialog implements ActionListener {
 	 *
 	 * @return the image tag
 	 */
-	public String getImageTag() {
-		return imageType;
+	public ArrayList<String> getImageTag() {
+		ArrayList<String> temp = new ArrayList<String>();
+		temp.add(imageType);
+		return temp;
 	}
 	
 	/**

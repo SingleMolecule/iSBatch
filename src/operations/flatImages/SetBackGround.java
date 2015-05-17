@@ -113,7 +113,7 @@ public class SetBackGround implements Operation {
 		if (dialog.isCanceled())
 			return false;
 		this.channel = dialog.getChannel();
-		this.imageTag = dialog.getTags();
+		this.imageTag = dialog.getImageTag();
 		this.method = dialog.getMethod();
 		this.imagePath = dialog.getImagePath();
 
@@ -189,7 +189,7 @@ public class SetBackGround implements Operation {
 				LogPanel.log("Background set to channel " + channel);
 			}
 		} else if (method.equalsIgnoreCase("Average Images")) {
-			LogPanel.log("Debug info: Average Images");
+			System.out.println("Debug info: Average Images");
 			ArrayList<Node> filenodes = node.getDescendents(new GenericFilter(
 					channel, imageTag, null, null));
 			if(filenodes.size() == 0){
@@ -236,7 +236,7 @@ public class SetBackGround implements Operation {
 		
 		IJ.saveAsTiff(projector.getProjection(), f.getAbsolutePath());
 		node.getProperties().put(channel + "_BeamProfile",
-				node.getOutputFolder() + File.separator + imp.getTitle());
+				f.getAbsolutePath());
 	}
 
 	/**

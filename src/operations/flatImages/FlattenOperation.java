@@ -81,7 +81,7 @@ public class FlattenOperation implements Operation {
 			String ch = node.getProperty("channel");
 			
 			// check the channel of this file
-			if (ch == null || !ch.equals(channel))
+			if (ch == null || !ch.equalsIgnoreCase(channel))
 				return false;
 			
 			String path = node.getProperty("path");
