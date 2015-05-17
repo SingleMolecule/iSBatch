@@ -4,21 +4,13 @@
 package operations.diffusion;
 
 
-import ij.gui.PolygonRoi;
 import ij.measure.ResultsTable;
 import java.awt.Color;
-import java.awt.Polygon;
-import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
-
 import analysis.LevenbergMarquardt;
 import analysis.Plot;
 import filters.GenericFilter;
@@ -31,58 +23,26 @@ import model.OperationNode;
 import model.Root;
 import model.Sample;
 import operations.Operation;
-import operations.cellIntensity.CellIntensityGUI;
-import table.ResultsTableSorter;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class DiffusioOperation.
  */
 public class DiffusioOperation implements Operation {
-	
-	/** The dialog. */
 	private DiffusionOperationGUI dialog;
-	
-	/** The channel. */
 	private String channel;
-	
-	/** The custom search. */
 	private String customSearch;
-	
-	/** The tags. */
 	private ArrayList<String> tags;
-	
-	/** The maxdistance. */
 	private int maxdistance;
-	
-	/** The look ahead. */
 	private int lookAhead = 1;
-	
-	/** The max step size. */
 	private double maxStepSize = 8;
-	
-	/** The minimum width. */
 	private double minimumWidth = 0;
-	
-	/** The minimum height. */
 	private double minimumHeight = 0;
-	
-	/** The show trajectories. */
 	private boolean showTrajectories = true;
-	
-	/** The pixel size. */
 	private double pixelSize;
-	
-	/** The time interval. */
 	private double timeInterval;
-	
-	/** The Number of points. */
 	private int NumberOfPoints;
-	
-	/** The fit until. */
 	private double fitUntil;
-
-	/** The do average. */
 	private boolean doAverage;
 	
 	
