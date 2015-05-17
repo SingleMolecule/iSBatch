@@ -15,6 +15,8 @@
 
 ## Release and Night Build
 
+iSBatch development is happening quick! Check out the last release or try the very last version downloading the **Nightly build**
+
 [Last Release](https://github.com/SingleMolecule/iSBatch/releases)
 
 [Night Build](https://github.com/SingleMolecule/iSBatch/raw/master/iSBatch/Nighty-Built-ISBatch_.jar)
