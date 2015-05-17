@@ -50,7 +50,7 @@
 		</jar>
 		<!-- <copy file="ISBatch.jar" toDir="${pluginsDir}" /> -->
 		<copy file="ISBatch_.jar" toDir="C:\Program Files\ImageJ\plugins\jars" />
-		
+		<copy file="ISBatch_.jar" toDir="D:\Softwares\Fiji.app\plugins\jars" />
 	</target>
 	
 

@@ -51,7 +51,7 @@ public class ExperimentDialog extends JDialog implements ActionListener {
 	
 	/** The type combo box. */
 	private JComboBox<String> typeComboBox = new JComboBox<String>(
-			new String[] { "Time Sampling", "Time Lapse" });
+			new String[] { "Rapid Acquisition", "Time Lapse" });
 	
 	/** The canceled. */
 	private boolean canceled = false;
