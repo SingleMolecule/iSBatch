@@ -26,8 +26,9 @@ iSBatch development is happening quick! Check out the last release or try the ve
 
 	- Copy the iSBatch.jar file to the ImageJ/Plugins folder
 	- Go to Help>Refresh Menus or (better) restart ImageJ.
-	- Check the manual [here](http://singlemolecule.github.io/iSBatch/).
-	-
+
+Check the manual [here](https://singlemolecule.github.io/iSBatch).
+
 
 The menus will automatically appear as "Single Molecule Biophysics".
 
@@ -45,8 +46,7 @@ The menus will automatically appear as "Single Molecule Biophysics".
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-## Contact us!
-[Contact Form](https://vcaldas.wufoo.com/forms/m101ztdq04mv8o8/)
+## [Contact us!](https://vcaldas.wufoo.com/forms/m101ztdq04mv8o8/)
 
 ## Contributing
 
