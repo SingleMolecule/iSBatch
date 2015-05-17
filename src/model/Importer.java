@@ -254,7 +254,6 @@ public class Importer {
 		fileNode.setProperty("name", file.getName());
 		fileNode.setProperty("path", file.getPath());
 		fileNode.addProperty("channelType", channelType);
-		
 		model.addNode(node, fileNode);
 	}
 	

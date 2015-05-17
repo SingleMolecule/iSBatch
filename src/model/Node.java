@@ -34,26 +34,13 @@ import operations.OperationElement;
  */
 public abstract class Node implements OperationElement, ContextElement,
 		NodeInterface {
-
-	/** The metadata. */
 	private Metadata metadata;
-	
-	/** The parent. */
 	private Node parent;
-
-	/** The type. */
 	private String type;
-
-	
-	/** The properties. */
 	private HashMap<String, String> properties = new HashMap<String, String>();
-
-	/** The children. */
 	private ArrayList<Node> children = new ArrayList<Node>();
-
-	/** The file. */
 	private File file;
-
+	private ArrayList<String> tags = new ArrayList<String>();
 	private NodeType nodeType;
 
 	/**
@@ -390,8 +377,7 @@ public abstract class Node implements OperationElement, ContextElement,
 	 * @return the tag
 	 */
 	public ArrayList<String> getTag() {
-		System.out.println("does not apply to this level.");
-		return null;
+		return tags;
 	}
 
 	/**
@@ -435,7 +421,7 @@ public abstract class Node implements OperationElement, ContextElement,
 	
 	public ImagePlus getBeamProfileAsImage(String channel){
 		ImagePlus imp = null;
-		System.out.println("Background Image: " + getBeamProfile(channel));
+		System.out.println("Background Image: " + this.getBeamProfile(channel));
 		if(!getBeamProfile(channel).isEmpty()){
 			File f = new File(getBeamProfile(channel));
 			imp = new ImagePlus(f.getAbsolutePath());
@@ -457,5 +443,6 @@ public abstract class Node implements OperationElement, ContextElement,
 	public void addProperty(String string, Object obj){
 
 	}
+	
 	
 }

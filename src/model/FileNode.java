@@ -28,14 +28,10 @@ import operations.Operation;
  */
 public class FileNode extends Node implements FileInterface{
 	
-	/** The channel. */
-	String channel = null;
-	
-	/** The Constant type. */
+	private String channel = null;
 	public static final String type = "File";
-	
-	/** The channel1. */
-	Channel channel1 = null;
+	private Channel channel1 = null;
+	private ArrayList<String> tags = new ArrayList<String>();
 	
 	/**
 	 * Instantiates a new file node.
@@ -94,9 +90,9 @@ public class FileNode extends Node implements FileInterface{
 	}
 
 	/**
-	 * Gets the fo v name.
+	 * Gets the Field of View name.
 	 *
-	 * @return the fo v name
+	 * @return the Field of View name.
 	 */
 	public String getFoVName(){
 		return this.getParent().getName();
@@ -203,19 +199,20 @@ public class FileNode extends Node implements FileInterface{
 	 * @return Tags that are assigned to this file node (which is specified by the filename)
 	 */
 	public ArrayList<String> getTags() {
-		
-		ArrayList<String> tags = new ArrayList<String>();
-		
-		String filename = getFilename();
-			
-		Pattern pattern = Pattern.compile("(?<=_)[a-zA-Z0-9]+");
-		Matcher matcher = pattern.matcher(filename);
 	
-		while (matcher.find())
-			tags.add(matcher.group());
+//			
+//		String filename = getFilename();
+//			
+//		Pattern pattern = Pattern.compile("(?<=_)[a-zA-Z0-9]+");
+//		Matcher matcher = pattern.matcher(filename);
+//	
+//		while (matcher.find())
+//			tags.add(matcher.group());
 			
 		return tags;
 		
 	}
+
+
 	
 }
