@@ -37,15 +37,8 @@ import model.Root;
 import model.Sample;
 
 // TODO: Auto-generated Javadoc
-/**
- * The Class FlattenOperation.
- */
 public class FlattenOperation implements Operation {
-
-	/** The importer. */
 	private Importer importer;
-	
-	/** The channels. */
 	private String[] channels = new String[] {
 			"Acquisition",
 			"Bright Field",
@@ -54,19 +47,10 @@ public class FlattenOperation implements Operation {
 			"Blue",
 	};
 			
-	/** The channel. */
 	private String channel;
-	
-	/** The electronic offset. */
 	private double electronicOffset = 3300;
-	
-	/** The use electronic offset image. */
 	private boolean useElectronicOffsetImage = false;
-	
-	/** The electronic offset image. */
 	private ImagePlus electronicOffsetImage;
-	
-	/** The background image. */
 	private ImagePlus backgroundImage;
 	
 	/** The image file node filter. */

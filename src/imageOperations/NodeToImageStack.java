@@ -20,8 +20,7 @@ import model.Node;
  */
 public class NodeToImageStack {
 	
-	/** The imp. */
-	ImagePlus imp;
+	private ImagePlus imp;
 	
 	/**
 	 * Instantiates a new node to image stack.

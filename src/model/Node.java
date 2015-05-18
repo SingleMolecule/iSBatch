@@ -424,6 +424,7 @@ public abstract class Node implements OperationElement, ContextElement,
 		System.out.println("Background Image: " + this.getBeamProfile(channel));
 		if(!getBeamProfile(channel).isEmpty()){
 			File f = new File(getBeamProfile(channel));
+			System.out.println("open" + f.getAbsolutePath());
 			imp = new ImagePlus(f.getAbsolutePath());
 		}
 		else{

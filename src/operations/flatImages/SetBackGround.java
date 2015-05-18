@@ -40,20 +40,10 @@ import operations.Operation;
  * @author VictorCaldas
  */
 public class SetBackGround implements Operation {
-
-	/** The dialog. */
 	SetBackgroundGui dialog;
-
-	/** The channel. */
 	private String channel;
-
-	/** The method. */
 	private String method;
-
-	/** The image tag. */
 	private ArrayList<String> imageTag;
-
-	/** The image path. */
 	private String imagePath = "";
 
 	/**
@@ -137,23 +127,10 @@ public class SetBackGround implements Operation {
 		LogPanel.log("Background image created and stored.");
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see operations.Operation#visit(model.Root)
-	 */
-
-	/**
-	 * Visit.
-	 *
-	 * @param root
-	 *            the root
-	 */
 	@Override
 	public void visit(Root root) {
 		// Does not apply to ROOT.
 	}
-
 	/**
 	 * Visit.
 	 *
@@ -184,7 +161,7 @@ public class SetBackGround implements Operation {
 			if (f.exists() && channel != null) {
 				// Test if the file exist
 				ImagePlus imp = IJ.openImage(imagePath);
-				save(node, imp);
+				averageImage(node, imp);
 				imp.close();
 				LogPanel.log("Background set to channel " + channel);
 			}
@@ -195,9 +172,6 @@ public class SetBackGround implements Operation {
 			if(filenodes.size() == 0){
 				LogPanel.log("No image found for averaging");
 			}
-//			ArrayList<Node> filenodes = node.getDescendents(new GenericFilter(
-//					channel, imageTag));
-			// get ImageStack from the ArrayList
 
 			NodeToImageStack temp = new NodeToImageStack(filenodes, channel,
 					"BeamProfile");
@@ -209,10 +183,40 @@ public class SetBackGround implements Operation {
 			projector.setMethod(ZProjector.AVG_METHOD);
 			projector.doProjection();
 
-			save(node, imp);
+			// Properly save and keep track of that file now.
+			File folder = new File(node.getOutputFolder());
+			folder.mkdirs();
+			File f = new File(node.getOutputFolder()
+					+ File.separator + imp.getTitle()+".tif");
+			
+			
+				
+			IJ.saveAsTiff(projector.getProjection(), f.getAbsolutePath());
+			node.getProperties().put(channel + "_BeamProfile",
+					f.getAbsolutePath());
+
+			
+			
+			
 		} else {
 			IJ.log("Operation failed");
 		}
+	}
+
+	private void averageImage(Node node, ImagePlus imp) {
+		// Properly save and keep track of that file now.
+				ZProjector projector = new ZProjector(imp);
+				projector.setMethod(ZProjector.AVG_METHOD);
+				projector.doProjection();
+				File folder = new File(node.getOutputFolder());
+				folder.mkdirs();
+				File f = new File(node.getOutputFolder()
+						+ File.separator + imp.getTitle());
+				
+				IJ.saveAsTiff(projector.getProjection(), f.getAbsolutePath());
+				node.getProperties().put(channel + "_BeamProfile",
+						f.getAbsolutePath());
+
 	}
 
 	/**
@@ -223,21 +227,6 @@ public class SetBackGround implements Operation {
 	 * @param imp
 	 *            the imp
 	 */
-	private void save(Node node, ImagePlus imp) {
-		// Properly save and keep track of that file now.
-		ZProjector projector = new ZProjector(imp);
-		projector.setMethod(ZProjector.AVG_METHOD);
-		projector.doProjection();
-		File folder = new File(node.getOutputFolder());
-		folder.mkdirs();
-	
-		File f = new File(node.getOutputFolder()
-				+ File.separator + imp.getTitle());
-		
-		IJ.saveAsTiff(projector.getProjection(), f.getAbsolutePath());
-		node.getProperties().put(channel + "_BeamProfile",
-				f.getAbsolutePath());
-	}
 
 	/**
 	 * Visit.
