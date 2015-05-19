@@ -7,10 +7,9 @@
 	<classpathentry kind="lib" path="lib/jmatio.jar"/>
 	<classpathentry kind="lib" path="devLib/ij.jar"/>
 	<classpathentry kind="lib" path="lib/forms-1.3.0.jar"/>
-	<classpathentry kind="lib" path="devLib/antlr-runtime-3.4.jar"/>
 	<classpathentry kind="lib" path="devLib/opencsv-3.2.jar"/>
 	<classpathentry kind="lib" path="devLib/org-netbeans-swing-outline-RELEASE68.jar"/>
-	<classpathentry kind="lib" path="devLib/sqljet-1.1.10.jar"/>
 	<classpathentry kind="lib" path="devLib/sqljet-browser-1.1.10.jar"/>
+	<classpathentry kind="lib" path="lib/antlr-runtime-3.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
