@@ -42,51 +42,20 @@ import javax.swing.border.TitledBorder;
  * The Class MicrobeTrackerIOGui.
  */
 public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
-	
-	/** The btn cancel. */
-
-	// butons
-
 	private JButton btnCancel;
-	
-	/** The btn process. */
 	private JButton btnProcess;
-
-	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
-	
-	/** The channels. */
 	private String[] channels = new String[] {
-
 	"[Select Channel]", "All", "Acquisition", "Bright Field", "Red", "Green",
 			"Blue", };
-
-	/** The types. */
 	private String[] types = new String[] { "[File Type]", "Raw", "Flat",
 			"Discoidal" };
-
-	/** The canceled. */
 	private boolean canceled = false;
-
-	/** The frame. */
 	static JFrame frame;
-	
-	/** The node. */
 	private Node node;
-	
-	/** The image path. */
 	private String channel, method, imagePath;
-	
-	/** The BFF ile input path. */
 	protected String matFilePath, BFFIleInputPath;
-	
-	/** The custom fiter. */
 	protected String customFiter;
-
-	/*
-	 * Filter variables
-	 */
-
 	
 	/**
 	 * Instantiates a new microbe tracker io gui.
@@ -353,46 +322,19 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 		return canceled;
 	}
 
-	/** The image type. */
 	private String imageType;
-	
-	/** The panel. */
 	private JPanel panel;
-	
-	/** The panel_1. */
 	private JPanel panel_1;
-	
-	/** The Import panel. */
 	private JPanel ImportPanel;
-	
-	/** The Create input panel. */
 	private JPanel CreateInputPanel;
-	
-	/** The file type combo box. */
 	private JComboBox<String> fileTypeComboBox;
-	
-	/** The channel combo box. */
 	private JComboBox<String> channelComboBox;
-	
-	/** The lbl customfilter. */
 	private JLabel lblCustomfilter;
-	
-	/** The custom filter text field. */
 	private JTextField customFilterTextField;
-	
-	/** The btn loadmat. */
 	private JButton btnLoadmat;
-	
-	/** The math path text field. */
 	private JTextField mathPathTextField;
-	
-	/** The btn bf input. */
 	private JButton btnBfInput;
-	
-	/** The BF input. */
 	private JTextField BFInput;
-	
-	/** The btn import. */
 	private JButton btnImport;
 
 	/**
@@ -443,10 +385,6 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 			BFInput.setText(BFFIleInputPath);
 			}
 		}
-
-	
-	
-	
 	
 	/**
 	 * Gets the channel.
