@@ -6,6 +6,12 @@
 
 **Closed issues:**
 
+- Add version number to about menu [\#18](https://github.com/SingleMolecule/iSBatch/issues/18)
+
+- Add timestamp to log window [\#17](https://github.com/SingleMolecule/iSBatch/issues/17)
+
+- Loading data window rapid acquisition vs time sampling [\#14](https://github.com/SingleMolecule/iSBatch/issues/14)
+
 - TimeSampling rename to Rapid Acquisition [\#1](https://github.com/SingleMolecule/iSBatch/issues/1)
 
 ## [v0.1-beta](https://github.com/SingleMolecule/iSBatch/tree/v0.1-beta) (2015-05-15)

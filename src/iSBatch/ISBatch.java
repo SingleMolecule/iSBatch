@@ -1,6 +1,7 @@
 package iSBatch;
 
 import filters.NodeFilterInterface;
+import gui.AboutPanel;
 import gui.DatabaseDialog;
 import gui.DatabaseTreeCellRenderer;
 import gui.LogPanel;
@@ -44,11 +45,15 @@ import javax.swing.tree.TreePath;
 
 import org.tmatesoft.sqljet.core.SqlJetException;
 
+import macros.MacroOperation;
 import model.Database;
 import model.DatabaseModel;
 import model.Node;
 import model.parameters.NodeType;
 import context.ContextHandler;
+import operations.AddNodeOperation;
+import operations.ImportOperation;
+import operations.Operation;
 import operations.cellIntensity.CellIntensity;
 import operations.cellOutlines.CellOutlines;
 import operations.cellularConcentration.CellularConcentration;
@@ -56,7 +61,6 @@ import operations.changePoint.ChangePoint;
 import operations.diffusion.DiffusioOperation;
 import operations.focusLifetime.FocusLifetimes;
 import operations.tracking.Tracking;
-import operations.*;
 import operations.flatImages.FlattenOperation;
 import operations.flatImages.SetBackGround;
 import operations.locationMaps.LocationMaps;
@@ -93,6 +97,14 @@ public class ISBatch implements TreeSelectionListener {
 		getInstance();
 	}
 
+	/*
+	 * Current version:
+	 */
+		String version = "v0.2-beta";
+	
+	
+	
+	
 	public ISBatch() throws SqlJetException {
 		DatabaseDialog dialog = new DatabaseDialog(frame);
 		database = dialog.getDatabase();
@@ -167,7 +179,7 @@ public class ISBatch implements TreeSelectionListener {
 
 		// Add menus to "Menu"
 		menu = new JMenu("Menu");
-		preferences = new JMenu("Preferences");
+		preferences = new JMenu("Preferences");	
 		about = new JMenu("About");
 
 		NewtMenuItem = new JMenuItem("New Database");
@@ -246,13 +258,33 @@ public class ISBatch implements TreeSelectionListener {
 			}
 
 		});
+		
+		JMenuItem bugReport = new JMenuItem("Report bug");
+		bugReport.addActionListener(new ActionListener() {
+			public void actionPerformed(final ActionEvent event) {
+				openIssuePages();
+			}
+
+		});
 
 		menu.add(exit);
 		menuBar.add(menu);
 //		menuBar.add(preferences);
 		menuBar.add(about);
+		menuBar.add(bugReport);
 		frame.setJMenuBar(menuBar);
 
+	}
+
+	protected void openIssuePages() {
+		try {
+			Desktop.getDesktop().browse(
+					new URL("https://github.com/SingleMolecule/iSBatch/issues/new").toURI());
+		} catch (Exception e) {
+			LogPanel.log(e.getMessage());
+		}
+
+		
 	}
 
 	protected void goToSourceCode() {
@@ -276,11 +308,7 @@ public class ISBatch implements TreeSelectionListener {
 	}
 
 	protected void showAbout() {
-		JFrame AboutFrame = new JFrame("About iSBatch");
-		// JPanel AboutPanel = new AboutPanel();
-
-		AboutFrame.setLayout(new BorderLayout());
-		// AboutFrame.add(AboutPanel, BorderLayout.WEST);
+		new AboutPanel(version);
 
 	}
 
@@ -445,7 +473,7 @@ public class ISBatch implements TreeSelectionListener {
 				new MicrobeTrackerIO(treeModel), new CellOutlines(treeModel),
 				new FindPeaksOperation(treeModel),
 				new FitPeaksOperation(treeModel),
-				new macros.MacroOperation(treeModel),
+				new MacroOperation(treeModel),
 				new CellularConcentration(treeModel),
 				new CellIntensity(treeModel),
 				new FocusLifetimes(treeModel),
