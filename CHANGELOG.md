@@ -1,8 +1,8 @@
 # Change Log
 
-## [Unreleased](https://github.com/SingleMolecule/iSBatch/tree/HEAD)
+## [v0.2-beta](https://github.com/SingleMolecule/iSBatch/tree/v0.2-beta) (2015-05-19)
 
-[Full Changelog](https://github.com/SingleMolecule/iSBatch/compare/v0.1-beta...HEAD)
+[Full Changelog](https://github.com/SingleMolecule/iSBatch/compare/v0.1-beta...v0.2-beta)
 
 **Closed issues:**
 
