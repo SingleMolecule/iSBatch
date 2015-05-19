@@ -50,41 +50,18 @@ public class MacroDialog extends JDialog implements ActionListener, Runnable {
 	
 	/** The model. */
 	private DatabaseModel model;
-	
-	/** The node. */
 	private Node node;
-
-	/** The node combo box. */
 	private JComboBox<String> nodeComboBox = new JComboBox<String>();
-	
-	/** The channel combo box. */
 	private JComboBox<String> channelComboBox = new JComboBox<String>();
-	
-	/** The type combo box. */
 	private JComboBox<String> typeComboBox = new JComboBox<String>();
-	
-	/** The choose button. */
 	private JButton chooseButton = new JButton("Choose");
-	
-	/** The run button. */
 	private JButton runButton = new JButton("Run");
-	
-	/** The stop button. */
 	private JButton stopButton = new JButton("Stop");
-	
-	/** The filename text field. */
 	private JTextField filenameTextField = new JTextField(20);
-	
-	/** The filter text field. */
 	private JTextField filterTextField = new JTextField(".*", 10);
-	
-	/** The text pane. */
 	private CodeTextPane textPane = new CodeTextPane();
-	
-	/** The macro thread. */
 	private Thread macroThread;
-	
-	/** The macro should run. */
+
 	private boolean macroShouldRun = false;
 	
 	/**

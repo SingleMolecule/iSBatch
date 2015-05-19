@@ -18,28 +18,21 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class LogPanel.
  */
 public class LogPanel extends JPanel implements ActionListener {
-	
-	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
-	
-	/** The instance. */
 	private static LogPanel instance;
-	
-	/** The list model. */
 	private DefaultListModel<String> listModel = new DefaultListModel<String>();
-	
-	/** The list. */
 	private JList<String> list = new JList<String>(listModel);
-	
-	/** The clear button. */
 	private JButton clearButton = new JButton("Clear");
-	
-	/** The save button. */
 	private JButton saveButton = new JButton("Save");
 	
 	/**
@@ -110,8 +103,9 @@ public class LogPanel extends JPanel implements ActionListener {
 	 * @param str the str
 	 */
 	public static void log(String str) {
+		String ts = new SimpleDateFormat("HH:mm:ss").format(new Date());
 		LogPanel panel = LogPanel.getInstance();
-		panel.listModel.add(0, str);
+		panel.listModel.add(0, ts + " | "+ str);
 	}
 	
 	/**

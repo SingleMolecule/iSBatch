@@ -20,6 +20,7 @@ import model.Node;
 import model.OperationNode;
 import model.Root;
 import model.Sample;
+import model.parameters.ExperimentType;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -116,7 +117,7 @@ public class ImportOperation implements Operation {
 	@Override
 	public void visit(Root root) {
 		
-		String[] options = new String[]{"Time Sampling" , "Time Lapse"};
+		String[] options = new String[]{ExperimentType.RAPID_ACQUISITION.toString() , ExperimentType.TIME_LAPSE.toString()};
 		int option = JOptionPane.showOptionDialog(null, "Experiment type", "Import Experiment", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 		
 		if (option == JOptionPane.CANCEL_OPTION)

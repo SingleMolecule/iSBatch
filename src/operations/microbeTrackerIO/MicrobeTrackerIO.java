@@ -13,7 +13,6 @@
 package operations.microbeTrackerIO;
 
 import ij.IJ;
-
 import ij.ImagePlus;
 import ij.ImageStack;
 import ij.gui.PolygonRoi;
@@ -35,6 +34,7 @@ import filters.NodeFilterInterface;
 import java.util.HashMap;
 
 
+
 import model.DatabaseModel;
 import model.Experiment;
 import model.FieldOfView;
@@ -43,6 +43,7 @@ import model.Node;
 import model.OperationNode;
 import model.Root;
 import model.Sample;
+import model.parameters.NodeType;
 import operations.Operation;
 public class MicrobeTrackerIO implements Operation {
 	private MicrobeTrackerIOGui dialog;
@@ -63,7 +64,10 @@ public class MicrobeTrackerIO implements Operation {
 	}
 
 	public String[] getContext() {
-		return new String[] { "All" };
+		// Set context to all unless Root.
+		return new String[] { NodeType.EXPERIMENT.toString(),
+				NodeType.SAMPLE.toString(), NodeType.FOV.toString(),
+				NodeType.FILE.toString() };
 	}
 
 	@Override
@@ -81,11 +85,15 @@ public class MicrobeTrackerIO implements Operation {
 		dialog = new MicrobeTrackerIOGui(node);
 		if (dialog.isCanceled())
 			return false;
+		
+		//Get information from the dialog
+		//From panel1
 		this.channel = dialog.getChannel();
+		this.imageType = dialog.getImageType();
 		this.customFilter = dialog.getCustomFilter();
 		
+		// From panel 2
 		this.matFilePath = dialog.getMatFilePath();
-		this.imageType = dialog.getImageType();
 		this.BFFIleInputPath = dialog.BFFIleInputPath;
 		return true;
 	}
@@ -97,8 +105,7 @@ public class MicrobeTrackerIO implements Operation {
 	 */
 	@Override
 	public void finalize(Node node) {
-		System.out.println("Operation finalized");
-
+		System.out.println("MicrobeTracker IO Operation finalized");
 	}
 
 
@@ -109,7 +116,6 @@ public class MicrobeTrackerIO implements Operation {
 	 */
 	@Override
 	public void visit(Root root) {
-
 	}
 
 	/**
@@ -121,7 +127,6 @@ public class MicrobeTrackerIO implements Operation {
 	public void visit(Experiment experiment) {
 		System.out.println(experiment.getProperty("type"));
 		run(experiment);
-
 	}
 
 	/**
@@ -130,6 +135,12 @@ public class MicrobeTrackerIO implements Operation {
 	 * @param node the node
 	 */
 	private void run(Node node) {
+		//Decide path to take.
+		// Relevant informations: Experiment Type : Rapid Acquisition or Time Lapse
+		
+//		String experimentType = node.getExperimentType();
+		
+		
 		File matFile = new File(matFilePath);
 
 		if (!matFile.exists()) {

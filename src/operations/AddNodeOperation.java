@@ -33,20 +33,15 @@ import model.Node;
 import model.OperationNode;
 import model.Root;
 import model.Sample;
+import model.parameters.ExperimentType;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class AddNodeOperation.
  */
 public class AddNodeOperation implements Operation {
 
-	/** The frame. */
 	private JFrame frame;
-
-	/** The model. */
 	private DatabaseModel model;
-
-	/** The importer. */
 	private Importer importer;
 
 	/**
@@ -67,11 +62,11 @@ public class AddNodeOperation implements Operation {
 	/**
 	 * Gets the name.
 	 *
-	 * @return the name
+	 * @return the name of the node.
 	 */
 	@Override
 	public String getName() {
-		return "Add";
+		return "Add node ";
 	}
 
 	/**
@@ -96,7 +91,7 @@ public class AddNodeOperation implements Operation {
 		Experiment experiment = new Experiment(root);
 		experiment.setProperty("name", "experiment");
 		experiment.setProperty("folder", "");
-		experiment.setProperty("type", "Rapid Acquisition");
+		experiment.setProperty("type", ExperimentType.RAPID_ACQUISITION.toString());
 		ExperimentDialog dialog = new ExperimentDialog(frame, experiment);
 
 		if (dialog.isCanceled())

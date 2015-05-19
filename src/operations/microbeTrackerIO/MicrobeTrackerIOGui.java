@@ -3,7 +3,6 @@ package operations.microbeTrackerIO;
 
 import gui.AskFileUser;
 import gui.LogPanel;
-import ij.IJ;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -34,6 +33,8 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
+import javax.swing.JTabbedPane;
+import javax.swing.ComboBoxModel;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -75,11 +76,10 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 	private void display() {
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] { 60, 60, 60, 60, 0 };
-		gridBagLayout.rowHeights = new int[] { 14, 60, 85, 0, 0 };
-		gridBagLayout.columnWeights = new double[] { 1.0, 1.0, 1.0,
-				0.0, Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 0.0, 1.0, 1.0, 0.0,
+		gridBagLayout.columnWidths = new int[] { 107, 97, 60, 0 };
+		gridBagLayout.rowHeights = new int[] { 14, 23, 0, 0 };
+		gridBagLayout.columnWeights = new double[] { 1.0, 0.0, 1.0, Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 1.0, 0.0, 0.0,
 				Double.MIN_VALUE };
 		getContentPane().setLayout(gridBagLayout);
 
@@ -92,57 +92,60 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 		gbc_lblBatch.gridx = 0;
 		gbc_lblBatch.gridy = 0;
 		getContentPane().add(lblBatch, gbc_lblBatch);
-
-		JLabel lblOperation = new JLabel(node.getType() + ": "
-				+ node.toString());
-
-		GridBagConstraints gbc_lblOperation = new GridBagConstraints();
-		gbc_lblOperation.anchor = GridBagConstraints.SOUTH;
-		gbc_lblOperation.fill = GridBagConstraints.HORIZONTAL;
-		gbc_lblOperation.insets = new Insets(0, 0, 5, 5);
-		gbc_lblOperation.gridx = 1;
-		gbc_lblOperation.gridy = 0;
-		getContentPane().add(lblOperation, gbc_lblOperation);
 		
-		CreateInputPanel = new JPanel();
-		CreateInputPanel.setBorder(new TitledBorder(null, "Create image stack", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		GridBagConstraints gbc_CreateInputPanel = new GridBagConstraints();
-		gbc_CreateInputPanel.fill = GridBagConstraints.BOTH;
-		gbc_CreateInputPanel.gridwidth = 4;
-		gbc_CreateInputPanel.insets = new Insets(0, 0, 5, 0);
-		gbc_CreateInputPanel.gridx = 0;
-		gbc_CreateInputPanel.gridy = 1;
-		getContentPane().add(CreateInputPanel, gbc_CreateInputPanel);
-		GridBagLayout gbl_CreateInputPanel = new GridBagLayout();
-		gbl_CreateInputPanel.columnWidths = new int[]{60, 60, 60, 60, 0};
-		gbl_CreateInputPanel.rowHeights = new int[]{25, 0, 0};
-		gbl_CreateInputPanel.columnWeights = new double[]{1.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_CreateInputPanel.rowWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
-		CreateInputPanel.setLayout(gbl_CreateInputPanel);
+				JLabel lblOperation = new JLabel(node.getType() + ": "
+						+ node.toString());
+				
+						GridBagConstraints gbc_lblOperation = new GridBagConstraints();
+						gbc_lblOperation.anchor = GridBagConstraints.SOUTH;
+						gbc_lblOperation.fill = GridBagConstraints.HORIZONTAL;
+						gbc_lblOperation.insets = new Insets(0, 0, 5, 5);
+						gbc_lblOperation.gridx = 1;
+						gbc_lblOperation.gridy = 0;
+						getContentPane().add(lblOperation, gbc_lblOperation);
 		
-		panel = new JPanel();
-		GridBagConstraints gbc_panel = new GridBagConstraints();
-		gbc_panel.insets = new Insets(0, 0, 5, 0);
-		gbc_panel.fill = GridBagConstraints.BOTH;
-		gbc_panel.gridwidth = 4;
-		gbc_panel.gridx = 0;
-		gbc_panel.gridy = 0;
-		CreateInputPanel.add(panel, gbc_panel);
-		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[]{0, 0, 0};
-		gbl_panel.rowHeights = new int[]{0, 0};
-		gbl_panel.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
-		gbl_panel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
-		panel.setLayout(gbl_panel);
+		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		GridBagConstraints gbc_tabbedPane = new GridBagConstraints();
+		gbc_tabbedPane.gridwidth = 3;
+		gbc_tabbedPane.insets = new Insets(0, 0, 5, 0);
+		gbc_tabbedPane.fill = GridBagConstraints.BOTH;
+		gbc_tabbedPane.gridx = 0;
+		gbc_tabbedPane.gridy = 1;
+		getContentPane().add(tabbedPane, gbc_tabbedPane);
+		
+		createPanel = new JPanel();
+		createPanel.setBorder(new TitledBorder(null, "Create image stack", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		tabbedPane.addTab("Create", null, createPanel, null);
+		GridBagLayout gbl_createPanel = new GridBagLayout();
+		gbl_createPanel.columnWidths = new int[]{60, 60, 60, 60, 0};
+		gbl_createPanel.rowHeights = new int[]{25, 0, 0};
+		gbl_createPanel.columnWeights = new double[]{1.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_createPanel.rowWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
+		createPanel.setLayout(gbl_createPanel);
+		
+		panel_2 = new JPanel();
+		GridBagConstraints gbc_panel_2 = new GridBagConstraints();
+		gbc_panel_2.fill = GridBagConstraints.BOTH;
+		gbc_panel_2.gridwidth = 4;
+		gbc_panel_2.insets = new Insets(0, 0, 5, 0);
+		gbc_panel_2.gridx = 0;
+		gbc_panel_2.gridy = 0;
+		createPanel.add(panel_2, gbc_panel_2);
+		GridBagLayout gbl_panel_2 = new GridBagLayout();
+		gbl_panel_2.columnWidths = new int[]{0, 0, 0};
+		gbl_panel_2.rowHeights = new int[]{0, 0};
+		gbl_panel_2.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
+		gbl_panel_2.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		panel_2.setLayout(gbl_panel_2);
 		
 		channelComboBox = new JComboBox<String>(new DefaultComboBoxModel<String>(channels));
 		channelComboBox.addActionListener(this);
 		GridBagConstraints gbc_channelComboBox = new GridBagConstraints();
-		gbc_channelComboBox.insets = new Insets(0, 0, 0, 5);
 		gbc_channelComboBox.fill = GridBagConstraints.HORIZONTAL;
+		gbc_channelComboBox.insets = new Insets(0, 0, 0, 5);
 		gbc_channelComboBox.gridx = 0;
 		gbc_channelComboBox.gridy = 0;
-		panel.add(channelComboBox, gbc_channelComboBox);
+		panel_2.add(channelComboBox, gbc_channelComboBox);
 		
 		fileTypeComboBox = new JComboBox<String>(new DefaultComboBoxModel<String>(types));
 		fileTypeComboBox.addActionListener(this);
@@ -150,15 +153,15 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 		gbc_fileTypeComboBox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_fileTypeComboBox.gridx = 1;
 		gbc_fileTypeComboBox.gridy = 0;
-		panel.add(fileTypeComboBox, gbc_fileTypeComboBox);
+		panel_2.add(fileTypeComboBox, gbc_fileTypeComboBox);
 		
-		lblCustomfilter = new JLabel("CustomFilter");
-		GridBagConstraints gbc_lblCustomfilter = new GridBagConstraints();
-		gbc_lblCustomfilter.anchor = GridBagConstraints.EAST;
-		gbc_lblCustomfilter.insets = new Insets(0, 0, 0, 5);
-		gbc_lblCustomfilter.gridx = 0;
-		gbc_lblCustomfilter.gridy = 1;
-		CreateInputPanel.add(lblCustomfilter, gbc_lblCustomfilter);
+		label = new JLabel("CustomFilter");
+		GridBagConstraints gbc_label = new GridBagConstraints();
+		gbc_label.anchor = GridBagConstraints.EAST;
+		gbc_label.insets = new Insets(0, 0, 0, 5);
+		gbc_label.gridx = 0;
+		gbc_label.gridy = 1;
+		createPanel.add(label, gbc_label);
 		
 		customFilterTextField = new JTextField();
 		customFilterTextField.addKeyListener(new KeyAdapter() {
@@ -167,45 +170,39 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 				customFiter = customFilterTextField.getText();
 			}
 		});
+		customFilterTextField.setColumns(10);
 		GridBagConstraints gbc_customFilterTextField = new GridBagConstraints();
-		gbc_customFilterTextField.gridwidth = 3;
 		gbc_customFilterTextField.insets = new Insets(0, 0, 0, 5);
 		gbc_customFilterTextField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_customFilterTextField.gridwidth = 3;
 		gbc_customFilterTextField.gridx = 1;
 		gbc_customFilterTextField.gridy = 1;
-		CreateInputPanel.add(customFilterTextField, gbc_customFilterTextField);
-		customFilterTextField.setColumns(10);
+		createPanel.add(customFilterTextField, gbc_customFilterTextField);
 		
-		ImportPanel = new JPanel();
-		ImportPanel.setBorder(new TitledBorder(null, "Load .Mat File with cells", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		GridBagConstraints gbc_ImportPanel = new GridBagConstraints();
-		gbc_ImportPanel.fill = GridBagConstraints.BOTH;
-		gbc_ImportPanel.gridwidth = 4;
-		gbc_ImportPanel.insets = new Insets(0, 0, 5, 0);
-		gbc_ImportPanel.gridx = 0;
-		gbc_ImportPanel.gridy = 2;
-		getContentPane().add(ImportPanel, gbc_ImportPanel);
-		GridBagLayout gbl_ImportPanel = new GridBagLayout();
-		gbl_ImportPanel.columnWidths = new int[]{60, 60, 60, 60, 0};
-		gbl_ImportPanel.rowHeights = new int[]{24, 0};
-		gbl_ImportPanel.columnWeights = new double[]{1.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_ImportPanel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
-		ImportPanel.setLayout(gbl_ImportPanel);
+		loadPanel = new JPanel();
+		loadPanel.setBorder(new TitledBorder(null, "Load .Mat File with cells", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		tabbedPane.addTab("Load", null, loadPanel, null);
+		GridBagLayout gbl_loadPanel = new GridBagLayout();
+		gbl_loadPanel.columnWidths = new int[]{60, 60, 60, 60, 0};
+		gbl_loadPanel.rowHeights = new int[]{24, 0};
+		gbl_loadPanel.columnWeights = new double[]{1.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_loadPanel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+		loadPanel.setLayout(gbl_loadPanel);
 		
-		panel_1 = new JPanel();
-		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
-		gbc_panel_1.fill = GridBagConstraints.BOTH;
-		gbc_panel_1.gridwidth = 4;
-		gbc_panel_1.insets = new Insets(0, 0, 0, 5);
-		gbc_panel_1.gridx = 0;
-		gbc_panel_1.gridy = 0;
-		ImportPanel.add(panel_1, gbc_panel_1);
-		GridBagLayout gbl_panel_1 = new GridBagLayout();
-		gbl_panel_1.columnWidths = new int[]{0, 0, 0};
-		gbl_panel_1.rowHeights = new int[]{0, 0, 0};
-		gbl_panel_1.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gbl_panel_1.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		panel_1.setLayout(gbl_panel_1);
+		panel_3 = new JPanel();
+		GridBagConstraints gbc_panel_3 = new GridBagConstraints();
+		gbc_panel_3.insets = new Insets(0, 0, 0, 5);
+		gbc_panel_3.fill = GridBagConstraints.BOTH;
+		gbc_panel_3.gridwidth = 4;
+		gbc_panel_3.gridx = 0;
+		gbc_panel_3.gridy = 0;
+		loadPanel.add(panel_3, gbc_panel_3);
+		GridBagLayout gbl_panel_3 = new GridBagLayout();
+		gbl_panel_3.columnWidths = new int[]{0, 0, 0};
+		gbl_panel_3.rowHeights = new int[]{0, 0, 0};
+		gbl_panel_3.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+		gbl_panel_3.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		panel_3.setLayout(gbl_panel_3);
 		
 		btnLoadmat = new JButton("Load .mat");
 		btnLoadmat.addActionListener(this);
@@ -213,7 +210,7 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 		gbc_btnLoadmat.insets = new Insets(0, 0, 5, 5);
 		gbc_btnLoadmat.gridx = 0;
 		gbc_btnLoadmat.gridy = 0;
-		panel_1.add(btnLoadmat, gbc_btnLoadmat);
+		panel_3.add(btnLoadmat, gbc_btnLoadmat);
 		
 		mathPathTextField = new JTextField();
 		mathPathTextField.addKeyListener(new KeyAdapter() {
@@ -222,13 +219,13 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 				matFilePath = mathPathTextField.getText();
 			}
 		});
+		mathPathTextField.setColumns(10);
 		GridBagConstraints gbc_mathPathTextField = new GridBagConstraints();
-		gbc_mathPathTextField.insets = new Insets(0, 0, 5, 0);
 		gbc_mathPathTextField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_mathPathTextField.insets = new Insets(0, 0, 5, 0);
 		gbc_mathPathTextField.gridx = 1;
 		gbc_mathPathTextField.gridy = 0;
-		panel_1.add(mathPathTextField, gbc_mathPathTextField);
-		mathPathTextField.setColumns(10);
+		panel_3.add(mathPathTextField, gbc_mathPathTextField);
 		
 		btnBfInput = new JButton("BF Input");
 		btnBfInput.addActionListener(this);
@@ -237,43 +234,33 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 		gbc_btnBfInput.insets = new Insets(0, 0, 0, 5);
 		gbc_btnBfInput.gridx = 0;
 		gbc_btnBfInput.gridy = 1;
-		panel_1.add(btnBfInput, gbc_btnBfInput);
+		panel_3.add(btnBfInput, gbc_btnBfInput);
 		
 		BFInput = new JTextField();
+		BFInput.setColumns(10);
 		GridBagConstraints gbc_BFInput = new GridBagConstraints();
 		gbc_BFInput.fill = GridBagConstraints.HORIZONTAL;
 		gbc_BFInput.gridx = 1;
 		gbc_BFInput.gridy = 1;
-		panel_1.add(BFInput, gbc_BFInput);
-		BFInput.setColumns(10);
-
-		btnCancel = new JButton("Cancel");
-		btnCancel.addActionListener(this);
+		panel_3.add(BFInput, gbc_BFInput);
 		
-				btnProcess = new JButton("Process");
-				btnProcess.addActionListener(this);
-				GridBagConstraints gbc_btnProcess = new GridBagConstraints();
-				gbc_btnProcess.anchor = GridBagConstraints.EAST;
-				gbc_btnProcess.insets = new Insets(0, 0, 0, 5);
-				gbc_btnProcess.gridx = 1;
-				gbc_btnProcess.gridy = 3;
-				getContentPane().add(btnProcess, gbc_btnProcess);
-		
-		btnImport = new JButton("Import");
-		btnImport.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		GridBagConstraints gbc_btnImport = new GridBagConstraints();
-		gbc_btnImport.insets = new Insets(0, 0, 0, 5);
-		gbc_btnImport.gridx = 2;
-		gbc_btnImport.gridy = 3;
-		getContentPane().add(btnImport, gbc_btnImport);
-
-		GridBagConstraints gbc_btnCancel = new GridBagConstraints();
-		gbc_btnCancel.gridx = 3;
-		gbc_btnCancel.gridy = 3;
-		getContentPane().add(btnCancel, gbc_btnCancel);
+				btnCancel = new JButton("Cancel");
+				btnCancel.addActionListener(this);
+						
+								btnProcess = new JButton("Process");
+								btnProcess.setHorizontalAlignment(SwingConstants.LEFT);
+								btnProcess.addActionListener(this);
+								GridBagConstraints gbc_btnProcess = new GridBagConstraints();
+								gbc_btnProcess.anchor = GridBagConstraints.EAST;
+								gbc_btnProcess.insets = new Insets(0, 0, 0, 5);
+								gbc_btnProcess.gridx = 1;
+								gbc_btnProcess.gridy = 2;
+								getContentPane().add(btnProcess, gbc_btnProcess);
+				
+						GridBagConstraints gbc_btnCancel = new GridBagConstraints();
+						gbc_btnCancel.gridx = 2;
+						gbc_btnCancel.gridy = 2;
+						getContentPane().add(btnCancel, gbc_btnCancel);
 
 		pack();
 
@@ -297,19 +284,19 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 	}
 
 	private String imageType;
-	private JPanel panel;
-	private JPanel panel_1;
-	private JPanel ImportPanel;
-	private JPanel CreateInputPanel;
-	private JComboBox<String> fileTypeComboBox;
+	private JTabbedPane tabbedPane;
+	private JPanel createPanel;
+	private JPanel panel_2;
 	private JComboBox<String> channelComboBox;
-	private JLabel lblCustomfilter;
+	private JComboBox<String> fileTypeComboBox;
+	private JLabel label;
 	private JTextField customFilterTextField;
+	private JPanel loadPanel;
+	private JPanel panel_3;
 	private JButton btnLoadmat;
 	private JTextField mathPathTextField;
 	private JButton btnBfInput;
 	private JTextField BFInput;
-	private JButton btnImport;
 
 	/**
 	 * Action performed.
@@ -322,22 +309,13 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 			canceled = true;
 			dispose();
 		} else if (e.getSource() == btnProcess) {
+			
+			matFilePath = mathPathTextField.getText();
+			BFFIleInputPath = BFInput.getText();
+			customFiter = customFilterTextField.getText();
 			matFilePath = mathPathTextField.getText();
 			customFiter = customFilterTextField.getText();
 			dispose();
-		} 
-		 else if (e.getSource() == btnImport) {
-				matFilePath = mathPathTextField.getText();
-				BFFIleInputPath = BFInput.getText();
-				customFiter = customFilterTextField.getText();
-			dispose();
-			}
-		 else if (e.getSource() == channelComboBox) {
-			this.channel = channels[channelComboBox.getSelectedIndex()];
-			System.out.println(channel);
-		} else if (e.getSource() == fileTypeComboBox) {
-			this.imageType = (String) fileTypeComboBox.getSelectedItem();
-
 		}
 		else if(e.getSource() == btnLoadmat){
 			System.out.println("Open dialog to get file");
@@ -352,6 +330,7 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 			BFInput.setText(BFFIleInputPath);
 			}
 		}
+
 	
 	public String getChannel() {
 		return channel;
