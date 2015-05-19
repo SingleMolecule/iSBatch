@@ -444,6 +444,12 @@ public abstract class Node implements OperationElement, ContextElement,
 	public void addProperty(String string, Object obj){
 
 	}
+
+	public String getExperimentType() {
+		
+		
+		return null;
+	}
 	
 	
 }

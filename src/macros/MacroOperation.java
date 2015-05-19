@@ -30,8 +30,6 @@ public class MacroOperation implements Operation {
 
 	/** The model. */
 	private DatabaseModel model;
-	
-	/** The importer. */
 	private Importer importer;
 	
 	/**
