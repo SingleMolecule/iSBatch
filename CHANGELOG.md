@@ -14,6 +14,10 @@
 
 - TimeSampling rename to Rapid Acquisition [\#1](https://github.com/SingleMolecule/iSBatch/issues/1)
 
+**Merged pull requests:**
+
+- Victor [\#20](https://github.com/SingleMolecule/iSBatch/pull/20) ([vcaldas](https://github.com/vcaldas))
+
 ## [v0.1-beta](https://github.com/SingleMolecule/iSBatch/tree/v0.1-beta) (2015-05-15)
 
 **Merged pull requests:**
