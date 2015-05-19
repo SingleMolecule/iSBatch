@@ -1,10 +1,8 @@
-/*
- * 
- */
 package operations.microbeTrackerIO;
 
 
 import gui.AskFileUser;
+import gui.LogPanel;
 import ij.IJ;
 
 import javax.swing.JDialog;
@@ -58,30 +56,22 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 	protected String customFiter;
 	
 	/**
-	 * Instantiates a new microbe tracker io gui.
+	 * Instantiates a new MicrobeTracker I/O Graphic interface.
 	 *
-	 * @param node the node
+	 * @param node Entry node
 	 */
 	public MicrobeTrackerIOGui(Node node) {
 		setModal(true);
 		setTitle("MicrobeTracker I/O");
 		frame = new JFrame("MicrobeTracker I/O");
 		this.node = node;
-
 		setup();
 		display();
-
 	}
 
-	/**
-	 * Setup.
-	 */
 	private void setup() {
 	}
-
-	/**
-	 * Display.
-	 */
+	
 	private void display() {
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -292,17 +282,6 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 
 	}
 
-	/**
-	 * The main method.
-	 *
-	 * @param args the arguments
-	 */
-	public static void main(String[] args) {
-		frame = new JFrame();
-
-		new MicrobeTrackerIOGui(null);
-
-	}
 
 	/**
 	 * Error.
@@ -310,14 +289,9 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 	 * @param msg the msg
 	 */
 	void error(String msg) {
-		IJ.error("Batch Processor", msg);
+		LogPanel.log("MicrobeTracker IO error: " +  msg);
 	}
 
-	/**
-	 * Checks if is canceled.
-	 *
-	 * @return true, if is canceled
-	 */
 	public boolean isCanceled() {
 		return canceled;
 	}
@@ -350,26 +324,19 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 		} else if (e.getSource() == btnProcess) {
 			matFilePath = mathPathTextField.getText();
 			customFiter = customFilterTextField.getText();
-//			run();
 			dispose();
 		} 
 		 else if (e.getSource() == btnImport) {
 				matFilePath = mathPathTextField.getText();
 				BFFIleInputPath = BFInput.getText();
 				customFiter = customFilterTextField.getText();
-//				run();
 			dispose();
 			}
 		 else if (e.getSource() == channelComboBox) {
 			this.channel = channels[channelComboBox.getSelectedIndex()];
 			System.out.println(channel);
-//		} 
-//		else if (e.getSource() == methodComboBox) {
-//			this.method = (String) methodComboBox.getSelectedItem();
-//			System.out.println(method);
 		} else if (e.getSource() == fileTypeComboBox) {
 			this.imageType = (String) fileTypeComboBox.getSelectedItem();
-			System.out.println(imageType);
 
 		}
 		else if(e.getSource() == btnLoadmat){
@@ -386,56 +353,21 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 			}
 		}
 	
-	/**
-	 * Gets the channel.
-	 *
-	 * @return the channel
-	 */
 	public String getChannel() {
 		return channel;
 	}
-
-	/**
-	 * Gets the method.
-	 *
-	 * @return the method
-	 */
 	public String getMethod() {
 		return method;
 	}
-
-	/**
-	 * Gets the image path.
-	 *
-	 * @return the image path
-	 */
 	public String getImagePath() {
 		return imagePath;
 	}
-
-	/**
-	 * Gets the custom filter.
-	 *
-	 * @return the custom filter
-	 */
 	public String getCustomFilter() {
 		return customFiter;
 	}
-
-	/**
-	 * Gets the mat file path.
-	 *
-	 * @return the mat file path
-	 */
 	public String getMatFilePath() {
 		return matFilePath;
 	}
-
-	/**
-	 * Gets the image type.
-	 *
-	 * @return the image type
-	 */
 	public String getImageType() {
 		return imageType;
 	}
