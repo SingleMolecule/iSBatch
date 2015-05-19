@@ -1,6 +1,15 @@
-/**
- * 
- */
+/************************************************************************
+ * 				iSBatch  Copyright (C) 2015  							*
+ *		Victor E. A. Caldas -  v.e.a.caldas at rug.nl					*
+ *		C. Michiel Punter - c.m.punter at rug.nl						*
+ *																		*
+ *	This program is distributed in the hope that it will be useful,		*
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of		*
+ * 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the		*
+ *	GNU General Public License for more details.						*
+ *	You should have received a copy of the GNU General Public License	*
+ *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ***********************************************************************/
 package operations.microbeTrackerIO;
 
 import ij.IJ;
@@ -9,7 +18,6 @@ import ij.ImageStack;
 import ij.gui.PolygonRoi;
 import ij.gui.Roi;
 import ij.measure.Measurements;
-import ij.plugin.ZProjector;
 import ij.plugin.frame.RoiManager;
 import ij.process.ImageProcessor;
 import ij.process.ImageStatistics;
@@ -20,14 +28,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Map;
 
 import filters.NodeFilterInterface;
 
 import java.util.HashMap;
 
-import com.jmatio.io.MatFileReader;
-import com.jmatio.types.MLArray;
+
 
 import model.DatabaseModel;
 import model.Experiment;
@@ -37,38 +43,16 @@ import model.Node;
 import model.OperationNode;
 import model.Root;
 import model.Sample;
+import model.parameters.NodeType;
 import operations.Operation;
-
-// TODO: Auto-generated Javadoc
-/**
- * The Class MicrobeTrackerIO.
- *
- * @author VictorCaldas
- */
 public class MicrobeTrackerIO implements Operation {
-	
-	/** The dialog. */
-	MicrobeTrackerIOGui dialog;
-	
-	/** The manager. */
+	private MicrobeTrackerIOGui dialog;
 	private RoiManager manager;
-	
-	/** The channel. */
 	private String channel;
-	
-	/** The method. */
 	private String method;
-	
-	/** The custom filter. */
 	private String customFilter;
-	
-	/** The mat file path. */
 	private String matFilePath;
-	
-	/** The BFF ile input path. */
 	private String BFFIleInputPath;
-	
-	/** The image type. */
 	private Object imageType;
 
 	/**
@@ -79,41 +63,17 @@ public class MicrobeTrackerIO implements Operation {
 	public MicrobeTrackerIO(DatabaseModel treeModel) {
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see context.ContextElement#getContext()
-	 */
-	/**
-	 * Gets the context.
-	 *
-	 * @return the context
-	 */
-	@Override
 	public String[] getContext() {
-		return new String[] { "All" };
+		// Set context to all unless Root.
+		return new String[] { NodeType.EXPERIMENT.toString(),
+				NodeType.SAMPLE.toString(), NodeType.FOV.toString(),
+				NodeType.FILE.toString() };
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see operations.Operation#getName()
-	 */
-	/**
-	 * Gets the name.
-	 *
-	 * @return the name
-	 */
 	@Override
 	public String getName() {
 		return "MicrobeTracker I/O";
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see operations.Operation#setup(model.Node)
-	 */
 	/**
 	 * Setup.
 	 *
@@ -125,20 +85,19 @@ public class MicrobeTrackerIO implements Operation {
 		dialog = new MicrobeTrackerIOGui(node);
 		if (dialog.isCanceled())
 			return false;
+		
+		//Get information from the dialog
+		//From panel1
 		this.channel = dialog.getChannel();
-		this.method = dialog.getMethod();
-		this.customFilter = dialog.getCustomFilter();
-		this.matFilePath = dialog.getMatFilePath();
 		this.imageType = dialog.getImageType();
+		this.customFilter = dialog.getCustomFilter();
+		
+		// From panel 2
+		this.matFilePath = dialog.getMatFilePath();
 		this.BFFIleInputPath = dialog.BFFIleInputPath;
 		return true;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see operations.Operation#finalize(model.Node)
-	 */
 	/**
 	 * Finalize.
 	 *
@@ -146,15 +105,9 @@ public class MicrobeTrackerIO implements Operation {
 	 */
 	@Override
 	public void finalize(Node node) {
-		System.out.println("Operation finalized");
-
+		System.out.println("MicrobeTracker IO Operation finalized");
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see operations.Operation#visit(model.Root)
-	 */
 
 	/**
 	 * Visit.
@@ -163,7 +116,6 @@ public class MicrobeTrackerIO implements Operation {
 	 */
 	@Override
 	public void visit(Root root) {
-
 	}
 
 	/**
@@ -175,7 +127,6 @@ public class MicrobeTrackerIO implements Operation {
 	public void visit(Experiment experiment) {
 		System.out.println(experiment.getProperty("type"));
 		run(experiment);
-
 	}
 
 	/**
@@ -184,6 +135,12 @@ public class MicrobeTrackerIO implements Operation {
 	 * @param node the node
 	 */
 	private void run(Node node) {
+		//Decide path to take.
+		// Relevant informations: Experiment Type : Rapid Acquisition or Time Lapse
+		
+//		String experimentType = node.getExperimentType();
+		
+		
 		File matFile = new File(matFilePath);
 
 		if (!matFile.exists()) {
@@ -206,8 +163,6 @@ public class MicrobeTrackerIO implements Operation {
 		manager = new RoiManager(true);
 		ArrayList<FieldOfView> nodes = node.getFieldOfView();
 
-		
-
 		// By the way that it acts, get the parent is the folder to Save the
 		// ROI. The list of nodes
 		// contain imagePaths based on the filter tag. Sure this has to be
@@ -225,14 +180,9 @@ public class MicrobeTrackerIO implements Operation {
 						currentFov = (FieldOfView)node1;
 						continue;
 					}
-					
-					
-					
-					
 				}
 				
 				RoiManager currentManager = new RoiManager(true);
-				
 				
 				for (Mesh m : meshes) {
 					int stackPosition = m.getSlice();
@@ -244,10 +194,6 @@ public class MicrobeTrackerIO implements Operation {
 						roi.setPosition(stackPosition);
 						currentManager.addRoi(roi);
 					}
-
-					
-					
-					
 				}
 				// Save all Rois in that folder
 				System.out.println(referenceImp.getStack().getSliceLabel(i));
@@ -259,7 +205,6 @@ public class MicrobeTrackerIO implements Operation {
 				currentFov.getProperties().put("CellRoi", currentFov.getCellROIPath());
 				currentManager.runCommand("Save", currentFov.getOutputFolder()
 						+ File.separator + "cellRoi.zip");
-
 			}
 
 		} catch (IOException e) {
@@ -269,23 +214,10 @@ public class MicrobeTrackerIO implements Operation {
 
 	}
 
-	/**
-	 * Gets the reference.
-	 *
-	 * @param node the node
-	 * @return the reference
-	 */
 	private ImagePlus getReference(Node node) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/**
-	 * Gets the stack for mt.
-	 *
-	 * @param node the node
-	 * @return the stack for mt
-	 */
 	private void getStackForMT(Node node) {
 		System.out.println("--- Start ----");
 		ArrayList<Node> nodes = node.getDescendents(filter(channel));
@@ -311,12 +243,6 @@ public class MicrobeTrackerIO implements Operation {
 
 	}
 
-	/**
-	 * Gets the stack size.
-	 *
-	 * @param meshes the meshes
-	 * @return the stack size
-	 */
 	private int getStackSize(ArrayList<Mesh> meshes) {
 		int size = 0;
 		for (Mesh mesh : meshes) {
@@ -327,12 +253,6 @@ public class MicrobeTrackerIO implements Operation {
 		return size;
 	}
 
-	/**
-	 * Filter.
-	 *
-	 * @param channel the channel
-	 * @return the node filter interface
-	 */
 	private NodeFilterInterface filter(String channel) {
 		final String selectedChannel = channel;
 		String[] channels = { "Acquisition", "Bright Field", "Red", "Green",
