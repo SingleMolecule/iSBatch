@@ -11,6 +11,8 @@
  *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ***********************************************************************/
 package model.parameters;
+
+
 /**
  *  Colors that can be used
  *  <li>{@link #GREEN}</li>
@@ -46,5 +48,6 @@ public enum Channel {
 		default:			return "Acquisition";
 		}
 	}
+	
 
 }

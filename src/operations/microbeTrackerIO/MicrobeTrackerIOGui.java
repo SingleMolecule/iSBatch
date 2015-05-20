@@ -1,8 +1,8 @@
 package operations.microbeTrackerIO;
 
 
-import gui.AskFileUser;
 import gui.LogPanel;
+import ij.IJ;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -34,7 +34,6 @@ import java.awt.event.KeyEvent;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 import javax.swing.JTabbedPane;
-import javax.swing.ComboBoxModel;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -180,6 +179,7 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 		createPanel.add(customFilterTextField, gbc_customFilterTextField);
 		
 		loadPanel = new JPanel();
+		loadPanel.setToolTipText("Warming! There is no error check! Make sure you are providing valid files!");
 		loadPanel.setBorder(new TitledBorder(null, "Load .Mat File with cells", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		tabbedPane.addTab("Load", null, loadPanel, null);
 		GridBagLayout gbl_loadPanel = new GridBagLayout();
@@ -205,6 +205,7 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 		panel_3.setLayout(gbl_panel_3);
 		
 		btnLoadmat = new JButton("Load .mat");
+		btnLoadmat.setToolTipText("Warming! There is no error check! Make sure you are providing valid  .mat file!");
 		btnLoadmat.addActionListener(this);
 		GridBagConstraints gbc_btnLoadmat = new GridBagConstraints();
 		gbc_btnLoadmat.insets = new Insets(0, 0, 5, 5);
@@ -228,6 +229,7 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 		panel_3.add(mathPathTextField, gbc_mathPathTextField);
 		
 		btnBfInput = new JButton("BF Input");
+		btnBfInput.setToolTipText("Warming! There is no error check! Make sure you are providing valid  .TIF file! The file should have a tag MTInput");
 		btnBfInput.addActionListener(this);
 		GridBagConstraints gbc_btnBfInput = new GridBagConstraints();
 		gbc_btnBfInput.fill = GridBagConstraints.HORIZONTAL;
@@ -310,7 +312,8 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 			dispose();
 		} else if (e.getSource() == btnProcess) {
 			
-			matFilePath = mathPathTextField.getText();
+			channel = channelComboBox.getSelectedItem().toString();
+			imageType = fileTypeComboBox.getSelectedItem().toString();
 			BFFIleInputPath = BFInput.getText();
 			customFiter = customFilterTextField.getText();
 			matFilePath = mathPathTextField.getText();
@@ -318,15 +321,11 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 			dispose();
 		}
 		else if(e.getSource() == btnLoadmat){
-			System.out.println("Open dialog to get file");
-			AskFileUser ask = new AskFileUser();
-			matFilePath = ask.path;
+			matFilePath = IJ.getFilePath(".MAT file");
 			mathPathTextField.setText(matFilePath);
 			}
 		else if(e.getSource() == btnBfInput){
-			System.out.println("Open dialog to get file");
-			AskFileUser ask = new AskFileUser();
-			BFFIleInputPath = ask.path;
+			BFFIleInputPath = IJ.getFilePath("MT input image");
 			BFInput.setText(BFFIleInputPath);
 			}
 		}

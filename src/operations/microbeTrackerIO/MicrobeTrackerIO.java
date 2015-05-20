@@ -35,6 +35,11 @@ import java.util.HashMap;
 
 
 
+
+
+
+
+import macros.MacroDialog2;
 import model.DatabaseModel;
 import model.Experiment;
 import model.FieldOfView;
@@ -43,8 +48,11 @@ import model.Node;
 import model.OperationNode;
 import model.Root;
 import model.Sample;
+import model.parameters.Channel;
+import model.parameters.EnumUtils;
 import model.parameters.NodeType;
 import operations.Operation;
+import test.TreeGenerator;
 public class MicrobeTrackerIO implements Operation {
 	private MicrobeTrackerIOGui dialog;
 	private RoiManager manager;
@@ -98,33 +106,13 @@ public class MicrobeTrackerIO implements Operation {
 		return true;
 	}
 
-	/**
-	 * Finalize.
-	 *
-	 * @param node the node
-	 */
-	@Override
 	public void finalize(Node node) {
 		System.out.println("MicrobeTracker IO Operation finalized");
 	}
 
-
-	/**
-	 * Visit.
-	 *
-	 * @param root the root
-	 */
-	@Override
 	public void visit(Root root) {
 	}
-
-	/**
-	 * Visit.
-	 *
-	 * @param experiment the experiment
-	 */
-	@Override
-	public void visit(Experiment experiment) {
+ 	public void visit(Experiment experiment) {
 		System.out.println(experiment.getProperty("type"));
 		run(experiment);
 	}
@@ -138,7 +126,10 @@ public class MicrobeTrackerIO implements Operation {
 		//Decide path to take.
 		// Relevant informations: Experiment Type : Rapid Acquisition or Time Lapse
 		
-//		String experimentType = node.getExperimentType();
+
+		
+		
+		
 		
 		
 		File matFile = new File(matFilePath);
@@ -346,6 +337,43 @@ public class MicrobeTrackerIO implements Operation {
 	 */
 	public static void main(String[] args) {
 
+//		DatabaseModel model = TreeGenerator.generate("e:/test", "e:/test", 4);
+//		MicrobeTrackerIOGui dialog = new MicrobeTrackerIOGui(model.getRoot());
+//		System.out.println(dialog.getChannel());
+//		
+//		System.out.println(dialog.getImageType());
+//		System.out.println(dialog.getCustomFilter());
+//		
+//		// From panel 2
+//		System.out.println(dialog.getMatFilePath());
+//		System.out.println(dialog.BFFIleInputPath);
+//		
+//		File f = new File(dialog.getMatFilePath());
+//		File f2 = new File(dialog.BFFIleInputPath);
+//		
+//		if(f.exists() && f2.exists()){
+//			System.out.println("Going to import");
+//		}
+//		
+//		if(!f.exists() || !f2.exists()){
+//			System.out.println("Missing one of the files. Will abort");
+//		}
+//		
+//		String channel = dialog.getChannel();
+//		System.out.println(EnumUtils.contains(Channel.values(), channel));
+//	
+//		
+//		if(EnumUtils.contains(Channel.values(), channel)){
+//			System.out.println(channel);
+//		}
+//		
+//		
+//		if(EnumUtils.contains(Channel.class, channel)){
+//			System.out.println();
+//		}
+	    System.out.println(EnumUtils.contains(Channel.class, "Acquisition"));
+	    	
+	    	
 	}
 
 	/**
@@ -365,7 +393,7 @@ public class MicrobeTrackerIO implements Operation {
 	 * @return the channel
 	 */
 	private String getChannel() {
-
+		
 		return channel;
 	}
 
