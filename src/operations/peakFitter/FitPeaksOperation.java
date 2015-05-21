@@ -1,14 +1,20 @@
-/*
- * 
- */
+/************************************************************************
+ * 				iSBatch  Copyright (C) 2015  							*
+ *		Victor E. A. Caldas -  v.e.a.caldas at rug.nl					*
+ *		C. Michiel Punter - c.m.punter at rug.nl						*
+ *																		*
+ *	This program is distributed in the hope that it will be useful,		*
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of		*
+ * 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the		*
+ *	GNU General Public License for more details.						*
+ *	You should have received a copy of the GNU General Public License	*
+ *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ***********************************************************************/
 package operations.peakFitter;
-
-/**
- * 
- */
 
 import filters.GenericFilter;
 import iSBatch.iSBatchPreferences;
+import ij.IJ;
 import ij.ImagePlus;
 import ij.ImageStack;
 import ij.gui.PointRoi;
@@ -33,6 +39,7 @@ import analysis.PeakFinder;
 import analysis.PeakFitter;
 import operations.Operation;
 import process.DiscoidalAveragingFilter;
+import test.TreeGenerator;
 import model.DatabaseModel;
 import model.Experiment;
 import model.FieldOfView;
@@ -41,89 +48,37 @@ import model.Node;
 import model.OperationNode;
 import model.Root;
 import model.Sample;
-
-// TODO: Auto-generated Javadoc
-/**
- * The Class FitPeaksOperation.
- *
- * @author VictorCaldas
- */
 public class FitPeaksOperation implements Operation {
-	
-	/** The dialog. */
 	private PeakFitterGui dialog;
-	
-	/** The channel. */
 	private String channel;
-	
-	/** The preferences. */
-	iSBatchPreferences preferences;
-	
-	/** The peak finder. */
 	PeakFinder peakFinder;
-	
-	/** The roi manager. */
 	RoiManager roiManager;
-	
-	/** The number of operations. */
 	int NUMBER_OF_OPERATIONS;
-	
-	/** The current count. */
 	int currentCount;
-	
-	/** The custom search. */
 	private String customSearch;
-	
-	/** The tags. */
 	ArrayList<String> tags = new ArrayList<String>();
-	
-	/** The current node. */
 	private Node currentNode;
-	
-	/** The cell roi manager. */
 	RoiManager cellRoiManager;
-	
-	/** The peaks manager. */
 	RoiManager peaksManager;
-
-	/**
-	 * Instantiates a new fit peaks operation.
-	 *
-	 * @param treeModel the tree model
-	 */
+	private boolean exportRaw;
+	private int radius;
+	
 	public FitPeaksOperation(DatabaseModel treeModel) {
 	}
 
-	/** The Constant SIGMA_TO_FWHM. */
 	public static final double SIGMA_TO_FWHM = 2.0 * Math.sqrt(2.0 * Math
 			.log(2));
 
-	/**
-	 * Gets the context.
-	 *
-	 * @return the context
-	 */
 	@Override
 	public String[] getContext() {
 		return new String[] { "All" };
 	}
 
-	/**
-	 * Gets the name.
-	 *
-	 * @return the name
-	 */
 	@Override
 	public String getName() {
 		return "Peak Fitter";
 	}
 
-	/**
-	 * Setup.
-	 *
-	 * @param node the node
-	 * @return true, if successful
-	 */
 	@Override
 	public boolean setup(Node node) {
 		dialog = new PeakFitterGui(node);
@@ -132,37 +87,23 @@ public class FitPeaksOperation implements Operation {
 		this.channel = dialog.getChannel();
 		this.customSearch = dialog.getCustomSearch();
 		this.tags = dialog.getTags();
+		this.radius = Integer.parseInt(iSBatchPreferences.SELECTION_RADIUS);
 		NUMBER_OF_OPERATIONS = node.getNumberOfFoV();
 		currentCount = 1;
+		this.exportRaw = dialog.exportRaw();
 
 		return true;
 	}
 
-	/**
-	 * Finalize.
-	 *
-	 * @param node the node
-	 */
 	@Override
 	public void finalize(Node node) {
-
 	}
 
-	/**
-	 * Visit.
-	 *
-	 * @param root the root
-	 */
 	@Override
 	public void visit(Root root) {
 		System.out.println("Not applicable to root. ");
 	}
 
-	/**
-	 * Run.
-	 *
-	 * @param node the node
-	 */
 	private void run(Node node) {
 		String extention = null;
 		// Run Peak Finder
@@ -170,6 +111,7 @@ public class FitPeaksOperation implements Operation {
 		ResultsTable fittedPeaks = null;
 		ArrayList<Node> filenodes = node.getDescendents(new GenericFilter(
 				channel, tags, extention, customSearch));
+		
 		for (Node currentNode : filenodes) {
 			System.out.println(currentNode.getName());
 			fittedPeaks = getFittedPeaks(currentNode);
@@ -196,46 +138,34 @@ public class FitPeaksOperation implements Operation {
 
 	}
 
-	/**
-	 * Gets the fitted peaks.
-	 *
-	 * @param node the node
-	 * @return the fitted peaks
-	 */
 	private ResultsTable getFittedPeaks(Node node) {
 		FileNode fnode = (FileNode) node;
 		this.currentNode = node;
+		
 		ImagePlus imp = fnode.getImage();
 		System.out.println(fnode.getPath());
 		// Check if calculation will be done inside cells and load the manager
 		if (iSBatchPreferences.insideCell) {
 			cellRoiManager = new RoiManager(true);
 			cellRoiManager.runCommand("Open", node.getCellROIPath());
-
-		}
-
-		if (iSBatchPreferences.insideCell) {
 			return getPeaks(imp);
+
 		}
 
 		return getPeaks(imp);
 	}
 
-	/**
-	 * Gets the peaks.
-	 *
-	 * @param imp the imp
-	 * @return the peaks
-	 */
 	private ResultsTable getPeaks(ImagePlus imp) {
 		ResultsTable PeakData = new ResultsTable();
 		ImageStack stack = imp.getStack();
 		int stackSize = stack.getSize();
+		
+		
+		
 		for (int stackPosition = 1; stackPosition <= stackSize; stackPosition++) {
 			ImageProcessor ip = stack.getProcessor(stackPosition);
 			@SuppressWarnings("unchecked")
-			Hashtable<String, Roi> table = (Hashtable<String, Roi>) cellRoiManager
-					.getROIs();
+			Hashtable<String, Roi> table = (Hashtable<String, Roi>) cellRoiManager.getROIs();
 			for (String label : table.keySet()) {
 
 				Roi roi = table.get(label);
@@ -245,7 +175,6 @@ public class FitPeaksOperation implements Operation {
 				DiscoidalAveragingFilter filter1 = new DiscoidalAveragingFilter(
 						ip.getWidth(), iSBatchPreferences.INNER_RADIUS,
 						iSBatchPreferences.OUTER_RADIUS);
-
 				PeakFinder finder = new PeakFinder(
 						iSBatchPreferences.useDiscoidalFiltering, filter1,
 						iSBatchPreferences.SNR_THRESHOLD,
@@ -271,8 +200,34 @@ public class FitPeaksOperation implements Operation {
 					parameters[2] = x;
 					parameters[3] = y;
 
-					ip.setRoi(x - 3, y - 3, 7, 7);
-
+					ip.setRoi(x - (radius-1) , y - (radius-1), (2*radius-1), 2*radius-1);
+					/**
+					 * 
+					 * 
+					 * Selection radius
+					 * 
+					 * 
+					 */
+					
+					
+					if(exportRaw){
+						//Create FolderS
+						ImagePlus imp2 =new ImagePlus();
+						
+						//Format
+						// frame-cell-x-y
+						String fileName = "CellNumber-"+ Integer.toString(stackPosition)+ "-"+ Integer.toString(x) + "-" + Integer.toString(y);
+						File outputDir = new File(currentNode.getOutputFolder()+ File.separator + "RawPeaks" + File.separator + "peakImage");
+						outputDir.mkdirs();
+						imp2.setProcessor(ip.crop());
+						IJ.saveAsTiff(imp2, outputDir.getAbsolutePath() + File.separator + fileName );
+						System.out.println(outputDir.getAbsolutePath() + File.separator + fileName);
+						////
+						outputDir = new File(currentNode.getOutputFolder()+ File.separator + "RawPeaks" + File.separator + "peakValues");
+						outputDir.mkdirs();
+						IJ.saveAs(imp2, "Text Image", outputDir.getAbsolutePath() + File.separator + fileName );
+						System.out.println(outputDir.getAbsolutePath() + File.separator + fileName + ".csv");
+					}
 					PeakFitter.fitPeak(ip, parameters, errors);
 
 					// Filtering conditions
@@ -291,9 +246,9 @@ public class FitPeaksOperation implements Operation {
 						continue;
 					
 					double  position_y = parameters[3];
-					
+					 
 					if ( position_y<1 ||  position_x>(ip.getHeight()-1) || Double.isNaN(position_y))
-						continue;
+					continue;
 					
 					double fwhmx = parameters[4] * SIGMA_TO_FWHM;
 					
@@ -358,41 +313,21 @@ public class FitPeaksOperation implements Operation {
 		return PeakData;
 	}
 
-	/**
-	 * Visit.
-	 *
-	 * @param experiment the experiment
-	 */
 	@Override
 	public void visit(Experiment experiment) {
 		run(experiment);
 	}
 
-	/**
-	 * Visit.
-	 *
-	 * @param sample the sample
-	 */
 	@Override
 	public void visit(Sample sample) {
 		run(sample);
 	}
 
-	/**
-	 * Visit.
-	 *
-	 * @param fieldOfView the field of view
-	 */
 	@Override
 	public void visit(FieldOfView fieldOfView) {
 		run(fieldOfView);
 	}
 
-	/**
-	 * Visit.
-	 *
-	 * @param fileNode the file node
-	 */
 	@Override
 	public void visit(FileNode fileNode) {
 		// System.out.println("Peak Find: " + currentCount + " of "
@@ -405,45 +340,22 @@ public class FitPeaksOperation implements Operation {
 
 	}
 
-	/**
-	 * Visit.
-	 *
-	 * @param operationNode the operation node
-	 */
 	@Override
 	public void visit(OperationNode operationNode) {
-		// TODO Auto-generated method stub
-
 	}
 
-	/**
-	 * Gets the created nodes.
-	 *
-	 * @return the created nodes
-	 */
 	@Override
 	public Node[] getCreatedNodes() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/**
-	 * Gets the parameters.
-	 *
-	 * @return the parameters
-	 */
+
 	@Override
 	public HashMap<String, String> getParameters() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/**
-	 * Run plug in filter.
-	 *
-	 * @param filter the filter
-	 * @param imp the imp
-	 */
 	public static void runPlugInFilter(PlugInFilter filter, ImagePlus imp) {
 
 		ImageStack stack = imp.getImageStack();
@@ -452,23 +364,10 @@ public class FitPeaksOperation implements Operation {
 			runPlugInFilter(filter, stack.getProcessor(slice));
 	}
 
-	/**
-	 * Run plug in filter.
-	 *
-	 * @param filter the filter
-	 * @param ip the ip
-	 */
 	public static void runPlugInFilter(PlugInFilter filter, ImageProcessor ip) {
 		filter.run(ip);
 	}
 
-	/**
-	 * Find peaks.
-	 *
-	 * @param finder the finder
-	 * @param imp the imp
-	 * @return the array list
-	 */
 	public static ArrayList<Roi> findPeaks(PeakFinder finder, ImagePlus imp) {
 
 		ArrayList<Roi> allPeaks = new ArrayList<Roi>();
@@ -488,13 +387,6 @@ public class FitPeaksOperation implements Operation {
 		return allPeaks;
 	}
 
-	/**
-	 * Save rois as zip.
-	 *
-	 * @param rois the rois
-	 * @param filename the filename
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 */
 	public static void saveRoisAsZip(ArrayList<Roi> rois, String filename)
 			throws IOException {
 		ZipOutputStream zos = new ZipOutputStream(
@@ -511,6 +403,29 @@ public class FitPeaksOperation implements Operation {
 
 		zos.close();
 
+	}
+	public static void main(String[] args) {
+		DatabaseModel model = TreeGenerator.generate("e:/test", "e:/test", 2);
+		PeakFitterGui dialog = new PeakFitterGui(model.getRoot());
+		
+		System.out.println("Channel: "+ dialog.getChannel());
+		
+		System.out.println("Custom search: "+ dialog.getCustomSearch());
+		
+		for(String string : dialog.getTags()){
+			System.out.println("Tag: "+ string);
+		}
+		
+		System.out.println("Discoidal: " + dialog.useDiscoidal);
+		System.out.println("Cells: " + dialog.useCells);
+		System.out.println("Export raw: " + dialog.exportRaw());
+		
+		
+		
+		
+		
+		
+		
 	}
 
 }

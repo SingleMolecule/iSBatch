@@ -36,7 +36,6 @@ import model.OperationNode;
 import model.Root;
 import model.Sample;
 
-// TODO: Auto-generated Javadoc
 public class FlattenOperation implements Operation {
 	private Importer importer;
 	private String[] channels = new String[] {
@@ -52,8 +51,6 @@ public class FlattenOperation implements Operation {
 	private boolean useElectronicOffsetImage = false;
 	private ImagePlus electronicOffsetImage;
 	private ImagePlus backgroundImage;
-	
-	/** The image file node filter. */
 	private NodeFilterInterface imageFileNodeFilter = new NodeFilterInterface() {
 		
 		@Override
@@ -183,7 +180,6 @@ public class FlattenOperation implements Operation {
 	 */
 	@Override
 	public void finalize(Node node) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -311,10 +307,9 @@ public class FlattenOperation implements Operation {
 				
 					ip.setf(x, y, (float)Math.abs(value / backgroundValue));
 				}
-				
 			}
-			
 		}
+		
 		
 		// filename without extension
 		File file = new File(path);
@@ -322,11 +317,17 @@ public class FlattenOperation implements Operation {
 		String filenameWithoutExtension = filename.substring(0, filename.lastIndexOf('.'));
 		File outputFile = new File(fileNode.getOutputFolder(), filenameWithoutExtension + "_flat.tif");
 		
+		FileNode newNode = new FileNode(fileNode);
+		newNode.setProperty("channel", channel);
+		newNode.setProperty("channel", fileNode.getChannel());
+		newNode.setProperty("path", outputFile.getAbsolutePath());
+		newNode.setProperty("name", filenameWithoutExtension + "_flat.tif");
 		LogPanel.log("saving flattened file as " + outputFile);
 		IJ.saveAsTiff(imp, outputFile.getPath());
 		
 		// add it to the tree
 		LogPanel.log("adding to tree");
+		importer.im
 		importer.importFile(fileNode.getParent(), outputFile);
 	}
 	
@@ -337,7 +338,6 @@ public class FlattenOperation implements Operation {
 	 */
 	@Override
 	public void visit(OperationNode operationNode) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -348,7 +348,6 @@ public class FlattenOperation implements Operation {
 	 */
 	@Override
 	public Node[] getCreatedNodes() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -359,7 +358,6 @@ public class FlattenOperation implements Operation {
 	 */
 	@Override
 	public HashMap<String, String> getParameters() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

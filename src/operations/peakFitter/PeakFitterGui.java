@@ -1,6 +1,15 @@
-/*
- * 
- */
+/************************************************************************
+ * 				iSBatch  Copyright (C) 2015  							*
+ *		Victor E. A. Caldas -  v.e.a.caldas at rug.nl					*
+ *		C. Michiel Punter - c.m.punter at rug.nl						*
+ *																		*
+ *	This program is distributed in the hope that it will be useful,		*
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of		*
+ * 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the		*
+ *	GNU General Public License for more details.						*
+ *	You should have received a copy of the GNU General Public License	*
+ *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ***********************************************************************/
 package operations.peakFitter;
 
 
@@ -44,345 +53,145 @@ import javax.swing.JCheckBox;
 import javax.swing.border.TitledBorder;
 
 import operations.peakFinder.FindPeaksGui;
+import utils.ModelUtils;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class PeakFitterGui.
- */
-public class PeakFitterGui extends JDialog implements ActionListener {
+public class PeakFitterGui extends JDialog implements ActionListener{
 	
-	/** The number format. */
 	NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale
 			.getDefault());
 	
-	/** The decimal format. */
 	DecimalFormat decimalFormat = (DecimalFormat) numberFormat;
 
-	/** The image type. */
 	private String imageType;
-	
-	/** The panel. */
 	private JPanel panel;
-	
-	/** The use discoidal filter chk. */
 	private JCheckBox useDiscoidalFilterChk;
-	
-	/** The inner radius txt. */
 	private JTextField innerRadiusTxt;
-	
-	/** The outer radius txt. */
 	private JTextField outerRadiusTxt;
-	
-	/** The lbl radius. */
 	private JLabel lblRadius;
-	
-	/** The lbl inner. */
 	private JLabel lblInner;
-	
-	/** The lbl outer. */
 	private JLabel lblOuter;
-	
-	/** The Discoidal filter panel. */
 	private JPanel DiscoidalFilterPanel;
-	
-	/** The Peak finder parameters. */
 	private JPanel PeakFinderParameters;
-	
-	/** The lbl threshold. */
 	private JLabel lblThreshold;
-	
-	/** The SNR txt. */
 	private JTextField SNRTxt;
-	
-	/** The lbl snr. */
 	private JLabel lblSnr;
-	
-	/** The Intensity txt. */
 	private JTextField IntensityTxt;
-	
-	/** The lbl threshold_1. */
 	private JLabel lblThreshold_1;
-	
-	/** The lbl intensity. */
 	private JLabel lblIntensity;
-	
-	/** The lbl selection radius. */
 	private JLabel lblSelectionRadius;
-	
-	/** The Selection radius txt. */
 	private JTextField SelectionRadiusTxt;
-	
-	/** The lbl min distance. */
 	private JLabel lblMinDistance;
-	
-	/** The min distance txt. */
 	private JTextField minDistanceTxt;
-	
-	/** The lbl px. */
 	private JLabel lblPx;
-	
-	/** The lbl px_1. */
 	private JLabel lblPx_1;
-	
-	/** The chckbx inside cells. */
 	private JCheckBox chckbxInsideCells;
-	
-	/** The custom search. */
 	private String customSearch;
-	// butons
-
-	/** The btn cancel. */
 	private JButton btnCancel;
-	
-	/** The btn process. */
 	private JButton btnProcess;
-
-	// Parameters
-	/** The inner radius. */
+	private boolean exportRaw;
 	public String innerRadius= null;
 
-	/**
-	 * Gets the inner radius.
-	 *
-	 * @return the inner radius
-	 */
 	public double getInnerRadius() {
 		return parseDouble(innerRadius);
 	}
 
-	/**
-	 * Parses the double.
-	 *
-	 * @param str the str
-	 * @return the double
-	 * @throws NumberFormatException the number format exception
-	 */
 	private double parseDouble(String str) throws NumberFormatException {
 		double toReturn = 0;
-//		System.out.println(str);
 		if(!str.equalsIgnoreCase("") || !str.equals(null))
 		{	
 		try {
 			toReturn = Double.parseDouble(str);
-//			System.out.println("Value parsed :" + toReturn);
 		} catch (NumberFormatException ex) {
 			System.out.println("---- Debug --- ");
 			System.err.println("Ilegal input");
 			System.out.println("Illegal string: " + str+".|||");
 			toReturn = 0;
-			// Discard input or request new input ...
-			// clean up if necessary
 		}
 		}
 		
 		return toReturn;
 	}
 
-	/** The outer radius. */
 	public String outerRadius= null;
 
-	/**
-	 * Gets the outer radius.
-	 *
-	 * @return the outer radius
-	 */
 	public double getOuterRadius() {
 		return parseDouble(outerRadius);
 	}
 
-	/** The SNR threshold. */
 	public String SNRThreshold = null;
-	
-	/** The threshold. */
 	public String threshold= null;
-	
-	/** The min distance. */
 	public String minDistance= null;
-	
-	/** The selection radius. */
 	public String selectionRadius= null;
-
-	// ComboBox
-	/** The file type combo box. */
 	private JComboBox<String> fileTypeComboBox;
-	
-	/** The channel combo box. */
 	private JComboBox<String> channelComboBox;
-
-	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
-	
-	/** The channels. */
-	private String[] channels = new String[] {
 
-	"[Select Channel]", "All", "Acquisition", "Bright Field", "Red", "Green",
-			"Blue", };
-
-//	private static final String[] methods = { "[Method]", "Load Image",
-//			"Average Images" };
-	/** The types. */
 private String[] types = new String[] { "[File Type]", "Raw", "Flat",
 			"Discoidal" };
-
-	/** The canceled. */
 	private boolean canceled = false;
-
-	/** The frame. */
 	static JFrame frame;
-	
-	/** The node. */
 	private Node node;
-	
-	/** The image path. */
 	private String channel, method, imagePath;
-	
-	/** The use discoidal. */
 	public boolean useDiscoidal;
-	
-	/** The use cells. */
 	public boolean useCells;
-	
-	/** The Peak fitter panel. */
 	private JPanel PeakFitterPanel;
-	
-	/** The Error baselinetext field. */
 	private JTextField ErrorBaselinetextField;
-	
-	/** The error heightext field. */
 	private JTextField errorHeightextField;
-	
-	/** The error xtext field. */
 	private JTextField errorXtextField;
-	
-	/** The error ytext field. */
 	private JTextField errorYtextField;
-	
-	/** The error sigma xtext field. */
 	private JTextField errorSigmaXtextField;
-	
-	/** The error sigma ytext field. */
 	private JTextField errorSigmaYtextField;
-	
-	/** The Zscaletxt field. */
 	private JTextField ZscaletxtField;
-	
-	/** The lbl new label. */
 	private JLabel lblNewLabel;
-	
-	/** The lbl new label_1. */
 	private JLabel lblNewLabel_1;
-	
-	/** The lbl new label_2. */
 	private JLabel lblNewLabel_2;
-	
-	/** The lbl new label_3. */
 	private JLabel lblNewLabel_3;
-	
-	/** The lbl new label_4. */
 	private JLabel lblNewLabel_4;
-	
-	/** The lbl new label_5. */
 	private JLabel lblNewLabel_5;
-	
-	/** The lbl new label_6. */
 	private JLabel lblNewLabel_6;
-	
-	/** The z scale. */
 	protected String zScale;
-	
-	/**
-	 * Gets the z scale.
-	 *
-	 * @return the z scale
-	 */
+
 	public double getZScale(){
 		return parseDouble(zScale);
 	}
-	
-	/** The error sigma y. */
 	protected String errorSigmaY;
-	
-	/**
-	 * Gets the error sigma y.
-	 *
-	 * @return the error sigma y
-	 */
+
 	public double getErrorSigmaY(){
 		return parseDouble(errorSigmaY);
 	}
-	
-	/** The error sigma x. */
 	protected String errorSigmaX;
 	
-	/**
-	 * Gets the error sigma x.
-	 *
-	 * @return the error sigma x
-	 */
 	public double getErrorSigmaX(){
 		return parseDouble(errorSigmaX);
 	}
-	
-	/** The error y. */
 	protected String errorY;
 	
-	/**
-	 * Gets the error y.
-	 *
-	 * @return the error y
-	 */
 	public double getErrorY(){
 		return parseDouble(errorY);
 	}
 	
-	/** The error x. */
 	protected String errorX;
 	
-	/**
-	 * Gets the error x.
-	 *
-	 * @return the error x
-	 */
 	public double getErrorX(){
 		return parseDouble(errorX);
 	}
 	
-	/** The error height. */
 	protected String errorHeight;
 	
-	/**
-	 * Gets the error height.
-	 *
-	 * @return the error height
-	 */
 	public double getErrorHeight(){
 		return parseDouble(errorHeight);
 	}
 	
-	/** The error baseline. */
 	protected String errorBaseline;
-	
-	/** The custom search txt field. */
 	private JTextField customSearchTxtField;
+	private JLabel lblSelectMethod;
+	private JComboBox<String> comboBox;
+	private JCheckBox chckbxExportRaw;
 	
-	/**
-	 * Gets the error baseline.
-	 *
-	 * @return the error baseline
-	 */
 	public double getErrorBaseline(){
 		return parseDouble(errorBaseline);
 	}
 
-	/*
-	 * Filter variables
-	 */
-
-	/**
-	 * Instantiates a new peak fitter gui.
-	 *
-	 * @param node the node
-	 */
 	public PeakFitterGui(Node node) {
 		setModal(true);
 		setTitle("Fit Peaks");
@@ -395,24 +204,18 @@ private String[] types = new String[] { "[File Type]", "Raw", "Flat",
 	}
 
 
-	/**
-	 * Setup.
-	 */
 	private void setup() {
 	}
 
-	/**
-	 * Display.
-	 */
 	private void display() {
 		decimalFormat.setGroupingUsed(false);
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 60, 115, 60, 0 };
-		gridBagLayout.rowHeights = new int[] { 14, 23, 0, 0, 103, 203, 0, 0 };
+		gridBagLayout.rowHeights = new int[] { 14, 23, 0, 0, 103, 0, 203, 0, 0 };
 		gridBagLayout.columnWeights = new double[] { 1.0, 1.0, 1.0,
 				Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0,
+		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0,
 				Double.MIN_VALUE };
 		getContentPane().setLayout(gridBagLayout);
 
@@ -440,7 +243,7 @@ private String[] types = new String[] { "[File Type]", "Raw", "Flat",
 		channelComboBox = new JComboBox<String>();
 		channelComboBox.addActionListener(this);
 
-		channelComboBox.setModel(new DefaultComboBoxModel<String>(channels));
+		channelComboBox.setModel(ModelUtils.getUniqueChannels(node));
 		GridBagConstraints gbc_channelComboBox = new GridBagConstraints();
 		gbc_channelComboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_channelComboBox.fill = GridBagConstraints.HORIZONTAL;
@@ -471,7 +274,7 @@ private String[] types = new String[] { "[File Type]", "Raw", "Flat",
 		customSearchTxtField = new JTextField();
 		GridBagConstraints gbc_customSearchTxtField = new GridBagConstraints();
 		gbc_customSearchTxtField.gridwidth = 2;
-		gbc_customSearchTxtField.insets = new Insets(0, 0, 5, 5);
+		gbc_customSearchTxtField.insets = new Insets(0, 0, 5, 0);
 		gbc_customSearchTxtField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_customSearchTxtField.gridx = 1;
 		gbc_customSearchTxtField.gridy = 2;
@@ -686,6 +489,7 @@ private String[] types = new String[] { "[File Type]", "Raw", "Flat",
 		PeakFinderParameters.add(lblSelectionRadius, gbc_lblSelectionRadius);
 
 		SelectionRadiusTxt = new JTextField();
+		SelectionRadiusTxt.setToolTipText("Must be integer");
 		SelectionRadiusTxt.setText(iSBatchPreferences.SELECTION_RADIUS);
 		GridBagConstraints gbc_SelectionRadiusTxt = new GridBagConstraints();
 		gbc_SelectionRadiusTxt.insets = new Insets(0, 0, 5, 5);
@@ -744,6 +548,32 @@ private String[] types = new String[] { "[File Type]", "Raw", "Flat",
 		chckbxInsideCells = new JCheckBox("Inside Cells");
 		chckbxInsideCells.addActionListener(this);
 		
+		lblSelectMethod = new JLabel("Select method: ");
+		GridBagConstraints gbc_lblSelectMethod = new GridBagConstraints();
+		gbc_lblSelectMethod.anchor = GridBagConstraints.EAST;
+		gbc_lblSelectMethod.insets = new Insets(0, 0, 5, 5);
+		gbc_lblSelectMethod.gridx = 0;
+		gbc_lblSelectMethod.gridy = 5;
+		getContentPane().add(lblSelectMethod, gbc_lblSelectMethod);
+		
+		comboBox = new JComboBox<String>();
+		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Gaussian fit", "----------"}));
+		GridBagConstraints gbc_comboBox = new GridBagConstraints();
+		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
+		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comboBox.gridx = 1;
+		gbc_comboBox.gridy = 5;
+		getContentPane().add(comboBox, gbc_comboBox);
+		
+		chckbxExportRaw = new JCheckBox("Export raw");
+		chckbxExportRaw.addActionListener(this);
+		chckbxExportRaw.setToolTipText("Save raw peak intensities in the folder \\Peaks.");
+		GridBagConstraints gbc_chckbxExportRaw = new GridBagConstraints();
+		gbc_chckbxExportRaw.insets = new Insets(0, 0, 5, 0);
+		gbc_chckbxExportRaw.gridx = 2;
+		gbc_chckbxExportRaw.gridy = 5;
+		getContentPane().add(chckbxExportRaw, gbc_chckbxExportRaw);
+		
 		PeakFitterPanel = new JPanel();
 		PeakFitterPanel.setBorder(new TitledBorder(null, "Peak Fitter Parameters", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GridBagConstraints gbc_PeakFitterPanel = new GridBagConstraints();
@@ -751,7 +581,7 @@ private String[] types = new String[] { "[File Type]", "Raw", "Flat",
 		gbc_PeakFitterPanel.gridwidth = 3;
 		gbc_PeakFitterPanel.insets = new Insets(0, 0, 5, 0);
 		gbc_PeakFitterPanel.gridx = 0;
-		gbc_PeakFitterPanel.gridy = 5;
+		gbc_PeakFitterPanel.gridy = 6;
 		getContentPane().add(PeakFitterPanel, gbc_PeakFitterPanel);
 		GridBagLayout gbl_PeakFitterPanel = new GridBagLayout();
 		gbl_PeakFitterPanel.columnWidths = new int[]{0, 0, 0, 0, 0};
@@ -931,12 +761,12 @@ private String[] types = new String[] { "[File Type]", "Raw", "Flat",
 		GridBagConstraints gbc_chckbxInsideCells = new GridBagConstraints();
 		gbc_chckbxInsideCells.insets = new Insets(0, 0, 0, 5);
 		gbc_chckbxInsideCells.gridx = 0;
-		gbc_chckbxInsideCells.gridy = 6;
+		gbc_chckbxInsideCells.gridy = 7;
 		getContentPane().add(chckbxInsideCells, gbc_chckbxInsideCells);
 		GridBagConstraints gbc_btnProcess = new GridBagConstraints();
 		gbc_btnProcess.insets = new Insets(0, 0, 0, 5);
 		gbc_btnProcess.gridx = 1;
-		gbc_btnProcess.gridy = 6;
+		gbc_btnProcess.gridy = 7;
 		getContentPane().add(btnProcess, gbc_btnProcess);
 
 		btnCancel = new JButton("Cancel");
@@ -944,7 +774,7 @@ private String[] types = new String[] { "[File Type]", "Raw", "Flat",
 
 		GridBagConstraints gbc_btnCancel = new GridBagConstraints();
 		gbc_btnCancel.gridx = 2;
-		gbc_btnCancel.gridy = 6;
+		gbc_btnCancel.gridy = 7;
 		getContentPane().add(btnCancel, gbc_btnCancel);
 
 		pack();
@@ -954,21 +784,13 @@ private String[] types = new String[] { "[File Type]", "Raw", "Flat",
 
 	}
 
-	/**
-	 * Run.
-	 */
 	private void run() {
 	}
 
-	/**
-	 * The main method.
-	 *
-	 * @param args the arguments
-	 */
 	public static void main(String[] args) {
 		frame = new JFrame();
 
-		new FindPeaksGui(null, new iSBatchPreferences());
+		new FindPeaksGui(null);
 
 	}
 
@@ -981,20 +803,10 @@ private String[] types = new String[] { "[File Type]", "Raw", "Flat",
 		IJ.error("Batch Processor", msg);
 	}
 
-	/**
-	 * Checks if is canceled.
-	 *
-	 * @return true, if is canceled
-	 */
 	public boolean isCanceled() {
 		return canceled;
 	}
 
-	/**
-	 * Action performed.
-	 *
-	 * @param e the e
-	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnCancel) {
@@ -1015,22 +827,11 @@ private String[] types = new String[] { "[File Type]", "Raw", "Flat",
 			iSBatchPreferences.ERROR_Y = errorXtextField.getText();
 			iSBatchPreferences.ERROR_HEIGHT = errorHeightextField.getText();
 			iSBatchPreferences.ERROR_BASELINE = ErrorBaselinetextField.getText();
-			
+			channel = (String) channelComboBox.getSelectedItem();
 			customSearch = customSearchTxtField.getText();
 			run();
 			dispose();
-		} else if (e.getSource() == channelComboBox) {
-			String foo = (String) channelComboBox.getSelectedItem();
-			if (foo.equalsIgnoreCase("[Select Channel]")) {
-				this.channel = "All";
-			} else {
-				this.channel = channels[channelComboBox.getSelectedIndex()];
-			}
 			
-//			System.out.println(channel);
-//		} else if (e.getSource() == methodComboBox) {
-//			this.method = (String) methodComboBox.getSelectedItem();
-////			System.out.println(method);
 		} else if (e.getSource() == fileTypeComboBox) {
 			String foo = (String) fileTypeComboBox.getSelectedItem();
 			if (foo.equalsIgnoreCase("[File Type]")) {
@@ -1051,7 +852,17 @@ private String[] types = new String[] { "[File Type]", "Raw", "Flat",
 				this.useDiscoidal = false;
 				iSBatchPreferences.useDiscoidalFiltering = true;
 			}
-		} else if (e.getSource() == chckbxInsideCells) {
+		}  else if (e.getSource() == chckbxExportRaw) {
+			boolean isSelected = chckbxExportRaw.isSelected();
+
+			if (isSelected) {
+				this.exportRaw = true;
+
+			} else {
+				this.exportRaw = false;
+			}
+		}
+		else if (e.getSource() == chckbxInsideCells) {
 			boolean isSelected = chckbxInsideCells.isSelected();
 
 			if (isSelected) {
@@ -1065,83 +876,38 @@ private String[] types = new String[] { "[File Type]", "Raw", "Flat",
 		}
 	}
 
-	/**
-	 * Gets the channel.
-	 *
-	 * @return the channel
-	 */
 	public String getChannel() {
 		return channel;
 	}
 
-	/**
-	 * Gets the method.
-	 *
-	 * @return the method
-	 */
 	public String getMethod() {
 		return method;
 	}
 
-	/**
-	 * Gets the image path.
-	 *
-	 * @return the image path
-	 */
-	public String getImagePath() {
+public String getImagePath() {
 		return imagePath;
 	}
 
-	/**
-	 * Gets the threshold.
-	 *
-	 * @return the threshold
-	 */
 	public double getThreshold() {
 		return parseDouble(threshold);
 	}
 
-	/**
-	 * Gets the SNR threshold.
-	 *
-	 * @return the SNR threshold
-	 */
 	public double getSNRThreshold() {
 		return parseDouble(SNRThreshold);
 	}
 
-	/**
-	 * Gets the min distance.
-	 *
-	 * @return the min distance
-	 */
 	public double getMinDistance() {
 		return parseDouble(minDistance);
 	}
 
-	/**
-	 * Gets the selection radius.
-	 *
-	 * @return the selection radius
-	 */
 	public double getSelectionRadius() {
 		return parseDouble(selectionRadius);
 	}
 
-	/**
-	 * Gets the custom search.
-	 *
-	 * @return the custom search
-	 */
 	public String getCustomSearch() {
 		return this.customSearch;
 	}
 
-	/**
-	 * Gets the tags.
-	 *
-	 * @return the tags
-	 */
 	public ArrayList<String> getTags() {
 		ArrayList<String> container = new ArrayList<String>();
 		if (imageType != null) {
@@ -1152,11 +918,24 @@ private String[] types = new String[] { "[File Type]", "Raw", "Flat",
 			}
 			return container;
 		}
-
 		else
-			
 			return container;
 
 	}
+	
+	public boolean useDiscoidal(){
+		return useDiscoidal;
+	}
+	
+	public boolean useCells(){
+		return useCells;
+	}
+
+	public boolean exportRaw(){
+		return exportRaw;
+	}
+
 
 }
+
+		

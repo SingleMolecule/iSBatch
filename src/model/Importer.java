@@ -50,22 +50,21 @@ import model.parameters.Channel;
 public class Importer {
 
 	// channel regular expressions
-	/** The acq reg ex. */
+	/** The Acquisition regex. */
 	public static String acqRegEx = ".*acquisition.?\\.tif";
 	
-	/** The bf reg ex. */
+	/** The Bright Field regex. */
 	public static String bfRegEx = ".*bf.?\\.tif";
 	
-	/** The red reg ex. */
+	/** The Red channel regex. */
 	public static String redRegEx = ".*568.?\\.tif";
 	
-	/** The green reg ex. */
+	/** The Green channel regex. */
 	public static String greenRegEx = ".*514.?\\.tif";
 	
-	/** The blue reg ex. */
+	/** The Blue channel regex. */
 	public static String blueRegEx = ".*488.?\\.tif";
 	
-	/** The model. */
 	private DatabaseModel model;
 
 	/**
@@ -223,7 +222,6 @@ public class Importer {
 	public void importFile(Node node, File file) {
 		
 		FileNode fileNode = new FileNode(node);
-		@SuppressWarnings("unused")
 		Channel channelType = null;
 		String channel = "";
 		String name = file.getName().toLowerCase();
@@ -237,7 +235,7 @@ public class Importer {
 			channel = "Bright Field";
 			channelType = Channel.BRIGHT_FIELD;
 		}
-		else if (name.matches(redRegEx)){
+		else if (name.matches(redRegEx) || name.contains("red")){
 			channel = "Red";
 			channelType = Channel.RED;
 		}

@@ -1,6 +1,15 @@
-/**
- * 
- */
+/************************************************************************
+ * 				iSBatch  Copyright (C) 2015  							*
+ *		Victor E. A. Caldas -  v.e.a.caldas at rug.nl					*
+ *		C. Michiel Punter - c.m.punter at rug.nl						*
+ *																		*
+ *	This program is distributed in the hope that it will be useful,		*
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of		*
+ * 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the		*
+ *	GNU General Public License for more details.						*
+ *	You should have received a copy of the GNU General Public License	*
+ *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ***********************************************************************/
 package operations.peakFinder;
 
 import iSBatch.iSBatchPreferences;
@@ -28,6 +37,7 @@ import java.util.zip.ZipOutputStream;
 import analysis.PeakFinder;
 import operations.Operation;
 import process.DiscoidalAveragingFilter;
+import test.TreeGenerator;
 import model.DatabaseModel;
 import model.Experiment;
 import model.FieldOfView;
@@ -44,90 +54,34 @@ import model.Sample;
  * @author VictorCaldas
  */
 public class FindPeaksOperation implements Operation {
-	
-	/** The dialog. */
 	private FindPeaksGui dialog;
-	
-	/** The channel. */
 	private String channel;
-	
-	/** The use discoidal. */
 	private boolean useDiscoidal;
-	
-	/** The model. */
 	private DatabaseModel model;
-	
-	/** The preferences. */
 	iSBatchPreferences preferences;
-	
-	/** The peak finder. */
 	PeakFinder peakFinder;
-	
-	/** The roi manager. */
 	RoiManager roiManager;
-	
-	/** The number of operations. */
 	int NUMBER_OF_OPERATIONS;
-	
-	/** The current count. */
 	int currentCount;
 
-	/**
-	 * Instantiates a new find peaks operation.
-	 *
-	 * @param treeModel the tree model
-	 */
 	public FindPeaksOperation(DatabaseModel treeModel) {
 		this.model = treeModel;
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see context.ContextElement#getContext()
-	 */
-	/**
-	 * Gets the context.
-	 *
-	 * @return the context
-	 */
 	@Override
 	public String[] getContext() {
 		return new String[] { "All" };
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see operations.Operation#getName()
-	 */
-	/**
-	 * Gets the name.
-	 *
-	 * @return the name
-	 */
 	@Override
 	public String getName() {
 		return "Peak Finder";
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see operations.Operation#setup(model.Node)
-	 */
-	/**
-	 * Setup.
-	 *
-	 * @param node the node
-	 * @return true, if successful
-	 */
 	@Override
 	public boolean setup(Node node) {
 		// String to parse:
 
 		preferences = model.preferences;
-		dialog = new FindPeaksGui(node, preferences);
+		dialog = new FindPeaksGui(node);
 		if (dialog.isCanceled())
 			return false;
 		this.useDiscoidal = dialog.useDiscoidal;
@@ -137,46 +91,16 @@ public class FindPeaksOperation implements Operation {
 		return true;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see operations.Operation#finalize(model.Node)
-	 */
-	/**
-	 * Finalize.
-	 *
-	 * @param node the node
-	 */
 	@Override
 	public void finalize(Node node) {
 		// TODO Auto-generated method stub
 
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see operations.Operation#visit(model.Root)
-	 */
-
-	/**
-	 * Visit.
-	 *
-	 * @param root the root
-	 */
 	@Override
 	public void visit(Root root) {
 		System.out.println("Not applicable to root. ");
 	}
-
-	/**
-	 * Run.
-	 *
-	 * @param node the node
-	 */
 	private void run(Node node) {
-		// Run Peak Finder
-		//
 		ImagePlus imp = IJ.openImage(node.getPath());
 		peakFinder = new PeakFinder(useDiscoidal, new DiscoidalAveragingFilter(
 				imp.getWidth(), iSBatchPreferences.INNER_RADIUS,
@@ -200,8 +124,6 @@ public class FindPeaksOperation implements Operation {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		// node.setProperty("PeakROIs",
-		// "node.getParentFolder() + File.separator + nameToSave");
 
 		if (iSBatchPreferences.insideCell == true) {
 			System.out.println("Detect within cells");
@@ -228,8 +150,6 @@ public class FindPeaksOperation implements Operation {
 				
 				node.getProperties().put(channel + "_PeaksFiltered",
 						node.getOutputFolder() + File.separator + nameToSave);
-
-
 		}
 
 		currentCount++;
@@ -271,11 +191,6 @@ public class FindPeaksOperation implements Operation {
 		return filtered;
 	}
 
-	/**
-	 * Visit.
-	 *
-	 * @param experiment the experiment
-	 */
 	@Override
 	public void visit(Experiment experiment) {
 		for (Sample sample : experiment.getSamples()) {
@@ -284,11 +199,6 @@ public class FindPeaksOperation implements Operation {
 		}
 	}
 
-	/**
-	 * Visit.
-	 *
-	 * @param sample the sample
-	 */
 	@Override
 	public void visit(Sample sample) {
 		for (FieldOfView fov : sample.getFieldOfView()) {
@@ -296,11 +206,6 @@ public class FindPeaksOperation implements Operation {
 		}
 	}
 
-	/**
-	 * Visit.
-	 *
-	 * @param fieldOfView the field of view
-	 */
 	@Override
 	public void visit(FieldOfView fieldOfView) {
 		for (FileNode fileNode : fieldOfView.getImages(channel)) {
@@ -308,11 +213,6 @@ public class FindPeaksOperation implements Operation {
 		}
 	}
 
-	/**
-	 * Visit.
-	 *
-	 * @param fileNode the file node
-	 */
 	@Override
 	public void visit(FileNode fileNode) {
 		System.out.println("Peak Find: " + currentCount + " of "
@@ -325,19 +225,17 @@ public class FindPeaksOperation implements Operation {
 
 	}
 
-	/**
-	 * The main method.
-	 *
-	 * @param args the arguments
-	 */
 	public static void main(String[] args) {
+		DatabaseModel model = TreeGenerator.generate("e:/test", "e:/test", 2);
+		FindPeaksGui dialog = new FindPeaksGui(model.getRoot());
+		System.out.println(dialog.getChannel());
+		System.out.println(dialog.getMethod());
+		System.out.println(dialog.useDiscoidal);
+		System.out.println(dialog.getImageType());
+		System.out.println(dialog.getInsindeCells());
+		
 	}
 
-	/**
-	 * Visit.
-	 *
-	 * @param operationNode the operation node
-	 */
 	@Override
 	public void visit(OperationNode operationNode) {
 		// TODO Auto-generated method stub
@@ -362,7 +260,6 @@ public class FindPeaksOperation implements Operation {
 	 */
 	@Override
 	public HashMap<String, String> getParameters() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -465,5 +362,7 @@ public class FindPeaksOperation implements Operation {
 		zos.close();
 
 	}
+
+	
 
 }

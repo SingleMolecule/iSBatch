@@ -27,12 +27,7 @@ import model.parameters.ExperimentType;
  * The Class ImportOperation.
  */
 public class ImportOperation implements Operation {
-
-	
-	/** The importer. */
 	private Importer importer;
-	
-	/** The file. */
 	private File file;
 	
 	/**

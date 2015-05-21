@@ -33,13 +33,6 @@ import filters.NodeFilterInterface;
 
 import java.util.HashMap;
 
-
-
-
-
-
-
-import macros.MacroDialog2;
 import model.DatabaseModel;
 import model.Experiment;
 import model.FieldOfView;
@@ -49,10 +42,12 @@ import model.OperationNode;
 import model.Root;
 import model.Sample;
 import model.parameters.Channel;
-import model.parameters.EnumUtils;
 import model.parameters.NodeType;
 import operations.Operation;
 import test.TreeGenerator;
+import utils.EnumUtils;
+
+
 public class MicrobeTrackerIO implements Operation {
 	private MicrobeTrackerIOGui dialog;
 	private RoiManager manager;
@@ -123,21 +118,15 @@ public class MicrobeTrackerIO implements Operation {
 	 * @param node the node
 	 */
 	private void run(Node node) {
-		//Decide path to take.
-		// Relevant informations: Experiment Type : Rapid Acquisition or Time Lapse
-		
 
+		File matFile = new File(dialog.getMatFilePath());
+		File BFmt = new File(dialog.BFFIleInputPath);
 		
-		
-		
-		
-		
-		File matFile = new File(matFilePath);
-
-		if (!matFile.exists()) {
-			getStackForMT(node);
-		} else {
+		if(matFile.exists() && BFmt.exists()){
 			importFiles(node, matFile);
+		}
+		else {
+			getStackForMT(node);
 		}
 
 	}
@@ -205,9 +194,6 @@ public class MicrobeTrackerIO implements Operation {
 
 	}
 
-	private ImagePlus getReference(Node node) {
-		return null;
-	}
 
 	private void getStackForMT(Node node) {
 		System.out.println("--- Start ----");
@@ -337,42 +323,52 @@ public class MicrobeTrackerIO implements Operation {
 	 */
 	public static void main(String[] args) {
 
-//		DatabaseModel model = TreeGenerator.generate("e:/test", "e:/test", 4);
-//		MicrobeTrackerIOGui dialog = new MicrobeTrackerIOGui(model.getRoot());
-//		System.out.println(dialog.getChannel());
-//		
-//		System.out.println(dialog.getImageType());
-//		System.out.println(dialog.getCustomFilter());
-//		
-//		// From panel 2
-//		System.out.println(dialog.getMatFilePath());
-//		System.out.println(dialog.BFFIleInputPath);
-//		
-//		File f = new File(dialog.getMatFilePath());
-//		File f2 = new File(dialog.BFFIleInputPath);
-//		
-//		if(f.exists() && f2.exists()){
-//			System.out.println("Going to import");
-//		}
-//		
-//		if(!f.exists() || !f2.exists()){
-//			System.out.println("Missing one of the files. Will abort");
-//		}
-//		
-//		String channel = dialog.getChannel();
-//		System.out.println(EnumUtils.contains(Channel.values(), channel));
-//	
-//		
-//		if(EnumUtils.contains(Channel.values(), channel)){
-//			System.out.println(channel);
-//		}
-//		
-//		
-//		if(EnumUtils.contains(Channel.class, channel)){
-//			System.out.println();
-//		}
-	    System.out.println(EnumUtils.contains(Channel.class, "Acquisition"));
-	    	
+		/**
+		 * 
+		 * Testing the funtions 
+		 */
+		DatabaseModel model = TreeGenerator.generate("e:/test", "e:/test", 4);
+		MicrobeTrackerIOGui dialog = new MicrobeTrackerIOGui(model.getRoot());
+		System.out.println(dialog.getChannel());
+		
+		System.out.println(dialog.getImageType());
+		System.out.println(dialog.getCustomFilter());
+		
+		// From panel 2
+		System.out.println("MatFile: "+dialog.getMatFilePath());
+		System.out.println("BFFile: "+ dialog.BFFIleInputPath);
+		
+		File f = new File(dialog.getMatFilePath());
+		File f2 = new File(dialog.BFFIleInputPath);
+		
+		if(f.exists() && f2.exists()){
+			System.out.println("Going to import");
+		}
+		else {
+			System.out.println("Going to create input");
+		}
+		
+		if (EnumUtils.contains(Channel.values(), dialog.getChannel())){
+			System.out.println("Contain channel " +   dialog.getChannel());
+		}else {
+			System.out.println("Contain no Channel. Abort");
+		}
+		
+		
+		if (EnumUtils.contains(Channel.values(), dialog.getImageType())){
+			System.out.println("Contain type " +   dialog.getImageType());
+		} else {
+			System.out.println("Contain no type. Set to Raw");
+		}
+		
+		if(!f.exists() || !f2.exists()){
+			System.out.println("Missing one of the files. Will abort");
+		}
+		
+		
+		System.out.println(dialog.getCustomFilter());
+		
+
 	    	
 	}
 

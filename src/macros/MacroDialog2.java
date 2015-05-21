@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import test.TreeGenerator;
+import utils.ModelUtils;
 import filters.NodeFilterInterface;
 import gui.CodeTextPane;
 import model.DatabaseModel;
@@ -94,19 +95,17 @@ public class MacroDialog2 extends JDialog implements ActionListener, Runnable {
 			
 		});
 		
-		HashSet<String> channels = new HashSet<String>();
 		HashSet<String> tags = new HashSet<String>();
 		HashSet<String> extensions = new HashSet<String>();
 		
 		for (Node n: fileNodes) {
 			FileNode fn = (FileNode)n;
-			channels.add(fn.getChannel());
 			tags.addAll(fn.getTags());
 			extensions.add(fn.getExtension());
 		}
 		
-		for (String channel: channels)
-			channelComboBox.addItem(channel);
+		channelComboBox.setModel((ModelUtils.getUniqueChannels(node)));
+		
 
 		for (String tag: tags)
 			tagComboBox.addItem(tag);
@@ -199,7 +198,7 @@ public class MacroDialog2 extends JDialog implements ActionListener, Runnable {
 	
 	public static void main(String[] args) {
 
-		DatabaseModel model = TreeGenerator.generate("e:/test", "e:/test", 4);
+		DatabaseModel model = TreeGenerator.generate("e:/test", "e:/test", 2);
 		new MacroDialog2(model.getRoot());
 		
 

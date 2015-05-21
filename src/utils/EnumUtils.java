@@ -10,7 +10,9 @@
  *	You should have received a copy of the GNU General Public License	*
  *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ***********************************************************************/
-package model.parameters;
+package utils;
+
+import model.parameters.Channel;
 
 /**
  * The Class EnumUtils. 
@@ -40,6 +42,7 @@ public class EnumUtils {
     /**
      * Contains
      *Check if the input name is contained in the Enum
+     *This matches exactly with the Enum name.
      *
      * @param <T> the generic type
      * @param clazz The enum class (Enum.class)
