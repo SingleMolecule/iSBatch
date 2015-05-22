@@ -1,7 +1,5 @@
 package iSBatch;
 
-import ij.Prefs;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -12,7 +10,6 @@ import model.Node;
 import model.Root;
 import model.Sample;
 
-// TODO: Auto-generated Javadoc
 /**
  * This class is a placeholder for all the preferences. It also contains methods for storing and retrieving
  * preferences into a (root)node. This root node can be stored in the database to make the preferences persistent.
