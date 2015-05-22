@@ -44,14 +44,6 @@ public class AddNodeOperation implements Operation {
 	private DatabaseModel model;
 	private Importer importer;
 
-	/**
-	 * Instantiates a new adds the node operation.
-	 *
-	 * @param frame
-	 *            the frame
-	 * @param model
-	 *            the model
-	 */
 	public AddNodeOperation(JFrame frame, DatabaseModel model) {
 		super();
 		this.frame = frame;
@@ -59,32 +51,16 @@ public class AddNodeOperation implements Operation {
 		importer = new Importer(model);
 	}
 
-	/**
-	 * Gets the name.
-	 *
-	 * @return the name of the node.
-	 */
 	@Override
 	public String getName() {
 		return "Add node ";
 	}
 
-	/**
-	 * Gets the context.
-	 *
-	 * @return the context
-	 */
 	@Override
 	public String[] getContext() {
 		return new String[] { "All" };
 	}
 
-	/**
-	 * Visit.
-	 *
-	 * @param root
-	 *            the root
-	 */
 	@Override
 	public void visit(Root root) {
 
@@ -120,12 +96,6 @@ public class AddNodeOperation implements Operation {
 		}
 	}
 
-	/**
-	 * Visit.
-	 *
-	 * @param experiment
-	 *            the experiment
-	 */
 	@Override
 	public void visit(Experiment experiment) {
 
@@ -161,12 +131,6 @@ public class AddNodeOperation implements Operation {
 
 	}
 
-	/**
-	 * Visit.
-	 *
-	 * @param sample
-	 *            the sample
-	 */
 	@Override
 	public void visit(Sample sample) {
 
@@ -201,12 +165,6 @@ public class AddNodeOperation implements Operation {
 		}
 	}
 
-	/**
-	 * Visit.
-	 *
-	 * @param fieldOfView
-	 *            the field of view
-	 */
 	@Override
 	public void visit(FieldOfView fieldOfView) {
 
@@ -217,67 +175,32 @@ public class AddNodeOperation implements Operation {
 			model.addNode(fieldOfView, fileNode);
 	}
 
-	/**
-	 * Visit.
-	 *
-	 * @param fileNode
-	 *            the file node
-	 */
 	@Override
 	public void visit(FileNode fileNode) {
 	}
 
-	/**
-	 * Setup.
-	 *
-	 * @param node
-	 *            the node
-	 * @return true, if successful
-	 */
 	@Override
 	public boolean setup(Node node) {
 
 		return true;
 	}
 
-	/**
-	 * Finalize.
-	 *
-	 * @param node
-	 *            the node
-	 */
 	@Override
 	public void finalize(Node node) {
 		LogPanel.log("Finish importing data. Double click on the node to expand it.");
 	}
 
-	/**
-	 * Visit.
-	 *
-	 * @param operationNode
-	 *            the operation node
-	 */
 	@Override
 	public void visit(OperationNode operationNode) {
 		// TODO Auto-generated method stub
 
 	}
 
-	/**
-	 * Gets the created nodes.
-	 *
-	 * @return the created nodes
-	 */
 	@Override
 	public Node[] getCreatedNodes() {
 		return null;
 	}
 
-	/**
-	 * Gets the parameters.
-	 *
-	 * @return the parameters
-	 */
 	@Override
 	public HashMap<String, String> getParameters() {
 		return null;

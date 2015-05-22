@@ -46,8 +46,8 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 public class SetBackgroundGui extends JDialog implements ActionListener {
+
 	private JButton btnCancel;
 	private JButton btnProcess;
 	private JComboBox<String> fileTypeComboBox;
@@ -58,8 +58,10 @@ public class SetBackgroundGui extends JDialog implements ActionListener {
 
 	"[Select Channel]", "All", "Acquisition", "Bright Field", "Red", "Green",
 			"Blue", };
+
 	private static final String[] methods = { "[Method]", "Load Image",
 			"Average Images" };
+
 	private String[] types = new String[] { "[File Type]", "Raw", "Flat",
 			"Discoidal" };
 	private JTextField pathToImage;
@@ -188,10 +190,10 @@ public class SetBackgroundGui extends JDialog implements ActionListener {
 		gbc_pathToImage.gridy = 3;
 		getContentPane().add(pathToImage, gbc_pathToImage);
 		pathToImage.setColumns(1);
-		
+
 		btnLoadImage = new JButton("Load Image");
 		btnLoadImage.addActionListener(this);
-		
+
 		GridBagConstraints gbc_btnLoadImage = new GridBagConstraints();
 		gbc_btnLoadImage.insets = new Insets(0, 0, 5, 5);
 		gbc_btnLoadImage.gridx = 5;
@@ -218,18 +220,22 @@ public class SetBackgroundGui extends JDialog implements ActionListener {
 		setVisible(true);
 
 	}
-
 	private void run() {
-		
-		System.out.println("Parameters will be: " + channel + " , " + 
-				imageType + " , " + method);
+		//
+		// // get array of Images
+		// ArrayList<Node> images = node.getDescendents(imageFileNodeFilter);
+
+		System.out.println("Parameters will be: " + channel + " , " + imageType
+				+ " , " + method);
 	}
+
 	public static void main(String[] args) {
 		frame = new JFrame();
 
 		new SetBackgroundGui(null);
 
 	}
+
 	void error(String msg) {
 		IJ.error("Batch Processor", msg);
 	}
@@ -239,7 +245,6 @@ public class SetBackgroundGui extends JDialog implements ActionListener {
 	}
 	private String imageType;
 	private JButton btnLoadImage;
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnCancel) {
@@ -248,7 +253,7 @@ public class SetBackgroundGui extends JDialog implements ActionListener {
 		} else if (e.getSource() == btnProcess) {
 			imagePath = pathToImage.getText();
 			this.method = (String) methodComboBox.getSelectedItem();
-			
+
 			run();
 			dispose();
 		} else if (e.getSource() == channelComboBox) {
@@ -258,28 +263,34 @@ public class SetBackgroundGui extends JDialog implements ActionListener {
 		} else if (e.getSource() == fileTypeComboBox) {
 			String foo = (String) fileTypeComboBox.getSelectedItem();
 			if (foo.equalsIgnoreCase("[File Type]")) {
-					this.imageType = null;
+				this.imageType = null;
 			} else {
 				this.imageType = (String) fileTypeComboBox.getSelectedItem();
-			}		} else if (e.getSource() ==btnLoadImage){
+			}
+		} else if (e.getSource() == btnLoadImage) {
 			JFileChooser fileChooser = new JFileChooser();
 			fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-	
+
 			if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
 				imagePath = fileChooser.getSelectedFile().getPath();
-				pathToImage.setText(imagePath);
-				methodComboBox.setSelectedIndex(1);
+			pathToImage.setText(imagePath);
+			methodComboBox.setSelectedIndex(1);
 		}
-		
+
 	}
 
+	/**
+	 * Gets the channel.
+	 *
+	 * @return the channel
+	 */
 	public String getChannel() {
 		return channel;
 	}
-
 	public String getMethod() {
 		return method;
 	}
+
 	public String getImagePath() {
 		return imagePath;
 	}
@@ -288,11 +299,11 @@ public class SetBackgroundGui extends JDialog implements ActionListener {
 		temp.add(imageType);
 		return temp;
 	}
-	
+
 	public ArrayList<String> getTags() {
 		ArrayList<String> container = new ArrayList<String>();
 		if (imageType != null) {
-			
+
 			List<String> list = Arrays.asList(imageType.split("\\s*,\\s*"));
 			for (String foo : list) {
 				container.add(foo);
@@ -301,7 +312,7 @@ public class SetBackgroundGui extends JDialog implements ActionListener {
 		}
 
 		else
-			
+
 			return container;
 
 	}

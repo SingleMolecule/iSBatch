@@ -32,8 +32,8 @@ import model.OperationNode;
 import model.Root;
 import model.Sample;
 import operations.Operation;
+import test.TreeGenerator;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class SetBackGround.
  *
@@ -219,81 +219,41 @@ public class SetBackGround implements Operation {
 
 	}
 
-	/**
-	 * Save.
-	 *
-	 * @param node
-	 *            the node
-	 * @param imp
-	 *            the imp
-	 */
-
-	/**
-	 * Visit.
-	 *
-	 * @param sample
-	 *            the sample
-	 */
 	@Override
 	public void visit(Sample sample) {
 		run(sample);
 
 	}
 
-	/**
-	 * Visit.
-	 *
-	 * @param fieldOfView
-	 *            the field of view
-	 */
 	@Override
 	public void visit(FieldOfView fieldOfView) {
 		System.out.println("Call load image or ignore");
 	}
 
-	/**
-	 * Visit.
-	 *
-	 * @param fileNode
-	 *            the file node
-	 */
 	@Override
 	public void visit(FileNode fileNode) {
 		run(fileNode);
 	}
 
-	/**
-	 * Visit.
-	 *
-	 * @param operationNode
-	 *            the operation node
-	 */
 	@Override
 	public void visit(OperationNode operationNode) {
-		// TODO Auto-generated method stub
-
 	}
 
-	/**
-	 * Gets the created nodes.
-	 *
-	 * @return the created nodes
-	 */
 	@Override
 	public Node[] getCreatedNodes() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/**
-	 * Gets the parameters.
-	 *
-	 * @return the parameters
-	 */
 	@Override
 	public HashMap<String, String> getParameters() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
+	public static void main(String[] args) {
+		DatabaseModel model = TreeGenerator.generate("e:/test", "e:/test", 2);
+		SetBackgroundGui dialog = new SetBackgroundGui(model.getRoot());
+		
+		System.out.println(dialog.getChannel());
+		
+	}
 }

@@ -88,7 +88,7 @@ public class ISBatch implements TreeSelectionListener {
 	private JMenuItem saveMenuItem;
 	private JMenuItem prefsMenuItem;
 	private JMenuItem helpMenuItem;
-	private JMenuItem aboutMenuItem;
+	private JMenuItem aboutMenuItem; 
 	protected TreePath currentSelected;
 	protected Object oldSelectedPath;
 	private JMenuItem sourceMenuItem;
@@ -96,11 +96,11 @@ public class ISBatch implements TreeSelectionListener {
 	public static void main(String[] args) {
 		getInstance();
 	}
-
+ 
 	/*
 	 * Current version:
 	 */
-		String version = "v0.2-beta";
+		String version = "v0.3.1-beta";
 	
 	
 	
