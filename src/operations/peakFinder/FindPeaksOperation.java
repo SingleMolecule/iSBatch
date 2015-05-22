@@ -159,15 +159,6 @@ public class FindPeaksOperation implements Operation {
 
 	}
 
-	/**
-	 * Peaks inside cells.
-	 *
-	 * @param cellsManager
-	 *            the cells manager
-	 * @param allPeaksManager
-	 *            the all peaks manager
-	 * @return the roi manager
-	 */
 	private RoiManager PeaksInsideCells(RoiManager cellsManager,
 			RoiManager allPeaksManager) {
 		RoiManager filtered = new RoiManager(true);

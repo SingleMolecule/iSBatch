@@ -72,6 +72,13 @@ import operations.peakFinder.FindPeaksOperation;
 import operations.peakFitter.FitPeaksOperation;
 
 public class ISBatch implements TreeSelectionListener {
+	/*
+	 * Current version:
+	 */
+	String version = "v0.3-beta";
+	
+	
+	
 
 	private static ISBatch instance;
 
@@ -99,11 +106,7 @@ public class ISBatch implements TreeSelectionListener {
 		getInstance();
 	}
 
-	/*
-	 * Current version:
-	 */
-	String version = "v0.3.1-beta";
-
+	
 	protected Node selectedNode;
 
 	public ISBatch() throws SqlJetException {
