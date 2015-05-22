@@ -17,7 +17,6 @@ import java.util.ArrayList;
 
 import model.parameters.Channel;
 
-// TODO: Auto-generated Javadoc
 /**
  * The importer class takes care of importing measurement data. Depending on the
  * directory structure and filename it deduces what is an experiment, a sample,
@@ -213,12 +212,7 @@ public class Importer {
 
 	}
 	
-	/**
-	 * Import file.
-	 *
-	 * @param node the node
-	 * @param file the file
-	 */
+
 	public void importFile(Node node, File file) {
 		
 		FileNode fileNode = new FileNode(node);
@@ -247,6 +241,18 @@ public class Importer {
 			channel = "Blue";
 			channelType = Channel.BLUE;
 		}
+		
+		fileNode.setProperty("channel", channel);
+		fileNode.setProperty("name", file.getName());
+		fileNode.setProperty("path", file.getPath());
+		fileNode.addProperty("channelType", channelType);
+		model.addNode(node, fileNode);
+	}
+	
+public void importFile(Node node, File file, String channel, String name, String path) {
+		FileNode fileNode = new FileNode(node);
+		Channel channelType = null;
+
 		
 		fileNode.setProperty("channel", channel);
 		fileNode.setProperty("name", file.getName());
