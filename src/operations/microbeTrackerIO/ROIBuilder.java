@@ -1,6 +1,15 @@
-/*
- * 
- */
+/************************************************************************
+ * 				iSBatch  Copyright (C) 2015  							*
+ *		Victor E. A. Caldas -  v.e.a.caldas at rug.nl					*
+ *		C. Michiel Punter - c.m.punter at rug.nl						*
+ *																		*
+ *	This program is distributed in the hope that it will be useful,		*
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of		*
+ * 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the		*
+ *	GNU General Public License for more details.						*
+ *	You should have received a copy of the GNU General Public License	*
+ *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ***********************************************************************/
 package operations.microbeTrackerIO;
 
 // Adapted from http://rsb.info.nih.gov/ij/plugins/download/ROI_Importer.java
@@ -9,106 +18,58 @@ import ij.*;
 import ij.process.*;
 import ij.gui.*;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 import ij.plugin.*;
-import ij.measure.*;
 import ij.plugin.TextReader;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class ROIBuilder.
- */
 public class ROIBuilder implements PlugIn {
-	
-	/** The points. */
 	private ArrayList<Point> points;
-	
-	/** The roi. */
 	private Roi roi;
-	
-	/** The number of points. */
 	private int numberOfPoints;
-	
-	/** The max int x. */
 	int maxIntX;
-	
-	/** The max int y. */
 	int maxIntY;
-	
-	/**
-	 * Instantiates a new ROI builder.
-	 *
-	 * @param points the points
-	 */
+
 	public ROIBuilder(ArrayList<Point> points) {
 		this.points = points;
 		this.numberOfPoints = points.size();
-		
+
 		createROI();
-		
+
 	}
 
-	/**
-	 * Creates the roi.
-	 */
 	private void createROI() {
-		//Get maximun X Value
+		// Get maximun X Value
 		setMax();
-		int maxIntX = getMax(points, 1);
-		
-		//Get Maxium Y Value
-		int maxIntY = getMax(points, 2);
-		
+//		int maxIntX = getMax(points, 1);
+
+		// Get Maxium Y Value
+//		int maxIntY = getMax(points, 2);
+
 		// Create a image with values 0
-//		ImagePlus imp2 = new ImagePlus
-//		ImagePlus imp = new ImagePlus("dummy"), new ByteProcessor(Math.abs(r.x)
-//				+ r.width + 10, Math.abs(r.y) + r.height + 10));
-//		
-		
-		
-		
-		
+		// ImagePlus imp2 = new ImagePlus
+		// ImagePlus imp = new ImagePlus("dummy"), new
+		// ByteProcessor(Math.abs(r.x)
+		// + r.width + 10, Math.abs(r.y) + r.height + 10));
+		//
+
 	}
 
-	/**
-	 * Sets the max.
-	 */
 	private void setMax() {
-		for(Point point : points){
-			if (point.x >= maxIntX){
-				maxIntX = (int)Math.round(point.x);
+		for (Point point : points) {
+			if (point.x >= maxIntX) {
+				maxIntX = (int) Math.round(point.x);
 			}
-			
-			if (point.y >= maxIntY){
-				maxIntY = (int)Math.round(point.y);
+
+			if (point.y >= maxIntY) {
+				maxIntY = (int) Math.round(point.y);
 			}
 		}
-		
+
 	}
-
-	/**
-	 * Gets the max.
-	 *
-	 * @param points the points
-	 * @param i the i
-	 * @return the max
-	 */
-	private int getMax(ArrayList<Point> points, int i) {
-
-
-		
-		
-		
-		return 0;
-	}
-
-	/**
-	 * Run.
-	 *
-	 * @param arg the arg
-	 */
+//	private int getMax(ArrayList<Point> points, int i) {
+//		return 0;
+//	}
 	@SuppressWarnings("deprecation")
 	public void run(String arg) {
 		if (IJ.versionLessThan("1.26f"))
@@ -139,29 +100,21 @@ public class ROIBuilder implements PlugIn {
 		if (roi.getLength() / x.length > 10)
 			roi = new PolygonRoi(x, y, numberOfPoints, null, Roi.POLYGON); // use
 																			// "handles"
-//		@SuppressWarnings("deprecation")
-//		Rectangle r = roi.getBoundingRect();
-//		ImagePlus imp = WindowManager.getCurrentImage();
-//		if (imp == null || imp.getWidth() < r.x + r.width
-//				|| imp.getHeight() < r.y + r.height) {
-//			new ImagePlus(tr.getName(), new ByteProcessor(Math.abs(r.x)
-//					+ r.width + 10, Math.abs(r.y) + r.height + 10)).show();
-//			imp = WindowManager.getCurrentImage();
-//		}
-//		if (imp != null)
-//			imp.setRoi(roi);
+																			// @SuppressWarnings("deprecation")
+			// Rectangle r = roi.getBoundingRect();
+			// ImagePlus imp = WindowManager.getCurrentImage();
+			// if (imp == null || imp.getWidth() < r.x + r.width
+			// || imp.getHeight() < r.y + r.height) {
+			// new ImagePlus(tr.getName(), new ByteProcessor(Math.abs(r.x)
+			// + r.width + 10, Math.abs(r.y) + r.height + 10)).show();
+			// imp = WindowManager.getCurrentImage();
+			// }
+			// if (imp != null)
+			// imp.setRoi(roi);
 	}
 
-	/**
-	 * Gets the roi.
-	 *
-	 * @return the roi
-	 */
 	public Roi getRoi() {
-		// TODO Auto-generated method stub
 		return roi;
 	}
-	
-	
 
 }

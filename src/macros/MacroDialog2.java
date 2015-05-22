@@ -207,7 +207,7 @@ public class MacroDialog2 extends JDialog implements ActionListener, Runnable {
 	@Override
 	public void run() {
 		
-		for (Node node: node.getDescendents(filter)) {
+		for (@SuppressWarnings("unused") Node node: node.getDescendents(filter)) {
 			
 			
 		}

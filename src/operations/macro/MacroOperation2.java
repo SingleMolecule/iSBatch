@@ -25,16 +25,9 @@ import model.Sample;
  */
 public class MacroOperation2 implements Operation {
 	
-	/** The macro file. */
 	private String macroFile = "";
-	
-	/** The filter. */
 	private NodeFilterInterface filter;
-	
-	/** The frame. */
 	private JFrame frame;
-	
-	/** The model. */
 	private DatabaseModel model;
 	
 	/**

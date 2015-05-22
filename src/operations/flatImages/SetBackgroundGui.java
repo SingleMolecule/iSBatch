@@ -46,6 +46,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 public class SetBackgroundGui extends JDialog implements ActionListener {
 
 	private JButton btnCancel;
@@ -54,11 +55,6 @@ public class SetBackgroundGui extends JDialog implements ActionListener {
 	private JComboBox<String> channelComboBox;
 	private JComboBox<String> methodComboBox;
 	private static final long serialVersionUID = 1L;
-	private String[] channels = new String[] {
-
-	"[Select Channel]", "All", "Acquisition", "Bright Field", "Red", "Green",
-			"Blue", };
-
 	private static final String[] methods = { "[Method]", "Load Image",
 			"Average Images" };
 
@@ -220,6 +216,7 @@ public class SetBackgroundGui extends JDialog implements ActionListener {
 		setVisible(true);
 
 	}
+
 	private void run() {
 		//
 		// // get array of Images
@@ -243,8 +240,10 @@ public class SetBackgroundGui extends JDialog implements ActionListener {
 	public boolean isCanceled() {
 		return canceled;
 	}
+
 	private String imageType;
 	private JButton btnLoadImage;
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnCancel) {
@@ -293,6 +292,7 @@ public class SetBackgroundGui extends JDialog implements ActionListener {
 	public String getChannel() {
 		return channel;
 	}
+
 	public String getMethod() {
 		return method;
 	}
@@ -300,6 +300,7 @@ public class SetBackgroundGui extends JDialog implements ActionListener {
 	public String getImagePath() {
 		return imagePath;
 	}
+
 	public ArrayList<String> getImageTag() {
 		ArrayList<String> temp = new ArrayList<String>();
 		temp.add(imageType);

@@ -27,10 +27,9 @@ import java.awt.Rectangle;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import filters.GenericFilter;
-import filters.NodeFilterInterface;
+import gui.LogPanel;
 
 import java.util.HashMap;
 
@@ -88,6 +87,10 @@ public class MicrobeTrackerIO implements Operation {
 		// Get information from the dialog
 		// From panel1
 		this.channel = dialog.getChannel();
+		if(channel.equalsIgnoreCase(null)){
+			LogPanel.log("No channel selected. Operation cancelled.");
+			return false;
+		}
 		this.imageType = dialog.getImageType();
 		this.customFilter = dialog.getCustomFilter();
 		this.imageTag = dialog.getImageTag();
@@ -215,62 +218,6 @@ public class MicrobeTrackerIO implements Operation {
 //		}
 //		return size;
 //	}
-
-	private NodeFilterInterface filter(String channel) {
-		final String selectedChannel = channel;
-		String[] channels = { "Acquisition", "Bright Field", "Red", "Green",
-				"Blue", };
-		NodeFilterInterface imageFileNodeFilter = null;
-		// Create Filters
-		if (channel == null || channel.equals("")
-				|| channel.equalsIgnoreCase("All")) {
-			imageFileNodeFilter = new NodeFilterInterface() {
-
-				@Override
-				public boolean accept(Node node) {
-
-					String path = node.getProperty("path");
-
-					// check if this file is an image
-					if (path == null
-							|| !(path.toLowerCase().endsWith(".tiff") || path
-									.toLowerCase().endsWith(".tif")))
-						return false;
-
-					// Get custom string and remove spaces in the begin and end.
-					// Not in
-					// the middle.
-
-					return true;
-				};
-			};
-		} else if (Arrays.asList(channels).contains(channel)) {
-			imageFileNodeFilter = new NodeFilterInterface() {
-
-				public boolean accept(Node node) {
-					String ch = null;
-					// try{
-					ch = node.getChannel();
-					if (ch == null || !ch.equalsIgnoreCase(selectedChannel))
-						return false;
-
-					String path = node.getPath();
-
-					// check if this file is an image
-					if (path == null
-							|| !(path.toLowerCase().endsWith(".tiff") || path
-									.toLowerCase().endsWith(".tif")))
-						return false;
-
-					return true;
-				};
-			};
-
-		}
-
-		return imageFileNodeFilter;
-
-	}
 
 	/**
 	 * Visit.

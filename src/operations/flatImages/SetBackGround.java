@@ -27,7 +27,6 @@ import model.DatabaseModel;
 import model.Experiment;
 import model.FieldOfView;
 import model.FileNode;
-import model.Importer;
 import model.Node;
 import model.OperationNode;
 import model.Root;
@@ -36,7 +35,6 @@ import operations.Operation;
 import test.TreeGenerator;
 
 public class SetBackGround implements Operation {
-	private Importer importer;
 	SetBackgroundGui dialog;
 	private String channel;
 	private String method;
@@ -68,6 +66,12 @@ public class SetBackGround implements Operation {
 		if (dialog.isCanceled())
 			return false;
 		this.channel = dialog.getChannel();
+		if(channel.equalsIgnoreCase(null)){
+			LogPanel.log("No channel selected. Operation cancelled.");
+			return false;
+		}
+			
+			
 		this.imageTag = dialog.getImageTag();
 		this.method = dialog.getMethod();
 		this.imagePath = dialog.getImagePath();
@@ -92,7 +96,8 @@ public class SetBackGround implements Operation {
 	}
 
 	private void run(Node node) {
-		LogPanel.log("Setting background on channel " + channel + " using " + method);
+		LogPanel.log("Setting background on channel " + channel + " using "
+				+ method);
 		// Get all images with the same characteristics
 
 		if (method.equalsIgnoreCase("Load Image")) {
@@ -109,10 +114,10 @@ public class SetBackGround implements Operation {
 			}
 		} else if (method.equalsIgnoreCase("Average Images")) {
 			System.out.println("Debug info: Average Images");
-			
+
 			ArrayList<Node> filenodes = node.getDescendents(new GenericFilter(
 					channel, imageTag, null, null));
-			
+
 			if (filenodes.size() == 0) {
 				LogPanel.log("No image found for averaging");
 			}
@@ -136,9 +141,9 @@ public class SetBackGround implements Operation {
 			IJ.saveAsTiff(projector.getProjection(), f.getAbsolutePath());
 			node.getProperties().put(channel + "_BeamProfile",
 					f.getAbsolutePath());
-//			
-//			importer.importFile(node, f, channel,
-//					f.getName(), f.getAbsolutePath());
+			//
+			// importer.importFile(node, f, channel,
+			// f.getName(), f.getAbsolutePath());
 		} else {
 			IJ.log("Operation failed");
 		}

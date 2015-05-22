@@ -12,6 +12,7 @@
  ***********************************************************************/
 package operations.peakFinder;
 
+import gui.LogPanel;
 import iSBatch.iSBatchPreferences;
 import ij.IJ;
 import ij.ImagePlus;
@@ -82,6 +83,10 @@ public class FindPeaksOperation implements Operation {
 			return false;
 		this.useDiscoidal = dialog.useDiscoidal;
 		this.channel = dialog.getChannel();
+		if(channel.equalsIgnoreCase(null)){
+			LogPanel.log("No channel selected. Operation cancelled.");
+			return false;
+		}
 		NUMBER_OF_OPERATIONS = node.getNumberOfFoV();
 		currentCount = 1;
 		return true;

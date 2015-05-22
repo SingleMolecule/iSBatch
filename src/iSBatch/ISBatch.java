@@ -10,6 +10,7 @@ import iSBatch.iSBatchPreferences;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.measure.ResultsTable;
+import ij.plugin.frame.RoiManager;
 
 import java.awt.BorderLayout;
 import java.awt.Cursor;
@@ -23,7 +24,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
@@ -75,7 +78,6 @@ public class ISBatch implements TreeSelectionListener {
 	private Database database;
 	private DatabaseModel treeModel;
 	private ContextHandler contextHandler = new ContextHandler();
-	private Node selectedNode;
 	private JTree tree;
 	private DefaultListModel<Node> listModel = new DefaultListModel<Node>();
 	private JList<Node> list = new JList<Node>(listModel);
@@ -101,6 +103,8 @@ public class ISBatch implements TreeSelectionListener {
 	 * Current version:
 	 */
 	String version = "v0.3.1-beta";
+
+	protected Node selectedNode;
 
 	public ISBatch() throws SqlJetException {
 		DatabaseDialog dialog = new DatabaseDialog(frame);
@@ -162,8 +166,8 @@ public class ISBatch implements TreeSelectionListener {
 		tree.removeTreeSelectionListener(this);
 		tree.addTreeSelectionListener(this);
 		
-//		tree.setComponentPopupMenu(getPopUpMenu());
-		tree.addMouseListener(getMouseListener());
+		tree.setComponentPopupMenu(getPopUpMenu());
+ 		tree.addMouseListener(getMouseListener());
 		tree.addMouseMotionListener(getMouseMotionAdapter());
 		tree.setCellRenderer(new DatabaseTreeCellRenderer());
 	}
@@ -424,20 +428,51 @@ public class ISBatch implements TreeSelectionListener {
 		return new MouseAdapter() {
 
 			@Override
-			public void mousePressed(MouseEvent arg0) {
-				if (arg0.getButton() == MouseEvent.BUTTON3) {
-					TreePath pathForLocation = tree.getPathForLocation(
-							arg0.getPoint().x, arg0.getPoint().y);
+			public void mousePressed(MouseEvent e) {
+				int selRow = tree.getRowForLocation(e.getX(), e.getY());
+				TreePath pathForLocation = tree.getPathForLocation(
+						e.getPoint().x, e.getPoint().y);
+				if (e.getButton() == MouseEvent.BUTTON3) {
 					if (pathForLocation != null) {
 						selectedNode = (Node) pathForLocation
 								.getLastPathComponent();
+						
+						
 					} else {
 						selectedNode = null;
 					}
 
 				}
-				super.mousePressed(arg0);
+				
+				else if(e.getButton()==MouseEvent.BUTTON1){
+					 if(e.getClickCount() == 1) {
+			             // System.out.println(pathForLocation.getLastPathComponent());
+			            }
+			            else if(e.getClickCount() == 2) {
+			                myDoubleClick(selRow, pathForLocation);
+			            }
+					
+					
+					
+				}
+				super.mousePressed(e);
 			}
+
+			private void myDoubleClick(int selRow, TreePath pathForLocation) {
+				selectedNode = (Node) pathForLocation
+						.getLastPathComponent();
+				if(selectedNode.getType().equalsIgnoreCase("File")){
+					LogPanel.log("Opening image: "+ selectedNode.getPath());
+					
+					IJ.open(selectedNode.getPath());
+				}
+				
+			}
+
+			private void mySingleClick(int selRow, TreePath pathForLocation) {
+				System.out.println("Single click");
+				
+			} 
 		};
 	}
 
@@ -468,7 +503,7 @@ public class ISBatch implements TreeSelectionListener {
 	private JPopupMenu getPopUpMenu() {
 
 		JPopupMenu menu = new JPopupMenu();
-		JMenuItem item = new JMenuItem("edit");
+		JMenuItem item = new JMenuItem("Open cell roi");
 		item.addActionListener(getEditActionListener());
 		menu.add(item);
 
@@ -537,8 +572,15 @@ public class ISBatch implements TreeSelectionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if (selectedNode != null) {
-					// edit here
+				if (selectedNode.getType().equalsIgnoreCase("File")) {
+					RoiManager manager = RoiManager.getInstance();
+					if(manager==null){
+						manager = new RoiManager();
+						
+					}
+					manager.runCommand("Open", selectedNode.getOutputFolder()
+							+ File.separator + "cellRoi.zip");
+					
 					System.out.println("pressed " + selectedNode);
 				}
 			}
@@ -551,8 +593,7 @@ public class ISBatch implements TreeSelectionListener {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (selectedNode != null) {
-					// System.out.println("Run macro on "
-					// + selectedNode.getContext().getClass());
+					
 					System.out.println("pressed on macro " + selectedNode);
 				}
 			}

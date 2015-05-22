@@ -13,6 +13,7 @@
 package operations.peakFitter;
 
 import filters.GenericFilter;
+import gui.LogPanel;
 import iSBatch.iSBatchPreferences;
 import ij.IJ;
 import ij.ImagePlus;
@@ -85,6 +86,10 @@ public class FitPeaksOperation implements Operation {
 		if (dialog.isCanceled())
 			return false;
 		this.channel = dialog.getChannel();
+		if(channel.equalsIgnoreCase(null)){
+			LogPanel.log("No channel selected. Operation cancelled.");
+			return false;
+		}
 		this.customSearch = dialog.getCustomSearch();
 		this.tags = dialog.getTags();
 		this.radius = Integer.parseInt(iSBatchPreferences.SELECTION_RADIUS);
