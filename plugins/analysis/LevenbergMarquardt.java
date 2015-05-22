@@ -3,27 +3,15 @@
  */
 package analysis;
 
-// TODO: Auto-generated Javadoc
-// http://en.wikipedia.org/wiki/Levenberg%E2%80%93Marquardt_algorithm
 
 /**
  * The Class LevenbergMarquardt.
  */
 public abstract class LevenbergMarquardt {
-
-	/** The precision. */
 	public double precision = 1e-6;
-	
-	/** The iterations. */
 	public int iterations = 0;
-	
-	/** The max iterations. */
 	public int maxIterations = 100;
-	
-	/** The chi sq. */
 	public double chiSq = 0;
-	
-	/** The factor. */
 	public double factor = 10;
 	
 	/**

@@ -1,5 +1,7 @@
 package iSBatch;
 
+import ij.Prefs;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -28,56 +30,22 @@ import model.Sample;
  */
 
 public class iSBatchPreferences  {
-
-	/** The inner radius. */
 	public static String INNER_RADIUS = "1";
-	
-	/** The outer radius. */
 	public static String OUTER_RADIUS = "3";
-	
-	/** The snr threshold. */
 	public static String SNR_THRESHOLD = "4";
-	
-	/** The intensity threshold. */
 	public static String INTENSITY_THRESHOLD = "0";
-	
-	/** The selection radius. */
 	public static String SELECTION_RADIUS = "4";
-	
-	/** The distance between peaks. */
 	public static String DISTANCE_BETWEEN_PEAKS = "8";
-	
-	/** The z scale. */
 	public static String Z_SCALE = "1.25";
-	
-	/** The error baseline. */
 	public static String ERROR_BASELINE = "5000";
-	
-	/** The error sigma y. */
 	public static String ERROR_SIGMA_Y = "1";
-	
-	/** The error sigma x. */
 	public static String ERROR_SIGMA_X = "1";
-	
-	/** The error x. */
 	public static String ERROR_X = "1";
-	
-	/** The error y. */
 	public static String ERROR_Y = "1";
-	
-	/** The error height. */
 	public static String ERROR_HEIGHT = "5000";
-	
-	/** The last selected path. */
 	public static String lastSelectedPath = "";
-	
-	/** The inside cell. */
 	public static boolean insideCell = false;
-	
-	/** The use discoidal filtering. */
 	public static boolean useDiscoidalFiltering = false;
-	
-	/** The max error. */
 	public static double[] maxError = new double[] {
 		Double.parseDouble(ERROR_BASELINE),
 		Double.parseDouble(ERROR_HEIGHT),
@@ -169,30 +137,23 @@ public class iSBatchPreferences  {
 	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
-		
 		Node testNode = new Node(null, Root.type) {
-
 			@Override
 			public void accept(Operation operation) {
 			}
-
 			@Override
 			public int getNumberOfFoV() {
 				return 0;
 			}
-
 			@Override
 			public ArrayList<FieldOfView> getFieldOfView() {
 				return null;
 			}
-
 			@Override
 			public ArrayList<Sample> getSamples() {
 				return null;
 			} 
-			
 		};
-		
 		testNode.setProperty("OUTER_RADIUS", "123");
 		loadPreferences(testNode);
 		System.out.println(OUTER_RADIUS);
@@ -200,7 +161,6 @@ public class iSBatchPreferences  {
 		OUTER_RADIUS = "456";
 		savePreferences(testNode);
 		System.out.println(testNode.getProperty("OUTER_RADIUS"));
-		
 	}
-	
+		
 }

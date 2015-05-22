@@ -327,7 +327,7 @@ public class FlattenOperation implements Operation {
 		
 		// add it to the tree
 		LogPanel.log("adding to tree");
-		importer.im
+		
 		importer.importFile(fileNode.getParent(), outputFile);
 	}
 	

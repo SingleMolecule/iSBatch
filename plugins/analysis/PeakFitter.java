@@ -22,40 +22,16 @@ import ij.plugin.filter.ExtendedPlugInFilter;
 import ij.plugin.filter.PlugInFilterRunner;
 import ij.process.ImageProcessor;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class PeakFitter.
- */
 public class PeakFitter implements ExtendedPlugInFilter, DialogListener {
-	
-	/** The Constant SIGMA_TO_FWHM. */
 	public static final double SIGMA_TO_FWHM = 2.0 * Math.sqrt(2.0 * Math.log(2));
-	
-	/** The flags. */
 	private int flags = DOES_8G | DOES_16 | DOES_32 | PARALLELIZE_STACKS | NO_CHANGES | FINAL_PROCESSING;
-	
-	/** The use discoidal averaging. */
 	private boolean useDiscoidalAveraging = Prefs.getBoolean("PeakFitter.useDiscoidalAveraging", true);
-	
-	/** The inner radius. */
 	private int innerRadius = Prefs.getInt("PeakFitter.innerRadius", 1);
-	
-	/** The outer radius. */
 	private int outerRadius = Prefs.getInt("PeakFitter.outerRadius", 3);
-	
-	/** The threshold. */
 	private double threshold = Prefs.getDouble("PeakFitter.threshold", 6.0);
-	
-	/** The threshold value. */
 	private double thresholdValue = Prefs.getDouble("PeakFitter.thresholdValue", 0);
-	
-	/** The minimum distance. */
 	private int minimumDistance = Prefs.getInt("PeakFitter.minimumDistance", 8);
-	
-	/** The fit radius. */
 	private int fitRadius = Prefs.getInt("PeakFitter.fitRadius", 4);
-	
-	/** The max error. */
 	private double[] maxError = new double[] {
 			Prefs.getDouble("PeakFitter.maxErrorBaseline", 5000),
 			Prefs.getDouble("PeakFitter.maxErrorHeight", 5000),
@@ -65,13 +41,8 @@ public class PeakFitter implements ExtendedPlugInFilter, DialogListener {
 			Prefs.getDouble("PeakFitter.maxErrorSigmaY", 1),
 	};
 	
-	/** The z scale. */
 	private double zScale = Prefs.getDouble("PeakFitter.zScale", 1.25);	// 80 nm per pixel
-	
-	/** The peak finder. */
 	private PeakFinder peakFinder;
-	
-	/** The lm. */
 	private static LevenbergMarquardt lm = new LevenbergMarquardt() {
 		
 		@Override
@@ -91,31 +62,13 @@ public class PeakFitter implements ExtendedPlugInFilter, DialogListener {
 		}
 		
 	};
-	
-	/** The table. */
 	private ResultsTable table;
-	
-	/** The imp. */
 	private ImagePlus imp;
-	
-	/**
-	 * Gets the results.
-	 *
-	 * @return the results
-	 */
 	public ResultsTable getResults(){
 		return table;
-				
 	}
-	
-	/** The is preview. */
 	private boolean isPreview = false;
 	
-	/**
-	 * Run.
-	 *
-	 * @param ip the ip
-	 */
 	@Override
 	public void run(ImageProcessor ip) {
 		
