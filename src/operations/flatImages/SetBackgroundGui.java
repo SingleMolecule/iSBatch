@@ -253,11 +253,17 @@ public class SetBackgroundGui extends JDialog implements ActionListener {
 		} else if (e.getSource() == btnProcess) {
 			imagePath = pathToImage.getText();
 			this.method = (String) methodComboBox.getSelectedItem();
-
+			this.channel = String.valueOf(channelComboBox.getSelectedItem());
+			String foo = (String) fileTypeComboBox.getSelectedItem();
+			if (foo.equalsIgnoreCase("[File Type]")) {
+				this.imageType = null;
+			} else {
+				this.imageType = (String) fileTypeComboBox.getSelectedItem();
+			}
 			run();
 			dispose();
 		} else if (e.getSource() == channelComboBox) {
-			this.channel = channels[channelComboBox.getSelectedIndex()];
+			this.channel = String.valueOf(channelComboBox.getSelectedItem());
 		} else if (e.getSource() == methodComboBox) {
 			this.method = (String) methodComboBox.getSelectedItem();
 		} else if (e.getSource() == fileTypeComboBox) {

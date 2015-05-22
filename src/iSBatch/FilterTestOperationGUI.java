@@ -10,10 +10,9 @@
  *	You should have received a copy of the GNU General Public License	*
  *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ***********************************************************************/
-package operations.microbeTrackerIO;
+package iSBatch;
 
 import gui.LogPanel;
-import ij.IJ;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -49,7 +48,7 @@ import javax.swing.JTabbedPane;
 
 import utils.ModelUtils;
 
-public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
+public class FilterTestOperationGUI extends JDialog implements ActionListener {
 	private JButton btnCancel;
 	private JButton btnProcess;
 	private static final long serialVersionUID = 1L;
@@ -68,7 +67,7 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 	 * @param node
 	 *            Entry node
 	 */
-	public MicrobeTrackerIOGui(Node node) {
+	public FilterTestOperationGUI(Node node) {
 		setModal(true);
 		setTitle("MicrobeTracker I/O");
 		frame = new JFrame("MicrobeTracker I/O");
@@ -84,10 +83,10 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 107, 97, 60, 0 };
-		gridBagLayout.rowHeights = new int[] { 14, 23, 0, 0 };
+		gridBagLayout.rowHeights = new int[] { 14, 0, 23, 0, 0 };
 		gridBagLayout.columnWeights = new double[] { 1.0, 0.0, 1.0,
 				Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 1.0, 0.0, 0.0,
+		gridBagLayout.rowWeights = new double[] { 1.0, 0.0, 0.0, 0.0,
 				Double.MIN_VALUE };
 		getContentPane().setLayout(gridBagLayout);
 
@@ -111,6 +110,14 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 		gbc_lblOperation.gridx = 1;
 		gbc_lblOperation.gridy = 0;
 		getContentPane().add(lblOperation, gbc_lblOperation);
+		
+		lblTestHereIf = new JLabel("Test here if the filter is working for your files.");
+		GridBagConstraints gbc_lblTestHereIf = new GridBagConstraints();
+		gbc_lblTestHereIf.gridwidth = 3;
+		gbc_lblTestHereIf.insets = new Insets(0, 0, 5, 5);
+		gbc_lblTestHereIf.gridx = 0;
+		gbc_lblTestHereIf.gridy = 1;
+		getContentPane().add(lblTestHereIf, gbc_lblTestHereIf);
 
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		GridBagConstraints gbc_tabbedPane = new GridBagConstraints();
@@ -118,7 +125,7 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 		gbc_tabbedPane.insets = new Insets(0, 0, 5, 0);
 		gbc_tabbedPane.fill = GridBagConstraints.BOTH;
 		gbc_tabbedPane.gridx = 0;
-		gbc_tabbedPane.gridy = 1;
+		gbc_tabbedPane.gridy = 2;
 		getContentPane().add(tabbedPane, gbc_tabbedPane);
 
 		createPanel = new JPanel();
@@ -192,79 +199,6 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 		gbc_customFilterTextField.gridy = 1;
 		createPanel.add(customFilterTextField, gbc_customFilterTextField);
 
-		loadPanel = new JPanel();
-		loadPanel
-				.setToolTipText("Warming! There is no error check! Make sure you are providing valid files!");
-		loadPanel.setBorder(new TitledBorder(null, "Load .Mat File with cells",
-				TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		tabbedPane.addTab("Load", null, loadPanel, null);
-		GridBagLayout gbl_loadPanel = new GridBagLayout();
-		gbl_loadPanel.columnWidths = new int[] { 60, 60, 60, 60, 0 };
-		gbl_loadPanel.rowHeights = new int[] { 24, 0 };
-		gbl_loadPanel.columnWeights = new double[] { 1.0, 1.0, 1.0, 0.0,
-				Double.MIN_VALUE };
-		gbl_loadPanel.rowWeights = new double[] { 1.0, Double.MIN_VALUE };
-		loadPanel.setLayout(gbl_loadPanel);
-
-		panel_3 = new JPanel();
-		GridBagConstraints gbc_panel_3 = new GridBagConstraints();
-		gbc_panel_3.insets = new Insets(0, 0, 0, 5);
-		gbc_panel_3.fill = GridBagConstraints.BOTH;
-		gbc_panel_3.gridwidth = 4;
-		gbc_panel_3.gridx = 0;
-		gbc_panel_3.gridy = 0;
-		loadPanel.add(panel_3, gbc_panel_3);
-		GridBagLayout gbl_panel_3 = new GridBagLayout();
-		gbl_panel_3.columnWidths = new int[] { 0, 0, 0 };
-		gbl_panel_3.rowHeights = new int[] { 0, 0, 0 };
-		gbl_panel_3.columnWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
-		gbl_panel_3.rowWeights = new double[] { 0.0, 0.0, Double.MIN_VALUE };
-		panel_3.setLayout(gbl_panel_3);
-
-		btnLoadmat = new JButton("Load .mat");
-		btnLoadmat
-				.setToolTipText("Warming! There is no error check! Make sure you are providing valid  .mat file!");
-		btnLoadmat.addActionListener(this);
-		GridBagConstraints gbc_btnLoadmat = new GridBagConstraints();
-		gbc_btnLoadmat.insets = new Insets(0, 0, 5, 5);
-		gbc_btnLoadmat.gridx = 0;
-		gbc_btnLoadmat.gridy = 0;
-		panel_3.add(btnLoadmat, gbc_btnLoadmat);
-
-		mathPathTextField = new JTextField();
-		mathPathTextField.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				matFilePath = mathPathTextField.getText();
-			}
-		});
-		mathPathTextField.setColumns(10);
-		GridBagConstraints gbc_mathPathTextField = new GridBagConstraints();
-		gbc_mathPathTextField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_mathPathTextField.insets = new Insets(0, 0, 5, 0);
-		gbc_mathPathTextField.gridx = 1;
-		gbc_mathPathTextField.gridy = 0;
-		panel_3.add(mathPathTextField, gbc_mathPathTextField);
-
-		btnBfInput = new JButton("BF Input");
-		btnBfInput
-				.setToolTipText("Warming! There is no error check! Make sure you are providing valid  .TIF file! The file should have a tag MTInput");
-		btnBfInput.addActionListener(this);
-		GridBagConstraints gbc_btnBfInput = new GridBagConstraints();
-		gbc_btnBfInput.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnBfInput.insets = new Insets(0, 0, 0, 5);
-		gbc_btnBfInput.gridx = 0;
-		gbc_btnBfInput.gridy = 1;
-		panel_3.add(btnBfInput, gbc_btnBfInput);
-
-		BFInput = new JTextField();
-		BFInput.setColumns(10);
-		GridBagConstraints gbc_BFInput = new GridBagConstraints();
-		gbc_BFInput.fill = GridBagConstraints.HORIZONTAL;
-		gbc_BFInput.gridx = 1;
-		gbc_BFInput.gridy = 1;
-		panel_3.add(BFInput, gbc_BFInput);
-
 		btnCancel = new JButton("Cancel");
 		btnCancel.addActionListener(this);
 
@@ -275,12 +209,12 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 		gbc_btnProcess.anchor = GridBagConstraints.EAST;
 		gbc_btnProcess.insets = new Insets(0, 0, 0, 5);
 		gbc_btnProcess.gridx = 1;
-		gbc_btnProcess.gridy = 2;
+		gbc_btnProcess.gridy = 3;
 		getContentPane().add(btnProcess, gbc_btnProcess);
 
 		GridBagConstraints gbc_btnCancel = new GridBagConstraints();
 		gbc_btnCancel.gridx = 2;
-		gbc_btnCancel.gridy = 2;
+		gbc_btnCancel.gridy = 3;
 		getContentPane().add(btnCancel, gbc_btnCancel);
 
 		pack();
@@ -290,12 +224,6 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 
 	}
 
-	/**
-	 * Error.
-	 *
-	 * @param msg
-	 *            the msg
-	 */
 	void error(String msg) {
 		LogPanel.log("MicrobeTracker IO error: " + msg);
 	}
@@ -312,12 +240,7 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 	private JComboBox<String> fileTypeComboBox;
 	private JLabel label;
 	private JTextField customFilterTextField;
-	private JPanel loadPanel;
-	private JPanel panel_3;
-	private JButton btnLoadmat;
-	private JTextField mathPathTextField;
-	private JButton btnBfInput;
-	private JTextField BFInput;
+	private JLabel lblTestHereIf;
 
 	/**
 	 * Action performed.
@@ -334,14 +257,9 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 
 			channel = channelComboBox.getSelectedItem().toString();
 			imageType = fileTypeComboBox.getSelectedItem().toString();
-			BFFIleInputPath = BFInput.getText();
 			customFiter = customFilterTextField.getText();
-			matFilePath = mathPathTextField.getText();
 			customFiter = customFilterTextField.getText();
 			dispose();
-		} else if (e.getSource() == btnLoadmat) {
-			matFilePath = IJ.getFilePath(".MAT file");
-			mathPathTextField.setText(matFilePath);
 		} else if (e.getSource() == fileTypeComboBox) {
 			String foo = (String) fileTypeComboBox.getSelectedItem();
 			if (foo.equalsIgnoreCase("[File Type]")) {
@@ -349,9 +267,6 @@ public class MicrobeTrackerIOGui extends JDialog implements ActionListener {
 			} else {
 				this.imageType = (String) fileTypeComboBox.getSelectedItem();
 			}
-		} else if (e.getSource() == btnBfInput) {
-			BFFIleInputPath = IJ.getFilePath("MT input image");
-			BFInput.setText(BFFIleInputPath);
 		}
 	}
 

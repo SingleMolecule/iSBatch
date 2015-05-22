@@ -47,12 +47,6 @@ import model.OperationNode;
 import model.Root;
 import model.Sample;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class FindPeaksOperation.
- *
- * @author VictorCaldas
- */
 public class FindPeaksOperation implements Operation {
 	private FindPeaksGui dialog;
 	private String channel;
@@ -67,6 +61,7 @@ public class FindPeaksOperation implements Operation {
 	public FindPeaksOperation(DatabaseModel treeModel) {
 		this.model = treeModel;
 	}
+
 	@Override
 	public String[] getContext() {
 		return new String[] { "All" };
@@ -76,6 +71,7 @@ public class FindPeaksOperation implements Operation {
 	public String getName() {
 		return "Peak Finder";
 	}
+
 	@Override
 	public boolean setup(Node node) {
 		// String to parse:
@@ -93,13 +89,14 @@ public class FindPeaksOperation implements Operation {
 
 	@Override
 	public void finalize(Node node) {
-		// TODO Auto-generated method stub
 
 	}
+
 	@Override
 	public void visit(Root root) {
 		System.out.println("Not applicable to root. ");
 	}
+
 	private void run(Node node) {
 		ImagePlus imp = IJ.openImage(node.getPath());
 		peakFinder = new PeakFinder(useDiscoidal, new DiscoidalAveragingFilter(
@@ -130,26 +127,27 @@ public class FindPeaksOperation implements Operation {
 			// Filter peaks
 			// Load Roi Peaks, and Load ROI Cells
 			RoiManager allPeaksManager = new RoiManager(true);
-			allPeaksManager.runCommand("Open", node.getOutputFolder() + File.separator
-					+ nameToSave);
+			allPeaksManager.runCommand("Open", node.getOutputFolder()
+					+ File.separator + nameToSave);
 			System.out.println(allPeaksManager.getCount());
 			RoiManager cellsManager = new RoiManager(true);
 			System.out.println(node.getParent().getCellROIPath());
-			
+
 			cellsManager.runCommand("Open", node.getParent().getCellROIPath());
 			System.out.println(cellsManager.getCount());
-			
+
 			RoiManager filteredPeaks = PeaksInsideCells(cellsManager,
 					allPeaksManager);
 
 			System.out.println(filteredPeaks.getCount());
 			nameToSave = node.getName().replace(".TIF", "")
 					+ "_PeakROIsFiltered.zip";
-			
-				filteredPeaks.runCommand("Save", node.getOutputFolder() + File.separator+ nameToSave);
-				
-				node.getProperties().put(channel + "_PeaksFiltered",
-						node.getOutputFolder() + File.separator + nameToSave);
+
+			filteredPeaks.runCommand("Save", node.getOutputFolder()
+					+ File.separator + nameToSave);
+
+			node.getProperties().put(channel + "_PeaksFiltered",
+					node.getOutputFolder() + File.separator + nameToSave);
 		}
 
 		currentCount++;
@@ -159,8 +157,10 @@ public class FindPeaksOperation implements Operation {
 	/**
 	 * Peaks inside cells.
 	 *
-	 * @param cellsManager the cells manager
-	 * @param allPeaksManager the all peaks manager
+	 * @param cellsManager
+	 *            the cells manager
+	 * @param allPeaksManager
+	 *            the all peaks manager
 	 * @return the roi manager
 	 */
 	private RoiManager PeaksInsideCells(RoiManager cellsManager,
@@ -233,43 +233,24 @@ public class FindPeaksOperation implements Operation {
 		System.out.println(dialog.useDiscoidal);
 		System.out.println(dialog.getImageType());
 		System.out.println(dialog.getInsindeCells());
-		
+
 	}
 
 	@Override
 	public void visit(OperationNode operationNode) {
-		// TODO Auto-generated method stub
 
 	}
 
-	/**
-	 * Gets the created nodes.
-	 *
-	 * @return the created nodes
-	 */
 	@Override
 	public Node[] getCreatedNodes() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/**
-	 * Gets the parameters.
-	 *
-	 * @return the parameters
-	 */
 	@Override
 	public HashMap<String, String> getParameters() {
 		return null;
 	}
 
-	/**
-	 * Parses the double.
-	 *
-	 * @param str the str
-	 * @return the double
-	 * @throws NumberFormatException the number format exception
-	 */
 	private double parseDouble(String str) throws NumberFormatException {
 		double toReturn = 0;
 		// System.out.println(str);
@@ -288,12 +269,6 @@ public class FindPeaksOperation implements Operation {
 		return toReturn;
 	}
 
-	/**
-	 * Run plug in filter.
-	 *
-	 * @param filter the filter
-	 * @param imp the imp
-	 */
 	public static void runPlugInFilter(PlugInFilter filter, ImagePlus imp) {
 
 		ImageStack stack = imp.getImageStack();
@@ -302,23 +277,10 @@ public class FindPeaksOperation implements Operation {
 			runPlugInFilter(filter, stack.getProcessor(slice));
 	}
 
-	/**
-	 * Run plug in filter.
-	 *
-	 * @param filter the filter
-	 * @param ip the ip
-	 */
 	public static void runPlugInFilter(PlugInFilter filter, ImageProcessor ip) {
 		filter.run(ip);
 	}
 
-	/**
-	 * Find peaks.
-	 *
-	 * @param finder the finder
-	 * @param imp the imp
-	 * @return the array list
-	 */
 	public static ArrayList<Roi> findPeaks(PeakFinder finder, ImagePlus imp) {
 
 		ArrayList<Roi> allPeaks = new ArrayList<Roi>();
@@ -338,13 +300,6 @@ public class FindPeaksOperation implements Operation {
 		return allPeaks;
 	}
 
-	/**
-	 * Save rois as zip.
-	 *
-	 * @param rois the rois
-	 * @param filename the filename
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 */
 	public static void saveRoisAsZip(ArrayList<Roi> rois, String filename)
 			throws IOException {
 		ZipOutputStream zos = new ZipOutputStream(
@@ -360,9 +315,5 @@ public class FindPeaksOperation implements Operation {
 		}
 
 		zos.close();
-
 	}
-
-	
-
 }

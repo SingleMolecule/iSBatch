@@ -1,34 +1,30 @@
-/*
- * 
- */
+/************************************************************************
+ * 				iSBatch  Copyright (C) 2015  							*
+ *		Victor E. A. Caldas -  v.e.a.caldas at rug.nl					*
+ *		C. Michiel Punter - c.m.punter at rug.nl						*
+ *																		*
+ *	This program is distributed in the hope that it will be useful,		*
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of		*
+ * 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the		*
+ *	GNU General Public License for more details.						*
+ *	You should have received a copy of the GNU General Public License	*
+ *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ***********************************************************************/
 package filters;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 
 import model.FileNode;
 import model.Node;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class GenericFilter.
- */
 public class GenericFilter implements NodeFilterInterface {
 
-	/** The channel. */
 	private String channel;
-	
-	/** The tags. */
 	private ArrayList<String> tags;
-	
-	/** The custom. */
 	private String custom;
 
-	/**
-	 * Instantiates a new generic filter.
-	 *
-	 * @param channel the channel
-	 * @param custom the custom
-	 */
 	public GenericFilter(String channel, String custom) {
 		this.channel = channel;
 
@@ -38,14 +34,6 @@ public class GenericFilter implements NodeFilterInterface {
 		}
 	}
 
-	/**
-	 * Instantiates a new generic filter.
-	 *
-	 * @param channel the channel
-	 * @param tags the tags
-	 * @param extension the extension
-	 * @param custom the custom
-	 */
 	public GenericFilter(String channel, ArrayList<String> tags,
 			String extension, String custom) {
 		this.channel = channel;
@@ -54,87 +42,88 @@ public class GenericFilter implements NodeFilterInterface {
 
 	}
 
-	/**
-	 * Accept.
-	 *
-	 * @param node the node
-	 * @return true, if successful
-	 */
 	@Override
 	public boolean accept(Node node) {
-		System.out.println("Filter image: " + node.getPath());
-		System.out.println(node.getChannel() + " " + node.getType());
-		
-		// Just for files
+		System.out.println("1 --- " + node.getType() + "|" + node.getChannel()
+				+ "|" + node.getName());
 		if (!node.getType().equalsIgnoreCase(FileNode.type)) {
-			System.out.println("Not the rigth type");
+			// System.out.println("Not the rigth type");
 			return false;
 		}
-		
-		boolean isChannel = false;
-		if(channel==null || channel.equalsIgnoreCase("All")|| node.getChannel().equalsIgnoreCase(channel)){
-			isChannel = true;
-			System.out.println("Channel true");
-		}
 
+		boolean isChannel = false;
+		if (channel == null || channel.equalsIgnoreCase("All")
+				|| node.getChannel().equalsIgnoreCase(channel)) {
+			isChannel = true;
+		}
 
 		boolean matchTag = false;
-		System.out.println("Matchtag" + node.getTag());
-		System.out.println("//////");
-		System.out.println(tags.size());
-		System.out.println("/////");
-		if(tags.isEmpty() || tags==null || tags.size()==0){
+		if (tags.isEmpty() || tags == null || tags.size() == 0) {
+			System.out.println("Tag is empty!");
 			matchTag = true;
-			System.out.println("tags null");
-		}
-		else{
-			System.out.println("convert fileNode");
-			
+		} else {
+
 			FileNode fNode = (FileNode) node;
-			System.out.println("convertion done");
-//			System.out.println("Fnode Info: "+ fNode.getTag().get(0));
-			if(fNode.getTag().size()==0 && tags.get(0).equalsIgnoreCase("Raw")){
+			System.out.println("  |--- " + fNode.getType() + "|"
+					+ fNode.getChannel() + "|" + fNode.getName() + "|"
+					+ fNode.getTags().size() + "|" + "|" + tags.size());
+			if (fNode.getTags().size() == 0
+					&& tags.get(0).equalsIgnoreCase("Raw")) {
+				System.out.println("Tag size is 1. Tag is" + tags.get(0));
 				matchTag = true;
-			}
-			else {
-				for (String currentTag : fNode.getTag()) {
-					if (tags.contains(currentTag)) {
-						matchTag = true;
-					}
-			}
-			
+			} else {
+				if (equalLists(fNode.getTags(), tags)) {
+					System.out.println("String comparison.");
+					matchTag = true;
+				}
 			}
 		}
-		
-//		if (!(extension == null)) {
-//			// Check Extension
-//
-//			String path = node.getProperty("path");
-//
-//			// check if this file is an image
-//			if (path == null
-//					|| !(path.toLowerCase().endsWith(".tiff") || path
-//							.toLowerCase().endsWith(".tif"))) {
-//				return false;
-//			}
-//
-//		}
 
 		boolean containsCustomTag = false;
-		if(custom==null || custom.equalsIgnoreCase("")){
+		if (custom == null || custom.equalsIgnoreCase("")) {
 			containsCustomTag = true;
 		}
-		if(!(custom == null)) {
-			if(node.getName().contains(custom)){
-				 containsCustomTag = true;
-			
+		if (!(custom == null)) {
+			if (node.getName().contains(custom)) {
+				containsCustomTag = true;
+
 			}
 		}
-		System.out.println(isChannel +"|"+matchTag+ "|" + containsCustomTag);
 		if (isChannel && matchTag && containsCustomTag) {
 			return true;
 		}
-	
+
 		return false;
 	};
+
+	public static boolean equalLists(ArrayList<String> one,
+			ArrayList<String> two) {
+		
+		HashSet<String> hOne = new HashSet<String>();
+		HashSet<String> hTwo = new HashSet<String>();
+
+		if (one == null && two == null) {
+			return true;
+		}
+
+		for (String string : one) {
+			hOne.add(string.toUpperCase());
+		}
+		for (String string : two) {
+			hTwo.add(string.toUpperCase());
+		}
+
+		if ((hOne == null && hTwo != null) || hOne != null && hTwo == null
+				|| hOne.size() != hTwo.size()) {
+			return false;
+		}
+		System.out.println("Same size");
+		
+		one = new ArrayList<String>(hOne);
+		two = new ArrayList<String>(hTwo);
+
+		Collections.sort(one);
+		Collections.sort(two);
+		return one.equals(two);
+	}
 };
