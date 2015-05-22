@@ -13,13 +13,6 @@
 package gui;
 
 import javax.swing.JFrame;
-import javax.swing.JTextField;
-
-import java.awt.BorderLayout;
-
-import javax.swing.JPanel;
-
-import java.awt.GridLayout;
 
 import javax.swing.JLabel;
 
@@ -39,7 +32,10 @@ import java.awt.Component;
 import javax.swing.Box;
 
 public class AboutPanel extends JFrame {
-	private JTextField textField;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public AboutPanel(String version) {
 		getContentPane().setBackground(Color.WHITE);
 		setBackground(Color.WHITE);

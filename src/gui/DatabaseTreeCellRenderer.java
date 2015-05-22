@@ -6,12 +6,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
-import model.Experiment;
-import model.FieldOfView;
-import model.FileNode;
 import model.Node;
-import model.Root;
-import model.Sample;
 import model.parameters.NodeType;
 
 public class DatabaseTreeCellRenderer extends DefaultTreeCellRenderer {
