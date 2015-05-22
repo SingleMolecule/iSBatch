@@ -77,7 +77,7 @@ public class DatabaseDialog extends JDialog implements ActionListener {
 	} 
 
 	private JTextField getPathText() {
-		return new JTextField(Prefs.get("isbatch.lastDB.directory",System.getProperty("user.home") + File.separator + "database"), 20);
+		return new JTextField(Prefs.get("isbatch.lastSelectet.DBdir",System.getProperty("user.home") + File.separator + "database"), 20);
 	}
 	
 	/* (non-Javadoc)
@@ -90,15 +90,15 @@ public class DatabaseDialog extends JDialog implements ActionListener {
 			
 			try {
 				String path = pathTextField.getText();
-				
+				System.out.println();
 				File file = new File(path);
 				iSBatchPreferences.lastSelectedPath = file.getPath();
-				Prefs.set("isbatch.input.directory",path);
+				Prefs.set("isbatch.lastSelectet.DBdir",path);
 				database = new Database(file);
 			}
 			catch (SqlJetException exception) {
 				JOptionPane.showMessageDialog(this, exception.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-			}
+			} 
 			
 			dispose();
 		}
