@@ -12,6 +12,8 @@
  ***********************************************************************/
 package operations.peakFinder;
 
+import filters.GenericFilter;
+import gui.FileSelectionDialog;
 import gui.LogPanel;
 import iSBatch.iSBatchPreferences;
 import ij.IJ;
@@ -21,7 +23,9 @@ import ij.gui.PointRoi;
 import ij.gui.Roi;
 import ij.gui.ShapeRoi;
 import ij.io.RoiEncoder;
-import ij.plugin.filter.PlugInFilter;
+import ij.plugin.PlugIn;
+import ij.plugin.filter.Analyzer;
+import ij.plugin.frame.Recorder;
 import ij.plugin.frame.RoiManager;
 import ij.process.ImageProcessor;
 
@@ -39,6 +43,11 @@ import analysis.PeakFinder;
 import operations.Operation;
 import process.DiscoidalAveragingFilter;
 import test.TreeGenerator;
+import utils.FileIOUtils;
+import utils.FileNames;
+import utils.IJUtils;
+import utils.MultiFilter;
+import utils.StringOperations;
 import model.DatabaseModel;
 import model.Experiment;
 import model.FieldOfView;
@@ -48,19 +57,19 @@ import model.OperationNode;
 import model.Root;
 import model.Sample;
 
-public class FindPeaksOperation implements Operation {
-	private FindPeaksGui dialog;
+public class FindPeaksOperation implements Operation, PlugIn {
+	private FileSelectionDialog dialog;
 	private String channel;
-	private boolean useDiscoidal;
-	private DatabaseModel model;
-	iSBatchPreferences preferences;
+	// private DatabaseModel model;
 	PeakFinder peakFinder;
 	RoiManager roiManager;
 	int NUMBER_OF_OPERATIONS;
 	int currentCount;
+	String operationName = "Peak Finder";
+	private ArrayList<Node> filenodes;
 
-	public FindPeaksOperation(DatabaseModel treeModel) {
-		this.model = treeModel;
+	public FindPeaksOperation() {
+		// this.model = treeModel;
 	}
 
 	@Override
@@ -70,31 +79,20 @@ public class FindPeaksOperation implements Operation {
 
 	@Override
 	public String getName() {
-		return "Peak Finder";
+		return operationName;
 	}
 
 	@Override
 	public boolean setup(Node node) {
-		// String to parse:
-
-		preferences = model.preferences;
-		dialog = new FindPeaksGui(node);
+		dialog = new FileSelectionDialog(node, operationName);
 		if (dialog.isCanceled())
 			return false;
-		this.useDiscoidal = dialog.useDiscoidal;
-		this.channel = dialog.getChannel();
-		if(channel.equalsIgnoreCase(null)){
-			LogPanel.log("No channel selected. Operation cancelled.");
-			return false;
-		}
-		NUMBER_OF_OPERATIONS = node.getNumberOfFoV();
-		currentCount = 1;
 		return true;
 	}
 
 	@Override
 	public void finalize(Node node) {
-
+		LogPanel.log("-------------Peak Finder finalized---------------");
 	}
 
 	@Override
@@ -102,67 +100,12 @@ public class FindPeaksOperation implements Operation {
 		System.out.println("Not applicable to root. ");
 	}
 
-	private void run(Node node) {
-		ImagePlus imp = IJ.openImage(node.getPath());
-		peakFinder = new PeakFinder(useDiscoidal, new DiscoidalAveragingFilter(
-				imp.getWidth(), iSBatchPreferences.INNER_RADIUS,
-				iSBatchPreferences.OUTER_RADIUS),
-				parseDouble(iSBatchPreferences.SNR_THRESHOLD),
-				parseDouble(iSBatchPreferences.INTENSITY_THRESHOLD),
-				Integer.parseInt(iSBatchPreferences.DISTANCE_BETWEEN_PEAKS));
 
-		ArrayList<Roi> rois = findPeaks(peakFinder, imp);
+	private RoiManager getPeaksInsideCells(RoiManager allPeaksManager,
+			RoiManager cellsManager) {
 
-		String nameToSave = node.getName().replace(".TIF", "")
-				+ "_PeakROIs.zip";
-		System.out.println("Saving peak Rois @ " + node.getOutputFolder()
-				+ File.separator + nameToSave);
+		RoiManager peaksInsideCells = new RoiManager(true);
 
-		try {
-			saveRoisAsZip(rois, node.getOutputFolder() + File.separator
-					+ nameToSave);
-			node.getProperties().put(channel + "_AllPeaks",
-					node.getOutputFolder() + File.separator + nameToSave);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		if (iSBatchPreferences.insideCell == true) {
-			System.out.println("Detect within cells");
-			// Filter peaks
-			// Load Roi Peaks, and Load ROI Cells
-			RoiManager allPeaksManager = new RoiManager(true);
-			allPeaksManager.runCommand("Open", node.getOutputFolder()
-					+ File.separator + nameToSave);
-			System.out.println(allPeaksManager.getCount());
-			RoiManager cellsManager = new RoiManager(true);
-			System.out.println(node.getParent().getCellROIPath());
-
-			cellsManager.runCommand("Open", node.getParent().getCellROIPath());
-			System.out.println(cellsManager.getCount());
-
-			RoiManager filteredPeaks = PeaksInsideCells(cellsManager,
-					allPeaksManager);
-
-			System.out.println(filteredPeaks.getCount());
-			nameToSave = node.getName().replace(".TIF", "")
-					+ "_PeakROIsFiltered.zip";
-
-			filteredPeaks.runCommand("Save", node.getOutputFolder()
-					+ File.separator + nameToSave);
-
-			node.getProperties().put(channel + "_PeaksFiltered",
-					node.getOutputFolder() + File.separator + nameToSave);
-		}
-
-		currentCount++;
-
-	}
-
-	private RoiManager PeaksInsideCells(RoiManager cellsManager,
-			RoiManager allPeaksManager) {
-		RoiManager filtered = new RoiManager(true);
-		// check if peaks are inside cells
 		@SuppressWarnings("unchecked")
 		Hashtable<String, Roi> listOfCells = (Hashtable<String, Roi>) cellsManager
 				.getROIs();
@@ -170,7 +113,6 @@ public class FindPeaksOperation implements Operation {
 		Hashtable<String, Roi> listOfPeaks = (Hashtable<String, Roi>) allPeaksManager
 				.getROIs();
 
-		// for some reason, RoiManager.getRoi does not work.
 		for (String label : listOfCells.keySet()) {
 			ShapeRoi currentCell = new ShapeRoi(listOfCells.get(label));
 
@@ -179,62 +121,74 @@ public class FindPeaksOperation implements Operation {
 
 				if (currentCell.contains(currentPeak.getBounds().x,
 						currentPeak.getBounds().y)) {
-					filtered.addRoi(currentPeak);
+					peaksInsideCells.addRoi(currentPeak);
 				}
 			}
-
 		}
-		return filtered;
+		return peaksInsideCells;
 	}
 
 	@Override
 	public void visit(Experiment experiment) {
-		for (Sample sample : experiment.getSamples()) {
-			visit(sample);
-
+		try {
+			runNode(experiment);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
 	@Override
 	public void visit(Sample sample) {
-		for (FieldOfView fov : sample.getFieldOfView()) {
-			visit(fov);
+		try {
+			runNode(sample);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
 	@Override
 	public void visit(FieldOfView fieldOfView) {
-		for (FileNode fileNode : fieldOfView.getImages(channel)) {
-			visit(fileNode);
+		try {
+			runNode(fieldOfView);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
 	@Override
 	public void visit(FileNode fileNode) {
-		System.out.println("Peak Find: " + currentCount + " of "
-				+ NUMBER_OF_OPERATIONS);
-		if (currentCount == NUMBER_OF_OPERATIONS) {
-			System.out.println("Peak Finder finished.");
+		try {
+			runNode(fileNode);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		IJ.showProgress(currentCount, NUMBER_OF_OPERATIONS);
-		run(fileNode);
 
+	}
+
+	private void runNode(Node node) throws IOException {
+		String extention = null;
+
+		this.filenodes = node.getDescendents(new GenericFilter(dialog.getChannel(), dialog
+				.getTags(), extention, dialog.getCustomSearch()));
+		run(null);
+		// }
 	}
 
 	public static void main(String[] args) {
 		DatabaseModel model = TreeGenerator.generate("e:/test", "e:/test", 2);
-		FindPeaksGui dialog = new FindPeaksGui(model.getRoot());
+		FileSelectionDialog dialog = new FileSelectionDialog(model.getRoot());
 		System.out.println(dialog.getChannel());
-		System.out.println(dialog.getMethod());
-		System.out.println(dialog.useDiscoidal);
-		System.out.println(dialog.getImageType());
-		System.out.println(dialog.getInsindeCells());
+		System.out.println("Use cells :" + dialog.useCells);
+		for (String string : dialog.getTags()) {
+			System.out.println(string);
+		}
+		System.out.println(dialog.getCustomSearch());
+		System.out.println("--------");
 
 	}
 
 	@Override
 	public void visit(OperationNode operationNode) {
-
 	}
 
 	@Override
@@ -245,36 +199,6 @@ public class FindPeaksOperation implements Operation {
 	@Override
 	public HashMap<String, String> getParameters() {
 		return null;
-	}
-
-	private double parseDouble(String str) throws NumberFormatException {
-		double toReturn = 0;
-		// System.out.println(str);
-		if (!str.equalsIgnoreCase("") || !str.equals(null)) {
-			try {
-				toReturn = Double.parseDouble(str);
-				// System.out.println("Value parsed :" + toReturn);
-			} catch (NumberFormatException ex) {
-				System.err.println("Ilegal input");
-				toReturn = 0;
-				// Discard input or request new input ...
-				// clean up if necessary
-			}
-		}
-
-		return toReturn;
-	}
-
-	public static void runPlugInFilter(PlugInFilter filter, ImagePlus imp) {
-
-		ImageStack stack = imp.getImageStack();
-
-		for (int slice = 1; slice <= stack.getSize(); slice++)
-			runPlugInFilter(filter, stack.getProcessor(slice));
-	}
-
-	public static void runPlugInFilter(PlugInFilter filter, ImageProcessor ip) {
-		filter.run(ip);
 	}
 
 	public static ArrayList<Roi> findPeaks(PeakFinder finder, ImagePlus imp) {
@@ -290,26 +214,86 @@ public class FindPeaksOperation implements Operation {
 				roi.setPosition(slice);
 				allPeaks.add(roi);
 			}
-
 		}
 
 		return allPeaks;
 	}
 
-	public static void saveRoisAsZip(ArrayList<Roi> rois, String filename)
-			throws IOException {
-		ZipOutputStream zos = new ZipOutputStream(
-				new FileOutputStream(filename));
+	@Override
+	public void run(String arg0) {
+		IJUtils.emptyAll();
 
-		int i = 0;
+		/**
+		 * Plugin : Peak Fitter
+		 * 
+		 */
+		
+		
+		// Create output directory
+		
 
-		for (Roi roi : rois) {
-			byte[] b = RoiEncoder.saveAsByteArray(roi);
-			zos.putNextEntry(new ZipEntry(i + ".roi"));
-			zos.write(b, 0, b.length);
-			i++;
+		String pluginName = "Peak Finder";
+		String arguments = "";
+		int size = filenodes.size();
+		
+		for (int i = 0; i < size; i++) {
+			Node currentNode = filenodes.get(i);
+			
+			ImagePlus imp = IJ.openImage(currentNode.getPath());
+			File f = new File(currentNode.getOutputFolder()+ File.separator + "PeakFinder");
+			f.mkdirs();
+			if (i == 0) {
+				
+				
+				
+				imp.show();
+				Recorder recorder = new Recorder(false);
+				Recorder.record = true;
+				Recorder.recordInMacros = true;
+				IJ.run(imp, pluginName, arguments);
+				LogPanel.log(arguments);
+				String command = recorder.getText();
+				recorder.close();
+				arguments = StringOperations.getArguments(pluginName, command);
+			} else {
+				IJ.run(imp, pluginName, arguments);
+			}
+
+			String nameToSave = FileNames.getOutputFilename(currentNode,
+					"PeakROI", ".zip");
+
+			// peak finder does not return a table
+			// Just returns a ROI Manager
+
+			String path = f.getAbsolutePath() + File.separator
+					+ currentNode.getChannel() + ".FittedPeaks.csv";
+			
+			RoiManager currentManager = RoiManager.getInstance2();
+			currentManager.runCommand("Save", f.getAbsolutePath()
+					+ File.separator + nameToSave);
+			
+			
+			// Check if it is inside cells{
+
+//			if (dialog.useCells) {
+//				RoiManager cellsManager = new RoiManager(true);
+//				cellsManager.runCommand("Open", currentNode.getCellROIPath());
+//				// Add property Channel_cellPeaks to the node
+//				try {
+//					System.out.println(path);
+//					MultiFilter.getTableRowsInsideCells(currentNode, path);
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//
+//			}
+			currentManager.removeAll();
+			currentManager.close();
+			IJUtils.emptyAll();
+			
+
 		}
 
-		zos.close();
 	}
+
 }

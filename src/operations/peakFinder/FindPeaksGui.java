@@ -49,11 +49,12 @@ import javax.swing.JCheckBox;
 import javax.swing.border.TitledBorder;
 
 import utils.ModelUtils;
+
 public class FindPeaksGui extends JDialog implements ActionListener {
-	
+
 	NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale
 			.getDefault());
-	
+
 	DecimalFormat decimalFormat = (DecimalFormat) numberFormat;
 	private JPanel panel;
 	private JCheckBox useDiscoidalFilterChk;
@@ -78,33 +79,33 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 	private JLabel lblPx_1;
 	private JCheckBox chckbxInsideCells;
 	private JButton btnCancel;
-	
+
 	private JButton btnProcess;
 
 	public String innerRadius = null;
 
 	public double getInnerRadius() {
-		return parseDouble(innerRadius);
+		return Double.parseDouble(innerRadius);
 	}
 
-	private double parseDouble(String str) throws NumberFormatException {
-		double toReturn = 0;
-		if (!str.equalsIgnoreCase("") || !str.equals(null)) {
-			try {
-				toReturn = Double.parseDouble(str);
-			} catch (NumberFormatException ex) {
-				System.err.println("Ilegal input");
-				toReturn = 0;
-			}
-		}
-
-		return toReturn;
-	}
+	// private double parseDouble(String str) throws NumberFormatException {
+	// double toReturn = 0;
+	// if (!str.equalsIgnoreCase("") || !str.equals(null)) {
+	// try {
+	// toReturn = Double.parseDouble(str);
+	// } catch (NumberFormatException ex) {
+	// System.err.println("Ilegal input");
+	// toReturn = 0;
+	// }
+	// }
+	//
+	// return toReturn;
+	// }
 
 	public String outerRadius = null;
 
 	public double getOuterRadius() {
-		return parseDouble(outerRadius);
+		return Double.parseDouble(outerRadius);
 	}
 
 	public String SNRThreshold = null;
@@ -115,10 +116,9 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 	private JComboBox<String> channelComboBox;
 	private JComboBox<String> methodComboBox;
 	private static final long serialVersionUID = 1L;
-	
 
-	private static final String[] methods = { "[Method]", "Built-in"};
-	
+	private static final String[] methods = { "[Method]", "Built-in" };
+
 	private String[] types = new String[] { "[File Type]", "Raw", "Flat",
 			"Discoidal" };
 	private boolean canceled = false;
@@ -129,6 +129,20 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 	public boolean useCells;
 	private String imageType;
 
+	private boolean performOperationInsideCells;
+
+	private String INTENSITY_THRESHOLD;
+
+	private String SNR_THRESHOLD;
+
+	private String DISTANCE_BETWEEN_PEAKS;
+
+	private String SELECTION_RADIUS;
+
+	private String INNER_RADIUS;
+
+	private String OUTER_RADIUS;
+
 	public FindPeaksGui(Node node) {
 		setModal(true);
 		setTitle("Find Peaks");
@@ -138,6 +152,7 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 		display();
 
 	}
+
 	private void setup() {
 	}
 
@@ -177,7 +192,8 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 		channelComboBox = new JComboBox<String>();
 		channelComboBox.addActionListener(this);
 
-		channelComboBox.setModel(ModelUtils.getUniqueChannels(node));
+		channelComboBox
+				.setModel(ModelUtils.getUniqueChannelsFromDatabase(node));
 		GridBagConstraints gbc_channelComboBox = new GridBagConstraints();
 		gbc_channelComboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_channelComboBox.fill = GridBagConstraints.HORIZONTAL;
@@ -517,6 +533,7 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 	void error(String msg) {
 		IJ.error("Batch Processor", msg);
 	}
+
 	public boolean isCanceled() {
 		return canceled;
 	}
@@ -527,74 +544,86 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 			canceled = true;
 			dispose();
 		} else if (e.getSource() == btnProcess) {
-			iSBatchPreferences.INNER_RADIUS = innerRadiusTxt.getText();
-			iSBatchPreferences.DISTANCE_BETWEEN_PEAKS = minDistanceTxt.getText();
-			iSBatchPreferences.SELECTION_RADIUS = SelectionRadiusTxt.getText();
-			iSBatchPreferences.INTENSITY_THRESHOLD = IntensityTxt.getText();
-			iSBatchPreferences.SNR_THRESHOLD = SNRTxt.getText();
-			iSBatchPreferences.OUTER_RADIUS = outerRadiusTxt.getText();
+			INNER_RADIUS = innerRadiusTxt.getText();
+			DISTANCE_BETWEEN_PEAKS = minDistanceTxt.getText();
+			SELECTION_RADIUS = SelectionRadiusTxt.getText();
+			INTENSITY_THRESHOLD = IntensityTxt.getText();
+			SNR_THRESHOLD = SNRTxt.getText();
+			OUTER_RADIUS = outerRadiusTxt.getText();
+
 			this.channel = String.valueOf(channelComboBox.getSelectedItem());
 			this.method = (String) methodComboBox.getSelectedItem();
 			this.imageType = (String) fileTypeComboBox.getSelectedItem();
-			
+
+			this.useDiscoidal = useDiscoidalFilterChk.isSelected();
+			this.performOperationInsideCells = chckbxInsideCells.isSelected();
 			run();
 			dispose();
-
-		} else if (e.getSource() == useDiscoidalFilterChk) {
-			boolean isSelected = useDiscoidalFilterChk.isSelected();
-
-			if (isSelected) {
-				this.useDiscoidal = true;
-
-			} else {
-				this.useDiscoidal = false;
-			}
-		} else if (e.getSource() == chckbxInsideCells) {
-			boolean isSelected = chckbxInsideCells.isSelected();
-
-			if (isSelected) {
-				this.useCells = true;
-				iSBatchPreferences.insideCell = true;
-
-			} else {
-				this.useCells = false;
-				iSBatchPreferences.insideCell = false;
-			}
 		}
 	}
 
-	public String getImageType(){
+	public String getImageType() {
 		return imageType;
 	}
-	
-	public String getChannel() {
+
+	public String getSelectedChannel() {
 		return channel;
 	}
 
 	public String getMethod() {
 		return method;
 	}
+
 	public String getImagePath() {
 		return imagePath;
 	}
 
 	public double getThreshold() {
-		return parseDouble(iSBatchPreferences.INTENSITY_THRESHOLD);
+		return Double.parseDouble(INTENSITY_THRESHOLD);
 	}
 
 	public double getSNRThreshold() {
-		return parseDouble(iSBatchPreferences.SNR_THRESHOLD);
+		return Double.parseDouble(SNR_THRESHOLD);
 	}
 
 	public double getMinDistance() {
-		return parseDouble(iSBatchPreferences.DISTANCE_BETWEEN_PEAKS);
+		return Double.parseDouble(DISTANCE_BETWEEN_PEAKS);
 	}
 
 	public double getSelectionRadius() {
-		return parseDouble(iSBatchPreferences.SELECTION_RADIUS);
+		return Double.parseDouble(SELECTION_RADIUS);
 	}
 
-	public boolean getInsindeCells() {
-		return useCells;
+	public boolean performInsideCells() {
+		return performOperationInsideCells;
 	}
+
+	public boolean performDiscoidalFiltering() {
+		return useDiscoidal;
+	}
+
+	public String getINTENSITY_THRESHOLD() {
+		return INTENSITY_THRESHOLD;
+	}
+
+	public String getSNR_THRESHOLD() {
+		return SNR_THRESHOLD;
+	}
+
+	public String getDISTANCE_BETWEEN_PEAKS() {
+		return DISTANCE_BETWEEN_PEAKS;
+	}
+
+	public String getSELECTION_RADIUS() {
+		return SELECTION_RADIUS;
+	}
+
+	public String getINNER_RADIUS() {
+		return INNER_RADIUS;
+	}
+
+	public String getOUTER_RADIUS() {
+		return OUTER_RADIUS;
+	}
+
 }
