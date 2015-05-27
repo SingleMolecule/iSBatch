@@ -50,7 +50,7 @@ import model.OperationNode;
 import model.Root;
 import model.Sample;
 public class FitPeaksOperation implements Operation {
-	private PeakFitterGui dialog;
+	private FitPeaksOperationGUI dialog;
 	private String channel;
 	PeakFinder peakFinder;
 	RoiManager roiManager;
@@ -82,7 +82,7 @@ public class FitPeaksOperation implements Operation {
 
 	@Override
 	public boolean setup(Node node) {
-		dialog = new PeakFitterGui(node);
+		dialog = new FitPeaksOperationGUI(node);
 		if (dialog.isCanceled())
 			return false;
 		this.channel = dialog.getChannel();
@@ -411,7 +411,7 @@ public class FitPeaksOperation implements Operation {
 	}
 	public static void main(String[] args) {
 		DatabaseModel model = TreeGenerator.generate("e:/test", "e:/test", 2);
-		PeakFitterGui dialog = new PeakFitterGui(model.getRoot());
+		FitPeaksOperationGUI dialog = new FitPeaksOperationGUI(model.getRoot());
 		
 		System.out.println("Channel: "+ dialog.getChannel());
 		
