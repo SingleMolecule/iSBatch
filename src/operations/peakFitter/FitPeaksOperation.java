@@ -95,7 +95,6 @@ public class FitPeaksOperation implements Operation {
 		this.radius = Integer.parseInt(iSBatchPreferences.SELECTION_RADIUS);
 		NUMBER_OF_OPERATIONS = node.getNumberOfFoV();
 		currentCount = 1;
-		this.exportRaw = dialog.exportRaw();
 
 		return true;
 	}
@@ -423,7 +422,6 @@ public class FitPeaksOperation implements Operation {
 		
 		System.out.println("Discoidal: " + dialog.useDiscoidal);
 		System.out.println("Cells: " + dialog.useCells);
-		System.out.println("Export raw: " + dialog.exportRaw());
 		
 		
 		

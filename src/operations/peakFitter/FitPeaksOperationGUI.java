@@ -61,39 +61,6 @@ public class FitPeaksOperationGUI extends JDialog implements ActionListener {
 	private String customSearch;
 	private JButton btnCancel;
 	private JButton btnProcess;
-	private boolean exportRaw;
-	public String innerRadius = null;
-
-	public double getInnerRadius() {
-		return parseDouble(innerRadius);
-	}
-
-	private double parseDouble(String str) throws NumberFormatException {
-		double toReturn = 0;
-		if (!str.equalsIgnoreCase("") || !str.equals(null)) {
-			try {
-				toReturn = Double.parseDouble(str);
-			} catch (NumberFormatException ex) {
-				System.out.println("---- Debug --- ");
-				System.err.println("Ilegal input");
-				System.out.println("Illegal string: " + str + ".|||");
-				toReturn = 0;
-			}
-		}
-
-		return toReturn;
-	}
-
-	public String outerRadius = null;
-
-	public double getOuterRadius() {
-		return parseDouble(outerRadius);
-	}
-
-	public String SNRThreshold = null;
-	public String threshold = null;
-	public String minDistance = null;
-	public String selectionRadius = null;
 	private JComboBox<String> fileTypeComboBox;
 	private JComboBox<String> channelComboBox;
 	private static final long serialVersionUID = 1L;
@@ -103,51 +70,12 @@ public class FitPeaksOperationGUI extends JDialog implements ActionListener {
 	private boolean canceled = false;
 	static JFrame frame;
 	private Node node;
-	private String channel, method, imagePath;
+	private String channel, method;
 	public boolean useDiscoidal;
 	public boolean useCells;
 	protected String zScale;
 
-	public double getZScale() {
-		return parseDouble(zScale);
-	}
-
-	protected String errorSigmaY;
-
-	public double getErrorSigmaY() {
-		return parseDouble(errorSigmaY);
-	}
-
-	protected String errorSigmaX;
-
-	public double getErrorSigmaX() {
-		return parseDouble(errorSigmaX);
-	}
-
-	protected String errorY;
-
-	public double getErrorY() {
-		return parseDouble(errorY);
-	}
-
-	protected String errorX;
-
-	public double getErrorX() {
-		return parseDouble(errorX);
-	}
-
-	protected String errorHeight;
-
-	public double getErrorHeight() {
-		return parseDouble(errorHeight);
-	}
-
-	protected String errorBaseline;
 	private JTextField customSearchTxtField;
-
-	public double getErrorBaseline() {
-		return parseDouble(errorBaseline);
-	}
 
 	public FitPeaksOperationGUI(Node node) {
 		setModal(true);
@@ -317,17 +245,16 @@ public class FitPeaksOperationGUI extends JDialog implements ActionListener {
 			// Fix this duplication later.
 			this.useCells = chckbxInsideCells.isSelected();
 
-			run();
-			dispose();
-
-		} else if (e.getSource() == fileTypeComboBox) {
 			String foo = (String) fileTypeComboBox.getSelectedItem();
 			if (foo.equalsIgnoreCase("[File Type]")) {
-
 				this.imageType = null;
 			} else {
 				this.imageType = (String) fileTypeComboBox.getSelectedItem();
 			}
+			
+			run();
+			dispose();
+
 		}
 	}
 
@@ -339,14 +266,6 @@ public class FitPeaksOperationGUI extends JDialog implements ActionListener {
 		return method;
 	}
 
-	public String getImagePath() {
-		return imagePath;
-	}
-
-
-
-
-
 	public String getCustomSearch() {
 		return this.customSearch;
 	}
@@ -356,13 +275,8 @@ public class FitPeaksOperationGUI extends JDialog implements ActionListener {
 
 	}
 
-
 	public boolean useCells() {
 		return useCells;
-	}
-
-	public boolean exportRaw() {
-		return exportRaw;
 	}
 
 }

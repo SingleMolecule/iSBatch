@@ -98,7 +98,6 @@ public class PeakFitter2 implements Operation, PlugIn {
 
 		this.filenodes = node.getDescendents(new GenericFilter(channel, tags,
 				extention, customSearch));
-
 		run(null);
 		// }
 	}
@@ -140,24 +139,6 @@ public class PeakFitter2 implements Operation, PlugIn {
 
 	}
 
-	public static void main(String[] args) {
-		DatabaseModel model = TreeGenerator.generate("e:/test", "e:/test", 2);
-		FitPeaksOperationGUI dialog = new FitPeaksOperationGUI(model.getRoot());
-
-		System.out.println("Channel: " + dialog.getChannel());
-
-		System.out.println("Custom search: " + dialog.getCustomSearch());
-
-		for (String string : dialog.getTags()) {
-			System.out.println("Tag: " + string);
-		}
-
-		System.out.println("Discoidal: " + dialog.useDiscoidal);
-		System.out.println("Cells: " + dialog.useCells);
-		System.out.println("Export raw: " + dialog.exportRaw());
-
-	}
-
 	@Override
 	public Node[] getCreatedNodes() {
 		return null;
@@ -189,7 +170,9 @@ public class PeakFitter2 implements Operation, PlugIn {
 		for (int i = 0; i < size; i++) {
 			Node currentNode = filenodes.get(i);
 			ImagePlus imp = IJ.openImage(currentNode.getPath());
-
+			File f = new File(currentNode.getOutputFolder()+ File.separator + "PeakFitter");
+			f.mkdirs();
+			
 			if (i == 0) {
 				imp.show();
 				Recorder recorder = new Recorder(false);
@@ -206,7 +189,7 @@ public class PeakFitter2 implements Operation, PlugIn {
 			
 			
 			
-			String path = currentNode.getOutputFolder() + File.separator + currentNode.getChannel() + ".FittedPeaks.csv";
+			String path = f.getAbsolutePath()+ File.separator + currentNode.getChannel() + ".FittedPeaks.csv";
 			table = Analyzer.getResultsTable();
 			try {
 				table.saveAs(path);
@@ -224,12 +207,10 @@ public class PeakFitter2 implements Operation, PlugIn {
 				//Add property Channel_cellPeaks to the node
 				try {
 					System.out.println(path);
-					MultiFilter.getTableRowsInsideCells(currentNode, path);
+					MultiFilter.getTableRowsInsideCells(currentNode, path,f);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
 				
 			}
 			
@@ -240,4 +221,22 @@ public class PeakFitter2 implements Operation, PlugIn {
 		}
 
 	}
+	
+	public static void main(String[] args) {
+		DatabaseModel model = TreeGenerator.generate("e:/test", "e:/test", 2);
+		FitPeaksOperationGUI dialog = new FitPeaksOperationGUI(model.getRoot());
+
+		System.out.println("Channel: " + dialog.getChannel());
+
+		System.out.println("Custom search: " + dialog.getCustomSearch());
+
+		for (String string : dialog.getTags()) {
+			System.out.println("Tag: " + string);
+		}
+
+		System.out.println("Discoidal: " + dialog.useDiscoidal);
+		System.out.println("Cells: " + dialog.useCells);
+
+	}
+	
 }
