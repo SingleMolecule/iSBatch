@@ -167,4 +167,58 @@ public abstract class MultiFilter {
 		return col;
 	}
 
+	public static void getTableRowsInsideCells(Node currentNode, String path,
+			File f) throws NumberFormatException, IOException {
+		//load cell Rois
+				cellRoiManager = new RoiManager(true);
+				cellRoiManager.runCommand("Open", currentNode.getCellROIPath());
+				
+				CSVReader reader;
+				reader = new CSVReader(new FileReader(path));
+				String[] nextLine = null;
+				
+				
+				
+				String propertyName = currentNode.getChannel() + ".cellPeaks.csv";
+				String savedPath = f.getAbsolutePath() + File.separator + propertyName;
+				CSVWriter writer = new CSVWriter(new FileWriter(savedPath));
+				File file = new File(savedPath);
+				currentNode.getProperties().put(propertyName, savedPath);
+				
+				//get header
+				nextLine = reader.readNext();
+				int colX = getcolNumber(nextLine, "x");
+				int colY = getcolNumber(nextLine, "y");
+				if(colX==0 && colY==0){
+					System.out.println("X and Y not found");
+				}
+				
+				//write header with extras
+						String[] ouputHeader = getOutputHeader(nextLine);
+						writer.writeNext(ouputHeader);
+						
+						System.out.println(ouputHeader[4]);
+						int cellCollum = getcolNumber(ouputHeader, "cellRoi");
+						
+						while ((nextLine = reader.readNext()) != null) {
+//							System.out.println(nextLine[0] + "| "  + nextLine[colX] + " " + nextLine[colY]);
+							
+							Hashtable<String, Roi> tableRoi = (Hashtable<String, Roi>) cellRoiManager.getROIs();
+							for (String label : tableRoi.keySet()) {
+								Roi roi = tableRoi.get(label);
+								int x =  (int) Math.round(Double.parseDouble(nextLine[colX]));
+								int y =  (int) Math.round(Double.parseDouble(nextLine[colY]));
+								if(roi.contains(x, y)){
+									String[] rowOutput = addCols(nextLine,1);
+									rowOutput[cellCollum] = label;
+									writer.writeNext(rowOutput);
+								}
+							}
+							
+						}
+				writer.close();
+						
+		
+	}
+
 }
