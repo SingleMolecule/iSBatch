@@ -108,6 +108,12 @@ public class LogPanel extends JPanel implements ActionListener {
 		panel.listModel.add(0, ts + " | "+ str);
 	}
 	
+
+	public static void log(int integer) {
+		log(Integer.toString(integer));
+	}
+	
+	
 	/**
 	 * Save.
 	 *
@@ -132,5 +138,6 @@ public class LogPanel extends JPanel implements ActionListener {
 		}
 		
 	}
+
 	
 }
