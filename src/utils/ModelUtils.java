@@ -70,6 +70,12 @@ public abstract class ModelUtils {
 		});
 		return fileNodes;
 	}
+
+	//Applying Clean code strategies. 
+	public static ComboBoxModel<String> getUniqueChannelsFromDatabase(Node node) {
+		//This function getUniqueChannels will be deprecated in the next iteration.
+		return getUniqueChannels(node);
+	}
 	
 	
 	
