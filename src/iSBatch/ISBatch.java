@@ -24,7 +24,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.io.File;
 import java.io.IOException;
@@ -70,6 +69,7 @@ import operations.locationMaps.LocationMaps;
 import operations.microbeTrackerIO.MicrobeTrackerIO;
 import operations.peakFinder.FindPeaksOperation;
 import operations.peakFitter.FitPeaksOperation;
+import operations.peakFitter.PeakFitter2;
 
 public class ISBatch implements TreeSelectionListener {
 	/*
@@ -471,9 +471,8 @@ public class ISBatch implements TreeSelectionListener {
 				}
 				
 			}
-
 			private void mySingleClick(int selRow, TreePath pathForLocation) {
-				System.out.println("Single click");
+				System.out.println("A single click won't do anything");
 				
 			} 
 		};
@@ -528,15 +527,16 @@ public class ISBatch implements TreeSelectionListener {
 
 				new SetBackGround(treeModel), new FlattenOperation(treeModel),
 				new MicrobeTrackerIO(treeModel), new CellOutlines(treeModel),
-				new FindPeaksOperation(treeModel),
-				new FitPeaksOperation(treeModel),
+				new FindPeaksOperation(),
+				new PeakFitter2(),
 				new MacroOperation(treeModel),
 				new CellularConcentration(treeModel),
 				new CellIntensity(treeModel), new FocusLifetimes(treeModel),
 				new Tracking(treeModel), new DiffusioOperation(treeModel),
 				new LocationMaps(treeModel), new ChangePoint(treeModel),
 				// new DebugProperties(treeModel),
-				new FilterTestOperation(treeModel), };
+				new FilterTestOperation(treeModel),
+				};
 	}
 
 	@Override
