@@ -1,6 +1,3 @@
-/*
- * 
- */
 package operations.tracking;
 
 import ij.IJ;
@@ -35,73 +32,27 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class TrackingGUI.
- */
 public class TrackingGUI extends JDialog implements ActionListener {
-	
-	/** The look ahead. */
 	private String lookAhead;
-	
-	/** The btn cancel. */
 	private JButton btnCancel;
-	
-	/** The btn process. */
 	private JButton btnProcess;
-
-	// ComboBox
-	/** The file type combo box. */
 	private JComboBox<String> fileTypeComboBox;
-	
-	/** The channel combo box. */
 	private JComboBox<String> channelComboBox;
-	
-	/** The method combo box. */
 	private JComboBox<String> methodComboBox;
-
-	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
-	
-	/** The channels. */
 	private String[] channels = new String[] {
 
 	"[Select Channel]", "All", "Acquisition", "Bright Field", "Red", "Green",
 			"Blue", };
 
-	/** The Constant methods. */
 	private static final String[] methods = { "[Method]", "Average Images" };
-	
-	/** The types. */
 	private String[] types = new String[] { "[File Type]", "Raw", "Flat"};
-
-	/** The custom search txt field. */
 	private JTextField customSearchTxtField;
-
-	/** The canceled. */
 	private boolean canceled = false;
-
-	/** The frame. */
 	static JFrame frame;
-	
-	/** The node. */
 	private Node node;
-	
-	/** The image path. */
 	private String channel, method, imagePath;
-	
-	/** The max steps. */
 	protected String maxSteps;
-
-	/*
-	 * Filter variables
-	 */
-
-	/**
-	 * Instantiates a new tracking gui.
-	 *
-	 * @param node the node
-	 */
 	public TrackingGUI(Node node) {
 		setModal(true);
 		setTitle("Focus Lifetimes");
@@ -110,18 +61,11 @@ public class TrackingGUI extends JDialog implements ActionListener {
 
 		setup();
 		display();
-
 	}
 
-	/**
-	 * Setup.
-	 */
 	private void setup() {
 	}
 
-	/**
-	 * Display.
-	 */
 	private void display() {
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -250,9 +194,6 @@ public class TrackingGUI extends JDialog implements ActionListener {
 		getContentPane().add(LookAheadtextField, gbc_LookAheadtextField);
 		LookAheadtextField.setColumns(10);
 		LookAheadtextField.addKeyListener(new KeyAdapter() {
-			
-
-			
 
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -284,7 +225,6 @@ public class TrackingGUI extends JDialog implements ActionListener {
 		getContentPane().add(maxStepTextField, gbc_maxStepTextField);
 		maxStepTextField.setColumns(10);
 		maxStepTextField.addKeyListener(new KeyAdapter() {
-			
 
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -319,76 +259,31 @@ public class TrackingGUI extends JDialog implements ActionListener {
 		setVisible(true);
 
 	}
-
-	/**
-	 * Run.
-	 */
 	private void run() {
-		//
-		// // get array of Images
-		// ArrayList<Node> images = node.getDescendents(imageFileNodeFilter);
-
 	}
 
-	/**
-	 * The main method.
-	 *
-	 * @param args the arguments
-	 */
 	public static void main(String[] args) {
 		frame = new JFrame();
-
 		new TrackingGUI(null);
-
 	}
 
-	/**
-	 * Error.
-	 *
-	 * @param msg the msg
-	 */
 	void error(String msg) {
 		IJ.error("Batch Processor", msg);
 	}
-
-	/**
-	 * Checks if is canceled.
-	 *
-	 * @return true, if is canceled
-	 */
+	
 	public boolean isCanceled() {
 		return canceled;
 	}
 
-	/** The image type. */
 	private String imageType = null;
-	
-	/** The custom search. */
 	private String customSearch;
-	
-	/** The lbl look ahead. */
 	private JLabel lblLookAhead;
-	
-	/** The Look aheadtext field. */
 	private JTextField LookAheadtextField;
-	
-	/** The lbl slices. */
 	private JLabel lblSlices;
-	
-	/** The lbl max step size. */
 	private JLabel lblMaxStepSize;
-	
-	/** The max step text field. */
 	private JTextField maxStepTextField;
-	
-	/** The lbl pixels. */
 	private JLabel lblPixels;
 
-	/**
-	 * Action performed.
-	 *
-	 * @param e the e
-	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnCancel) {
@@ -431,51 +326,23 @@ public class TrackingGUI extends JDialog implements ActionListener {
 		}
 	}
 
-	/**
-	 * Gets the channel.
-	 *
-	 * @return the channel
-	 */
 	public String getChannel() {
 		return channel;
 	}
-
-	/**
-	 * Gets the method.
-	 *
-	 * @return the method
-	 */
 	public String getMethod() {
 		return method;
 	}
-
-	/**
-	 * Gets the image path.
-	 *
-	 * @return the image path
-	 */
 	public String getImagePath() {
 		return imagePath;
 	}
 
-	/**
-	 * Gets the image tag.
-	 *
-	 * @return the image tag
-	 */
 	public String getImageTag() {
 		return imageType;
 	}
 
-	/**
-	 * Gets the tags.
-	 *
-	 * @return the tags
-	 */
 	public ArrayList<String> getTags() {
 		ArrayList<String> container = new ArrayList<String>();
 		if (imageType != null) {
-			
 
 			List<String> list = Arrays.asList(imageType.split("\\s*,\\s*"));
 			for (String foo : list) {
@@ -483,57 +350,27 @@ public class TrackingGUI extends JDialog implements ActionListener {
 			}
 			return container;
 		}
-
 		else
-			
 			return container;
-
 	}
 
-	/**
-	 * Gets the extention.
-	 *
-	 * @return the extention
-	 */
 	public String getExtention() {
 		return method;
 	}
 
-	/**
-	 * Gets the custom.
-	 *
-	 * @return the custom
-	 */
 	public String getCustom() {
 		return imagePath;
 	}
-	
-	/**
-	 * Gets the custom search.
-	 *
-	 * @return the custom search
-	 */
+
 	public String getCustomSearch() {
 		return this.customSearch;
 	}
 	
-	/**
-	 * Gets the look ahead.
-	 *
-	 * @return the look ahead
-	 */
 	public int getLookAhead(){
 		return Integer.parseInt(lookAhead);
 	}
 	
-	/**
-	 * Gets the max step size.
-	 *
-	 * @return the max step size
-	 */
 	public int getMaxStepSize(){
 		return Integer.parseInt(maxSteps);
 	}
-	
-	
 }
