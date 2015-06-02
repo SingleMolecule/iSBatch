@@ -68,18 +68,10 @@ import operations.flatImages.SetBackGround;
 import operations.locationMaps.LocationMaps;
 import operations.microbeTrackerIO.MicrobeTrackerIO;
 import operations.peakFinder.FindPeaksOperation;
-import operations.peakFitter.FitPeaksOperation;
 import operations.peakFitter.PeakFitter2;
 
 public class ISBatch implements TreeSelectionListener {
-	/*
-	 * Current version:
-	 */
 	String version = "v0.3-beta";
-	
-	
-	
-
 	private static ISBatch instance;
 
 	private Database database;
@@ -440,11 +432,9 @@ public class ISBatch implements TreeSelectionListener {
 						selectedNode = (Node) pathForLocation
 								.getLastPathComponent();
 						
-						
 					} else {
 						selectedNode = null;
 					}
-
 				}
 				
 				else if(e.getButton()==MouseEvent.BUTTON1){
@@ -454,9 +444,6 @@ public class ISBatch implements TreeSelectionListener {
 			            else if(e.getClickCount() == 2) {
 			                myDoubleClick(selRow, pathForLocation);
 			            }
-					
-					
-					
 				}
 				super.mousePressed(e);
 			}
@@ -469,12 +456,11 @@ public class ISBatch implements TreeSelectionListener {
 					
 					IJ.open(selectedNode.getPath());
 				}
-				
 			}
-			private void mySingleClick(int selRow, TreePath pathForLocation) {
-				System.out.println("A single click won't do anything");
-				
-			} 
+//			private void mySingleClick(int selRow, TreePath pathForLocation) {
+//				System.out.println("A single click won't do anything");
+//				
+//			} 
 		};
 	}
 
@@ -491,12 +477,9 @@ public class ISBatch implements TreeSelectionListener {
 				} else {
 					if (selRow > 0) {
 						path = tree.getPathForLocation(e.getX(), e.getY());
-
 					}
 				}
-
 				tree.repaint();
-
 			}
 		};
 
@@ -508,12 +491,36 @@ public class ISBatch implements TreeSelectionListener {
 		JMenuItem item = new JMenuItem("Open cell roi");
 		item.addActionListener(getEditActionListener());
 		menu.add(item);
-
+		
+		JMenuItem item3 = new JMenuItem("Open support Rois");
+		item3.addActionListener(getEditActionListener2());
+		menu.add(item3);
+		
 		JMenuItem item2 = new JMenuItem("Run Macro ...");
 		item2.addActionListener(getRunMacroActionListener());
 		menu.add(item2);
 
 		return menu;
+	}
+
+	private ActionListener getEditActionListener2() {
+		return new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if (selectedNode.getType().equalsIgnoreCase("File")) {
+					String path = selectedNode.getProperty("supportRoi");
+					if(path!=null){
+						RoiManager manager = RoiManager.getInstance();
+						if(manager==null){
+							manager = new RoiManager();
+						}
+						manager.runCommand("Open", selectedNode.getProperty("supportRoi"));
+					//System.out.println("pressed " + selectedNode);
+					}
+				}
+			}
+		};
 	}
 
 	public Operation[] getTreeOperations() {
@@ -531,11 +538,13 @@ public class ISBatch implements TreeSelectionListener {
 				new PeakFitter2(),
 				new MacroOperation(treeModel),
 				new CellularConcentration(treeModel),
-				new CellIntensity(treeModel), new FocusLifetimes(treeModel),
-				new Tracking(treeModel), new DiffusioOperation(treeModel),
+				new CellIntensity(treeModel), 
+				new FocusLifetimes(treeModel),
+				new Tracking(treeModel),
+				new DiffusioOperation(treeModel),
 				new LocationMaps(treeModel), new ChangePoint(treeModel),
-				// new DebugProperties(treeModel),
-				new FilterTestOperation(treeModel),
+				new DebugProperties(treeModel),
+//				new FilterTestOperation(treeModel),
 				};
 	}
 

@@ -2,12 +2,15 @@ package operations.tracking;
 
 import ij.IJ;
 import ij.ImagePlus;
+import ij.WindowManager;
 import ij.measure.ResultsTable;
 import ij.plugin.PlugIn;
+import ij.plugin.filter.Analyzer;
 import ij.plugin.frame.Recorder;
 import ij.plugin.frame.RoiManager;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -104,48 +107,47 @@ public class Tracking implements Operation, PlugIn {
 	public void run(String arg0) {
 		IJUtils.emptyAll();
 		RoiManager manager = new RoiManager(true);
-		ResultsTable table;
-		String pluginName = "Peak Finder";
+		ResultsTable table = null;
+		String pluginName = "Particle Tracker";
 		String arguments = "";
 		int size = filenodes.size();
 
 		for (int i = 0; i < size; i++) {
 			int currentcount = i+1;
 			LogPanel.log("Measuring on file " + currentcount + " of " + size);
+			
 			Node currentNode = filenodes.get(i);
-			ImagePlus imp = IJ.openImage(currentNode.getPath());
-			//Get Average Projection
-			ImagePlus projection  = Projections.doAverageProjection(imp);
 			
 			File f = new File(currentNode.getOutputFolder() + File.separator
 					+ "Tracking");
 			f.mkdirs();
+			String pathToTable = currentNode.getProperty("fitted peaks");
+			
+			// get table with peaks
+			//For now, get it directly. But a propergui has to be made
+			IJ.open(pathToTable);
+			
 			if (i == 0) {
 				
-				projection.show();
 				Recorder recorder = new Recorder(false);
 				Recorder.record = true;
 				Recorder.recordInMacros = true;
-				IJ.run(projection, pluginName, arguments);
+				IJ.run(pluginName, arguments);
 				String command = recorder.getText();
 				recorder.close();
 				arguments = StringOperations.getArguments(pluginName, command);
-				projection.close();
 			}
 			else{
-				IJ.run(projection, pluginName, arguments);
+				IJ.run(pluginName, arguments);
 			}
 			
-			
 			manager = RoiManager.getInstance();
-			manager.runCommand("Save", f.getAbsolutePath() + File.separator + "traceSeeds.zip");
+			manager.runCommand("Save", f.getAbsolutePath() + File.separator + "tracks.zip");
 			
-			IJ.run(imp, "Select All", "");
-			table = manager.multiMeasure(imp);
-			
+			table = Analyzer.getResultsTable();
 			String path = f.getAbsolutePath() + File.separator
 					+ currentNode.getChannel() + currentNode.getName()
-					+ ".traces.csv";
+					+ ".tracks.csv";
 			table.save(path);
 			table.reset();
 			manager.close();

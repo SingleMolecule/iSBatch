@@ -13,6 +13,7 @@ package gui;
  *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ***********************************************************************/
 
+import filters.GenericFilter;
 import ij.IJ;
 
 import javax.swing.JDialog;
@@ -65,7 +66,7 @@ public class FileSelectionDialog extends JDialog implements ActionListener {
 	private JComboBox<String> fileTypeComboBox;
 	private JComboBox<String> channelComboBox;
 	private static final long serialVersionUID = 1L;
-
+	private ArrayList<Node> filenodes;
 	private String[] types = new String[] { "[File Type]", "Raw", "Flat",
 			"Discoidal" };
 	private boolean canceled = false;
@@ -257,6 +258,7 @@ public class FileSelectionDialog extends JDialog implements ActionListener {
 				canceled = true;
 				dispose();
 			}
+			
 			customSearch = customSearchTxtField.getText();
 			// Fix this duplication later.
 			this.useCells = chckbxInsideCells.isSelected();
@@ -267,10 +269,14 @@ public class FileSelectionDialog extends JDialog implements ActionListener {
 			} else {
 				this.imageType = (String) fileTypeComboBox.getSelectedItem();
 			}
-
+			setFilenodes();
+			if(filenodes.size()==0){
+				LogPanel.log("Nothing detected with the current parameters.");
+				canceled = true;
+				dispose();
+			}
 			run();
 			dispose();
-
 		}
 	}
 
@@ -295,4 +301,11 @@ public class FileSelectionDialog extends JDialog implements ActionListener {
 		return useCells;
 	}
 
+	public  ArrayList<Node> getFileNodes(){
+		return filenodes;
+	}
+	
+	private void setFilenodes(){
+		this.filenodes = node.getDescendents(new GenericFilter(getChannel(), getTags(), null, getCustomSearch()));
+	}
 }

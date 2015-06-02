@@ -144,7 +144,7 @@ public class FindPeaksGui extends JDialog implements ActionListener {
 	private String OUTER_RADIUS;
 
 	public FindPeaksGui(Node node) {
-		setModal(true);
+		setModal(false);
 		setTitle("Find Peaks");
 		frame = new JFrame("Find Peaks");
 		this.node = node;
