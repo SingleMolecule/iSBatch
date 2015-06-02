@@ -1,6 +1,3 @@
-/*
- * 
- */
 package analysis;
 
 import java.awt.AWTEvent;

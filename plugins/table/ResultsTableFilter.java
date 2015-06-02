@@ -18,25 +18,13 @@ import ij.plugin.filter.Analyzer;
  * The Class ResultsTableFilter.
  */
 public class ResultsTableFilter implements PlugIn, DialogListener {
-	
-	/** The table. */
 	private ResultsTable table;
-	
-	/** The columns. */
 	private String[] columns;
-	
-	/** The column. */
 	private String column;
-	
-	/** The column index. */
 	private int columnIndex = 0;
-	
-	/** The min. */
 	private double min = 0;
-	
-	/** The max. */
 	private double max = 1;
-	
+
 	/**
 	 * Instantiates a new results table filter.
 	 */
