@@ -185,7 +185,9 @@ public class MacroDialog2 extends JDialog implements ActionListener, Runnable {
 		gbc.gridx = 0;
 		gbc.gridy++;
 		gbc.gridwidth = 4;
+		gbc.ipady = 100;
 		add(new JScrollPane(macroTextPane), gbc);
+		gbc.ipady = 0;
 
 		gbc.gridx = 0;
 		gbc.gridy++;

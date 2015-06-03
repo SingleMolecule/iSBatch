@@ -37,7 +37,7 @@ import model.OperationNode;
 import model.Root;
 import model.Sample;
 import operations.Operation;
-import operations.peakFitter.PeakFitterGui;
+//import operations.peakFitter.PeakFitterGui;
 import process.DiscoidalAveragingFilter;
 
 // TODO: Auto-generated Javadoc

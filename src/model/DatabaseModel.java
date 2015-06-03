@@ -108,6 +108,10 @@ public class DatabaseModel implements TreeModel {
 	 */
 	public void setRoot(Node root) {
 		this.root = root;
+		
+		// notify listeners that the root has been changed
+		for (TreeModelListener l : listeners)
+			l.treeStructureChanged(new TreeModelEvent(this, getPathToRoot(root)));
 	}
 
 	/**
@@ -167,7 +171,7 @@ public class DatabaseModel implements TreeModel {
 	 * @param child the child
 	 */
 	public void removeNode(Node parent, Node child) {
-		parent.getChildren().add(child);
+		parent.getChildren().remove(child);
 
 		for (TreeModelListener l : listeners) {
 			l.treeNodesRemoved(new TreeModelEvent(this, getPathToRoot(parent),
@@ -176,7 +180,7 @@ public class DatabaseModel implements TreeModel {
 		}
 
 	}
-
+	
 	/**
 	 * Gets the path to root.
 	 *
@@ -199,7 +203,8 @@ public class DatabaseModel implements TreeModel {
 	 */
 	public void nodeChanged(TreeNode lastPathComponent) {
 		// TODO Auto-generated method stub
-
 	}
+	
+	
 
 }
