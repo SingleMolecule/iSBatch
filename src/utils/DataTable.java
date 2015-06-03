@@ -9,8 +9,7 @@ import java.io.IOException;
 
 import au.com.bytecode.opencsv.CSVReader;
 
-
-public class DataTable  {
+public class DataTable {
 	private CSVReader reader;
 	private String[] headers;
 	private int cols = 0, rows = 0;
@@ -27,21 +26,12 @@ public class DataTable  {
 		for (String string : table.getHeader()) {
 			System.out.println(string);
 		}
-		
-		
-		ResultsTable table3 = new ResultsTable();
-		try {
-			table3.open(f.getAbsolutePath());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		
+
+		ResultsTable table3 = table.getResultsTable();
+		table3.save("D:\\ImageTest\\Output.csv");
 	}
 
-	public DataTable(String path){
+	public DataTable(String path) {
 		try {
 			this.reader = new CSVReader(new FileReader(path));
 		} catch (FileNotFoundException e) {
@@ -82,7 +72,7 @@ public class DataTable  {
 		return 0;
 	}
 
-	public ResultsTable getResultsTable()  {
+	public ResultsTable getResultsTable() {
 		String[] nextLine;
 		ResultsTable table = new ResultsTable();
 		try {
@@ -98,33 +88,25 @@ public class DataTable  {
 		return null;
 	}
 
-	public String[][] getTableMatrix() throws IOException  {
-		
+	public String[][] getTableMatrix() throws IOException {
+
 		String[][] matrix = new String[getNumberOfRows()][getNumberOfCols()];
-		//add header
-		for(int i = 0; i<this.cols; i++){
+		// add header
+		for (int i = 0; i < this.cols; i++) {
 			matrix[i][0] = headers[i];
 		}
-		// add the rest
-		
-		
-		for(int j = 1; j<cols; j++){
+
+		for (int j = 1; j < cols; j++) {
 			String[] currentRow = reader.readNext();
-			for(int i = 0; i<this.cols; i++){
+			for (int i = 0; i < this.cols; i++) {
 				matrix[i][j] = currentRow[i];
 			}
 		}
-		
-		
-		
-		
-		
-		
 		return matrix;
 	}
 
-	public int getNumberOfRows()  {
-		if(rows==0){
+	public int getNumberOfRows() {
+		if (rows == 0) {
 			int counter = 0;
 			try {
 				while ((reader.readNext()) != null) {
@@ -142,6 +124,4 @@ public class DataTable  {
 	public int getNumberOfCols() {
 		return getHeader().length;
 	}
-
-
 }

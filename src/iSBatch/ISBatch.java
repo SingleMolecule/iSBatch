@@ -531,7 +531,7 @@ public class ISBatch implements TreeSelectionListener {
 	public Operation[] getOperations() {
 		return new Operation[] {
 				// new MacroOperation2(frame, treeModel),
-
+				new DebugProperties(treeModel),
 				new SetBackGround(treeModel), new FlattenOperation(treeModel),
 				new MicrobeTrackerIO(treeModel), new CellOutlines(treeModel),
 				new FindPeaksOperation(),
@@ -543,7 +543,7 @@ public class ISBatch implements TreeSelectionListener {
 				new Tracking(treeModel),
 				new DiffusioOperation(treeModel),
 				new LocationMaps(treeModel), new ChangePoint(treeModel),
-				new DebugProperties(treeModel),
+				
 //				new FilterTestOperation(treeModel),
 				};
 	}
