@@ -25,6 +25,8 @@ import operations.Operation;
 import utils.IJUtils;
 import utils.Projections;
 import utils.StringOperations;
+//import operations.peakFitter.PeakFitterGui;
+import process.DiscoidalAveragingFilter;
 
 public class FocusLifetimes implements Operation, PlugIn {
 	private FileSelectionDialog dialog;

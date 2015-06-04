@@ -211,7 +211,13 @@ public class ISBatch implements TreeSelectionListener {
 					return;
 				else{
 					
-					startProcess();
+					try {
+						loadDatabase(database);
+					} catch (SqlJetException e) {
+						e.printStackTrace();
+					}
+					
+					//startProcess();
 				}
 			}
 		});
@@ -659,6 +665,18 @@ public class ISBatch implements TreeSelectionListener {
 		// load preferences
 		iSBatchPreferences.loadPreferences(treeModel.getRoot());
 
+	}
+	
+	public void loadDatabase(Database database) throws SqlJetException {
+		
+		if (treeModel == null)
+			treeModel = new DatabaseModel(database.getRoot());
+		else
+			treeModel.setRoot(database.getRoot());
+		
+		
+		
+		
 	}
 
 }

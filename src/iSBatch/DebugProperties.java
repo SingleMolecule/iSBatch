@@ -32,6 +32,7 @@ import model.OperationNode;
 import model.Root;
 import model.Sample;
 import operations.Operation;
+import operations.microbeTrackerIO.Point2;
 
 public class DebugProperties implements Operation, PlugIn {
 
@@ -111,88 +112,125 @@ public class DebugProperties implements Operation, PlugIn {
 
 		IJ.open("D:\\ImageTest\\green.csv");
 		IJ.run("Results Sorter", "column=slice group=[no grouping] ascending");
-		
-//		WindowManager.
-//		IJ.renameResults("green");
+
+		// WindowManager.
+		// IJ.renameResults("green");
 		ResultsTable green = ResultsTable.getResultsTable();
-//
+		//
 		IJ.open("D:\\ImageTest\\red.csv");
 		IJ.run("Results Sorter", "column=slice group=[no grouping] ascending");
-//		IJ.renameResults("red");
+		// IJ.renameResults("red");
 		ResultsTable red = Analyzer.getResultsTable();
 
-//		for (String string : WindowManager.getImageTitles()) {
-//			LogPanel.log(string);
-//		}
-//
-//		for (String string : WindowManager.getNonImageTitles()) {
-//			LogPanel.log(string);
-//		}
-		
-		
-		for (int i = 1; i <= green.getCounter(); i++) {
+		// for (String string : WindowManager.getImageTitles()) {
+		// LogPanel.log(string);
+		// }
+		//
+		// for (String string : WindowManager.getNonImageTitles()) {
+		// LogPanel.log(string);
+		// }
+
+		LogPanel.log(green.getCounter());
+		for (String string : green.getHeadings()) {
+			LogPanel.log(string);
+		}
+		;
+
+		// for(int i = 0; i<green.getCounter(); i++){
+
+		for (int i = 0; i < green.getCounter(); i++) {
+			LogPanel.log(i);
+			LogPanel.log(green.getValue("x", i));
+
 			double x = green.getValue("x", i);
 			double y = green.getValue("y", i);
 			double slice = green.getValue("slice", i);
-			operations.microbeTrackerIO.Point p = new operations.microbeTrackerIO.Point(
-					x, y);
+			Point2 p = new Point2(x, y);
 
-			
 			LogPanel.log(x);
-//			ResultsTable peaks = getSubTable(red, "slice", slice);
-//			peaks.save("D:\\ImageTest\\green_" + slice + ".csv");
-//			for (int j = 0; j < red.getCounter(); j++) {
-//				double dslice = red.getValue("slice", j);
-//				
-//				if (dslice == slice) {
-//					double dx = red.getValue("x", j);
-//					double dy = red.getValue("y", j);
-//					operations.microbeTrackerIO.Point p2 = new operations.microbeTrackerIO.Point(
-//							x, y);
-//
-//					double distance = p.distanceTo(p2);
-//					if (distance <= minDistance) {
-//						green.setValue("distance", i, distance);
-//						green.setValue("x2", i, dx);
-//						green.setValue("y2", i, dy);
-//					} else {
-//
-//						green.setValue("distance", i, -1);
-//						green.setValue("x2", i, 0);
-//						green.setValue("y2", i, 0);
-//					}
-//				}
-//			}
+
+			// get Closest peak
+			Point2 closest = getClosestPoint(p, getSubTable(red, "slice", slice));
+			
+			if(p.distanceTo(closest)<=minDistance){
+				green.setValue("distance", i, p.distanceTo(closest));
+				green.setValue("x2", i, closest.x);
+				green.setValue("y2", i, closest.y);
+				green.setValue("distance2", i, p.distanceTo(closest));
+			}
+			else{
+				green.setValue("distance", i, -1);
+				green.setValue("x2", i, closest.x);
+				green.setValue("y2", i, closest.y);
+				green.setValue("distance2", i, p.distanceTo(closest));
+			}
 		}
 
 		green.save("D:\\ImageTest\\greenColoS.csv");
+		
+		LogPanel.log("Done");
 
 	}
 
+	private Point2 getClosestPoint(Point2 p,
+			ResultsTable currentComparableTable) {
+		
+		Point2 p3 = new Point2(0, 0);
+		double distance = 0;
+		for (int j = 0; j < currentComparableTable.getCounter(); j++) {
+				double dx = currentComparableTable.getValue("x", j);
+				double dy = currentComparableTable.getValue("y", j);
+				Point2 p2 = new Point2(dx, dy);
+				LogPanel.log("Point "+ dx + " | " + dy);
+				
+				//calculate distance
+				double currentDistance = p.distanceTo(p2);
+				LogPanel.log(currentDistance);
+
+				if(j==0){
+					distance = currentDistance;
+					p3 = p2;
+				}
+				else if (currentDistance<distance){
+					distance = currentDistance;
+					p3 = p2;
+				}
+			}
+		return p3;
+		}
+		
+
 	/**
-	 * This method returns a ResultsTable containing only the rows with the selected filter.
+	 * This method returns a ResultsTable containing only the rows with the
+	 * selected filter.
 	 *
-	 * @param table ResultsTable to be filtered
-	 * @param colName Column name to get the value from
-	 * @param value Condition to match for filtering. 
+	 * @param table
+	 *            ResultsTable to be filtered
+	 * @param colName
+	 *            Column name to get the value from
+	 * @param value
+	 *            Condition to match for filtering.
 	 * @return A new ResultsTable
 	 */
-//	public static ResultsTable getSubTable(ResultsTable table, String colName, double value){
-//		ResultsTable results = new ResultsTable();
-//		results.incrementCounter();
-//		LogPanel.log(table.getCounter());
-//		for (int i=0; i<=table.getCounter(); i++){
-//			if(table.getValue(colName, i)==value){
-//				//add to the new table.
-//				//
-//				for(String string : table.getHeadings()){
-//					double currentValue = table.getValue(string, i);
-//					results.addValue(string, currentValue);
-//				}
-//			results.incrementCounter();
-//			}
-//		}
-//		return results;
-//	}
-	
+	public static ResultsTable getSubTable(ResultsTable table, String colName,
+			double value) {
+		ResultsTable results = new ResultsTable();
+		// results.incrementCounter();
+		LogPanel.log(table.getCounter());
+
+		for (int i = 0; i < table.getCounter(); i++) {
+
+			if (table.getValue(colName, i) == value) {
+				// add to the new table.
+				results.incrementCounter();
+				for (String string : table.getHeadings()) {
+					double currentValue = table.getValue(string, i);
+					results.addValue(string, currentValue);
+				}
+				// results.incrementCounter();
+			}
+		}
+		return results;
+	}
+
 }

@@ -43,8 +43,10 @@ public abstract class StringOperations {
 
 		// LogPanel.log(allMatches.size());
 
-		if (allMatches.get(0).equalsIgnoreCase(pluginName)) {
-			arguments = allMatches.get(1);
+		if (allMatches.size() > 0) {
+			if (allMatches.get(0).equalsIgnoreCase(pluginName)) {
+				arguments = allMatches.get(1);
+			}
 		}
 
 		return arguments;

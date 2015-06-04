@@ -51,12 +51,13 @@ public class ChannelsDialog extends JDialog implements ActionListener {
 	 */
 	public ChannelsDialog(JFrame parent, File folder) {
 		super(parent, "Database", true);
-
+		setResizable(false);
+		
 		this.folder = folder;
 
 		JPanel centerPanel = new JPanel(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
-
+		
 		searchButton.addActionListener(this);
 
 		gbc.insets = new Insets(5, 5, 5, 5);
