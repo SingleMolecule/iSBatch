@@ -72,7 +72,7 @@ import operations.peakFinder.FindPeaksOperation;
 import operations.peakFitter.PeakFitter2;
 
 public class ISBatch implements TreeSelectionListener {
-	String version = "v0.3-beta";
+	String version = "v0.3.1-beta";
 	private static ISBatch instance;
 
 	private Database database;
