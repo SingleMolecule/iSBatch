@@ -51,6 +51,7 @@ import macros.MacroOperation;
 import model.Database;
 import model.DatabaseModel;
 import model.Node;
+import model.PropertiesTable;
 import model.parameters.NodeType;
 import context.ContextHandler;
 import operations.AddNodeOperation;
@@ -506,7 +507,21 @@ public class ISBatch implements TreeSelectionListener {
 		item2.addActionListener(getRunMacroActionListener());
 		menu.add(item2);
 
+		JMenuItem item4= new JMenuItem("Properties");
+		item4.addActionListener(displayProperties());
+		menu.add(item4);
+		
 		return menu;
+	}
+
+	private ActionListener displayProperties() {
+		return new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				new PropertiesTable(selectedNode);
+			}
+		};
 	}
 
 	private ActionListener getEditActionListener2() {
