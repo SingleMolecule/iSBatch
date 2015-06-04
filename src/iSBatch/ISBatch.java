@@ -51,6 +51,7 @@ import macros.MacroOperation;
 import model.Database;
 import model.DatabaseModel;
 import model.Node;
+import model.PropertiesTable;
 import model.parameters.NodeType;
 import context.ContextHandler;
 import operations.AddNodeOperation;
@@ -68,18 +69,10 @@ import operations.flatImages.SetBackGround;
 import operations.locationMaps.LocationMaps;
 import operations.microbeTrackerIO.MicrobeTrackerIO;
 import operations.peakFinder.FindPeaksOperation;
-import operations.peakFitter.FitPeaksOperation;
 import operations.peakFitter.PeakFitter2;
 
 public class ISBatch implements TreeSelectionListener {
-	/*
-	 * Current version:
-	 */
 	String version = "v0.3-beta";
-	
-	
-	
-
 	private static ISBatch instance;
 
 	private Database database;
@@ -446,11 +439,9 @@ public class ISBatch implements TreeSelectionListener {
 						selectedNode = (Node) pathForLocation
 								.getLastPathComponent();
 						
-						
 					} else {
 						selectedNode = null;
 					}
-
 				}
 				
 				else if(e.getButton()==MouseEvent.BUTTON1){
@@ -460,9 +451,6 @@ public class ISBatch implements TreeSelectionListener {
 			            else if(e.getClickCount() == 2) {
 			                myDoubleClick(selRow, pathForLocation);
 			            }
-					
-					
-					
 				}
 				super.mousePressed(e);
 			}
@@ -475,12 +463,11 @@ public class ISBatch implements TreeSelectionListener {
 					
 					IJ.open(selectedNode.getPath());
 				}
-				
 			}
-			private void mySingleClick(int selRow, TreePath pathForLocation) {
-				System.out.println("A single click won't do anything");
-				
-			} 
+//			private void mySingleClick(int selRow, TreePath pathForLocation) {
+//				System.out.println("A single click won't do anything");
+//				
+//			} 
 		};
 	}
 
@@ -497,12 +484,9 @@ public class ISBatch implements TreeSelectionListener {
 				} else {
 					if (selRow > 0) {
 						path = tree.getPathForLocation(e.getX(), e.getY());
-
 					}
 				}
-
 				tree.repaint();
-
 			}
 		};
 
@@ -514,12 +498,50 @@ public class ISBatch implements TreeSelectionListener {
 		JMenuItem item = new JMenuItem("Open cell roi");
 		item.addActionListener(getEditActionListener());
 		menu.add(item);
-
+		
+		JMenuItem item3 = new JMenuItem("Open support Rois");
+		item3.addActionListener(getEditActionListener2());
+		menu.add(item3);
+		
 		JMenuItem item2 = new JMenuItem("Run Macro ...");
 		item2.addActionListener(getRunMacroActionListener());
 		menu.add(item2);
 
+		JMenuItem item4= new JMenuItem("Properties");
+		item4.addActionListener(displayProperties());
+		menu.add(item4);
+		
 		return menu;
+	}
+
+	private ActionListener displayProperties() {
+		return new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				new PropertiesTable(selectedNode);
+			}
+		};
+	}
+
+	private ActionListener getEditActionListener2() {
+		return new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if (selectedNode.getType().equalsIgnoreCase("File")) {
+					String path = selectedNode.getProperty("supportRoi");
+					if(path!=null){
+						RoiManager manager = RoiManager.getInstance();
+						if(manager==null){
+							manager = new RoiManager();
+						}
+						manager.runCommand("Open", selectedNode.getProperty("supportRoi"));
+					//System.out.println("pressed " + selectedNode);
+					}
+				}
+			}
+		};
 	}
 
 	public Operation[] getTreeOperations() {
@@ -530,18 +552,20 @@ public class ISBatch implements TreeSelectionListener {
 	public Operation[] getOperations() {
 		return new Operation[] {
 				// new MacroOperation2(frame, treeModel),
-
+				new DebugProperties(treeModel),
 				new SetBackGround(treeModel), new FlattenOperation(treeModel),
 				new MicrobeTrackerIO(treeModel), new CellOutlines(treeModel),
 				new FindPeaksOperation(),
 				new PeakFitter2(),
 				new MacroOperation(treeModel),
 				new CellularConcentration(treeModel),
-				new CellIntensity(treeModel), new FocusLifetimes(treeModel),
-				new Tracking(treeModel), new DiffusioOperation(treeModel),
+				new CellIntensity(treeModel), 
+				new FocusLifetimes(treeModel),
+				new Tracking(treeModel),
+				new DiffusioOperation(treeModel),
 				new LocationMaps(treeModel), new ChangePoint(treeModel),
-				// new DebugProperties(treeModel),
-				new FilterTestOperation(treeModel),
+				
+//				new FilterTestOperation(treeModel),
 				};
 	}
 

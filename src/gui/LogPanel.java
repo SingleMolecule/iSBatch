@@ -113,6 +113,10 @@ public class LogPanel extends JPanel implements ActionListener {
 		log(Integer.toString(integer));
 	}
 	
+	public static void log(Double value) {
+		log(Double.toString(value));
+	}
+	
 	
 	/**
 	 * Save.

@@ -26,43 +26,18 @@ import ij.process.ImageProcessor;
  * The Class PeakFinder.
  */
 public class PeakFinder implements ExtendedPlugInFilter, DialogListener {
-	
-	/** The flags. */
 	private int flags = DOES_8G | DOES_16 | DOES_32 | NO_CHANGES | PARALLELIZE_STACKS;
-	
-	/** The use discoidal averaging. */
 	private boolean useDiscoidalAveraging = Prefs.getBoolean("PeakFinder.useDiscoidalAveraging", true);
-	
-	/** The inner radius. */
 	private int innerRadius = Prefs.getInt("PeakFinder.innerRadius", 1);
-	
-	/** The outer radius. */
 	private int outerRadius = Prefs.getInt("PeakFinder.outerRadius", 3);
-	
-	/** The threshold. */
 	private double threshold = Prefs.getDouble("PeakFinder.threshold", 6);
-	
-	/** The threshold value. */
 	private double thresholdValue = Prefs.getDouble("PeakFinder.thresholdValue", 0);
-	
-	/** The selection radius. */
 	private int selectionRadius = Prefs.getInt("PeakFinder.selectionRadius", 4);
-	
-	/** The minimum distance. */
 	private int minimumDistance = Prefs.getInt("PeakFinder.minimumDistance", 8);
-	
-	/** The imp. */
 	private ImagePlus imp;
-	
-	/** The roi manager. */
 	private RoiManager roiManager;
-	
-	/** The filter. */
 	private DiscoidalAveragingFilter filter = new DiscoidalAveragingFilter();
-	
-	/** The is preview. */
 	private boolean isPreview = false;
-	
 	
 	/**
 	 * Gets the ROI manager.

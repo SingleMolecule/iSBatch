@@ -37,41 +37,17 @@ import model.Sample;
  * The Class MacroOperationTest.
  */
 public class MacroOperationTest implements ActionListener, Runnable {
-
-	/** The frame. */
 	private JFrame frame = new JFrame("Macro Operation Test");
-	
-	/** The model. */
 	private DatabaseModel model;
-	
-	/** The tree. */
 	private JTree tree;
-	
-	/** The text pane. */
 	private CodeTextPane textPane = new CodeTextPane(); 
-	
-	/** The add node button. */
 	private JButton addNodeButton = new JButton("Add");
-	
-	/** The remove node button. */
 	private JButton removeNodeButton = new JButton("Remove");
-	
-	/** The edit button. */
 	private JButton editButton = new JButton("Edit");
-	
-	/** The load button. */
 	private JButton loadButton = new JButton("Load");
-	
-	/** The save button. */
 	private JButton saveButton = new JButton("Save");
-	
-	/** The run button. */
 	private JButton runButton = new JButton("Run");
-	
-	/** The stop button. */
 	private JButton stopButton = new JButton("Stop");
-	
-	/** The macro thread. */
 	private Thread macroThread;
 	
 	/**

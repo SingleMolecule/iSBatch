@@ -191,6 +191,7 @@ public class PeakFitter2 implements Operation, PlugIn {
 			
 			String path = f.getAbsolutePath()+ File.separator + currentNode.getChannel() + ".FittedPeaks.csv";
 			table = Analyzer.getResultsTable();
+			currentNode.getProperties().put("fitted peaks", path);
 			try {
 				table.saveAs(path);
 			} catch (IOException e) {
@@ -205,6 +206,7 @@ public class PeakFitter2 implements Operation, PlugIn {
 				RoiManager cellsManager = new RoiManager(true);
 				cellsManager.runCommand("Open", currentNode.getCellROIPath());
 				//Add property Channel_cellPeaks to the node
+				currentNode.getProperties().put("fitted peaks cells", path);
 				try {
 					System.out.println(path);
 					MultiFilter.getTableRowsInsideCells(currentNode, path,f);
@@ -213,7 +215,6 @@ public class PeakFitter2 implements Operation, PlugIn {
 				}
 				
 			}
-			
 			
 			IJUtils.emptyAll();
 			

@@ -1,4 +1,16 @@
-package operations.tracking;
+/************************************************************************
+ * 				iSBatch  Copyright (C) 2015  							*
+ *		Victor E. A. Caldas -  v.e.a.caldas at rug.nl					*
+ *		C. Michiel Punter - c.m.punter at rug.nl						*
+ *																		*
+ *	This program is distributed in the hope that it will be useful,		*
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of		*
+ * 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the		*
+ *	GNU General Public License for more details.						*
+ *	You should have received a copy of the GNU General Public License	*
+ *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ***********************************************************************/
+package operations.cellIntensity;
 
 import ij.IJ;
 
@@ -32,8 +44,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class TrackingGUI extends JDialog implements ActionListener {
-	private String lookAhead;
+public class CellIntensityGUI extends JDialog implements ActionListener {
 	private JButton btnCancel;
 	private JButton btnProcess;
 	private JComboBox<String> fileTypeComboBox;
@@ -46,14 +57,20 @@ public class TrackingGUI extends JDialog implements ActionListener {
 			"Blue", };
 
 	private static final String[] methods = { "[Method]", "Average Images" };
-	private String[] types = new String[] { "[File Type]", "Raw", "Flat"};
+	private String[] types = new String[] { "[File Type]", "Raw", "Flat" };
 	private JTextField customSearchTxtField;
 	private boolean canceled = false;
 	static JFrame frame;
 	private Node node;
 	private String channel, method, imagePath;
-	protected String maxSteps;
-	public TrackingGUI(Node node) {
+
+	/**
+	 * Instantiates a new cell intensity gui.
+	 *
+	 * @param node
+	 *            the node
+	 */
+	public CellIntensityGUI(Node node) {
 		setModal(true);
 		setTitle("Focus Lifetimes");
 		frame = new JFrame("Set Backgroung Image");
@@ -61,19 +78,26 @@ public class TrackingGUI extends JDialog implements ActionListener {
 
 		setup();
 		display();
+
 	}
 
+	/**
+	 * Setup.
+	 */
 	private void setup() {
 	}
 
+	/**
+	 * Display.
+	 */
 	private void display() {
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 0, 60, 60, 60, 60, 60, 0, 0 };
-		gridBagLayout.rowHeights = new int[] { 14, 23, 0, 23, 0, 0, 0, 0 };
+		gridBagLayout.rowHeights = new int[] { 14, 23, 0, 23, 0, 0 };
 		gridBagLayout.columnWeights = new double[] { 0.0, 1.0, 0.0, 1.0, 1.0,
 				0.0, 0.0, Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0,
 				Double.MIN_VALUE };
 		getContentPane().setLayout(gridBagLayout);
 
@@ -158,14 +182,12 @@ public class TrackingGUI extends JDialog implements ActionListener {
 
 		customSearchTxtField = new JTextField();
 		customSearchTxtField.addKeyListener(new KeyAdapter() {
-			
 
 			@Override
 			public void keyTyped(KeyEvent e) {
 				customSearch = customSearchTxtField.getText();
 			}
 		});
-
 
 		GridBagConstraints gbc_customSearchTxtField = new GridBagConstraints();
 		gbc_customSearchTxtField.gridwidth = 2;
@@ -175,73 +197,10 @@ public class TrackingGUI extends JDialog implements ActionListener {
 		gbc_customSearchTxtField.gridy = 3;
 		getContentPane().add(customSearchTxtField, gbc_customSearchTxtField);
 		customSearchTxtField.setColumns(1);
-		
-		lblLookAhead = new JLabel("Look ahead");
-		GridBagConstraints gbc_lblLookAhead = new GridBagConstraints();
-		gbc_lblLookAhead.gridwidth = 2;
-		gbc_lblLookAhead.anchor = GridBagConstraints.EAST;
-		gbc_lblLookAhead.insets = new Insets(0, 0, 5, 5);
-		gbc_lblLookAhead.gridx = 1;
-		gbc_lblLookAhead.gridy = 4;
-		getContentPane().add(lblLookAhead, gbc_lblLookAhead);
-		
-		LookAheadtextField = new JTextField();
-		GridBagConstraints gbc_LookAheadtextField = new GridBagConstraints();
-		gbc_LookAheadtextField.insets = new Insets(0, 0, 5, 5);
-		gbc_LookAheadtextField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_LookAheadtextField.gridx = 3;
-		gbc_LookAheadtextField.gridy = 4;
-		getContentPane().add(LookAheadtextField, gbc_LookAheadtextField);
-		LookAheadtextField.setColumns(10);
-		LookAheadtextField.addKeyListener(new KeyAdapter() {
-
-			@Override
-			public void keyTyped(KeyEvent e) {
-				lookAhead = LookAheadtextField.getText();
-			}
-		});
-		
-		lblSlices = new JLabel("Slices");
-		GridBagConstraints gbc_lblSlices = new GridBagConstraints();
-		gbc_lblSlices.insets = new Insets(0, 0, 5, 5);
-		gbc_lblSlices.gridx = 4;
-		gbc_lblSlices.gridy = 4;
-		getContentPane().add(lblSlices, gbc_lblSlices);
-		
-		lblMaxStepSize = new JLabel("Max step size: ");
-		GridBagConstraints gbc_lblMaxStepSize = new GridBagConstraints();
-		gbc_lblMaxStepSize.anchor = GridBagConstraints.EAST;
-		gbc_lblMaxStepSize.insets = new Insets(0, 0, 5, 5);
-		gbc_lblMaxStepSize.gridx = 2;
-		gbc_lblMaxStepSize.gridy = 5;
-		getContentPane().add(lblMaxStepSize, gbc_lblMaxStepSize);
-		
-		maxStepTextField = new JTextField();
-		GridBagConstraints gbc_maxStepTextField = new GridBagConstraints();
-		gbc_maxStepTextField.insets = new Insets(0, 0, 5, 5);
-		gbc_maxStepTextField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_maxStepTextField.gridx = 3;
-		gbc_maxStepTextField.gridy = 5;
-		getContentPane().add(maxStepTextField, gbc_maxStepTextField);
-		maxStepTextField.setColumns(10);
-		maxStepTextField.addKeyListener(new KeyAdapter() {
-
-			@Override
-			public void keyTyped(KeyEvent e) {
-				maxSteps = maxStepTextField.getText();
-			}
-		});
-		
-		lblPixels = new JLabel("pixels");
-		GridBagConstraints gbc_lblPixels = new GridBagConstraints();
-		gbc_lblPixels.insets = new Insets(0, 0, 5, 5);
-		gbc_lblPixels.gridx = 4;
-		gbc_lblPixels.gridy = 5;
-		getContentPane().add(lblPixels, gbc_lblPixels);
 		GridBagConstraints gbc_btnProcess = new GridBagConstraints();
 		gbc_btnProcess.insets = new Insets(0, 0, 0, 5);
 		gbc_btnProcess.gridx = 4;
-		gbc_btnProcess.gridy = 6;
+		gbc_btnProcess.gridy = 4;
 		getContentPane().add(btnProcess, gbc_btnProcess);
 
 		btnCancel = new JButton("Cancel");
@@ -250,7 +209,7 @@ public class TrackingGUI extends JDialog implements ActionListener {
 		GridBagConstraints gbc_btnCancel = new GridBagConstraints();
 		gbc_btnCancel.insets = new Insets(0, 0, 0, 5);
 		gbc_btnCancel.gridx = 5;
-		gbc_btnCancel.gridy = 6;
+		gbc_btnCancel.gridy = 4;
 		getContentPane().add(btnCancel, gbc_btnCancel);
 
 		pack();
@@ -259,31 +218,61 @@ public class TrackingGUI extends JDialog implements ActionListener {
 		setVisible(true);
 
 	}
+
+	/**
+	 * Run.
+	 */
 	private void run() {
+		//
+		// // get array of Images
+		// ArrayList<Node> images = node.getDescendents(imageFileNodeFilter);
+
 	}
 
+	/**
+	 * The main method.
+	 *
+	 * @param args
+	 *            the arguments
+	 */
 	public static void main(String[] args) {
 		frame = new JFrame();
-		new TrackingGUI(null);
+
+		new CellIntensityGUI(null);
+
 	}
 
+	/**
+	 * Error.
+	 *
+	 * @param msg
+	 *            the msg
+	 */
 	void error(String msg) {
 		IJ.error("Batch Processor", msg);
 	}
-	
+
+	/**
+	 * Checks if is canceled.
+	 *
+	 * @return true, if is canceled
+	 */
 	public boolean isCanceled() {
 		return canceled;
 	}
 
+	/** The image type. */
 	private String imageType = null;
-	private String customSearch;
-	private JLabel lblLookAhead;
-	private JTextField LookAheadtextField;
-	private JLabel lblSlices;
-	private JLabel lblMaxStepSize;
-	private JTextField maxStepTextField;
-	private JLabel lblPixels;
 
+	/** The custom search. */
+	private String customSearch;
+
+	/**
+	 * Action performed.
+	 *
+	 * @param e
+	 *            the e
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnCancel) {
@@ -292,7 +281,7 @@ public class TrackingGUI extends JDialog implements ActionListener {
 		} else if (e.getSource() == btnProcess) {
 			String foo = (String) fileTypeComboBox.getSelectedItem();
 			if (foo.equalsIgnoreCase("[File Type]")) {
-				
+
 				this.imageType = null;
 			} else {
 				this.imageType = (String) fileTypeComboBox.getSelectedItem();
@@ -304,7 +293,7 @@ public class TrackingGUI extends JDialog implements ActionListener {
 			} else {
 				this.channel = channels[channelComboBox.getSelectedIndex()];
 			}
-			
+
 			foo = (String) methodComboBox.getSelectedItem();
 			if (foo.equalsIgnoreCase("[Method]")) {
 				this.method = ".tiff";
@@ -312,8 +301,6 @@ public class TrackingGUI extends JDialog implements ActionListener {
 				this.method = (String) methodComboBox.getSelectedItem();
 			}
 			customSearch = customSearchTxtField.getText();
-			maxSteps = maxStepTextField.getText();
-			lookAhead = LookAheadtextField.getText();
 			run();
 			dispose();
 		} else if (e.getSource() == channelComboBox) {
@@ -326,20 +313,47 @@ public class TrackingGUI extends JDialog implements ActionListener {
 		}
 	}
 
+	/**
+	 * Gets the channel.
+	 *
+	 * @return the channel
+	 */
 	public String getChannel() {
 		return channel;
 	}
+
+	/**
+	 * Gets the method.
+	 *
+	 * @return the method
+	 */
 	public String getMethod() {
 		return method;
 	}
+
+	/**
+	 * Gets the image path.
+	 *
+	 * @return the image path
+	 */
 	public String getImagePath() {
 		return imagePath;
 	}
 
+	/**
+	 * Gets the image tag.
+	 *
+	 * @return the image tag
+	 */
 	public String getImageTag() {
 		return imageType;
 	}
 
+	/**
+	 * Gets the tags.
+	 *
+	 * @return the tags
+	 */
 	public ArrayList<String> getTags() {
 		ArrayList<String> container = new ArrayList<String>();
 		if (imageType != null) {
@@ -350,27 +364,38 @@ public class TrackingGUI extends JDialog implements ActionListener {
 			}
 			return container;
 		}
+
 		else
+
 			return container;
+
 	}
 
+	/**
+	 * Gets the extention.
+	 *
+	 * @return the extention
+	 */
 	public String getExtention() {
 		return method;
 	}
 
+	/**
+	 * Gets the custom.
+	 *
+	 * @return the custom
+	 */
 	public String getCustom() {
 		return imagePath;
 	}
 
+	/**
+	 * Gets the custom search.
+	 *
+	 * @return the custom search
+	 */
 	public String getCustomSearch() {
 		return this.customSearch;
 	}
-	
-	public int getLookAhead(){
-		return Integer.parseInt(lookAhead);
-	}
-	
-	public int getMaxStepSize(){
-		return Integer.parseInt(maxSteps);
-	}
+
 }

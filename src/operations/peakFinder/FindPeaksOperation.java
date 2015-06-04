@@ -15,38 +15,27 @@ package operations.peakFinder;
 import filters.GenericFilter;
 import gui.FileSelectionDialog;
 import gui.LogPanel;
-import iSBatch.iSBatchPreferences;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.ImageStack;
 import ij.gui.PointRoi;
 import ij.gui.Roi;
-import ij.gui.ShapeRoi;
-import ij.io.RoiEncoder;
 import ij.plugin.PlugIn;
-import ij.plugin.filter.Analyzer;
 import ij.plugin.frame.Recorder;
 import ij.plugin.frame.RoiManager;
 import ij.process.ImageProcessor;
 
 import java.awt.Point;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
 
 import analysis.PeakFinder;
 import operations.Operation;
-import process.DiscoidalAveragingFilter;
 import test.TreeGenerator;
-import utils.FileIOUtils;
 import utils.FileNames;
 import utils.IJUtils;
-import utils.MultiFilter;
 import utils.StringOperations;
 import model.DatabaseModel;
 import model.Experiment;
@@ -59,7 +48,6 @@ import model.Sample;
 
 public class FindPeaksOperation implements Operation, PlugIn {
 	private FileSelectionDialog dialog;
-	private String channel;
 	// private DatabaseModel model;
 	PeakFinder peakFinder;
 	RoiManager roiManager;
@@ -98,34 +86,6 @@ public class FindPeaksOperation implements Operation, PlugIn {
 	@Override
 	public void visit(Root root) {
 		System.out.println("Not applicable to root. ");
-	}
-
-
-	private RoiManager getPeaksInsideCells(RoiManager allPeaksManager,
-			RoiManager cellsManager) {
-
-		RoiManager peaksInsideCells = new RoiManager(true);
-
-		@SuppressWarnings("unchecked")
-		Hashtable<String, Roi> listOfCells = (Hashtable<String, Roi>) cellsManager
-				.getROIs();
-		@SuppressWarnings("unchecked")
-		Hashtable<String, Roi> listOfPeaks = (Hashtable<String, Roi>) allPeaksManager
-				.getROIs();
-
-		for (String label : listOfCells.keySet()) {
-			ShapeRoi currentCell = new ShapeRoi(listOfCells.get(label));
-
-			for (String peakLabel : listOfPeaks.keySet()) {
-				Roi currentPeak = listOfPeaks.get(peakLabel);
-
-				if (currentCell.contains(currentPeak.getBounds().x,
-						currentPeak.getBounds().y)) {
-					peaksInsideCells.addRoi(currentPeak);
-				}
-			}
-		}
-		return peaksInsideCells;
 	}
 
 	@Override
@@ -168,7 +128,7 @@ public class FindPeaksOperation implements Operation, PlugIn {
 	private void runNode(Node node) throws IOException {
 		String extention = null;
 
-		this.filenodes = node.getDescendents(new GenericFilter(dialog.getChannel(), dialog
+		this.filenodes =node.getDescendents(new GenericFilter(dialog.getChannel(), dialog
 				.getTags(), extention, dialog.getCustomSearch()));
 		run(null);
 		// }
@@ -184,7 +144,6 @@ public class FindPeaksOperation implements Operation, PlugIn {
 		}
 		System.out.println(dialog.getCustomSearch());
 		System.out.println("--------");
-
 	}
 
 	@Override
@@ -225,9 +184,7 @@ public class FindPeaksOperation implements Operation, PlugIn {
 
 		/**
 		 * Plugin : Peak Fitter
-		 * 
 		 */
-		
 		
 		// Create output directory
 		
@@ -244,13 +201,12 @@ public class FindPeaksOperation implements Operation, PlugIn {
 			f.mkdirs();
 			if (i == 0) {
 				
-				
-				
 				imp.show();
 				Recorder recorder = new Recorder(false);
 				Recorder.record = true;
 				Recorder.recordInMacros = true;
 				IJ.run(imp, pluginName, arguments);
+				IJ.runPlugIn(imp, pluginName, arguments);
 				LogPanel.log(arguments);
 				String command = recorder.getText();
 				recorder.close();

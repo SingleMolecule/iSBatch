@@ -19,7 +19,6 @@ package operations.microbeTrackerIO;
  */
 public class Point {
 	
-	/** The y. */
 	public double x, y;
 
 	/**

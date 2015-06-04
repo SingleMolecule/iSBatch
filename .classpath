@@ -12,5 +12,6 @@
 	<classpathentry kind="lib" path="devLib/org-netbeans-swing-outline-RELEASE68.jar"/>
 	<classpathentry kind="lib" path="devLib/sqljet-1.1.10.jar"/>
 	<classpathentry kind="lib" path="devLib/sqljet-browser-1.1.10.jar"/>
+	<classpathentry kind="lib" path="lib/opencsv-2.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
