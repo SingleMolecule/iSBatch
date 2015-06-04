@@ -1,12 +1,5 @@
-/*
- * 
- */
 package context;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Interface ContextElement.
- */
 public interface ContextElement {
 	
 	/**

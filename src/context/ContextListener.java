@@ -1,9 +1,5 @@
-/*
- * 
- */
 package context;
 
-// TODO: Auto-generated Javadoc
 /**
  * The listener interface for receiving context events.
  * The class that is interested in processing a context
@@ -16,11 +12,5 @@ package context;
  * @see ContextEvent
  */
 public interface ContextListener {
-	
-	/**
-	 * Context changed.
-	 *
-	 * @param contextElement the context element
-	 */
 	public void contextChanged(ContextElement contextElement);
 }
