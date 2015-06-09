@@ -1,0 +1,150 @@
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>sc.fiji</groupId>
+		<artifactId>pom-fiji</artifactId>
+		<relativePath />
+		<version>9.0.0</version>
+	</parent>
+
+
+	<artifactId>iSBatch_</artifactId>
+	<version>0.3.2</version>
+
+	<name>plugins/iSBatch.jar</name>
+	<description>Plugin for batch analysis in imageJ.</description>
+
+	<developers>
+		<developer>
+			<id>vcaldas</id>
+			<name>Victor E. A. Caldas</name>
+			<email>caldas.victor@gmail.com</email>
+			<url>http://vcaldas.github.io</url>
+			<organization>University of Groningen</organization>
+			<organizationUrl>http://singlemolecule.nl</organizationUrl>
+			<roles>
+				<role>architect</role>
+				<role>developer</role>
+				<role>maintainer</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
+	</developers>
+	<contributors>
+		<contributor>
+			<name>C. Michiel Punter</name>
+		</contributor>
+	</contributors>
+
+	<scm>
+		<connection>scm:git:git://github.com/SingleMolecule/iSBatch</connection>
+		<developerConnection>scm:git:git@github.com:SingleMolecule/iSBatch</developerConnection>
+		<tag>HEAD</tag>
+		<url>https://github.com/SingleMolecule/iSBatch</url>
+	</scm>
+
+	<issueManagement>
+		<system>GitHub Issues</system>
+		<url>https://github.com/SingleMolecule/iSBatch/issues</url>
+	</issueManagement>
+
+	<repositories>
+		<repository>
+			<id>imagej.public</id>
+			<url>http://maven.imagej.net/content/groups/public</url>
+		</repository>
+	</repositories>
+
+	<dependencies>
+
+		<!-- ImageJ dependencies -->
+		<dependency>
+			<groupId>net.imagej</groupId>
+			<artifactId>ij</artifactId>
+		</dependency>
+
+		<!-- iSBatch Dependencies -->
+		<dependency>
+			<groupId>org.tmatesoft.sqljet</groupId>
+			<artifactId>sqljet</artifactId>
+			<version>1.1.10</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sourceforge.jmatio</groupId>
+			<artifactId>jmatio</artifactId>
+			 <type>jar</type>
+			<version>1.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.opencsv</groupId>
+			 <type>jar</type>
+			<artifactId>opencsv</artifactId>
+			<version>2.3</version>
+		</dependency>
+
+	</dependencies>
+	<url>http://singlemolecule.github.io/iSBatch/</url>
+	
+	  <reporting>
+      <plugins>  
+           <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>2.7</version>
+                <reportSets>
+                     <reportSet>
+                          <reports>
+                          </reports>
+                     </reportSet>
+                </reportSets>
+           </plugin>
+      </plugins>
+  </reporting>
+  
+  
+  
+  
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<!-- nothing here -->
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+					<archive>
+						<manifest>
+							<mainClass>src.main.java.iSBatch.ISBatch_</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
