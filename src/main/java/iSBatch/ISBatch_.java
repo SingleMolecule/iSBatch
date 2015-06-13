@@ -98,7 +98,6 @@ public class ISBatch_ implements TreeSelectionListener {
 		getInstance();
 	}
 
-	
 	protected Node selectedNode;
 
 	public ISBatch_() throws SqlJetException {
@@ -106,9 +105,9 @@ public class ISBatch_ implements TreeSelectionListener {
 		database = dialog.getDatabase();
 		if (database == null)
 			return;
-		
+
 		startProcess();
-		
+
 	}
 
 	private void startProcess() {
@@ -129,7 +128,7 @@ public class ISBatch_ implements TreeSelectionListener {
 
 		// load preferences
 		iSBatchPreferences.loadPreferences(treeModel.getRoot());
-		
+
 	}
 
 	public static ISBatch_ getInstance() {
@@ -142,9 +141,9 @@ public class ISBatch_ implements TreeSelectionListener {
 						"Could not open database : " + e.getMessage(),
 						"Database error", JOptionPane.ERROR_MESSAGE);
 			}
-		
+
 		}
-	
+
 		return instance;
 	}
 
@@ -157,12 +156,11 @@ public class ISBatch_ implements TreeSelectionListener {
 		}
 		tree = new JTree(treeModel);
 
-		
 		tree.removeTreeSelectionListener(this);
 		tree.addTreeSelectionListener(this);
-		
+
 		tree.setComponentPopupMenu(getPopUpMenu());
- 		tree.addMouseListener(getMouseListener());
+		tree.addMouseListener(getMouseListener());
 		tree.addMouseMotionListener(getMouseMotionAdapter());
 		tree.setCellRenderer(new DatabaseTreeCellRenderer());
 	}
@@ -204,20 +202,20 @@ public class ISBatch_ implements TreeSelectionListener {
 		LoadMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent event) {
 				LogPanel.log("Load database");
-				
+
 				DatabaseDialog dialog = new DatabaseDialog(frame);
 				database = dialog.getDatabase();
 				if (database == null)
 					return;
-				else{
-					
+				else {
+
 					try {
 						loadDatabase(database);
 					} catch (SqlJetException e) {
 						e.printStackTrace();
 					}
-					
-					//startProcess();
+
+					// startProcess();
 				}
 			}
 		});
@@ -437,36 +435,35 @@ public class ISBatch_ implements TreeSelectionListener {
 					if (pathForLocation != null) {
 						selectedNode = (Node) pathForLocation
 								.getLastPathComponent();
-						
+
 					} else {
 						selectedNode = null;
 					}
 				}
-				
-				else if(e.getButton()==MouseEvent.BUTTON1){
-					 if(e.getClickCount() == 1) {
-			             // System.out.println(pathForLocation.getLastPathComponent());
-			            }
-			            else if(e.getClickCount() == 2) {
-			                myDoubleClick(selRow, pathForLocation);
-			            }
+
+				else if (e.getButton() == MouseEvent.BUTTON1) {
+					if (e.getClickCount() == 1) {
+						// System.out.println(pathForLocation.getLastPathComponent());
+					} else if (e.getClickCount() == 2) {
+						myDoubleClick(selRow, pathForLocation);
+					}
 				}
 				super.mousePressed(e);
 			}
 
 			private void myDoubleClick(int selRow, TreePath pathForLocation) {
-				selectedNode = (Node) pathForLocation
-						.getLastPathComponent();
-				if(selectedNode.getType().equalsIgnoreCase("File")){
-					LogPanel.log("Opening image: "+ selectedNode.getPath());
-					
+				selectedNode = (Node) pathForLocation.getLastPathComponent();
+				if (selectedNode.getType().equalsIgnoreCase("File")) {
+					LogPanel.log("Opening image: " + selectedNode.getPath());
+
 					IJ.open(selectedNode.getPath());
 				}
 			}
-//			private void mySingleClick(int selRow, TreePath pathForLocation) {
-//				System.out.println("A single click won't do anything");
-//				
-//			} 
+			// private void mySingleClick(int selRow, TreePath pathForLocation)
+			// {
+			// System.out.println("A single click won't do anything");
+			//
+			// }
 		};
 	}
 
@@ -497,19 +494,19 @@ public class ISBatch_ implements TreeSelectionListener {
 		JMenuItem item = new JMenuItem("Open cell roi");
 		item.addActionListener(getEditActionListener());
 		menu.add(item);
-		
+
 		JMenuItem item3 = new JMenuItem("Open support Rois");
 		item3.addActionListener(getEditActionListener2());
 		menu.add(item3);
-		
+
 		JMenuItem item2 = new JMenuItem("Run Macro ...");
 		item2.addActionListener(getRunMacroActionListener());
 		menu.add(item2);
 
-		JMenuItem item4= new JMenuItem("Properties");
+		JMenuItem item4 = new JMenuItem("Properties");
 		item4.addActionListener(displayProperties());
 		menu.add(item4);
-		
+
 		return menu;
 	}
 
@@ -530,13 +527,14 @@ public class ISBatch_ implements TreeSelectionListener {
 			public void actionPerformed(ActionEvent arg0) {
 				if (selectedNode.getType().equalsIgnoreCase("File")) {
 					String path = selectedNode.getProperty("supportRoi");
-					if(path!=null){
+					if (path != null) {
 						RoiManager manager = RoiManager.getInstance();
-						if(manager==null){
+						if (manager == null) {
 							manager = new RoiManager();
 						}
-						manager.runCommand("Open", selectedNode.getProperty("supportRoi"));
-					//System.out.println("pressed " + selectedNode);
+						manager.runCommand("Open",
+								selectedNode.getProperty("supportRoi"));
+						// System.out.println("pressed " + selectedNode);
 					}
 				}
 			}
@@ -551,21 +549,19 @@ public class ISBatch_ implements TreeSelectionListener {
 	public Operation[] getOperations() {
 		return new Operation[] {
 				// new MacroOperation2(frame, treeModel),
-				new DebugProperties(treeModel),
-				new SetBackGround(treeModel), new FlattenOperation(treeModel),
+				new DebugProperties(treeModel), new SetBackGround(treeModel),
+				new FlattenOperation(treeModel),
 				new MicrobeTrackerIO(treeModel), new CellOutlines(treeModel),
-				new FindPeaksOperation(),
-				new PeakFitter2(),
+				new FindPeaksOperation(), new PeakFitter2(),
 				new MacroOperation(treeModel),
 				new CellularConcentration(treeModel),
-				new CellIntensity(treeModel), 
-				new FocusLifetimes(treeModel),
+				new CellIntensity(treeModel), new FocusLifetimes(treeModel),
 				new Tracking(treeModel),
-//				new DiffusioOperation(treeModel),
+				// new DiffusioOperation(treeModel),
 				new LocationMaps(treeModel), new ChangePoint(treeModel),
-				
-//				new FilterTestOperation(treeModel),
-				};
+
+		// new FilterTestOperation(treeModel),
+		};
 	}
 
 	@Override
@@ -606,13 +602,13 @@ public class ISBatch_ implements TreeSelectionListener {
 			public void actionPerformed(ActionEvent arg0) {
 				if (selectedNode.getType().equalsIgnoreCase("File")) {
 					RoiManager manager = RoiManager.getInstance();
-					if(manager==null){
+					if (manager == null) {
 						manager = new RoiManager();
-						
+
 					}
 					manager.runCommand("Open", selectedNode.getOutputFolder()
 							+ File.separator + "cellRoi.zip");
-					
+
 					System.out.println("pressed " + selectedNode);
 				}
 			}
@@ -625,7 +621,7 @@ public class ISBatch_ implements TreeSelectionListener {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (selectedNode != null) {
-					
+
 					System.out.println("pressed on macro " + selectedNode);
 				}
 			}
@@ -680,17 +676,14 @@ public class ISBatch_ implements TreeSelectionListener {
 		iSBatchPreferences.loadPreferences(treeModel.getRoot());
 
 	}
-	
+
 	public void loadDatabase(Database database) throws SqlJetException {
-		
+
 		if (treeModel == null)
 			treeModel = new DatabaseModel(database.getRoot());
 		else
 			treeModel.setRoot(database.getRoot());
-		
-		
-		
-		
+
 	}
 
 }

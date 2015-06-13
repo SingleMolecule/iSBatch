@@ -70,7 +70,7 @@ public class DebugProperties implements Operation, PlugIn {
 
 	@Override
 	public void visit(Root root) {
-		System.out.println("Does not apply to root");
+		System.out.println("Does not apply to root.JrebelS");
 	}
 
 	@Override
