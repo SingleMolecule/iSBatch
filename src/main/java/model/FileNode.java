@@ -26,6 +26,8 @@ public class FileNode extends Node implements FileInterface {
 	public static final String type = "File";
 	private ArrayList<String> tags = new ArrayList<String>();
 
+	public static final String tagDivider = "_";
+	
 	public FileNode(Node parent) {
 		super(parent, type);
 	}
@@ -118,7 +120,7 @@ public class FileNode extends Node implements FileInterface {
 		
 		 String filename = getFilename();
 		
-		 Pattern pattern = Pattern.compile("(?<=_)[a-zA-Z0-9]+");
+		 Pattern pattern = Pattern.compile("(?<=" + tagDivider + ")[a-zA-Z0-9]+");
 		 Matcher matcher = pattern.matcher(filename);
 		 while (matcher.find())
 		 tags.add(matcher.group());
@@ -133,7 +135,7 @@ public class FileNode extends Node implements FileInterface {
 		
 		ArrayList<String> mytag = new ArrayList<String>();
 		
-		Pattern pattern = Pattern.compile("(?<=_)[a-zA-Z0-9]+");
+		Pattern pattern = Pattern.compile("(?<=" + tagDivider + ")[a-zA-Z0-9]+");
 		Matcher matcher = pattern.matcher(filename);
 		
 		System.out.println("Find");
