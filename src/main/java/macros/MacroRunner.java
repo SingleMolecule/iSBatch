@@ -33,10 +33,18 @@ public class MacroRunner implements Runnable {
 		@Override
 		public boolean accept(Node node) {
 
+			//System.out.println(node.getChannel() + " == " + channel);
+			//
+			//for (String t: node.getTags())
+			//	System.out.println(t + " == " + tag);
+			//
+			//System.out.println(node.getProperty("path") + " == " + customTag);
+			//System.out.println(node.getProperty("path") + " == " + extension);
+			
 			return node.getType() == FileNode.type
 					&& node.getChannel().equalsIgnoreCase(channel)
-					&& (node.getTags().contains(tag) || node.getProperty("path").contains(customTag))
-					&& node.getProperty("path").endsWith(extension);
+					&& (node.getTags().contains(tag) || node.getProperty("path").toLowerCase().contains(customTag.toLowerCase()))
+					&& node.getProperty("path").toLowerCase().endsWith(extension.toLowerCase());
 			
 		}
 
@@ -177,6 +185,7 @@ public class MacroRunner implements Runnable {
 		
 		}
 		
+		IJ.runMacro("close(\"*\");");
 		roiManager.close();
 	}
 
@@ -191,10 +200,16 @@ public class MacroRunner implements Runnable {
 	public void stop() {
 		shouldRun = false;
 		thread = null;
+		
+		for (ActionListener listener: listeners)
+			listener.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_LAST, "MacroRunner"));
 	}
 	
 	@Override
 	public void run() {
+		
+		System.out.println("Macro runner thread started ... ");
+		
 		
 		for (Node n: node.getDescendents(filter)) {
 			
@@ -206,9 +221,7 @@ public class MacroRunner implements Runnable {
 			runMacro((FileNode)n, macro);
 		}
 		
-		for (ActionListener listener: listeners)
-			listener.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_LAST, "MacroRunner"));
-		
+		stop();
 	}
 	
 	public void addActionListener(ActionListener listener) {

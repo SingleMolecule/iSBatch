@@ -180,12 +180,6 @@ public class MacroDialog2 extends JDialog implements ActionListener {
 		setVisible(true);
 	}
 	
-	public void runMacro(FileNode node, String macro) {
-		runner.runMacro(node, macro);
-		runButton.setEnabled(false);
-		stopButton.setEnabled(true);
-	}
-	
 	public static void main(String[] args) {
 		DatabaseModel model = TreeGenerator.generate("e:/test", "e:/test", 2);
 		new MacroDialog2(model.getRoot(), model);
@@ -218,7 +212,15 @@ public class MacroDialog2 extends JDialog implements ActionListener {
 			tagComboBox.setEnabled(customTagTextField.getText().isEmpty());
 		}
 		else if (e.getSource() == runButton) {
+			
+			runner.setChannel((String)channelComboBox.getSelectedItem());
+			runner.setTag((String)tagComboBox.getSelectedItem());
+			runner.setCustomTag(customTagTextField.getText());
+			runner.setExtension((String)extensionComboBox.getSelectedItem());
+			
 			runner.runMacro(node, macroTextPane.getText());
+			runButton.setEnabled(false);
+			stopButton.setEnabled(true);
 		}
 		else if (e.getSource() == stopButton) {
 			runner.stop();
