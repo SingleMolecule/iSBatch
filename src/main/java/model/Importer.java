@@ -249,7 +249,7 @@ public class Importer {
 		model.addNode(node, fileNode);
 	}
 	
-public void importFile(Node node, File file, String channel, String name, String path) {
+	public void importFile(Node node, File file, String channel, String name) {
 		FileNode fileNode = new FileNode(node);
 		Channel channelType = null;
 

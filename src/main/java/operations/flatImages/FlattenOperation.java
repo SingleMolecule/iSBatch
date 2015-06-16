@@ -239,7 +239,7 @@ public class FlattenOperation implements Operation {
 		LogPanel.log("adding to tree");
 
 		importer.importFile(fileNode.getParent(), outputFile, channel,
-				outputFile.getName(), outputFile.getAbsolutePath());
+				outputFile.getName());
 
 	}
 

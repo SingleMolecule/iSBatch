@@ -1,6 +1,9 @@
 package macros;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
 
 import filters.NodeFilterInterface;
 import gui.LogPanel;
@@ -9,18 +12,22 @@ import ij.ImagePlus;
 import ij.WindowManager;
 import ij.measure.ResultsTable;
 import ij.plugin.frame.RoiManager;
+import model.DatabaseModel;
 import model.FileNode;
+import model.Importer;
 import model.Node;
 
-public class MacroRunner {
+public class MacroRunner implements Runnable {
 
-	private String channel;
-	private String tag;
-	private String customName;
+	private String channel = "";
+	private String tag = "";
+	private String customTag = "";
+	private String extension = ".tif";
 	private boolean saveInDatabase = true;
-
+	
 	private String outputTag;
 	private boolean overridetags = false;
+	
 	private NodeFilterInterface filter = new NodeFilterInterface() {
 
 		@Override
@@ -28,11 +35,25 @@ public class MacroRunner {
 
 			return node.getType() == FileNode.type
 					&& node.getChannel().equalsIgnoreCase(channel)
-					&& (node.getTags().contains(tag) || node.getProperty("path").matches(customName));
+					&& (node.getTags().contains(tag) || node.getProperty("path").contains(customTag))
+					&& node.getProperty("path").endsWith(extension);
+			
 		}
 
 	};
 
+	private Node node;
+	private String macro;
+	private Importer importer;
+	private Thread thread;
+	private boolean shouldRun = false;
+	private ArrayList<ActionListener> listeners = new ArrayList<ActionListener>();
+	
+	
+	public MacroRunner(DatabaseModel model) {
+		importer = new Importer(model);
+	}
+	
 	public String getChannel() {
 		return channel;
 	}
@@ -49,12 +70,20 @@ public class MacroRunner {
 		this.tag = tag;
 	}
 
-	public String getCustomName() {
-		return customName;
+	public String getCustomTag() {
+		return customTag;
 	}
 
-	public void setCustomName(String customName) {
-		this.customName = customName;
+	public void setCustomTag(String customTag) {
+		this.customTag = customTag;
+	}
+
+	public String getExtension() {
+		return extension;
+	}
+
+	public void setExtension(String extension) {
+		this.extension = extension;
 	}
 
 	public boolean isSaveInDatabase() {
@@ -115,6 +144,9 @@ public class MacroRunner {
 			    if (imp.changes) {
 			    	String tifFile = getUniquePath(filename, ".tif");
 			    	IJ.saveAsTiff(imp, tifFile);
+			    	File file = new File(tifFile);
+			    	importer.importFile(node, file, node.getChannel(), file.getName());
+			    	
 			    }
 			    
 			}
@@ -123,10 +155,14 @@ public class MacroRunner {
 			if (roiManager.getCount() == 1) {
 				String roiFile = getUniquePath(filename, ".roi");
 				roiManager.runCommand("save", roiFile);
+				File file = new File(roiFile);
+				importer.importFile(node, file, node.getChannel(), file.getName());
 			}
 			else if (roiManager.getCount() > 1) {
 				String zipFile = getUniquePath(filename, ".zip");
 				roiManager.runCommand("save", zipFile);
+				File file = new File(zipFile);
+				importer.importFile(node, file, node.getChannel(), file.getName());
 			}
 			
 			// save results table
@@ -135,6 +171,8 @@ public class MacroRunner {
 			if (table.getCounter() > 0) {
 				String csvFile = getUniquePath(filename, ".csv");
 				table.save(csvFile);
+				File file = new File(csvFile);
+				importer.importFile(node, file, node.getChannel(), file.getName());
 			}
 		
 		}
@@ -143,49 +181,39 @@ public class MacroRunner {
 	}
 
 	public void runMacro(Node node, String macro) {
+		this.node = node;
+		this.shouldRun = true;
+		this.macro = macro;
+		thread = new Thread(this);
+		thread.start();
+	}
+	
+	public void stop() {
+		shouldRun = false;
+		thread = null;
+	}
+	
+	@Override
+	public void run() {
 		
 		for (Node n: node.getDescendents(filter)) {
+			
+			if (!shouldRun)
+				return;
+			
 			LogPanel.log("run macro on " + n);
+			System.out.println("run macro on " + n);
 			runMacro((FileNode)n, macro);
 		}
 		
-	}
-	
-	
-	public static void main(String[] args) {
-		
-		RoiManager roiManager = new RoiManager();
-		roiManager.setVisible(false);
-		
-		String macro = "newImage(\"Untitled\", \"32-bit black\", 16, 16, 1); ";
-		macro += "run(\"Select All\"); ";
-		macro += "run(\"Fill\", \"slice\"); ";
-		macro += "run(\"Set Measurements...\", \"area redirect=None decimal=3\"); ";
-		macro += "run(\"Measure\"); ";
-		macro += "roiManager(\"Add\"); ";
-		IJ.runMacro(macro);
-		
-		for (String title : WindowManager.getImageTitles()) {
-		    
-			ImagePlus imp = WindowManager.getImage(title);
-		    
-		    if (imp.changes) {
-		    	System.out.println("imp : " + imp);
-		    }
-		}
-		
-		ResultsTable table = ResultsTable.getResultsTable();
-		
-		System.out.println("results table count : " + table.getCounter());
-		
-		System.out.println("roi manager count : " + roiManager.getCount());
-		
-		roiManager.close();
-		
+		for (ActionListener listener: listeners)
+			listener.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_LAST, "MacroRunner"));
 		
 	}
 	
-	
+	public void addActionListener(ActionListener listener) {
+		listeners.add(listener);
+	}
 	
 
 }
