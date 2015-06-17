@@ -51,7 +51,7 @@ import macros.MacroOperation;
 import model.Database;
 import model.DatabaseModel;
 import model.Node;
-import model.PropertiesTable;
+import model.PropertiesTableGui;
 import model.parameters.NodeType;
 import context.ContextHandler;
 import operations.AddNodeOperation;
@@ -374,11 +374,8 @@ public class ISBatch_ implements TreeSelectionListener {
 								"Could not open results table : "
 										+ ex.getMessage());
 					}
-
 				}
-
 			}
-
 		});
 
 		return listPanel;
@@ -515,7 +512,7 @@ public class ISBatch_ implements TreeSelectionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				new PropertiesTable(selectedNode);
+				new PropertiesTableGui(selectedNode);
 			}
 		};
 	}
