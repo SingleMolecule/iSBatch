@@ -92,8 +92,8 @@ public class ROIBuilder implements PlugIn {
 		int[] x = new int[numberOfPoints];
 		int[] y = new int[numberOfPoints];
 		for (int i = 0; i < numberOfPoints; i++) {
-			x[i] = (int) Math.round(ip.getPixelValue(0, i));
-			y[i] = (int) Math.round(ip.getPixelValue(1, i));
+			x[i] =  Math.round(ip.getPixelValue(0, i));
+			y[i] =  Math.round(ip.getPixelValue(1, i));
 		}
 
 		roi = new PolygonRoi(x, y, numberOfPoints, null, Roi.FREEROI);

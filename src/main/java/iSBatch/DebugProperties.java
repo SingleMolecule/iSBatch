@@ -19,8 +19,8 @@ import ij.measure.ResultsTable;
 import ij.plugin.PlugIn;
 import ij.plugin.filter.Analyzer;
 
-import java.awt.Point;
-import java.io.IOException;
+
+
 import java.util.HashMap;
 
 import model.DatabaseModel;
@@ -134,7 +134,6 @@ public class DebugProperties implements Operation, PlugIn {
 		for (String string : green.getHeadings()) {
 			LogPanel.log(string);
 		}
-		;
 
 		// for(int i = 0; i<green.getCounter(); i++){
 

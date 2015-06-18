@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import ij.IJ;
 import ij.ImagePlus;
-import ij.gui.Roi;
+
 import ij.plugin.frame.RoiManager;
 
 public class RoiOperations {

@@ -1,8 +1,8 @@
 package operations.tracking;
 
 import ij.IJ;
-import ij.ImagePlus;
-import ij.WindowManager;
+
+
 import ij.measure.ResultsTable;
 import ij.plugin.PlugIn;
 import ij.plugin.filter.Analyzer;
@@ -10,7 +10,7 @@ import ij.plugin.frame.Recorder;
 import ij.plugin.frame.RoiManager;
 
 import java.io.File;
-import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -26,7 +26,7 @@ import model.Root;
 import model.Sample;
 import operations.Operation;
 import utils.IJUtils;
-import utils.Projections;
+
 import utils.StringOperations;
 
 public class Tracking implements Operation, PlugIn {

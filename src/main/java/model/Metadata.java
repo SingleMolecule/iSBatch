@@ -70,8 +70,8 @@ public class Metadata {
 	 * @return true, if successful
 	 */
 	public boolean matches(Metadata otherProperties){
-		Iterator<String> i = ((Map<String, Object>) otherProperties.getProperties()).keySet().iterator(); i.hasNext(); {
-		      String propertyName = (String)i.next();
+		Iterator<String> i = ( otherProperties.getProperties()).keySet().iterator(); i.hasNext(); {
+		      String propertyName = i.next();
 		      if (!metadata.get(propertyName).equals(
 		    		  otherProperties.getProperty(propertyName))) {
 		        return false;

@@ -6,7 +6,7 @@ import gui.DatabaseDialog;
 import gui.DatabaseTreeCellRenderer;
 import gui.LogPanel;
 import gui.OperationButton;
-import iSBatch.iSBatchPreferences;
+
 import ij.IJ;
 import ij.ImagePlus;
 import ij.measure.ResultsTable;

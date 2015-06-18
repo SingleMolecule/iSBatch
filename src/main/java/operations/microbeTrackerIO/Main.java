@@ -96,7 +96,7 @@ public class Main implements PlugIn {
 					table2.addValue("L", projection.x);
 					table2.addValue("D", projection.y);
 					table2.addValue("L_normalized", projection.x / closestMesh.getTotalLength());
-					table2.addValue("cell", (int)closestMesh.getCell());
+					table2.addValue("cell", closestMesh.getCell());
 					table2.addValue("length", closestMesh.getTotalLength());
 					table2.addValue("area", closestMesh.getArea());
 					table2.addValue("volume", closestMesh.getVolume());

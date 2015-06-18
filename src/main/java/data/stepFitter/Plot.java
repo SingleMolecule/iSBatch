@@ -233,7 +233,7 @@ public class Plot extends Component implements Runnable {
 					try {
 						lock.wait();
 					} catch (InterruptedException e) {
-						//
+						System.out.println(e.getMessage());
 					}
 				}
 			}
@@ -241,7 +241,7 @@ public class Plot extends Component implements Runnable {
 				try {
 					Thread.sleep(40);
 				} catch (InterruptedException e) {
-					//
+					System.out.println(e.getMessage());
 				}
 			}
 		}

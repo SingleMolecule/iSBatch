@@ -91,7 +91,7 @@ public class FileNode extends Node implements FileInterface {
 	}
 
 	public String getCellROIPath() {
-		if (this.getParent().getType() == FieldOfView.type) {
+		if (this.getParent().getType().equalsIgnoreCase(FieldOfView.type)) {
 			return this.getParent().getProperty("CellRoi");
 		}
 		return null;

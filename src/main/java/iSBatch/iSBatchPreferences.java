@@ -73,7 +73,7 @@ public class iSBatchPreferences  {
 					try {
 						field.set(null, value);
 					} catch (Exception e) {
-						
+						System.out.println(e.getMessage());
 					}
 				}
 				
@@ -118,7 +118,7 @@ public class iSBatchPreferences  {
 					String value = (String)field.get(null);
 					root.setProperty(field.getName(), value);
 				} catch (Exception e) {
-					
+					System.out.println(e.getMessage());
 				}
 				
 			}

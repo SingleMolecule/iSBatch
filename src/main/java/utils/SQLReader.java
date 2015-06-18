@@ -97,8 +97,8 @@ public class SQLReader {
 				// ignore comments beginning with #
 				int indexOfCommentSign = queryLine.indexOf('#');
 				if (indexOfCommentSign != -1) {
-					if (queryLine.startsWith("#")) {
-						queryLine = new String("");
+					if (queryLine.length() > 0 && queryLine.charAt(0) == '#') {
+						queryLine = "";
 					} else
 						queryLine = new String(queryLine.substring(0,
 								indexOfCommentSign - 1));
@@ -107,7 +107,7 @@ public class SQLReader {
 				indexOfCommentSign = queryLine.indexOf("--");
 				if (indexOfCommentSign != -1) {
 					if (queryLine.startsWith("--")) {
-						queryLine = new String("");
+						queryLine = "";
 					} else
 						queryLine = new String(queryLine.substring(0,
 								indexOfCommentSign - 1));
@@ -115,8 +115,8 @@ public class SQLReader {
 				// ignore comments surrounded by /* */
 				indexOfCommentSign = queryLine.indexOf("/*");
 				if (indexOfCommentSign != -1) {
-					if (queryLine.startsWith("#")) {
-						queryLine = new String("");
+					if (queryLine.length() > 0 && queryLine.charAt(0) == '#') {
+						queryLine = "";
 					} else
 						queryLine = new String(queryLine.substring(0,
 								indexOfCommentSign - 1));
@@ -129,7 +129,7 @@ public class SQLReader {
 					indexOfCommentSign = queryLine.indexOf("*/");
 					if (indexOfCommentSign != -1) {
 						if (queryLine.endsWith("*/")) {
-							queryLine = new String("");
+							queryLine = "";
 						} else {
 							queryLine = new String(queryLine.substring(
 									indexOfCommentSign + 2,

@@ -41,7 +41,7 @@ public class MacroRunner implements Runnable {
 			//System.out.println(node.getProperty("path") + " == " + customTag);
 			//System.out.println(node.getProperty("path") + " == " + extension);
 			
-			return node.getType() == FileNode.type
+			return node.getType().equalsIgnoreCase(FileNode.type)
 					&& node.getChannel().equalsIgnoreCase(channel)
 					&& (node.getTags().contains(tag) || node.getProperty("path").toLowerCase().contains(customTag.toLowerCase()))
 					&& node.getProperty("path").toLowerCase().endsWith(extension.toLowerCase());

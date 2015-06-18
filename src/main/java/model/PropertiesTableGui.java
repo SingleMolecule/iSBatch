@@ -161,7 +161,7 @@ public class PropertiesTableGui extends JFrame implements WindowListener,
 
 	@Override
 	public void tableChanged(TableModelEvent e) {
-		System.out.println("triggered");
+		System.out.println("triggere2d");
 		int row = e.getFirstRow();
 		int column = e.getColumn();
 		TableModel model = (TableModel) e.getSource();
