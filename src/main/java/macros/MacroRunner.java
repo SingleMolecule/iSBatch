@@ -164,13 +164,13 @@ public class MacroRunner implements Runnable {
 				String roiFile = getUniquePath(filename, ".roi");
 				roiManager.runCommand("save", roiFile);
 				File file = new File(roiFile);
-				importer.importFile(node, file, node.getChannel(), file.getName());
+				importer.importFile(node.getParent(), file, node.getChannel(), file.getName());
 			}
 			else if (roiManager.getCount() > 1) {
 				String zipFile = getUniquePath(filename, ".zip");
 				roiManager.runCommand("save", zipFile);
 				File file = new File(zipFile);
-				importer.importFile(node, file, node.getChannel(), file.getName());
+				importer.importFile(node.getParent(), file, node.getChannel(), file.getName());
 			}
 			
 			// save results table
@@ -180,7 +180,7 @@ public class MacroRunner implements Runnable {
 				String csvFile = getUniquePath(filename, ".csv");
 				table.save(csvFile);
 				File file = new File(csvFile);
-				importer.importFile(node, file, node.getChannel(), file.getName());
+				importer.importFile(node.getParent(), file, node.getChannel(), file.getName());
 			}
 		
 		}
