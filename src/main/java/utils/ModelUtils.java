@@ -61,7 +61,7 @@ public abstract class ModelUtils {
 	}
 	
 	
-	private static ArrayList<Node> getAllFileNodes(Node node){
+	public static ArrayList<Node> getAllFileNodes(Node node){
 		ArrayList<Node> fileNodes = node.getDescendents(new NodeFilterInterface() {
 			@Override
 			public boolean accept(Node node) {
