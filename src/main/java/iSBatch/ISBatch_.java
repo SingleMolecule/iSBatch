@@ -109,6 +109,8 @@ public class ISBatch_ implements TreeSelectionListener, ActionListener {
 		setTree();
 
 		JPanel treePanel = createTreePanel();
+		// create operations panel
+
 		JPanel operationsPanel = createOperationsPanel();
 		JPanel listPanel = createListPanel();
 		layoutPanels(treePanel, operationsPanel, listPanel);
@@ -612,6 +614,7 @@ public class ISBatch_ implements TreeSelectionListener, ActionListener {
 		}
 
 	}
+		}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
