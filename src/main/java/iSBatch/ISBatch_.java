@@ -3,6 +3,7 @@ package iSBatch;
 import filters.NodeFilterInterface;
 import gui.DatabaseDialog;
 import gui.DatabaseTreeCellRenderer;
+import gui.AboutPanel;
 import gui.LogPanel;
 import gui.OperationButton;
 import ij.IJ;
@@ -12,6 +13,7 @@ import ij.plugin.frame.RoiManager;
 
 import java.awt.BorderLayout;
 import java.awt.Cursor;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -24,10 +26,13 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -40,8 +45,6 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreePath;
 
 import org.tmatesoft.sqljet.core.SqlJetException;
-
-import components.iSBatchMenu;
 
 import macros.MacroOperation;
 import model.Database;
@@ -66,9 +69,16 @@ import operations.microbeTrackerIO.MicrobeTrackerIO;
 import operations.peakFinder.FindPeaksOperation;
 import operations.peakFitter.PeakFitter2;
 
-public class ISBatch_ implements TreeSelectionListener {
+public class ISBatch_ implements TreeSelectionListener, ActionListener {
 	String version = "v0.3.2-beta";
 	private static ISBatch_ instance;
+
+	/** Links to Websites */
+
+	private String databaseDownloadURL = "http://singlemolecule.nl/~vcaldas/iSBatch/";
+	private String openIssueURL = "https://github.com/SingleMolecule/iSBatch/issues/new";
+	private String sourceCodeURL = "https://github.com/SingleMolecule/iSBatch";
+	private String helpPageURL = "https://github.com/SingleMolecule/iSBatch/wiki";
 
 	private Database database;
 	private DatabaseModel treeModel;
@@ -92,9 +102,7 @@ public class ISBatch_ implements TreeSelectionListener {
 		database = dialog.getDatabase();
 		if (database == null)
 			return;
-
 		startProcess();
-
 	}
 
 	private void startProcess() {
@@ -160,10 +168,99 @@ public class ISBatch_ implements TreeSelectionListener {
 		frame.setVisible(true);
 	}
 
+	/**
+	 * 
+	 * Defining components of Menu Bar This section will be moved when proper
+	 * MVC design takes place.
+	 * 
+	 */
+
+	private JMenuBar menuBar;
+	// private JMenu preferences = new JMenu("Preferences");
+	private JMenu menu;
+	private JMenuItem NewtMenuItem;
+	private JMenuItem LoadMenuItem;
+	private JMenuItem exit;
+	private JMenuItem saveMenuItem;
+
+	private JMenu helpMenuBar;
+	private JMenuItem prefsMenuItem;
+	private JMenuItem helpMenuItem;
+	private JMenuItem aboutMenuItem;
+	private JMenuItem sourceMenuItem;
+	private JMenuItem bugReport;
+	private JMenuItem downloadDBItem;
+
 	private void createMenus() {
-		iSBatchMenu iSBatchMenu = new iSBatchMenu(instance);
-		iSBatchMenu.setVersion(version);
-		frame.setJMenuBar(iSBatchMenu.getISBachMenuBar());
+		// iSBatchMenu iSBatchMenu = new iSBatchMenu(instance);
+		// iSBatchMenu.setVersion(version);
+		// frame.setJMenuBar(iSBatchMenu.getISBachMenuBar());
+
+		// Main top MenuBar
+
+		// Add Items to the main top Menu bar.
+		menuBar = new JMenuBar();
+		/**
+		 * Menu Save database Load database New Database Quit
+		 */
+		menu = new JMenu("Database");
+		menuBar.add(menu); // Add to the top MenuBar
+
+		NewtMenuItem = new JMenuItem("New Database");
+		LoadMenuItem = new JMenuItem("Load Database");
+		saveMenuItem = new JMenuItem("Save");
+		exit = new JMenuItem("Quit");
+
+		menu.add(NewtMenuItem);
+		menu.add(LoadMenuItem);
+		menu.add(saveMenuItem);
+		menu.add(exit);
+
+		NewtMenuItem.addActionListener(this);
+		LoadMenuItem.addActionListener(this);
+		saveMenuItem.addActionListener(this);
+		exit.addActionListener(this);
+
+		/**
+		 * Help About Source Code Website Report issues Contact Get Datasets
+		 */
+
+		helpMenuBar = new JMenu("Help");
+		menuBar.add(helpMenuBar);
+
+		prefsMenuItem = new JMenuItem("Preferences");
+		helpMenuItem = new JMenuItem("Help");
+		aboutMenuItem = new JMenuItem("About");
+		sourceMenuItem = new JMenuItem("Source Code");
+		bugReport = new JMenuItem("Report bug");
+		downloadDBItem = new JMenuItem("Download Database");
+
+		helpMenuBar.add(helpMenuItem);
+		helpMenuBar.add(aboutMenuItem);
+		helpMenuBar.add(sourceMenuItem);
+		helpMenuBar.add(bugReport);
+		helpMenuBar.add(downloadDBItem);
+
+		prefsMenuItem.addActionListener(this);
+		helpMenuItem.addActionListener(this);
+		aboutMenuItem.addActionListener(this);
+		bugReport.addActionListener(this);
+		sourceMenuItem.addActionListener(this);
+		downloadDBItem.addActionListener(this);
+
+		// preferences.add(prefsMenuItem);
+		// menuBar.add(preferences);
+
+		frame.setJMenuBar(menuBar);
+
+	}
+
+	public void openWebPage(String url) {
+		try {
+			Desktop.getDesktop().browse(new URL(url).toURI());
+		} catch (Exception e) {
+			LogPanel.log(e.getMessage());
+		}
 	}
 
 	private JPanel createListPanel() {
@@ -366,14 +463,18 @@ public class ISBatch_ implements TreeSelectionListener {
 	public Operation[] getOperations() {
 		return new Operation[] {
 				// new MacroOperation2(frame, treeModel),
-				new DebugProperties(treeModel), new SetBackGround(treeModel),
+				new DebugProperties(treeModel), 
+				new SetBackGround(treeModel),
 				new FlattenOperation(treeModel),
-				new MicrobeTrackerIO(treeModel), new CellOutlines(treeModel),
+				new MicrobeTrackerIO(treeModel), 
+				new CellOutlines(treeModel),
 				new FindPeaksOperation(), new PeakFitter2(),
 				new MacroOperation(treeModel),
 				new CellularConcentration(treeModel),
-				new CellIntensity(treeModel), new FocusLifetimes(treeModel),
-				new Tracking(treeModel), new LocationMaps(treeModel),
+				new CellIntensity(treeModel), 
+				new FocusLifetimes(treeModel),
+				new Tracking(treeModel), 
+				new LocationMaps(treeModel),
 				new ChangePoint(treeModel), };
 	}
 
@@ -499,20 +600,46 @@ public class ISBatch_ implements TreeSelectionListener {
 	}
 
 	public void reLoad() {
+
 		DatabaseDialog dialog = new DatabaseDialog(frame);
 		database = dialog.getDatabase();
 		if (database == null)
 			return;
 		else {
-
 			try {
 				loadDatabase(database);
 			} catch (SqlJetException e) {
 				e.printStackTrace();
 			}
-
 		}
-		
+
+	}
+		}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object selectedSource = e.getSource();
+		if (selectedSource == NewtMenuItem) {
+			newDatabase();
+		} else if (selectedSource == saveMenuItem) {
+			saveDatabase();
+		} else if (selectedSource == exit) {
+			System.exit(0);
+		} else if (selectedSource == helpMenuItem) {
+			openWebPage(sourceCodeURL);
+		} else if (selectedSource == bugReport) {
+			openWebPage(openIssueURL);
+		} else if (selectedSource == aboutMenuItem) {
+			new AboutPanel(version);
+		} else if (selectedSource == helpMenuItem) {
+			openWebPage(helpPageURL);
+		} else if (selectedSource == prefsMenuItem) {
+			LogPanel.log("Set Preferences");
+		} else if (selectedSource == LoadMenuItem) {
+			reLoad();
+		} else if (selectedSource == downloadDBItem) {
+			openWebPage(databaseDownloadURL);
+		}
 	}
 
 }

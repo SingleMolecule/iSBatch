@@ -31,7 +31,7 @@ public enum NodeType {
 		case ROOT:			return "Root";
 		case EXPERIMENT:			return "Experiment";
 		case SAMPLE:			return "Sample";
-		case FOV: 	return "Field of View";
+		case FOV: 	return "FieldOfView";
 		case FILE: 	return "File";
 		default:			return "";
 		}
