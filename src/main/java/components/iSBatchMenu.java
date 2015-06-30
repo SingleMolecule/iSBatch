@@ -9,17 +9,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
 
-import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 public class iSBatchMenu implements ActionListener {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	//TODO: The MenuBar should be separated from the rest of the software. Better MCV practices should be implemented before this step.
+	
 
 	/** Website links */
 
@@ -94,7 +91,7 @@ public class iSBatchMenu implements ActionListener {
 		} else if (selectedSource == prefsMenuItem) {
 			LogPanel.log("Set Preferences");
 		} else if (selectedSource == LoadMenuItem) {
-			isbatch.reLoad();
+//			isbatch.reLoad();
 
 		}
 	}
