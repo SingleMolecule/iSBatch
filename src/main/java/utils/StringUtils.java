@@ -5,7 +5,6 @@ import java.util.regex.Pattern;
 
 public class StringUtils {
 
-	
 	/**
 	 * This class contain methods to deal with simple string operations and to
 	 * handle creation of tags.
@@ -32,33 +31,34 @@ public class StringUtils {
 	}
 
 	public static boolean checkStackAssignment(String currentStacklabel) {
-		
-		System.out.println("Checking Stack assignment in " + currentStacklabel);
-		System.out.println("This will return " + getStackAssigment(currentStacklabel));
-		if(getStackAssigment(currentStacklabel) == "" || getStackAssigment(currentStacklabel) == null ){
-		
-			System.out.println("Return false");
+
+		// System.out.println("Checking Stack assignment in " +
+		// currentStacklabel);
+		// System.out.println("This will return " +
+		// getStackAssigment(currentStacklabel));
+		if (getStackAssigment(currentStacklabel).equalsIgnoreCase("")
+				|| getStackAssigment(currentStacklabel) == null) {
+
+//			System.out.println("Return false");
 			return false;
 		}
-		System.out.println("Return true " + getStackAssigment(currentStacklabel));
+//		System.out.println("Return true "
+//				+ getStackAssigment(currentStacklabel));
 		return true;
 	}
-	
-
-		
 
 	public static String getStackAssigment(String currentStacklabel) {
 		String stackAssignmentPattern = "(S\\(\\d{1,15}\\|\\d{1,15}\\))";
 		Pattern MY_PATTERN = Pattern.compile(stackAssignmentPattern);
-		Matcher  matcher = MY_PATTERN.matcher(currentStacklabel);
-	
-		 String matching = "";
-		
-		 while (matcher.find()) {
-			 	matching = matcher.group(1);
-			 	System.out.println(matching);
+		Matcher matcher = MY_PATTERN.matcher(currentStacklabel);
+
+		String matching = "";
+
+		while (matcher.find()) {
+			matching = matcher.group(1);
+			System.out.println(matching);
 		}
-		 return matching;
+		return matching;
 	}
 
 	public static int getCurrentStackfromAssigment(String currentStacklabel) {
@@ -85,7 +85,6 @@ public class StringUtils {
 		str[5] = "x(1|23232323232)";
 		str[6] = "s(1|23232323232)";
 		str[7] = "Sstack(1|23232323232)";
-
 
 		for (int i = 0; i < str.length; i++) {
 			System.out.println("Input: " + str[i]);

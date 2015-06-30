@@ -44,8 +44,9 @@ public class GenericFilter implements NodeFilterInterface {
 
 	@Override
 	public boolean accept(Node node) {
-		System.out.println("1 --- " + node.getType() + "|" + node.getChannel()
-				+ "|" + node.getName());
+		// System.out.println("1 --- " + node.getType() + "|" +
+		// node.getChannel()
+		// + "|" + node.getName());
 		if (!node.getType().equalsIgnoreCase(FileNode.type)) {
 			// System.out.println("Not the rigth type");
 			return false;
@@ -64,16 +65,16 @@ public class GenericFilter implements NodeFilterInterface {
 		} else {
 
 			FileNode fNode = (FileNode) node;
-			System.out.println("  |--- " + fNode.getType() + "|"
-					+ fNode.getChannel() + "|" + fNode.getName() + "|"
-					+ fNode.getTags().size() + "|" + "|" + tags.size());
+			// System.out.println("  |--- " + fNode.getType() + "|"
+			// + fNode.getChannel() + "|" + fNode.getName() + "|"
+			// + fNode.getTags().size() + "|" + "|" + tags.size());
 			if (fNode.getTags().size() == 0
 					&& tags.get(0).equalsIgnoreCase("Raw")) {
-				System.out.println("Tag size is 1. Tag is" + tags.get(0));
+				// System.out.println("Tag size is 1. Tag is" + tags.get(0));
 				matchTag = true;
 			} else {
 				if (equalLists(fNode.getTags(), tags)) {
-					System.out.println("String comparison.");
+					// System.out.println("String comparison.");
 					matchTag = true;
 				}
 			}
@@ -98,7 +99,7 @@ public class GenericFilter implements NodeFilterInterface {
 
 	public static boolean equalLists(ArrayList<String> one,
 			ArrayList<String> two) {
-		
+
 		HashSet<String> hOne = new HashSet<String>();
 		HashSet<String> hTwo = new HashSet<String>();
 
@@ -118,7 +119,7 @@ public class GenericFilter implements NodeFilterInterface {
 			return false;
 		}
 		System.out.println("Same size");
-		
+
 		one = new ArrayList<String>(hOne);
 		two = new ArrayList<String>(hTwo);
 

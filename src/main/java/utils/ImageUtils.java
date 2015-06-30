@@ -135,7 +135,7 @@ public class ImageUtils {
 	}
 
 	public static String getStackPosition(int i, int size) {
-		return "S("+Integer.toString(i) + "|" + size+")";
+		return "|S("+Integer.toString(i) + "|" + size+")";
 	}
 
 	public static void appendTitle(ImageStack stack, String string) {

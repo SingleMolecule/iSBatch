@@ -463,18 +463,14 @@ public class ISBatch_ implements TreeSelectionListener, ActionListener {
 	public Operation[] getOperations() {
 		return new Operation[] {
 				// new MacroOperation2(frame, treeModel),
-				new DebugProperties(treeModel), 
-				new SetBackGround(treeModel),
+				new DebugProperties(treeModel), new SetBackGround(treeModel),
 				new FlattenOperation(treeModel),
-				new MicrobeTrackerIO(treeModel), 
-				new CellOutlines(treeModel),
+				new MicrobeTrackerIO(treeModel), new CellOutlines(treeModel),
 				new FindPeaksOperation(), new PeakFitter2(),
 				new MacroOperation(treeModel),
 				new CellularConcentration(treeModel),
-				new CellIntensity(treeModel), 
-				new FocusLifetimes(treeModel),
-				new Tracking(treeModel), 
-				new LocationMaps(treeModel),
+				new CellIntensity(treeModel), new FocusLifetimes(treeModel),
+				new Tracking(treeModel), new LocationMaps(treeModel),
 				new ChangePoint(treeModel), };
 	}
 
@@ -614,7 +610,6 @@ public class ISBatch_ implements TreeSelectionListener, ActionListener {
 		}
 
 	}
-		
 
 	@Override
 	public void actionPerformed(ActionEvent e) {

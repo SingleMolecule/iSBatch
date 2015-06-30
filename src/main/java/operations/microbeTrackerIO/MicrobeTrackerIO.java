@@ -91,6 +91,8 @@ public class MicrobeTrackerIO implements Operation {
 	}
 
 	public void finalize(Node node) {
+		System.out.println("--- End ----");
+
 		System.out.println("MicrobeTracker IO Operation finalized");
 	}
 
@@ -103,9 +105,11 @@ public class MicrobeTrackerIO implements Operation {
 	}
 
 	private void setExperimentType(Experiment experiment) {
-		System.out.println(experiment.getType());
-		if(experiment.getType()== "Time Lapse")
+		System.out.println("Type " + experiment.getProperty("type"));
+		if(experiment.getProperty("type")== "Time Lapse")
+			System.out.println("Boolean before: " + isTimeLapse);
 			this.isTimeLapse = true;
+			System.out.println("Boolean after: " + isTimeLapse);
 	}
 
 	private void run(Node node) {
@@ -183,10 +187,12 @@ public class MicrobeTrackerIO implements Operation {
 		ArrayList<Node> filenodes = node.getDescendents(new GenericFilter(
 				channel, imageTag, null, null));
 
-		
 		MicrobeTrackerInputStack MTImputStack = new MicrobeTrackerInputStack(filenodes, isTimeLapse,"MTInput");
 		ImagePlus imp = MTImputStack.getImagePlus();
 
+		//Convert image to 15 bit
+//		IJ.run(imp, "Enhance Contrast", "saturated=0.35");
+//		IJ.run(imp, "16-bit", "");
 		
 		// save Image
 		System.out.println(node.getOutputFolder() + File.separator
@@ -197,7 +203,6 @@ public class MicrobeTrackerIO implements Operation {
 
 		// Now, finally get this list of files and create a combined
 
-		System.out.println("--- End ----");
 
 	}
 
