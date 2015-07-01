@@ -17,8 +17,6 @@ import ij.ImagePlus;
 import ij.gui.PolygonRoi;
 import ij.gui.Roi;
 import ij.plugin.frame.RoiManager;
-import imageOperations.NodeToImageStack;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,7 +39,6 @@ import model.parameters.NodeType;
 import operations.Operation;
 import test.TreeGenerator;
 import utils.EnumUtils;
-import utils.ImageUtils;
 
 public class MicrobeTrackerIO implements Operation {
 	private MicrobeTrackerIOGui dialog;
@@ -50,7 +47,6 @@ public class MicrobeTrackerIO implements Operation {
 	private String BFFIleInputPath;
 	private Object imageType;
 	private ArrayList<String> imageTag;
-	private ImageUtils impUtils;
 	private boolean isTimeLapse = false;
 
 	public MicrobeTrackerIO(DatabaseModel treeModel) {

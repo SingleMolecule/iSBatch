@@ -52,28 +52,10 @@ public class MicrobeTrackerInputStack {
 		this.isTimeLapse = isTimeLapse;
 	}
 
-	/**
-	 * Instantiates a new microbe tracker input stack assuming @isTimeLapse to
-	 * be False.
-	 *
-	 * @param filenodes
-	 *            List of File Nodes
-	 */
 	public MicrobeTrackerInputStack(ArrayList<Node> filenodes) {
 		this.fileNodes = filenodes;
 		this.isTimeLapse = false;
 	}
-
-	/**
-	 * Instantiates a new microbe tracker input stack.
-	 *
-	 * @param filenodes
-	 *            the filenodes
-	 * @param isTimeLapse
-	 *            the is time lapse
-	 * @param tag
-	 *            the tag
-	 */
 	public MicrobeTrackerInputStack(ArrayList<Node> filenodes,
 			boolean isTimeLapse, String tag) {
 		this.fileNodes = filenodes;
@@ -103,12 +85,6 @@ public class MicrobeTrackerInputStack {
 					.getImagePlus();
 	}
 
-	/**
-	 * Creates the time lapse mt stack.
-	 * 
-	 * @param tag2
-	 * @param fileNodes2
-	 */
 //	private ImagePlus createTimeLapseMTStack(ArrayList<Node> fileNodes2,
 //			String tag2) {
 //		/**
@@ -154,22 +130,10 @@ public class MicrobeTrackerInputStack {
 //
 //	}
 
-	/**
-	 * Sets the tag.
-	 *
-	 * @param tag
-	 *            the new tag
-	 */
 	public void setTag(String tag) {
 		this.tag = tag;
 	}
 
-	/**
-	 * The main method.
-	 *
-	 * @param args
-	 *            the arguments
-	 */
 //	public static void main(String[] args) {
 //		// Open image 1
 //
@@ -192,15 +156,6 @@ public class MicrobeTrackerInputStack {
 //		System.out.println("Done");
 //	}
 
-	/**
-	 * Append image plus.
-	 *
-	 * @param imp1
-	 *            the imp1
-	 * @param imp2
-	 *            the imp2
-	 * @return
-	 */
 //	private static ImagePlus appendImagePlus(ImagePlus imp1, ImagePlus imp2) {
 //		// Create Image
 //		ImagePlus results = imp1;
