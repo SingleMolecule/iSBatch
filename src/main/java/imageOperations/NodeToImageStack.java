@@ -19,57 +19,10 @@ public class NodeToImageStack {
 
 	private ImagePlus imp;
 
-	public NodeToImageStack(ArrayList<Node> nodes, String channel, boolean isTimeLapse) {
-		if(isTimeLapse){
-			/**
-			 * Has to loop through all filenodes and concatenate the images so
-			 * information can be retrieved later.
-			 * 
-			 * Name pattern for Timelapse MT Input will follow the rapid acquisition
-			 * pattern but has the the extra information of
-			 * (CurrentSlice/TotalSlices)
-			 */
-			// Create the output
-
-			ImagePlus templateImp = IJ.openImage(fileNodes.get(0).getPath());
-			String channel = fileNodes.get(0).getChannel();
-			String str = "[" + channel + "]" + tag;
-			int total = fileNodes.size();
-
-			// To loop, get the stack
-//			ImageStack resultStack = templateImp.getStack();
-			// Loop and Store. The first image will be copied to the recent made
-			// stack.
-
-			ImagePlus currentImp = IJ.openImage(fileNodes.get(0).getPath());
-			ImageStack currentStack = currentImp.getStack();
-			ImageUtils.appendTitle(currentStack, fileNodes.get(0).getName());
-			ImageUtils.appendStackPositiontoTitle(currentStack);
-
-			// Now loop and add to resultsStack.
-
-			// Start from 1, since 0 is already done.
-			for (int i = 1; i < total; i++) {
-
-				currentImp = IJ.openImage(fileNodes.get(i).getPath());
-				currentStack = currentImp.getStack();
-
-				ImageUtils.appendTitle(currentStack, fileNodes.get(0).getName());
-				ImageUtils.appendStackPositiontoTitle(currentStack);
-				templateImp = appendImagePlus(templateImp, currentImp);
-
-			}
-
-			return currentImp;
-
-		}
-			
-			
-		}
-		else{
+	public NodeToImageStack(ArrayList<Node> nodes, String channel, String tag, boolean isTimeLapse) {
 			// System.out.println(nodes.get(0).getPath());
 			ImagePlus ip = IJ.openImage(nodes.get(0).getPath());
-			String str = "[" + channel + "]" + isTimeLapse;
+			String str = "[" + channel + "]" + tag;
 			int total = nodes.size();
 			ImagePlus imp2 = IJ.createImage(str, ip.getWidth(), ip.getHeight(),
 					total, ip.getBitDepth());
@@ -90,10 +43,86 @@ public class NodeToImageStack {
 		}
 		
 		
-		
+
+	public NodeToImageStack(ArrayList<Node> nodes, String tag, boolean isTimelapse) {
+		if(isTimelapse){
+			NodeToImageStackTL(nodes, tag);
+		}
+		else{
+			NodeToImageStackRA(nodes, tag);
+		}
 	}
 
-	public NodeToImageStack(ArrayList<Node> nodes, String tag) {
+	private void NodeToImageStackTL(ArrayList<Node> nodes, String tag) {
+		/**
+		 * Has to loop through all filenodes and concatenate the images so
+		 * information can be retrieved later.
+		 * 
+		 * Name pattern for Timelapse MT Input will follow the rapid acquisition
+		 * pattern but has the the extra information of
+		 * (CurrentSlice/TotalSlices)
+		 */
+		
+		// Create the output
+
+//		ImagePlus templateImp = IJ.openImage(nodes.get(0).getPath());
+		String channel = nodes.get(0).getChannel();
+		String str = "[" + channel + "]" + tag;
+		int total = nodes.size();
+
+		// To loop, get the stack
+//		ImageStack resultStack = templateImp.getStack();
+		// Loop and Store. The first image will be copied to the recent made
+		// stack.
+
+		ImagePlus templateImp = IJ.openImage(nodes.get(0).getPath());
+		ImageStack currentStack = templateImp.getStack();
+		
+		ImageUtils.appendTitle(currentStack, nodes.get(0).getName());
+		ImageUtils.appendStackPositiontoTitle(currentStack);
+
+		// Now loop and add to resultsStack.
+
+		// Start from 1, since 0 is already done.
+		for (int i = 1; i < total; i++) {
+
+			ImagePlus currentImp = IJ.openImage(nodes.get(i).getPath());
+			currentStack = currentImp.getStack();
+
+			ImageUtils.appendTitle(currentStack, nodes.get(0).getName());
+			ImageUtils.appendStackPositiontoTitle(currentStack);
+			templateImp = appendImagePlus(templateImp, currentImp);
+
+		}
+		System.out.println(templateImp.getTitle());
+		templateImp.setTitle(str);
+		System.out.println(str);
+		System.out.println(templateImp.getTitle());
+		this.imp = templateImp;
+		
+	}
+	
+	private static ImagePlus appendImagePlus(ImagePlus imp1, ImagePlus imp2) {
+		// Create Image
+		ImagePlus results = imp1;
+		// get Stacks
+
+		ImageStack resultsStack = results.getStack();
+		ImageStack stack2 = imp2.getStack();
+
+		int TotalSize = stack2.getSize();
+		for (int i = 1; i <= TotalSize; i++) {
+			ImageProcessor ip = stack2.getProcessor(i);
+			resultsStack
+					.addSlice(ImageUtils.getStackPosition(i, TotalSize), ip);
+		}
+
+		return results;
+	}
+
+
+
+	private void NodeToImageStackRA(ArrayList<Node> nodes, String tag) {
 		ImagePlus ip = IJ.openImage(nodes.get(0).getPath());
 		String channel = nodes.get(0).getChannel();
 		String str = "[" + channel + "]" + tag;
@@ -114,8 +143,10 @@ public class NodeToImageStack {
 			stack.setSliceLabel(ImageName, i + 1);
 		}
 		this.imp = imp2;
-
+		
 	}
+
+
 
 	public ImagePlus getImagePlus() {
 		return imp;

@@ -226,8 +226,8 @@ public class MacroDialog3 extends JDialog implements ActionListener, Runnable {
 			if (!shouldRun)
 				return;
 			
-			RoiManager roiManager = new RoiManager();
-			roiManager.setVisible(false);
+			RoiManager roiManager = new RoiManager(true);
+//			roiManager.setVisible(false);
 			
 			String path = fileNode.getProperty("path");
 			path = path.replace("\\", "\\\\"); // necessary since it will be included in the macro code

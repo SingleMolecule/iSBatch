@@ -92,10 +92,25 @@ public class ISBatch_ implements TreeSelectionListener, ActionListener {
 	protected Object oldSelectedPath;
 
 	public static void main(String[] args) {
-		getInstance();
+		String path = "/home/vcaldas/ISBatchTutorial/MinimalDataset/TutorialDB";
+		File file = new File(path);
+		try {
+			instance  = new ISBatch_(file);
+		} catch (SqlJetException e) {
+			e.printStackTrace();
+		}
 	}
 
 	protected Node selectedNode;
+	
+	public ISBatch_(File file) throws SqlJetException {
+		DatabaseDialog dialog = new DatabaseDialog(frame, file.getAbsolutePath());
+		database = dialog.getDatabase();
+		if (database == null)
+			return;
+		startProcess();
+	}
+	
 
 	public ISBatch_() throws SqlJetException {
 		DatabaseDialog dialog = new DatabaseDialog(frame);
@@ -445,7 +460,7 @@ public class ISBatch_ implements TreeSelectionListener, ActionListener {
 					if (path != null) {
 						RoiManager manager = RoiManager.getInstance();
 						if (manager == null) {
-							manager = new RoiManager();
+							manager = new RoiManager(true);
 						}
 						manager.runCommand("Open",
 								selectedNode.getProperty("supportRoi"));

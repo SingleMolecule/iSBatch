@@ -109,50 +109,50 @@ public class MicrobeTrackerInputStack {
 	 * @param tag2
 	 * @param fileNodes2
 	 */
-	private ImagePlus createTimeLapseMTStack(ArrayList<Node> fileNodes2,
-			String tag2) {
-		/**
-		 * Has to loop through all filenodes and concatenate the images so
-		 * information can be retrieved later.
-		 * 
-		 * Name pattern for Timelapse MT Input will follow the rapid acquisition
-		 * pattern but has the the extra information of
-		 * (CurrentSlice/TotalSlices)
-		 */
-		// Create the output
-
-		ImagePlus templateImp = IJ.openImage(fileNodes.get(0).getPath());
-		String channel = fileNodes.get(0).getChannel();
-		String str = "[" + channel + "]" + tag;
-		int total = fileNodes.size();
-
-		// To loop, get the stack
-//		ImageStack resultStack = templateImp.getStack();
-		// Loop and Store. The first image will be copied to the recent made
-		// stack.
-
-		ImagePlus currentImp = IJ.openImage(fileNodes.get(0).getPath());
-		ImageStack currentStack = currentImp.getStack();
-		ImageUtils.appendTitle(currentStack, fileNodes.get(0).getName());
-		ImageUtils.appendStackPositiontoTitle(currentStack);
-
-		// Now loop and add to resultsStack.
-
-		// Start from 1, since 0 is already done.
-		for (int i = 1; i < total; i++) {
-
-			currentImp = IJ.openImage(fileNodes.get(i).getPath());
-			currentStack = currentImp.getStack();
-
-			ImageUtils.appendTitle(currentStack, fileNodes.get(0).getName());
-			ImageUtils.appendStackPositiontoTitle(currentStack);
-			templateImp = appendImagePlus(templateImp, currentImp);
-
-		}
-
-		return currentImp;
-
-	}
+//	private ImagePlus createTimeLapseMTStack(ArrayList<Node> fileNodes2,
+//			String tag2) {
+//		/**
+//		 * Has to loop through all filenodes and concatenate the images so
+//		 * information can be retrieved later.
+//		 * 
+//		 * Name pattern for Timelapse MT Input will follow the rapid acquisition
+//		 * pattern but has the the extra information of
+//		 * (CurrentSlice/TotalSlices)
+//		 */
+//		// Create the output
+//
+//		ImagePlus templateImp = IJ.openImage(fileNodes.get(0).getPath());
+//		String channel = fileNodes.get(0).getChannel();
+//		String str = "[" + channel + "]" + tag;
+//		int total = fileNodes.size();
+//
+//		// To loop, get the stack
+////		ImageStack resultStack = templateImp.getStack();
+//		// Loop and Store. The first image will be copied to the recent made
+//		// stack.
+//
+//		ImagePlus currentImp = IJ.openImage(fileNodes.get(0).getPath());
+//		ImageStack currentStack = currentImp.getStack();
+//		ImageUtils.appendTitle(currentStack, fileNodes.get(0).getName());
+//		ImageUtils.appendStackPositiontoTitle(currentStack);
+//
+//		// Now loop and add to resultsStack.
+//
+//		// Start from 1, since 0 is already done.
+//		for (int i = 1; i < total; i++) {
+//
+//			currentImp = IJ.openImage(fileNodes.get(i).getPath());
+//			currentStack = currentImp.getStack();
+//
+//			ImageUtils.appendTitle(currentStack, fileNodes.get(0).getName());
+//			ImageUtils.appendStackPositiontoTitle(currentStack);
+//			templateImp = appendImagePlus(templateImp, currentImp);
+//
+//		}
+//
+//		return currentImp;
+//
+//	}
 
 	/**
 	 * Sets the tag.
@@ -170,27 +170,27 @@ public class MicrobeTrackerInputStack {
 	 * @param args
 	 *            the arguments
 	 */
-	public static void main(String[] args) {
-		// Open image 1
-
-		ImagePlus imp1 = IJ.openImage("D:\\RoiTest\\001 BF_flat.tif");
-		ImagePlus imp3 = IJ.openImage("D:\\RoiTest\\001 BF_flat.tif");
-
-		ImageStack stack1 = imp1.getStack();
-		ImageStack stack2 = imp1.getStack();
-
-		ImageUtils.appendTitle(stack1, "Title1");
-		ImageUtils.appendTitle(stack1, "Title2");
-
-		ImageUtils.appendStackPositiontoTitle(stack1);
-		ImageUtils.appendStackPositiontoTitle(stack2);
-
-		ImagePlus results = appendImagePlus(imp1, imp3);
-		results = appendImagePlus(results, imp3);
-		// ImagePlus results = appendImagePlus(stack1, stack2);
-		IJ.saveAsTiff(results, "D:\\RoiTest\\result3");
-		System.out.println("Done");
-	}
+//	public static void main(String[] args) {
+//		// Open image 1
+//
+//		ImagePlus imp1 = IJ.openImage("D:\\RoiTest\\001 BF_flat.tif");
+//		ImagePlus imp3 = IJ.openImage("D:\\RoiTest\\001 BF_flat.tif");
+//
+//		ImageStack stack1 = imp1.getStack();
+//		ImageStack stack2 = imp1.getStack();
+//
+//		ImageUtils.appendTitle(stack1, "Title1");
+//		ImageUtils.appendTitle(stack1, "Title2");
+//
+//		ImageUtils.appendStackPositiontoTitle(stack1);
+//		ImageUtils.appendStackPositiontoTitle(stack2);
+//
+////		ImagePlus results = appendImagePlus(imp1, imp3);
+////		results = appendImagePlus(results, imp3);
+//		// ImagePlus results = appendImagePlus(stack1, stack2);
+//		IJ.saveAsTiff(results, "D:\\RoiTest\\result3");
+//		System.out.println("Done");
+//	}
 
 	/**
 	 * Append image plus.
@@ -201,22 +201,22 @@ public class MicrobeTrackerInputStack {
 	 *            the imp2
 	 * @return
 	 */
-	private static ImagePlus appendImagePlus(ImagePlus imp1, ImagePlus imp2) {
-		// Create Image
-		ImagePlus results = imp1;
-		// get Stacks
-
-		ImageStack resultsStack = results.getStack();
-		ImageStack stack2 = imp2.getStack();
-
-		int TotalSize = stack2.getSize();
-		for (int i = 1; i <= TotalSize; i++) {
-			ImageProcessor ip = stack2.getProcessor(i);
-			resultsStack
-					.addSlice(ImageUtils.getStackPosition(i, TotalSize), ip);
-		}
-
-		return results;
-	}
+//	private static ImagePlus appendImagePlus(ImagePlus imp1, ImagePlus imp2) {
+//		// Create Image
+//		ImagePlus results = imp1;
+//		// get Stacks
+//
+//		ImageStack resultsStack = results.getStack();
+//		ImageStack stack2 = imp2.getStack();
+//
+//		int TotalSize = stack2.getSize();
+//		for (int i = 1; i <= TotalSize; i++) {
+//			ImageProcessor ip = stack2.getProcessor(i);
+//			resultsStack
+//					.addSlice(ImageUtils.getStackPosition(i, TotalSize), ip);
+//		}
+//
+//		return results;
+//	}
 
 }

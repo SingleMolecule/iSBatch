@@ -123,7 +123,7 @@ public class SetBackGround implements Operation {
 			}
 
 			NodeToImageStack temp = new NodeToImageStack(filenodes, channel,
-					"BeamProfile");
+					"BeamProfile",false);
 
 			ImagePlus imp = temp.getImagePlus();
 

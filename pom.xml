@@ -12,13 +12,16 @@
 
 
 	<artifactId>iSBatch_</artifactId>
-	<version>0.3.2-SNAPSHOT</version>
+	<version>0.3.3-SNAPSHOT</version>
 	<inceptionYear>2015</inceptionYear>
-	
+
 
 	<name>plugins/iSBatch.jar</name>
 	<description>Plugin for batch analysis in imageJ.</description>
 
+	<properties>
+		<maven.javadoc.skip>true</maven.javadoc.skip>
+	</properties>
 	<developers>
 		<developer>
 			<id>vcaldas</id>

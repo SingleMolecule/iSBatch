@@ -75,6 +75,23 @@ public class DatabaseDialog extends JDialog implements ActionListener {
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setVisible(true);
 	} 
+	
+
+	public DatabaseDialog(Frame parent, String pathToDatabase) {
+		super(parent, "Database", true);
+		File file = new File(pathToDatabase);
+		iSBatchPreferences.lastSelectedPath = file.getPath();
+		Prefs.set("isbatch.lastSelectet.DBdir",pathToDatabase);
+		try {
+			database = new Database(file);
+		} catch (SqlJetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
 
 	private JTextField getPathText() {
 		return new JTextField(Prefs.get("isbatch.lastSelectet.DBdir",System.getProperty("user.home") + File.separator + "database"), 20);
