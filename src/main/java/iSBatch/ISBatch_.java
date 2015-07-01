@@ -443,7 +443,6 @@ public class ISBatch_ implements TreeSelectionListener, ActionListener {
 	private ActionListener displayProperties() {
 		return new ActionListener() {
 
-			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				new PropertiesTableGui(selectedNode);
 			}
@@ -453,7 +452,6 @@ public class ISBatch_ implements TreeSelectionListener, ActionListener {
 	private ActionListener getEditActionListener2() {
 		return new ActionListener() {
 
-			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (selectedNode.getType().equalsIgnoreCase("File")) {
 					String path = selectedNode.getProperty("supportRoi");
@@ -489,7 +487,6 @@ public class ISBatch_ implements TreeSelectionListener, ActionListener {
 				new ChangePoint(treeModel), };
 	}
 
-	@Override
 	public void valueChanged(TreeSelectionEvent e) {
 
 		Node node = (Node) tree.getLastSelectedPathComponent();
@@ -508,7 +505,6 @@ public class ISBatch_ implements TreeSelectionListener, ActionListener {
 
 		NodeFilterInterface fileNodesFilter = new NodeFilterInterface() {
 
-			@Override
 			public boolean accept(Node node) {
 				return node.getType().equals(NodeType.FILE);
 			}
@@ -523,7 +519,6 @@ public class ISBatch_ implements TreeSelectionListener, ActionListener {
 	private ActionListener getEditActionListener() {
 		return new ActionListener() {
 
-			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (selectedNode.getType().equalsIgnoreCase("File")) {
 					RoiManager manager = RoiManager.getInstance();
@@ -543,7 +538,6 @@ public class ISBatch_ implements TreeSelectionListener, ActionListener {
 	private ActionListener getRunMacroActionListener() {
 		return new ActionListener() {
 
-			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (selectedNode != null) {
 
@@ -626,7 +620,6 @@ public class ISBatch_ implements TreeSelectionListener, ActionListener {
 
 	}
 
-	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object selectedSource = e.getSource();
 		if (selectedSource == NewtMenuItem) {
