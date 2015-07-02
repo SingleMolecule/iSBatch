@@ -281,14 +281,6 @@ public abstract class LevenbergMarquardt {
 	 */
 	public abstract double getValue(double[] x, double[] parameters);
 	
-	/**
-	 * Gets the gradient.
-	 *
-	 * @param x the x
-	 * @param parameters the parameters
-	 * @param dyda the dyda
-	 * @return the gradient
-	 */
 	public abstract void getGradient(double[] x, double[] parameters, double[] dyda);
 	
 	/**

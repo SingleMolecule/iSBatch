@@ -51,7 +51,6 @@ public class FilterSet  {
 	/** The image file node filter. */
 	public NodeFilterInterface imageFileNodeFilter = new NodeFilterInterface() {
 
-		@Override
 		public boolean accept(Node node) {
 					String path = node.getProperty("path");
 

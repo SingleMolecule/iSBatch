@@ -47,17 +47,14 @@ public class ImportOperation implements Operation {
 		importer = new Importer(model);
 	}
 	
-	@Override
 	public String[] getContext() {
 		return new String[]{ "All" };
 	}
 
-	@Override
 	public String getName() {
 		return "Import";
 	}
 
-	@Override
 	public boolean setup(Node node) {
 		
 		String directory = IJ.getDirectory("Choose directory to import from");
@@ -67,21 +64,17 @@ public class ImportOperation implements Operation {
 		return !dialog.isCanceled();
 	}
 
-	@Override
 	public void finalize(Node node) {
 	}
 
-	@Override
 	public Node[] getCreatedNodes() {
 		return null;
 	}
 
-	@Override
 	public HashMap<String, String> getParameters() {
 		return null;
 	}
 
-	@Override
 	public void visit(Root root) {
 		
 		String[] options = new String[]{ExperimentType.RAPID_ACQUISITION.toString() , ExperimentType.TIME_LAPSE.toString()};
@@ -93,26 +86,21 @@ public class ImportOperation implements Operation {
 			importer.importExperiment(file, option == 0);
 	}
 
-	@Override
 	public void visit(Experiment experiment) {
 		importer.importSamples(experiment);
 	}
 
-	@Override
 	public void visit(Sample sample) {
 		importer.importFieldOfViews(sample);
 	}
 
-	@Override
 	public void visit(FieldOfView fieldOfView) {
 		importer.importFiles(fieldOfView);
 	}
 
-	@Override
 	public void visit(FileNode fileNode) {
 	}
 
-	@Override
 	public void visit(OperationNode operationNode) {
 	}
 

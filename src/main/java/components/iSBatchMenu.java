@@ -71,7 +71,6 @@ public class iSBatchMenu implements ActionListener {
 		menuBar.add(bugReport);
 	}
 
-	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object selectedSource = e.getSource();
 		if (selectedSource == NewtMenuItem) {
@@ -123,7 +122,7 @@ public class iSBatchMenu implements ActionListener {
 			LogPanel.log(e.getMessage());
 		}
 	}
-
+	
 	protected void showAbout() {
 		new AboutPanel(version);
 

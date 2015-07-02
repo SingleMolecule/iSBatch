@@ -41,56 +41,56 @@ public class DebugProperties implements Operation, PlugIn {
 	public DebugProperties(DatabaseModel treeModel) {
 	}
 
-	@Override
+	
 	public String[] getContext() {
 		return new String[] { "All" };
 	}
 
-	@Override
+	
 	public String getName() {
 		return "Debug";
 	}
 
-	@Override
+	
 	public boolean setup(Node node) {
 		return true;
 	}
 
-	@Override
+	
 	public void finalize(Node node) {
 	}
 
-	@Override
+	
 	public Node[] getCreatedNodes() {
 		return null;
 	}
 
-	@Override
+	
 	public HashMap<String, String> getParameters() {
 		return null;
 	}
 
-	@Override
+	
 	public void visit(Root root) {
 		System.out.println("Does not apply to update");
 	}
 
-	@Override
+	
 	public void visit(Experiment experiment) {
 		runNode(experiment);
 	}
 
-	@Override
+	
 	public void visit(Sample sample) {
 		runNode(sample);
 	}
 
-	@Override
+	
 	public void visit(FieldOfView fieldOfView) {
 		runNode(fieldOfView);
 	}
 
-	@Override
+	
 	public void visit(FileNode fileNode) {
 		runNode(fileNode);
 	}
@@ -99,11 +99,11 @@ public class DebugProperties implements Operation, PlugIn {
 		run(null);
 	}
 
-	@Override
+	
 	public void visit(OperationNode operationNode) {
 	}
 
-	@Override
+	
 	public void run(String arg0) {
 //		LogPanel.log("There are " + WindowManager.getWindowCount()
 //				+ " windows open.");

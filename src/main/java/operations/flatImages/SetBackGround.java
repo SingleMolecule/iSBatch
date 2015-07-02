@@ -50,17 +50,17 @@ public class SetBackGround implements Operation {
 	public SetBackGround(DatabaseModel treeModel) {
 	}
 
-	@Override
+	
 	public String[] getContext() {
 		return new String[] { "All" };
 	}
 
-	@Override
+	
 	public String getName() {
 		return "Set BackGround";
 	}
 
-	@Override
+	
 	public boolean setup(Node node) {
 		dialog = new SetBackgroundGui(node);
 		if (dialog.isCanceled())
@@ -79,17 +79,17 @@ public class SetBackGround implements Operation {
 		return true;
 	}
 
-	@Override
+	
 	public void finalize(Node node) {
 		System.out.println("Operation finalized");
 		LogPanel.log("Background image created and stored.");
 	}
 
-	@Override
+	
 	public void visit(Root root) {
 	}
 
-	@Override
+	
 	public void visit(Experiment experiment) {
 		run(experiment);
 
@@ -164,32 +164,32 @@ public class SetBackGround implements Operation {
 
 	}
 
-	@Override
+	
 	public void visit(Sample sample) {
 		run(sample);
 
 	}
 
-	@Override
+	
 	public void visit(FieldOfView fieldOfView) {
 		System.out.println("Call load image or ignore");
 	}
 
-	@Override
+	
 	public void visit(FileNode fileNode) {
 		run(fileNode);
 	}
 
-	@Override
+	
 	public void visit(OperationNode operationNode) {
 	}
 
-	@Override
+	
 	public Node[] getCreatedNodes() {
 		return null;
 	}
 
-	@Override
+	
 	public HashMap<String, String> getParameters() {
 		return null;
 	}

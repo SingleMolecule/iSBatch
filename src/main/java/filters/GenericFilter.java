@@ -42,7 +42,6 @@ public class GenericFilter implements NodeFilterInterface {
 
 	}
 
-	@Override
 	public boolean accept(Node node) {
 		// System.out.println("1 --- " + node.getType() + "|" +
 		// node.getChannel()

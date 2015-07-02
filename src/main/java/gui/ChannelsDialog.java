@@ -142,14 +142,6 @@ public class ChannelsDialog extends JDialog implements ActionListener {
 
 	}
 
-	/**
-	 * Gets the channel files.
-	 *
-	 * @param file the file
-	 * @param files the files
-	 * @param regularExpressions the regular expressions
-	 * @return the channel files
-	 */
 	public void getChannelFiles(File file, ArrayList<File> files,
 			String... regularExpressions) {
 
@@ -178,7 +170,7 @@ public class ChannelsDialog extends JDialog implements ActionListener {
 	 *
 	 * @param e the e
 	 */
-	@Override
+	
 	public void actionPerformed(ActionEvent e) {
 
 		if (e.getSource() == okButton) {

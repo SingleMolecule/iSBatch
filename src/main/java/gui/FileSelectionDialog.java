@@ -41,8 +41,6 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import model.Node;
-
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
@@ -50,6 +48,7 @@ import javax.swing.JCheckBox;
 import operations.peakFinder.FindPeaksGui;
 import utils.FileNames;
 import utils.ModelUtils;
+import model.Node;
 
 public class FileSelectionDialog extends JDialog implements ActionListener {
 
@@ -88,9 +87,6 @@ public class FileSelectionDialog extends JDialog implements ActionListener {
 		display();
 	}
 
-	/**
-	 * @wbp.parser.constructor
-	 */
 	public FileSelectionDialog(Node node, String title) {
 		setModal(true);
 		setTitle(title);

@@ -280,7 +280,6 @@ public class Main implements ActionListener {
 	 *
 	 * @param e the e
 	 */
-	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == openButton) {
 			openFile();

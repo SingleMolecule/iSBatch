@@ -11,7 +11,7 @@ public class ChannelFilter implements NodeFilterInterface{
 	public ChannelFilter(String channel) {
 		this.channel = channel;
 	}
-	@Override
+	
 	public boolean accept(Node node) {
 
 		String ch = node.getChannel();

@@ -206,7 +206,6 @@ public class Plot extends Component implements Runnable {
 	/**
 	 * Run.
 	 */
-	@Override
 	public void run() {
 		double dx, dy, dw, dh, sx, sy;
 		

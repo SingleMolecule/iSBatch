@@ -14,9 +14,11 @@ package operations.microbeTrackerIO;
 
 import ij.IJ;
 import ij.ImagePlus;
+import ij.ImageStack;
 import ij.gui.PolygonRoi;
 import ij.gui.Roi;
 import ij.plugin.frame.RoiManager;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,6 +41,8 @@ import model.parameters.NodeType;
 import operations.Operation;
 import test.TreeGenerator;
 import utils.EnumUtils;
+import utils.ImageStackUtils;
+import utils.StringUtils;
 
 public class MicrobeTrackerIO implements Operation {
 	private MicrobeTrackerIOGui dialog;
@@ -48,7 +52,8 @@ public class MicrobeTrackerIO implements Operation {
 	private Object imageType;
 	private ArrayList<String> imageTag;
 	private boolean isTimeLapse = false;
-
+	private StringUtils strUtils = new StringUtils(false);
+	
 	public MicrobeTrackerIO(DatabaseModel treeModel) {
 
 	}
@@ -101,11 +106,8 @@ public class MicrobeTrackerIO implements Operation {
 	}
 
 	private void setExperimentType(Experiment experiment) {
-		System.out.println("Type " + experiment.getProperty("type"));
-		if(experiment.getProperty("type")== "Time Lapse")
-			System.out.println("Boolean before: " + isTimeLapse);
+		if (experiment.getProperty("type") == "Time Lapse")
 			this.isTimeLapse = true;
-			System.out.println("Boolean after: " + isTimeLapse);
 	}
 
 	private void run(Node node) {
@@ -114,11 +116,81 @@ public class MicrobeTrackerIO implements Operation {
 		File BFmt = new File(dialog.BFFIleInputPath);
 
 		if (matFile.exists() && BFmt.exists()) {
-			importFiles(node, matFile);
+			if (isTimeLapse) {
+				importFiles(node, matFile);
+			} else {
+				importFilesTL(node, matFile);
+			}
+
 		} else {
 			getStackForMT(node);
 		}
 
+	}
+
+	private void importFilesTL(Node node, File matFile) {
+		// Get the MicrobeTracker Reference Image
+		ImagePlus referenceImp = IJ.openImage(BFFIleInputPath);
+		ImageStack referenceStack = referenceImp.getStack();
+
+		ArrayList<FieldOfView> nodes = node.getFieldOfView();
+
+		FieldOfView currentFov = null;
+
+		ArrayList<String> uniqueFoVNames = ImageStackUtils
+				.getUniqueFOVNames(referenceImp);
+
+		try {
+			ArrayList<Mesh> meshes = MatlabMeshes.getMeshes(matFile);
+			for (Node node1 : nodes) {
+				RoiManager currentManager = new RoiManager(true);
+				System.out.println("FoV name " + node1.getName());
+				currentFov = (FieldOfView) node1;
+				
+				for (int stackPosition = 1; stackPosition <= referenceStack.getSize(); stackPosition++) {
+			
+					if(referenceStack.getShortSliceLabel(stackPosition).startsWith(node1.getName())){
+						
+						for (Mesh m : meshes) {
+
+							int meshStackPosition = m.getSlice();
+							// referenceImp.setSlice(stackPosition);
+
+							if (meshStackPosition == stackPosition) {
+								Roi roi = getRoi(m);
+								roi.setPosition(strUtils.getCurrentStackfromAssigment(referenceStack.getShortSliceLabel(stackPosition)));
+								currentManager.addRoi(roi);
+							}
+						}
+						
+					}
+			
+				}
+				
+				
+				
+				
+				System.out.println(currentFov.getOutputFolder()
+						+ File.separator + "cellRoi.zip");
+				currentFov.setCellROIPath(currentFov.getOutputFolder()
+						+ File.separator + "cellRoi.zip");
+				currentFov.getProperties().put("CellRoi",
+						currentFov.getCellROIPath());
+
+				if (currentManager.getCount() != 0) {
+					currentManager.runCommand("Save",
+							currentFov.getOutputFolder() + File.separator
+									+ "cellRoi.zip");
+				}
+				
+				
+				
+				
+				
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void importFiles(Node node, File matFile) {
@@ -178,18 +250,19 @@ public class MicrobeTrackerIO implements Operation {
 
 	private void getStackForMT(Node node) {
 
-		//Get list of nodes to be the input.
-		
+		// Get list of nodes to be the input.
+
 		ArrayList<Node> filenodes = node.getDescendents(new GenericFilter(
 				channel, imageTag, null, null));
 
-		MicrobeTrackerInputStack MTImputStack = new MicrobeTrackerInputStack(filenodes, isTimeLapse,"MTInput");
+		MicrobeTrackerInputStack MTImputStack = new MicrobeTrackerInputStack(
+				filenodes, isTimeLapse, "MTInput");
 		ImagePlus imp = MTImputStack.getImagePlus();
 
-		//Convert image to 15 bit
-//		IJ.run(imp, "Enhance Contrast", "saturated=0.35");
-//		IJ.run(imp, "16-bit", "");
-		
+		// Convert image to 15 bit
+		// IJ.run(imp, "Enhance Contrast", "saturated=0.35");
+		// IJ.run(imp, "16-bit", "");
+
 		// save Image
 		System.out.println(node.getOutputFolder() + File.separator
 				+ imp.getTitle());
@@ -198,7 +271,6 @@ public class MicrobeTrackerIO implements Operation {
 		imp.close();
 
 		// Now, finally get this list of files and create a combined
-
 
 	}
 

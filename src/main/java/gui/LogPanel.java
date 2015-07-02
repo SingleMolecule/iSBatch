@@ -22,8 +22,6 @@ import javax.swing.JScrollPane;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-// TODO: Auto-generated Javadoc
 /**
  * The Class LogPanel.
  */

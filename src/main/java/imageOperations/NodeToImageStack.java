@@ -75,11 +75,12 @@ public class NodeToImageStack {
 		// Loop and Store. The first image will be copied to the recent made
 		// stack.
 
-		ImagePlus templateImp = IJ.openImage(nodes.get(0).getPath());
-		ImageStack currentStack = templateImp.getStack();
-		
-		ImageUtils.appendTitle(currentStack, nodes.get(0).getName());
-		ImageUtils.appendStackPositiontoTitle(currentStack);
+		ImagePlus outputImp = IJ.openImage(nodes.get(0).getPath());
+		ImageStack currentStack = outputImp.getStack();
+		ImageUtils.makeFullTitle(currentStack,  nodes.get(0).getParent().getName());
+//		ImageUtils.appendTitle(currentStack, nodes.get(0).getParent().getName());
+//		System.out.println(nodes.get(0).getParent().getName());
+//		ImageUtils.appendStackPositiontoTitle(currentStack);
 
 		// Now loop and add to resultsStack.
 
@@ -88,17 +89,16 @@ public class NodeToImageStack {
 
 			ImagePlus currentImp = IJ.openImage(nodes.get(i).getPath());
 			currentStack = currentImp.getStack();
-
-			ImageUtils.appendTitle(currentStack, nodes.get(0).getName());
-			ImageUtils.appendStackPositiontoTitle(currentStack);
-			templateImp = appendImagePlus(templateImp, currentImp);
+			ImageUtils.makeFullTitle(currentStack,  nodes.get(i).getParent().getName());
+//			ImageUtils.appendTitle(currentStack, nodes.get(i).getParent().getName());
+//			System.out.println(nodes.get(i).getParent().getName());
+//			ImageUtils.appendStackPositiontoTitle(currentStack);
+			appendImagePlus(outputImp, currentImp);
 
 		}
-		System.out.println(templateImp.getTitle());
-		templateImp.setTitle(str);
-		System.out.println(str);
-		System.out.println(templateImp.getTitle());
-		this.imp = templateImp;
+		outputImp.setTitle(str);
+
+		this.imp = outputImp;
 		
 	}
 	
@@ -113,8 +113,10 @@ public class NodeToImageStack {
 		int TotalSize = stack2.getSize();
 		for (int i = 1; i <= TotalSize; i++) {
 			ImageProcessor ip = stack2.getProcessor(i);
+			System.out.println();
 			resultsStack
 					.addSlice(ImageUtils.getStackPosition(i, TotalSize), ip);
+			resultsStack.setSliceLabel(stack2.getShortSliceLabel(i), resultsStack.getSize());
 		}
 
 		return results;

@@ -10,7 +10,16 @@ import ij.process.ImageStatistics;
 
 import java.awt.Rectangle;
 
-public class ImageUtils {
+/**
+ * @author Victor Caldas
+ * 
+ * This class handles simple operations in images. 
+ * Every operation that involves changes in pixel values or generation of images should be places here.
+ * Use @StringUtils for string operations.
+ *
+ */
+public abstract class ImageUtils {
+	private static StringUtils strUtils = new StringUtils(false);
 	public void deflicker(ImagePlus imp) {
 
 		int Fram = -1;
@@ -124,7 +133,7 @@ public class ImageUtils {
 			if (currentStacklabel == null) {
 				stack.setSliceLabel(getStackPosition(i, stackSize), i);
 			} 
-			else if (StringUtils.checkStackAssignment(currentStacklabel) == false) {
+			else if (strUtils.checkStackAssignment(currentStacklabel) == false) {
 				String newLabel = currentStacklabel.concat(getStackPosition(i,
 						stackSize));
 				stack.setSliceLabel(newLabel, i);
@@ -149,10 +158,28 @@ public class ImageUtils {
 			else {
 				String newLabel = currentStacklabel.concat(getStackPosition(i,
 						stackSize));
+				System.out.println("New label variable = "+ newLabel);
 				stack.setSliceLabel(newLabel, i);
 			}
 
 		}
 		
 	}
-}
+
+	public static void makeFullTitle(ImageStack stack, String name) {
+		int stackSize = stack.getSize();
+
+		for (int i = 1; i <= stackSize; i++) {
+			String currentStacklabel = name;
+			currentStacklabel = currentStacklabel.concat(getStackPosition(i,stackSize));
+			stack.setSliceLabel(currentStacklabel, i);
+			System.out.println( "Stack name" + stack.getShortSliceLabel(i));
+			}
+
+		}
+		
+		
+		
+		
+	}
+

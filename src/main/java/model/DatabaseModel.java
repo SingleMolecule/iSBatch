@@ -34,27 +34,22 @@ public class DatabaseModel implements TreeModel {
 		this.root = root;
 	}
 
-	@Override
 	public void addTreeModelListener(TreeModelListener l) {
 		listeners.add(l);
 	}
 
-	@Override
 	public Node getChild(Object parent, int index) {
 		return ((Node) parent).getChildren().get(index);
 	}
 
-	@Override
 	public int getChildCount(Object parent) {
 		return ((Node) parent).getChildren().size();
 	}
 
-	@Override
 	public int getIndexOfChild(Object parent, Object child) {
 		return ((Node) parent).getChildren().indexOf(child);
 	}
 
-	@Override
 	public Node getRoot() {
 		return root;
 	}
@@ -67,17 +62,14 @@ public class DatabaseModel implements TreeModel {
 			l.treeStructureChanged(new TreeModelEvent(this, getPathToRoot(root)));
 	}
 
-	@Override
 	public boolean isLeaf(Object node) {
 		return getChildCount(node) == 0;
 	}
 
-	@Override
 	public void removeTreeModelListener(TreeModelListener l) {
 		listeners.remove(l);
 	}
 
-	@Override
 	public void valueForPathChanged(TreePath path, Object newValue) {
 		for (TreeModelListener l : listeners)
 			l.treeNodesChanged(new TreeModelEvent(this, path));

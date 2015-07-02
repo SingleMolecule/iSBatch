@@ -1,11 +1,12 @@
 package iSBatch;
 
+
 import filters.NodeFilterInterface;
-import gui.DatabaseDialog;
-import gui.DatabaseTreeCellRenderer;
 import gui.AboutPanel;
+import gui.DatabaseDialog;
 import gui.LogPanel;
 import gui.OperationButton;
+import gui.DatabaseTreeCellRenderer;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.measure.ResultsTable;
@@ -506,7 +507,7 @@ public class ISBatch_ implements TreeSelectionListener, ActionListener {
 		NodeFilterInterface fileNodesFilter = new NodeFilterInterface() {
 
 			public boolean accept(Node node) {
-				return node.getType().equals(NodeType.FILE);
+				return node.getType().equals(NodeType.FILE.toString());
 			}
 
 		};

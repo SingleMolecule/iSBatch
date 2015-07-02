@@ -29,7 +29,6 @@ public class NodeFilter implements NodeFilterInterface {
 	 * @param node the node
 	 * @return true, if successful
 	 */
-	@Override
 	public boolean accept(Node node) {
 		return node.getType().equalsIgnoreCase(type);
 	}
