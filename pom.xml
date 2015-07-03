@@ -19,6 +19,8 @@
 	<name>plugins/iSBatch.jar</name>
 	<description>Plugin for batch analysis in imageJ.</description>
 
+
+
 	<developers>
 		<developer>
 			<id>vcaldas</id>
@@ -131,8 +133,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.3.2</version>
 				<configuration>
-					<source>${jdk.version}</source>
-					<target>${jdk.version}</target>
+					<source>1.6</source>
+					<target>1.6</target>
 				</configuration>
 			</plugin>
 
@@ -168,5 +170,7 @@
 
 		</plugins>
 	</build>
+
+
 
 </project>
