@@ -51,17 +51,14 @@ public class AddNodeOperation implements Operation {
 		importer = new Importer(model);
 	}
 
-	@Override
 	public String getName() {
 		return "Add node ";
 	}
 
-	@Override
 	public String[] getContext() {
 		return new String[] { "All" };
 	}
 
-	@Override
 	public void visit(Root root) {
 
 		Experiment experiment = new Experiment(root);
@@ -96,7 +93,6 @@ public class AddNodeOperation implements Operation {
 		}
 	}
 
-	@Override
 	public void visit(Experiment experiment) {
 
 		Sample sample = new Sample(experiment);
@@ -131,7 +127,6 @@ public class AddNodeOperation implements Operation {
 
 	}
 
-	@Override
 	public void visit(Sample sample) {
 
 		FieldOfView fieldOfView = new FieldOfView(sample);
@@ -165,7 +160,6 @@ public class AddNodeOperation implements Operation {
 		}
 	}
 
-	@Override
 	public void visit(FieldOfView fieldOfView) {
 
 		FileNode fileNode = new FileNode(fieldOfView);
@@ -175,33 +169,27 @@ public class AddNodeOperation implements Operation {
 			model.addNode(fieldOfView, fileNode);
 	}
 
-	@Override
 	public void visit(FileNode fileNode) {
 	}
 
-	@Override
 	public boolean setup(Node node) {
 
 		return true;
 	}
 
-	@Override
 	public void finalize(Node node) {
 		LogPanel.log("Finish importing data. Double click on the node to expand it.");
 	}
 
-	@Override
 	public void visit(OperationNode operationNode) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
 	public Node[] getCreatedNodes() {
 		return null;
 	}
 
-	@Override
 	public HashMap<String, String> getParameters() {
 		return null;
 	}

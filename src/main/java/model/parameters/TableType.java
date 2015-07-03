@@ -11,15 +11,6 @@
  *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ***********************************************************************/
 package model.parameters;
-
-// TODO: Auto-generated Javadoc
-/**
- *  Types of Results Table
- *  <li>{@link #TRACK}</li>
- *  <li>{@link #TRACE}</li>
- *  <li>{@link #PEAK}</li>
- *  <li>{@link #BRIGHT_FIELD}</li>.
- */
 public enum TableType {
 
 	/**  Track table. */
@@ -29,11 +20,6 @@ public enum TableType {
 	/** PEAK table. */
 	PEAK;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Enum#toString()
-	 */
 	public String toString() {
 		switch (this) {
 		case TRACK:	return "Track";

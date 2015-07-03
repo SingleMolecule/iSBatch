@@ -94,7 +94,7 @@ public class CodeTextPane extends JComponent implements DocumentListener, Runnab
 			
 		}
 		catch (BadLocationException e) {
-			
+			System.out.println(e.getMessage());
 		}
 	}
 	

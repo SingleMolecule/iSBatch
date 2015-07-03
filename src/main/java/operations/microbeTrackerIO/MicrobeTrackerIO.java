@@ -17,13 +17,8 @@ import ij.ImagePlus;
 import ij.ImageStack;
 import ij.gui.PolygonRoi;
 import ij.gui.Roi;
-import ij.measure.Measurements;
 import ij.plugin.frame.RoiManager;
-import ij.process.ImageProcessor;
-import ij.process.ImageStatistics;
-import imageOperations.NodeToImageStack;
 
-import java.awt.Rectangle;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -46,6 +41,8 @@ import model.parameters.NodeType;
 import operations.Operation;
 import test.TreeGenerator;
 import utils.EnumUtils;
+import utils.ImageStackUtils;
+import utils.StringUtils;
 
 public class MicrobeTrackerIO implements Operation {
 	private MicrobeTrackerIOGui dialog;
@@ -54,9 +51,11 @@ public class MicrobeTrackerIO implements Operation {
 	private String BFFIleInputPath;
 	private Object imageType;
 	private ArrayList<String> imageTag;
+	private boolean isTimeLapse = false;
+	private StringUtils strUtils = new StringUtils(false);
 	
 	public MicrobeTrackerIO(DatabaseModel treeModel) {
-		
+
 	}
 
 	public String[] getContext() {
@@ -71,13 +70,6 @@ public class MicrobeTrackerIO implements Operation {
 		return "MicrobeTracker I/O";
 	}
 
-	/**
-	 * Setup.
-	 *
-	 * @param node
-	 *            the node
-	 * @return true, if successful
-	 */
 	@Override
 	public boolean setup(Node node) {
 		dialog = new MicrobeTrackerIOGui(node);
@@ -87,7 +79,7 @@ public class MicrobeTrackerIO implements Operation {
 		// Get information from the dialog
 		// From panel1
 		this.channel = dialog.getChannel();
-		if(channel.equalsIgnoreCase(null)){
+		if (channel.equalsIgnoreCase(null)) {
 			LogPanel.log("No channel selected. Operation cancelled.");
 			return false;
 		}
@@ -100,6 +92,8 @@ public class MicrobeTrackerIO implements Operation {
 	}
 
 	public void finalize(Node node) {
+		System.out.println("--- End ----");
+
 		System.out.println("MicrobeTracker IO Operation finalized");
 	}
 
@@ -107,8 +101,13 @@ public class MicrobeTrackerIO implements Operation {
 	}
 
 	public void visit(Experiment experiment) {
-		System.out.println(experiment.getProperty("type"));
+		setExperimentType(experiment);
 		run(experiment);
+	}
+
+	private void setExperimentType(Experiment experiment) {
+		if (experiment.getProperty("type") == "Time Lapse")
+			this.isTimeLapse = true;
 	}
 
 	private void run(Node node) {
@@ -117,11 +116,81 @@ public class MicrobeTrackerIO implements Operation {
 		File BFmt = new File(dialog.BFFIleInputPath);
 
 		if (matFile.exists() && BFmt.exists()) {
-			importFiles(node, matFile);
+			if (isTimeLapse) {
+				importFiles(node, matFile);
+			} else {
+				importFilesTL(node, matFile);
+			}
+
 		} else {
 			getStackForMT(node);
 		}
 
+	}
+
+	private void importFilesTL(Node node, File matFile) {
+		// Get the MicrobeTracker Reference Image
+		ImagePlus referenceImp = IJ.openImage(BFFIleInputPath);
+		ImageStack referenceStack = referenceImp.getStack();
+
+		ArrayList<FieldOfView> nodes = node.getFieldOfView();
+
+		FieldOfView currentFov = null;
+
+		ArrayList<String> uniqueFoVNames = ImageStackUtils
+				.getUniqueFOVNames(referenceImp);
+
+		try {
+			ArrayList<Mesh> meshes = MatlabMeshes.getMeshes(matFile);
+			for (Node node1 : nodes) {
+				RoiManager currentManager = new RoiManager(true);
+				System.out.println("FoV name " + node1.getName());
+				currentFov = (FieldOfView) node1;
+				
+				for (int stackPosition = 1; stackPosition <= referenceStack.getSize(); stackPosition++) {
+			
+					if(referenceStack.getShortSliceLabel(stackPosition).startsWith(node1.getName())){
+						
+						for (Mesh m : meshes) {
+
+							int meshStackPosition = m.getSlice();
+							// referenceImp.setSlice(stackPosition);
+
+							if (meshStackPosition == stackPosition) {
+								Roi roi = getRoi(m);
+								roi.setPosition(strUtils.getCurrentStackfromAssigment(referenceStack.getShortSliceLabel(stackPosition)));
+								currentManager.addRoi(roi);
+							}
+						}
+						
+					}
+			
+				}
+				
+				
+				
+				
+				System.out.println(currentFov.getOutputFolder()
+						+ File.separator + "cellRoi.zip");
+				currentFov.setCellROIPath(currentFov.getOutputFolder()
+						+ File.separator + "cellRoi.zip");
+				currentFov.getProperties().put("CellRoi",
+						currentFov.getCellROIPath());
+
+				if (currentManager.getCount() != 0) {
+					currentManager.runCommand("Save",
+							currentFov.getOutputFolder() + File.separator
+									+ "cellRoi.zip");
+				}
+				
+				
+				
+				
+				
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void importFiles(Node node, File matFile) {
@@ -157,7 +226,6 @@ public class MicrobeTrackerIO implements Operation {
 
 					if (i == stackPosition) {
 						Roi roi = getRoi(m);
-						roi.setPosition(stackPosition);
 						currentManager.addRoi(roi);
 					}
 				}
@@ -181,21 +249,19 @@ public class MicrobeTrackerIO implements Operation {
 	}
 
 	private void getStackForMT(Node node) {
-		System.out.println("--- Start ----");
-		
-//		ArrayList<Node> nodes = node.getDescendents(filter(channel));
+
+		// Get list of nodes to be the input.
+
 		ArrayList<Node> filenodes = node.getDescendents(new GenericFilter(
 				channel, imageTag, null, null));
-		// Create BF File
-		
-		NodeToImageStack temp = new NodeToImageStack(filenodes, channel, "MTinput");
-		ImagePlus imp = temp.getImagePlus();
-		
-		Stack_Deflicker(imp);
-		System.out.println("Filters to use");
-		System.out.println("Channel: " + channel);
-		System.out.println("Type: " + imageType);
-		System.out.println("Custom filter" + customFilter);
+
+		MicrobeTrackerInputStack MTImputStack = new MicrobeTrackerInputStack(
+				filenodes, isTimeLapse, "MTInput");
+		ImagePlus imp = MTImputStack.getImagePlus();
+
+		// Convert image to 15 bit
+		// IJ.run(imp, "Enhance Contrast", "saturated=0.35");
+		// IJ.run(imp, "16-bit", "");
 
 		// save Image
 		System.out.println(node.getOutputFolder() + File.separator
@@ -203,50 +269,21 @@ public class MicrobeTrackerIO implements Operation {
 		IJ.saveAsTiff(imp,
 				node.getOutputFolder() + File.separator + imp.getTitle());
 		imp.close();
-		// Now, finally get this list of files and create a combined
 
-		System.out.println("--- End ----");
+		// Now, finally get this list of files and create a combined
 
 	}
 
-//	private int getStackSize(ArrayList<Mesh> meshes) {
-//		int size = 0;
-//		for (Mesh mesh : meshes) {
-//			if (mesh.getSlice() >= size) {
-//				size = mesh.getCell();
-//			}
-//		}
-//		return size;
-//	}
-
-	/**
-	 * Visit.
-	 *
-	 * @param sample
-	 *            the sample
-	 */
 	@Override
 	public void visit(Sample sample) {
 		run(sample);
 	}
 
-	/**
-	 * Visit.
-	 *
-	 * @param fieldOfView
-	 *            the field of view
-	 */
 	@Override
 	public void visit(FieldOfView fieldOfView) {
 		run(fieldOfView);
 	}
 
-	/**
-	 * Visit.
-	 *
-	 * @param fileNode
-	 *            the file node
-	 */
 	@Override
 	public void visit(FileNode fileNode) {
 		run(fileNode);
@@ -262,7 +299,7 @@ public class MicrobeTrackerIO implements Operation {
 		MicrobeTrackerIOGui dialog = new MicrobeTrackerIOGui(model.getRoot());
 		System.out.println(dialog.getChannel());
 
-		for(String string : dialog.getImageTag()){
+		for (String string : dialog.getImageTag()) {
 			System.out.println("Tag: " + string);
 		}
 		System.out.println(dialog.getImageType());
@@ -301,17 +338,10 @@ public class MicrobeTrackerIO implements Operation {
 
 	}
 
-	/**
-	 * Visit.
-	 *
-	 * @param operationNode
-	 *            the operation node
-	 */
 	@Override
 	public void visit(OperationNode operationNode) {
 
 	}
-
 
 	@Override
 	public Node[] getCreatedNodes() {
@@ -344,75 +374,4 @@ public class MicrobeTrackerIO implements Operation {
 		return roi;
 	}
 
-	public static void Stack_Deflicker(ImagePlus imp) {
-		int Fram = -1;
-		/*
-		 * Adapted from: Stack_Deflicker.java ImageJ plugin to remove flickering
-		 * from movies by J. S. Pedersen. version 1 2008-12-30 Initial version
-		 * based on Stack_Normalizer plugin by Joachim Walter
-		 * 
-		 * version 2 2010-09-09 Uses ImageJ functions to measure mean and
-		 * multiply frames in stead of getPixelValue and putPixel These changes
-		 * make the plugin about 4 times faster than version 1.
-		 */
-		/**
-		 * The Stack_Deflicker calculates the average grey value for each frame
-		 * and normalizes all frames so that they have same average grey level
-		 * as a specified frame of the stack This plugin is very useful to remove
-		 * flickering in movies caused by frame rates different from the
-		 * frequency of 50/60Hz AC power used for the light-source that
-		 * illuminate the scene. An input value of -1 corresponds to the
-		 * brightest frame while an input value of zero corresponds to the
-		 * faintest frame. If a ROI is selected the average frame intensity will
-		 * be calculated from this region, but the whole scene will be
-		 * normalized.
-		 */
-
-		ImageStack stack = imp.getStack();
-		int size = stack.getSize();
-		ImageProcessor ip = imp.getProcessor();
-		Rectangle roi = ip.getRoi();
-
-		// Find min and max
-
-		double roiAvg[] = new double[size + 1];
-		double fMin = Double.MAX_VALUE;
-		double fMax = -Double.MAX_VALUE;
-		int maxF = 1;
-		int minF = 1;
-
-		for (int slice = 1; slice <= size; slice++) {
-			IJ.showStatus("Calculating: " + slice + "/" + size);
-			IJ.showProgress((double) slice / size);
-			ip = stack.getProcessor(slice);
-			roiAvg[slice] = 0;
-
-			ip.setRoi(roi);
-			ImageStatistics is = ImageStatistics.getStatistics(ip,
-					Measurements.MEAN, imp.getCalibration());
-
-			roiAvg[slice] = is.mean;
-
-			if (roiAvg[slice] > fMax) {
-				maxF = slice;
-				fMax = roiAvg[slice];
-			}
-			if (roiAvg[slice] < fMin) {
-				minF = slice;
-				fMin = roiAvg[slice];
-			}
-
-		}
-		if (Fram < 0)
-			Fram = maxF;
-		else if (Fram < 1)
-			Fram = minF;
-
-		for (int slice = 1; slice <= size; slice++) {
-			IJ.showStatus("Normalizing: " + slice + "/" + size);
-			IJ.showProgress((double) slice / size);
-			ip = stack.getProcessor(slice);
-			ip.multiply(roiAvg[Fram] / roiAvg[slice]);
-		}
-	}
 }

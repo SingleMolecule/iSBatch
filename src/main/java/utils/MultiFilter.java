@@ -58,7 +58,7 @@ public abstract class MultiFilter {
 				while ((nextLine = reader.readNext()) != null) {
 //					System.out.println(nextLine[0] + "| "  + nextLine[colX] + " " + nextLine[colY]);
 					
-					Hashtable<String, Roi> tableRoi = (Hashtable<String, Roi>) cellRoiManager.getROIs();
+					Hashtable<String, Roi> tableRoi =  cellRoiManager.getROIs();
 					for (String label : tableRoi.keySet()) {
 						Roi roi = tableRoi.get(label);
 						int x =  (int) Math.round(Double.parseDouble(nextLine[colX]));
@@ -108,7 +108,7 @@ public abstract class MultiFilter {
 		while ((nextLine = reader.readNext()) != null) {
 //			System.out.println(nextLine[0] + "| "  + nextLine[colX] + " " + nextLine[colY]);
 			
-			Hashtable<String, Roi> tableRoi = (Hashtable<String, Roi>) cellRoiManager.getROIs();
+			Hashtable<String, Roi> tableRoi =  cellRoiManager.getROIs();
 			for (String label : tableRoi.keySet()) {
 				Roi roi = tableRoi.get(label);
 				int x =  (int) Math.round(Double.parseDouble(nextLine[colX]));
@@ -141,11 +141,7 @@ public abstract class MultiFilter {
 		if(newArray.length<=lenght){
 			return oldArray;
 		}
-		for(int i =0; i< lenght; i++){
-			newArray[i] = oldArray[i];
-		}
-		
-		return newArray;
+		return oldArray;
 	}
 
 	private static String[] getOutputHeader(String[] nextLine) {
@@ -163,7 +159,7 @@ public abstract class MultiFilter {
 			if(colName.equalsIgnoreCase(header[i])){
 				return i;
 			}
-		};
+		}
 		return col;
 	}
 
@@ -203,7 +199,7 @@ public abstract class MultiFilter {
 						while ((nextLine = reader.readNext()) != null) {
 //							System.out.println(nextLine[0] + "| "  + nextLine[colX] + " " + nextLine[colY]);
 							
-							Hashtable<String, Roi> tableRoi = (Hashtable<String, Roi>) cellRoiManager.getROIs();
+							Hashtable<String, Roi> tableRoi = cellRoiManager.getROIs();
 							for (String label : tableRoi.keySet()) {
 								Roi roi = tableRoi.get(label);
 								int x =  (int) Math.round(Double.parseDouble(nextLine[colX]));

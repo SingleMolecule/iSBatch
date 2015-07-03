@@ -83,7 +83,7 @@ public class CellROI{
 				for (Point point : points) {
 					fileWriter.append(String.valueOf(point.x));
 					fileWriter.append(COMMA_DELIMITER);
-					fileWriter.append(String.valueOf(point.y));;
+					fileWriter.append(String.valueOf(point.y));
 					fileWriter.append(NEW_LINE_SEPARATOR);
 				}
 

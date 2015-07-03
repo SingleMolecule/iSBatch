@@ -22,15 +22,15 @@ public class DatabaseTreeCellRenderer extends DefaultTreeCellRenderer {
 		
 		Node node = (Node)value;
 		
-		if (node.getType() == NodeType.ROOT.toString()) {
+		if (node.getType().equalsIgnoreCase(NodeType.ROOT.toString())) {
 			setIcon(new ImageIcon(DatabaseTreeCellRenderer.class.getResource("/gui/DatabaseTreeCellRenderer/treeIcons/Root.png")));
-		} else if (node.getType() == NodeType.EXPERIMENT.toString()) {
+		} else if (node.getType().equalsIgnoreCase(NodeType.EXPERIMENT.toString())) {
 			setIcon(new ImageIcon(DatabaseTreeCellRenderer.class.getResource("/gui/DatabaseTreeCellRenderer/treeIcons/Experiment.png")));
-		} else if (node.getType() == NodeType.SAMPLE.toString()) {
+		} else if (node.getType().equalsIgnoreCase(NodeType.SAMPLE.toString())) {
 			setIcon(new ImageIcon(DatabaseTreeCellRenderer.class.getResource("/gui/DatabaseTreeCellRenderer/treeIcons/Sample.png")));
-		} else if (node.getType() == NodeType.FOV.toString()) {
+		} else if (node.getType().equalsIgnoreCase(NodeType.FOV.toString())) {
 			setIcon(new ImageIcon(DatabaseTreeCellRenderer.class.getResource("/gui/DatabaseTreeCellRenderer/treeIcons/FieldOfView.png")));
-		} else if (node.getType() == NodeType.FILE.toString()) {
+		} else if (node.getType().equalsIgnoreCase(NodeType.FILE.toString())) {
 			setIcon(new ImageIcon(DatabaseTreeCellRenderer.class.getResource("/gui/DatabaseTreeCellRenderer/treeIcons/File.png")));
 
 			// TODO color text

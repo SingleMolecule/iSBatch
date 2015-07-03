@@ -692,7 +692,6 @@ public class MacroOperationGUI extends JDialog implements ItemListener {
 				if (!name.toLowerCase().contains(customString.toLowerCase())) {
 					return false;
 				}
-				;
 
 			}
 			return true;

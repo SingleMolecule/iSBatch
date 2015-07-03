@@ -6,7 +6,7 @@ package test;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.ImageStack;
-import ij.process.ImageProcessor;
+
 
 // TODO: Auto-generated Javadoc
 /**

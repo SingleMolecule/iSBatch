@@ -103,8 +103,7 @@ public abstract class Node implements OperationElement, ContextElement,
 				if (filter.accept(child))
 					filteredChildren.add(child);
 			} catch (NullPointerException e) {
-				// Do nothing
-			}
+				System.out.println(e.getMessage());			}
 		}
 		return filteredChildren;
 	}

@@ -154,7 +154,7 @@ public class Main implements ActionListener {
 				fitter = new StepFitter(y, 1);
 				showSteps();
 				
-			} catch (FileNotFoundException e) {
+			} catch (FileNotFoundException e) { // $codepro.audit.disable logExceptions
 				JOptionPane.showMessageDialog(frame, "could not open file");
 			}
 		}
@@ -280,7 +280,6 @@ public class Main implements ActionListener {
 	 *
 	 * @param e the e
 	 */
-	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == openButton) {
 			openFile();

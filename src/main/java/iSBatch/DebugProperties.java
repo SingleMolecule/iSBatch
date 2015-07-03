@@ -19,8 +19,10 @@ import ij.measure.ResultsTable;
 import ij.plugin.PlugIn;
 import ij.plugin.filter.Analyzer;
 
-import java.awt.Point;
-import java.io.IOException;
+
+
+import ij.plugin.frame.RoiManager;
+
 import java.util.HashMap;
 
 import model.DatabaseModel;
@@ -39,56 +41,56 @@ public class DebugProperties implements Operation, PlugIn {
 	public DebugProperties(DatabaseModel treeModel) {
 	}
 
-	@Override
+	
 	public String[] getContext() {
 		return new String[] { "All" };
 	}
 
-	@Override
+	
 	public String getName() {
 		return "Debug";
 	}
 
-	@Override
+	
 	public boolean setup(Node node) {
 		return true;
 	}
 
-	@Override
+	
 	public void finalize(Node node) {
 	}
 
-	@Override
+	
 	public Node[] getCreatedNodes() {
 		return null;
 	}
 
-	@Override
+	
 	public HashMap<String, String> getParameters() {
 		return null;
 	}
 
-	@Override
+	
 	public void visit(Root root) {
-		System.out.println("Does not apply to root.JrebelS");
+		System.out.println("Does not apply to update");
 	}
 
-	@Override
+	
 	public void visit(Experiment experiment) {
 		runNode(experiment);
 	}
 
-	@Override
+	
 	public void visit(Sample sample) {
 		runNode(sample);
 	}
 
-	@Override
+	
 	public void visit(FieldOfView fieldOfView) {
 		runNode(fieldOfView);
 	}
 
-	@Override
+	
 	public void visit(FileNode fileNode) {
 		runNode(fileNode);
 	}
@@ -97,78 +99,89 @@ public class DebugProperties implements Operation, PlugIn {
 		run(null);
 	}
 
-	@Override
+	
 	public void visit(OperationNode operationNode) {
 	}
 
-	@Override
+	
 	public void run(String arg0) {
-		LogPanel.log("There are " + WindowManager.getWindowCount()
-				+ " windows open.");
-		String pluginName = "Particle Tracker";
-		String arguments = "";
-		double minDistance = 2.0;
-		int[] IDS = WindowManager.getIDList();
-
-		IJ.open("D:\\ImageTest\\green.csv");
-		IJ.run("Results Sorter", "column=slice group=[no grouping] ascending");
-
-		// WindowManager.
-		// IJ.renameResults("green");
-		ResultsTable green = ResultsTable.getResultsTable();
-		//
-		IJ.open("D:\\ImageTest\\red.csv");
-		IJ.run("Results Sorter", "column=slice group=[no grouping] ascending");
-		// IJ.renameResults("red");
-		ResultsTable red = Analyzer.getResultsTable();
-
-		// for (String string : WindowManager.getImageTitles()) {
-		// LogPanel.log(string);
-		// }
-		//
-		// for (String string : WindowManager.getNonImageTitles()) {
-		// LogPanel.log(string);
-		// }
-
-		LogPanel.log(green.getCounter());
-		for (String string : green.getHeadings()) {
-			LogPanel.log(string);
-		}
-		;
-
-		// for(int i = 0; i<green.getCounter(); i++){
-
-		for (int i = 0; i < green.getCounter(); i++) {
-			LogPanel.log(i);
-			LogPanel.log(green.getValue("x", i));
-
-			double x = green.getValue("x", i);
-			double y = green.getValue("y", i);
-			double slice = green.getValue("slice", i);
-			Point2 p = new Point2(x, y);
-
-			LogPanel.log(x);
-
-			// get Closest peak
-			Point2 closest = getClosestPoint(p, getSubTable(red, "slice", slice));
-			
-			if(p.distanceTo(closest)<=minDistance){
-				green.setValue("distance", i, p.distanceTo(closest));
-				green.setValue("x2", i, closest.x);
-				green.setValue("y2", i, closest.y);
-				green.setValue("distance2", i, p.distanceTo(closest));
-			}
-			else{
-				green.setValue("distance", i, -1);
-				green.setValue("x2", i, closest.x);
-				green.setValue("y2", i, closest.y);
-				green.setValue("distance2", i, p.distanceTo(closest));
-			}
-		}
-
-		green.save("D:\\ImageTest\\greenColoS.csv");
+//		LogPanel.log("There are " + WindowManager.getWindowCount()
+//				+ " windows open.");
+//		String pluginName = "Particle Tracker";
+//		String arguments = "";
+//		double minDistance = 2.0;
+//		int[] IDS = WindowManager.getIDList();
+//
+//		IJ.open("D:\\ImageTest\\green.csv");
+//		IJ.run("Results Sorter", "column=slice group=[no grouping] ascending");
+//
+//		// WindowManager.
+//		// IJ.renameResults("green");
+//		ResultsTable green = ResultsTable.getResultsTable();
+//		//
+//		IJ.open("D:\\ImageTest\\red.csv");
+//		IJ.run("Results Sorter", "column=slice group=[no grouping] ascending");
+//		// IJ.renameResults("red");
+//		ResultsTable red = Analyzer.getResultsTable();
+//
+//		// for (String string : WindowManager.getImageTitles()) {
+//		// LogPanel.log(string);
+//		// }
+//		//
+//		// for (String string : WindowManager.getNonImageTitles()) {
+//		// LogPanel.log(string);
+//		// }
+//
+//		LogPanel.log(green.getCounter());
+//		for (String string : green.getHeadings()) {
+//			LogPanel.log(string);
+//		}
+//
+//		// for(int i = 0; i<green.getCounter(); i++){
+//
+//		for (int i = 0; i < green.getCounter(); i++) {
+//			LogPanel.log(i);
+//			LogPanel.log(green.getValue("x", i));
+//
+//			double x = green.getValue("x", i);
+//			double y = green.getValue("y", i);
+//			double slice = green.getValue("slice", i);
+//			Point2 p = new Point2(x, y);
+//
+//			LogPanel.log(x);
+//
+//			// get Closest peak
+//			Point2 closest = getClosestPoint(p, getSubTable(red, "slice", slice));
+//			
+//			if(p.distanceTo(closest)<=minDistance){
+//				green.setValue("distance", i, p.distanceTo(closest));
+//				green.setValue("x2", i, closest.x);
+//				green.setValue("y2", i, closest.y);
+//				green.setValue("distance2", i, p.distanceTo(closest));
+//			}
+//			else{
+//				green.setValue("distance", i, -1);
+//				green.setValue("x2", i, closest.x);
+//				green.setValue("y2", i, closest.y);
+//				green.setValue("distance2", i, p.distanceTo(closest));
+//			}
+//		}
+//
+//		green.save("D:\\ImageTest\\greenColoS.csv");
+//		
+//		LogPanel.log("Done");
 		
-		LogPanel.log("Done");
+				
+			RoiManager roiManager = new RoiManager(true);
+				
+			String macro = "newImage(\"Untitled\", \"16-bit black\", 400, 400, 1);";
+			macro += "makeRectangle(76,25,55,43);";
+			macro += "roiManager(\"Add\");";
+
+			IJ.runMacro(macro);
+				
+			System.out.println(RoiManager.getInstance2());
+
 
 	}
 

@@ -17,15 +17,15 @@ import gui.FileSelectionDialog;
 import gui.LogPanel;
 import ij.IJ;
 import ij.ImagePlus;
-import ij.ImageStack;
-import ij.gui.PointRoi;
-import ij.gui.Roi;
+
+
+
 import ij.plugin.PlugIn;
 import ij.plugin.frame.Recorder;
 import ij.plugin.frame.RoiManager;
-import ij.process.ImageProcessor;
 
-import java.awt.Point;
+
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;

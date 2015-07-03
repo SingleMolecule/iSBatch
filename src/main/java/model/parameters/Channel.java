@@ -12,15 +12,6 @@
  ***********************************************************************/
 package model.parameters;
 
-
-/**
- *  Colors that can be used
- *  <li>{@link #GREEN}</li>
- *  <li>{@link #RED}</li>
- *  <li>{@link #BLUE}</li>
- *  <li>{@link #BRIGHT_FIELD}</li>
- *  <li>{@link #ACQUISITION}</li>.
- */
 public enum Channel {
 
 	/** Green channel. */
@@ -34,11 +25,6 @@ public enum Channel {
 	/** Acquisition channel. */
 	ACQUISITION;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Enum#toString()
-	 */
 	public String toString() {
 		switch (this) {
 		case GREEN:			return "Green";

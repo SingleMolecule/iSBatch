@@ -21,10 +21,10 @@ import com.jmatio.io.MatFileReader;
 import com.jmatio.types.MLArray;
 import com.jmatio.types.MLCell;
 import com.jmatio.types.MLDouble;
+import com.jmatio.types.MLEmptyArray;
 import com.jmatio.types.MLNumericArray;
 import com.jmatio.types.MLStructure;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class MatlabMeshes.
  */
@@ -56,12 +56,15 @@ public class MatlabMeshes {
 		
 		Map<String, MLArray> content = reader.getContent();
 		MLCell cellList = (MLCell)content.get("cellList");
-		if( cellList != null){
+		if( cellList != null ){
 			
-		
 		// each slice has a cell list
 		for (int slice = 0; slice < cellList.getSize(); slice++) {
 			
+			//check size of cellList
+			//Empty causes errors
+		if (cellList.get(slice) instanceof MLEmptyArray == false){
+//			System.out.println(cellList.get(slice).getClass().toString());
 			MLCell cells = (MLCell)cellList.get(slice);
 			
 			for (int cell = 0; cell < cells.getSize(); cell++) {
@@ -103,7 +106,7 @@ public class MatlabMeshes {
 				}
 				
 			}
-			
+			}
 		}}
 		
 		return meshes;

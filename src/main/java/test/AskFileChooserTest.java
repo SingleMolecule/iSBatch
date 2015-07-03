@@ -24,7 +24,7 @@ public class AskFileChooserTest {
 		System.out.println(directory.getAbsolutePath());
 		if(directory.isDirectory()){
 			System.out.println("Directory");
-		};
+		}
 		
 		System.out.println(file.getAbsolutePath());
 		if(file.isDirectory()){
@@ -42,7 +42,6 @@ public class AskFileChooserTest {
 		
 		System.out.println(str.substring(str.lastIndexOf('_') + 1));
 		
-		;
 	}
 
 }

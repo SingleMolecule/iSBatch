@@ -17,7 +17,6 @@ public class ImageFilter implements NodeFilterInterface{
 	 * @param node the node
 	 * @return true, if successful
 	 */
-	@Override
 	public boolean accept(Node node) {
 
 		String path = node.getProperty("path");

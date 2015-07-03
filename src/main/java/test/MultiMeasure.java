@@ -8,6 +8,7 @@ import ij.plugin.frame.RoiManager;
 import java.io.File;
 
 public class MultiMeasure {
+	
 	public static void main(String[] args) {
 		File image = new File("D:\\ImageTest\\514_flat.TIF");
 		File rois = new File("D:\\ImageTest\\rois.zip");
