@@ -79,7 +79,7 @@ public class MatFileToROI {
 
 			currentManager.runCommand("Save",
 					"/home/vcaldas/ISBatchTutorial/MinimalDataset/TesteRoiSaver_" + i + ".zip");
-
+			assignLineage(currentManager,"/home/vcaldas/ISBatchTutorial/MinimalDataset/TesteRoiSaver_" + i);
 		}
 		// for (Mesh m : meshes){
 		// System.out.println(m.getSlice());
@@ -113,6 +113,20 @@ public class MatFileToROI {
 		// System.out.println("saveAs(\"Selection\", \"D:\\TestFolderIsbatch\\TesteRoiSaver.roi\"");
 		//
 		// System.out.println("Done");
+	}
+
+	private static void assignLineage(RoiManager currenROItManager, String pathToSave) {
+		Lineage lineage = new Lineage(currenROItManager);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 
 	/**

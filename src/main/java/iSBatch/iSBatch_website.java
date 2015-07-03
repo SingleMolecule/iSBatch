@@ -4,6 +4,12 @@ import ij.IJ;
 import ij.plugin.BrowserLauncher;
 import ij.plugin.PlugIn;
 
+/**
+ * @author Victor Caldas
+ * 
+ * Simple class to store information to open the iSBatch website.
+ *
+ */
 public class iSBatch_website implements PlugIn {
 
 	public void run(String arg) {
@@ -22,6 +28,9 @@ public class iSBatch_website implements PlugIn {
 		IJ.showStatus("");
 	}
 	
+	/**
+	 * @return string Name of the website
+	 */
 	public static String name() {
 		
 		return "iSBatch";

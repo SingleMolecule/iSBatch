@@ -91,18 +91,22 @@ public class ISBatch_ implements TreeSelectionListener, ActionListener {
 	private JPanel treeButtonspanel = new JPanel();
 	protected TreePath currentSelected;
 	protected Object oldSelectedPath;
+	
+	///Debug
+	private static File fileDebug = new File("/home/vcaldas/ISBatchTutorial/MinimalDataset/TutorialDB");
+	
 
 	public static void main(String[] args) {
-		String path = "/home/vcaldas/ISBatchTutorial/MinimalDataset/TutorialDB";
-		File file = new File(path);
 		try {
-			instance  = new ISBatch_(file);
+			instance  = new ISBatch_(fileDebug);
 		} catch (SqlJetException e) {
 			e.printStackTrace();
 		}
 	}
 
 	protected Node selectedNode;
+	
+	
 	
 	public ISBatch_(File file) throws SqlJetException {
 		DatabaseDialog dialog = new DatabaseDialog(frame, file.getAbsolutePath());
