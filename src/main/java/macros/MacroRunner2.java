@@ -148,10 +148,12 @@ public class MacroRunner2 implements Runnable {
 				suffix += "outputs = \"\";\n";
 				suffix += "for (i = 1; i <= nImages; i++) {\n";
 				suffix += "selectImage(i);\n";
+				suffix += "if (is(\"changes\")) {\n";
 				suffix += "filename = getFilename(\"" + outputPath
 						+ "\", \".tif\");\n";
 				suffix += "saveAs(\"tiff\", filename);\n";
 				suffix += "outputs += filename + \";\";\n";
+				suffix += "}\n";
 				suffix += "}\n";
 				suffix += "if (roiManager(\"count\") > 0) {\n";
 				suffix += "filename = getFilename(\"" + outputPath
