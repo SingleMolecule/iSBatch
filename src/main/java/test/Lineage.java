@@ -1,5 +1,6 @@
 package test;
 
+import ij.measure.ResultsTable;
 import ij.plugin.frame.RoiManager;
 
 /**
@@ -26,7 +27,15 @@ public class Lineage {
 		RoiManager manager = new RoiManager(true);
 		manager.runCommand("Open", "/home/vcaldas/ISBatchTutorial/MinimalDataset/TutorialDB_files/TimeLapse/DnaX_DnaX-M9Glycerol/001/cellRoi.zip");
 
+		Lineage lineage = new Lineage(manager);
+		
 		System.out.println("Roi manager contains " + manager.getCount() + " rois.");
+		
+		ResultsTable table = new ResultsTable();
+		
+		
+		
+		
 		
 		
 	}
