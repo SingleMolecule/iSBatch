@@ -32,7 +32,7 @@ public class MacroOperation implements Operation {
 
 	@Override
 	public boolean setup(Node node) {
-		new MacroDialog2(node, model);
+		new MacroDialog4(model, node);
 		return true;
 	}
 

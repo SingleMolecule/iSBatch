@@ -68,6 +68,10 @@ public abstract class ModelUtils {
 				return node.getType().equalsIgnoreCase(FileNode.type);
 			}
 		});
+		
+		if (node.getType().equalsIgnoreCase(FileNode.type))
+			fileNodes.add(node);
+		
 		return fileNodes;
 	}
 

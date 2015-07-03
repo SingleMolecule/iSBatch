@@ -1,10 +1,6 @@
 package macros;
 
 import ij.IJ;
-import ij.ImagePlus;
-import ij.WindowManager;
-import ij.measure.ResultsTable;
-import ij.plugin.frame.RoiManager;
 
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -20,7 +16,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -28,10 +23,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import model.DatabaseModel;
-import model.FileNode;
-import model.Importer;
 import model.Node;
-import test.TreeGenerator;
 import utils.ModelUtils;
 
 public class MacroDialog4 extends JDialog implements ActionListener {
