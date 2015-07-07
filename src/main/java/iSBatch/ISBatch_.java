@@ -332,7 +332,7 @@ public class ISBatch_ implements TreeSelectionListener, ActionListener {
 	private JPanel createTreePanel() {
 		JPanel treePanel = new JPanel(new BorderLayout());
 		for (Operation operation : getTreeOperations()) {
-			OperationButton button = new OperationButton(treeModel, operation);
+			OperationButton button = new OperationButton(treeModel, operation, tree);
 			contextHandler.getListeners().add(button);
 			treeButtonspanel.add(button);
 		}
@@ -352,7 +352,7 @@ public class ISBatch_ implements TreeSelectionListener, ActionListener {
 
 		for (Operation operation : getOperations()) {
 
-			OperationButton opButton = new OperationButton(treeModel, operation);
+			OperationButton opButton = new OperationButton(treeModel, operation, tree);
 			contextHandler.getListeners().add(opButton);
 
 			gbc.gridy++;

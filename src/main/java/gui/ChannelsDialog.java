@@ -156,7 +156,7 @@ public class ChannelsDialog extends JDialog implements ActionListener {
 
 			for (String regularExpression : regularExpressions) {
 
-				if (name.matches(regularExpression) && !files.contains(file))
+				if ((name.matches(regularExpression) || name.toLowerCase().matches(regularExpression)) && !files.contains(file))
 					files.add(file);
 
 			}
