@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JTree;
+import javax.swing.tree.TreePath;
 
 import model.DatabaseModel;
 import model.Node;
@@ -33,16 +35,20 @@ public class OperationButton extends JButton implements ContextListener, ActionL
 	/** The context element. */
 	private ContextElement contextElement;
 	
+	private JTree tree;
+	
 	/**
 	 * Instantiates a new operation button.
 	 *
 	 * @param model the model
 	 * @param operation the operation
+	 * @param tree 
 	 */
-	public OperationButton(DatabaseModel model, Operation operation) {
+	public OperationButton(DatabaseModel model, Operation operation, JTree tree) {
 		super(operation.getName());
 		this.model = model;
 		this.operation = operation;
+		this.tree = tree;
 		
 		addActionListener(this);
 	}
@@ -77,7 +83,9 @@ public class OperationButton extends JButton implements ContextListener, ActionL
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		new OperationRunner(model, operation, (Node)contextElement);
+		
+		new OperationRunner(model, operation, (Node)contextElement, tree);
+		
 	}
 	
 }

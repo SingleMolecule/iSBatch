@@ -37,7 +37,7 @@ public class MacroDialog4 extends JDialog implements ActionListener {
 	
 	private JTextArea macroTextPane = new JTextArea(20, 80);
 	
-	private JButton chooseButton = new JButton("Choose");
+	private JButton chooseButton = new JButton("Choose Macro file");
 	private JButton runButton = new JButton("Run");
 	private JButton stopButton = new JButton("Stop");
 	
@@ -78,7 +78,7 @@ public class MacroDialog4 extends JDialog implements ActionListener {
 		gbc.gridwidth = 1;
 		gbc.gridx = 0;
 		gbc.gridy++;
-		add(new JLabel("Filename"), gbc);
+		add(new JLabel("Output filename"), gbc);
 		
 		gbc.gridx++;
 		add(filenameTextField, gbc);
