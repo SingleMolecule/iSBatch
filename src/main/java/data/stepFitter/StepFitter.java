@@ -19,50 +19,19 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Scanner;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class StepFitter.
- */
 public class StepFitter {
 	
-	/** The data. */
 	private double[] data;
 	
-	/** The sigma. */
 	private double sigma;
-	
-	/** The steps. */
 	private LinkedList<Step> steps = new LinkedList<Step>();
-	
-	/** The counter steps. */
 	private LinkedList<Step> counterSteps = new LinkedList<Step>();
-	
-	/** The total chi squared. */
 	private double totalChiSquared;
-	
-	/** The counter chi squared. */
 	private double counterChiSquared;
-	
-	/**
-	 * The Class Split.
-	 */
 	private class Split {
-		
-		/** The left. */
 		public Step left;
-		
-		/** The right. */
 		public Step right;
-		
-		/** The chi squared. */
 		private double chiSquared;
-		
-		/**
-		 * Instantiates a new split.
-		 *
-		 * @param left the left
-		 * @param right the right
-		 */
 		public Split(Step left, Step right) {
 			this.left = left;
 			this.right = right;
@@ -74,17 +43,9 @@ public class StepFitter {
 	 * The Class Step.
 	 */
 	private class Step {
-		
-		/** The from. */
 		public int from;
-		
-		/** The to. */
 		public int to;
-		
-		/** The mean. */
 		public double mean;
-		
-		/** The chi squared. */
 		public double chiSquared;
 		
 		/**

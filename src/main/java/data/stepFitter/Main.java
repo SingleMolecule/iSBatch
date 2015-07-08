@@ -39,54 +39,21 @@ import javax.swing.JPanel;
  */
 public class Main implements ActionListener {
 	
-	/** The frame. */
 	JFrame frame = new JFrame("step fitter");
-	
-	/** The open button. */
 	JButton openButton = new JButton("open file");
-	
-	/** The dec button. */
 	JButton decButton = new JButton("decrease steps");
-	
-	/** The inc button. */
 	JButton incButton = new JButton("increase steps");
-	
-	/** The export button. */
 	JButton exportButton = new JButton("export steps");
-	
-	/** The export all button. */
 	JButton exportAllButton = new JButton("export all fits");
-	
-	/** The save image button. */
 	JButton saveImageButton = new JButton("save plot");
-	
-	/** The statistics text field. */
 	JLabel statisticsTextField = new JLabel("chi^2 : NaN chi^2 Counter Fit : NaN Ratio : NaN");
-	
-	/** The current directory. */
 	File currentDirectory;
-	
-	/** The x. */
 	double[] x;
-	
-	/** The y. */
 	double[] y;
-	
-	/** The plot. */
 	Plot plot = new Plot();
-	
-	/** The fitter. */
 	StepFitter fitter;
-	
-	/** The steps. */
 	int steps = 0;
-	
-	/** The max steps. */
 	int maxSteps;
-	
-	/**
-	 * Instantiates a new main.
-	 */
 	public Main() {
 		
 		openButton.addActionListener(this);
@@ -118,9 +85,6 @@ public class Main implements ActionListener {
 	}
 	
 	
-	/**
-	 * Open file.
-	 */
 	public void openFile() {
 		JFileChooser fileChooser = new JFileChooser();
 		

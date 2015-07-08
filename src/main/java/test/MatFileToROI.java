@@ -20,6 +20,7 @@ import java.util.zip.ZipOutputStream;
 
 import com.jmatio.io.MatFileReader;
 
+import operations.microbeTrackerIO.Lineage;
 import operations.microbeTrackerIO.MatlabMeshes;
 import operations.microbeTrackerIO.Mesh;
 import operations.microbeTrackerIO.Point;
@@ -116,7 +117,7 @@ public class MatFileToROI {
 	}
 
 	private static void assignLineage(RoiManager currenROItManager, String pathToSave) {
-		Lineage lineage = new Lineage(currenROItManager);
+//		Lineage lineage = new Lineage(currenROItManager);
 		
 		
 		
