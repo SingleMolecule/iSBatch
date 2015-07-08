@@ -6,6 +6,8 @@ package operations;
 
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JTree;
+import javax.swing.tree.TreePath;
 
 import model.DatabaseModel;
 import model.Node;
@@ -18,10 +20,13 @@ import model.OperationNode;
 public class OperationRunner implements Runnable {
 
 	/** The operation. */
+	private DatabaseModel model;
 	private Operation operation;
 	
 	/** The node. */
 	private Node node;
+	
+	private JTree tree;
 	
 	/**
 	 * Instantiates a new operation runner.
@@ -29,11 +34,14 @@ public class OperationRunner implements Runnable {
 	 * @param model the model
 	 * @param operation the operation
 	 * @param node the node
+	 * @param tree 
 	 */
-	public OperationRunner(DatabaseModel model, Operation operation, Node node) {
+	public OperationRunner(DatabaseModel model, Operation operation, Node node, JTree tree) {
 		super();
+		this.model = model;
 		this.operation = operation;
 		this.node = node;
+		this.tree = tree;
 		new Thread(this).start();
 	}
 
@@ -51,20 +59,8 @@ public class OperationRunner implements Runnable {
 		if (operation.setup(node)) {
 			node.accept(operation);
 			operation.finalize(node);
+			tree.expandRow(0);
 		}
-		
-		// create an operation node
-		OperationNode operationNode = new OperationNode(node);
-		operationNode.setProperty("name", operation.getName());
-		System.out.println(operation.getName());
-//		System.out.println(operation.getParameters().toString());
-//		for (Entry<String, String> entry: operation.getParameters().entrySet())
-//			operationNode.setProperty(entry.getKey(), entry.getValue());
-		
-//		model.addNode(node, operationNode);
-//		
-//		for (Node child: operation.getCreatedNodes())
-//			model.addNode(operationNode, child);
 		
 		dialog.setVisible(false);
 		dialog.dispose();

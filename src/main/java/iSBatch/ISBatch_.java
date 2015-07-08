@@ -58,8 +58,6 @@ import operations.AddNodeOperation;
 import operations.ImportOperation;
 import operations.Operation;
 import operations.cellIntensity.CellIntensity;
-import operations.cellOutlines.CellOutlines;
-import operations.cellularConcentration.CellularConcentration;
 import operations.changePoint.ChangePoint;
 import operations.focusLifetime.FocusLifetimes;
 import operations.tracking.Tracking;
@@ -332,7 +330,7 @@ public class ISBatch_ implements TreeSelectionListener, ActionListener {
 	private JPanel createTreePanel() {
 		JPanel treePanel = new JPanel(new BorderLayout());
 		for (Operation operation : getTreeOperations()) {
-			OperationButton button = new OperationButton(treeModel, operation);
+			OperationButton button = new OperationButton(treeModel, operation, tree);
 			contextHandler.getListeners().add(button);
 			treeButtonspanel.add(button);
 		}
@@ -352,7 +350,7 @@ public class ISBatch_ implements TreeSelectionListener, ActionListener {
 
 		for (Operation operation : getOperations()) {
 
-			OperationButton opButton = new OperationButton(treeModel, operation);
+			OperationButton opButton = new OperationButton(treeModel, operation, tree);
 			contextHandler.getListeners().add(opButton);
 
 			gbc.gridy++;
@@ -483,13 +481,13 @@ public class ISBatch_ implements TreeSelectionListener, ActionListener {
 				// new MacroOperation2(frame, treeModel),
 				new DebugProperties(treeModel), new SetBackGround(treeModel),
 				new FlattenOperation(treeModel),
-				new MicrobeTrackerIO(treeModel), new CellOutlines(treeModel),
+				new MicrobeTrackerIO(treeModel), 
 				new FindPeaksOperation(), new PeakFitter2(),
 				new MacroOperation(treeModel),
-				new CellularConcentration(treeModel),
 				new CellIntensity(treeModel), new FocusLifetimes(treeModel),
 				new Tracking(treeModel), new LocationMaps(treeModel),
-				new ChangePoint(treeModel), };
+				new ChangePoint(treeModel),
+				new ExportOperation(treeModel),};
 	}
 
 	public void valueChanged(TreeSelectionEvent e) {
