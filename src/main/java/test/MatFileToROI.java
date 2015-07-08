@@ -24,12 +24,26 @@ import operations.microbeTrackerIO.MatlabMeshes;
 import operations.microbeTrackerIO.Mesh;
 import operations.microbeTrackerIO.Point;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class MatFileToROI.
+ */
 public class MatFileToROI {
 
+	/** The manager. */
 	static RoiManager manager;
 
+	/** The rois. */
 	static ArrayList<Roi> rois = new ArrayList<Roi>();
 
+	/**
+	 * The main method.
+	 *
+	 * @param args
+	 *            the arguments
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 */
 	public static void main(String[] args) throws IOException {
 		ImagePlus imp = IJ
 				.openImage("/home/vcaldas/ISBatchTutorial/MinimalDataset/TutorialDB_files/TimeLapse/[Bright Field]BeamProfile.tif");
@@ -102,6 +116,16 @@ public class MatFileToROI {
 	}
 
 	private static void assignLineage(RoiManager currenROItManager, String pathToSave) {
+		Lineage lineage = new Lineage(currenROItManager);
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 	}
 

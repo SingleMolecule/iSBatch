@@ -13,8 +13,11 @@
 package iSBatch;
 
 import gui.LogPanel;
+import ij.IJ;
+import ij.WindowManager;
 import ij.measure.ResultsTable;
 import ij.plugin.PlugIn;
+import ij.plugin.filter.Analyzer;
 
 
 
@@ -31,6 +34,7 @@ import model.OperationNode;
 import model.Root;
 import model.Sample;
 import operations.Operation;
+import operations.microbeTrackerIO.Point2;
 
 public class DebugProperties implements Operation, PlugIn {
 
@@ -167,12 +171,46 @@ public class DebugProperties implements Operation, PlugIn {
 //		
 //		LogPanel.log("Done");
 		
+				
+			RoiManager roiManager = new RoiManager(true);
+				
+			String macro = "newImage(\"Untitled\", \"16-bit black\", 400, 400, 1);";
+			macro += "makeRectangle(76,25,55,43);";
+			macro += "roiManager(\"Add\");";
 
+			IJ.runMacro(macro);
 				
 			System.out.println(RoiManager.getInstance2());
 
 
 	}
+
+	private Point2 getClosestPoint(Point2 p,
+			ResultsTable currentComparableTable) {
+		
+		Point2 p3 = new Point2(0, 0);
+		double distance = 0;
+		for (int j = 0; j < currentComparableTable.getCounter(); j++) {
+				double dx = currentComparableTable.getValue("x", j);
+				double dy = currentComparableTable.getValue("y", j);
+				Point2 p2 = new Point2(dx, dy);
+				LogPanel.log("Point "+ dx + " | " + dy);
+				
+				//calculate distance
+				double currentDistance = p.distanceTo(p2);
+				LogPanel.log(currentDistance);
+
+				if(j==0){
+					distance = currentDistance;
+					p3 = p2;
+				}
+				else if (currentDistance<distance){
+					distance = currentDistance;
+					p3 = p2;
+				}
+			}
+		return p3;
+		}
 		
 
 	/**

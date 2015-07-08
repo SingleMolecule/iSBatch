@@ -53,7 +53,7 @@ public class MicrobeTrackerIO implements Operation {
 	private ArrayList<String> imageTag;
 	private boolean isTimeLapse = false;
 	private StringUtils strUtils = new StringUtils(false);
-
+	
 	public MicrobeTrackerIO(DatabaseModel treeModel) {
 
 	}
@@ -129,6 +129,7 @@ public class MicrobeTrackerIO implements Operation {
 	}
 
 	private void importFilesTL(Node node, File matFile) {
+		// Get the MicrobeTracker Reference Image
 		ImagePlus referenceImp = IJ.openImage(BFFIleInputPath);
 		ImageStack referenceStack = referenceImp.getStack();
 
@@ -145,13 +146,11 @@ public class MicrobeTrackerIO implements Operation {
 				RoiManager currentManager = new RoiManager(true);
 				System.out.println("FoV name " + node1.getName());
 				currentFov = (FieldOfView) node1;
-
-				for (int stackPosition = 1; stackPosition <= referenceStack
-						.getSize(); stackPosition++) {
-
-					if (referenceStack.getShortSliceLabel(stackPosition)
-							.startsWith(node1.getName())) {
-
+				
+				for (int stackPosition = 1; stackPosition <= referenceStack.getSize(); stackPosition++) {
+			
+					if(referenceStack.getShortSliceLabel(stackPosition).startsWith(node1.getName())){
+						
 						for (Mesh m : meshes) {
 
 							int meshStackPosition = m.getSlice();
@@ -159,17 +158,18 @@ public class MicrobeTrackerIO implements Operation {
 
 							if (meshStackPosition == stackPosition) {
 								Roi roi = getRoi(m);
-								roi.setPosition(strUtils
-										.getCurrentStackfromAssigment(referenceStack
-												.getShortSliceLabel(stackPosition)));
+								roi.setPosition(strUtils.getCurrentStackfromAssigment(referenceStack.getShortSliceLabel(stackPosition)));
 								currentManager.addRoi(roi);
 							}
 						}
-
+						
 					}
-
+			
 				}
-
+				
+				
+				
+				
 				System.out.println(currentFov.getOutputFolder()
 						+ File.separator + "cellRoi.zip");
 				currentFov.setCellROIPath(currentFov.getOutputFolder()
@@ -178,17 +178,15 @@ public class MicrobeTrackerIO implements Operation {
 						currentFov.getCellROIPath());
 
 				if (currentManager.getCount() != 0) {
-					String currentPath =currentFov.getOutputFolder() + File.separator
-							+ "cellRoi.zip";
 					currentManager.runCommand("Save",
 							currentFov.getOutputFolder() + File.separator
 									+ "cellRoi.zip");
-					
-					Lineage lineage = new Lineage(currentPath, referenceImp);
-					lineage.assingn();
-					node.getProperties().put("LineageFolder", lineage.OUTPUT_FOLDER.getAbsolutePath());
 				}
-
+				
+				
+				
+				
+				
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -265,6 +263,7 @@ public class MicrobeTrackerIO implements Operation {
 		// IJ.run(imp, "Enhance Contrast", "saturated=0.35");
 		// IJ.run(imp, "16-bit", "");
 
+		// save Image
 		System.out.println(node.getOutputFolder() + File.separator
 				+ imp.getTitle());
 		IJ.saveAsTiff(imp,

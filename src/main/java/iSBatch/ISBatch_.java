@@ -58,8 +58,6 @@ import operations.AddNodeOperation;
 import operations.ImportOperation;
 import operations.Operation;
 import operations.cellIntensity.CellIntensity;
-import operations.cellOutlines.CellOutlines;
-import operations.cellularConcentration.CellularConcentration;
 import operations.changePoint.ChangePoint;
 import operations.focusLifetime.FocusLifetimes;
 import operations.tracking.Tracking;
@@ -483,13 +481,13 @@ public class ISBatch_ implements TreeSelectionListener, ActionListener {
 				// new MacroOperation2(frame, treeModel),
 				new DebugProperties(treeModel), new SetBackGround(treeModel),
 				new FlattenOperation(treeModel),
-				new MicrobeTrackerIO(treeModel), new CellOutlines(treeModel),
+				new MicrobeTrackerIO(treeModel), 
 				new FindPeaksOperation(), new PeakFitter2(),
 				new MacroOperation(treeModel),
-				new CellularConcentration(treeModel),
 				new CellIntensity(treeModel), new FocusLifetimes(treeModel),
 				new Tracking(treeModel), new LocationMaps(treeModel),
-				new ChangePoint(treeModel), };
+				new ChangePoint(treeModel),
+				new ExportOperation(treeModel),};
 	}
 
 	public void valueChanged(TreeSelectionEvent e) {

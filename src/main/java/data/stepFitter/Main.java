@@ -39,22 +39,54 @@ import javax.swing.JPanel;
  */
 public class Main implements ActionListener {
 	
+	/** The frame. */
 	JFrame frame = new JFrame("step fitter");
+	
+	/** The open button. */
 	JButton openButton = new JButton("open file");
+	
+	/** The dec button. */
 	JButton decButton = new JButton("decrease steps");
+	
+	/** The inc button. */
 	JButton incButton = new JButton("increase steps");
+	
+	/** The export button. */
 	JButton exportButton = new JButton("export steps");
+	
+	/** The export all button. */
 	JButton exportAllButton = new JButton("export all fits");
+	
+	/** The save image button. */
 	JButton saveImageButton = new JButton("save plot");
+	
+	/** The statistics text field. */
 	JLabel statisticsTextField = new JLabel("chi^2 : NaN chi^2 Counter Fit : NaN Ratio : NaN");
+	
+	/** The current directory. */
 	File currentDirectory;
+	
+	/** The x. */
 	double[] x;
+	
+	/** The y. */
 	double[] y;
+	
+	/** The plot. */
 	Plot plot = new Plot();
+	
+	/** The fitter. */
 	StepFitter fitter;
+	
+	/** The steps. */
 	int steps = 0;
+	
+	/** The max steps. */
 	int maxSteps;
-
+	
+	/**
+	 * Instantiates a new main.
+	 */
 	public Main() {
 		
 		openButton.addActionListener(this);
@@ -86,6 +118,9 @@ public class Main implements ActionListener {
 	}
 	
 	
+	/**
+	 * Open file.
+	 */
 	public void openFile() {
 		JFileChooser fileChooser = new JFileChooser();
 		
@@ -126,6 +161,9 @@ public class Main implements ActionListener {
 		
 	}
 	
+	/**
+	 * Save file.
+	 */
 	public void saveFile() {
 		JFileChooser fileChooser = new JFileChooser(currentDirectory);
 		
@@ -156,6 +194,9 @@ public class Main implements ActionListener {
 		}
 	}
 	
+	/**
+	 * Save image.
+	 */
 	public void saveImage() {
 		JFileChooser fileChooser = new JFileChooser(currentDirectory);
 		
@@ -178,6 +219,9 @@ public class Main implements ActionListener {
 		}
 	}
 	
+	/**
+	 * Save all fits.
+	 */
 	public void saveAllFits() {
 		
 		JFileChooser fileChooser = new JFileChooser(currentDirectory);
@@ -195,11 +239,7 @@ public class Main implements ActionListener {
 					os.write(String.format("%d\t", n).getBytes());
 					os.write(String.format("%f\t", fitter2.getChiSquared()).getBytes());
 					os.write(String.format("%f\t", fitter2.getCounterChiSquared()).getBytes());
-					os.write(String.format("%f\r\n", 	/**
-							 * The main method.
-							 *
-							 * @param args the arguments
-							 */fitter2.getChiSquared() / fitter2.getCounterChiSquared()).getBytes());
+					os.write(String.format("%f\r\n", fitter2.getChiSquared() / fitter2.getCounterChiSquared()).getBytes());
 					
 					fitter2.addStep();					
 				}
@@ -215,6 +255,9 @@ public class Main implements ActionListener {
 		}
 	}
 
+	/**
+	 * Show steps.
+	 */
 	public void showSteps() {
 		if (fitter == null)
 			return;
@@ -232,6 +275,11 @@ public class Main implements ActionListener {
 		statisticsTextField.setText(String.format("steps : %d chi^2 : %f chi^2 Counter Fit : %f Ratio : %f", steps + 1, fitter.getChiSquared(), fitter.getCounterChiSquared(), fitter.getChiSquared() / fitter.getCounterChiSquared()));
 	}
 	
+	/**
+	 * Action performed.
+	 *
+	 * @param e the e
+	 */
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == openButton) {
 			openFile();
@@ -261,6 +309,11 @@ public class Main implements ActionListener {
 		}
 	}
 	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		
 		

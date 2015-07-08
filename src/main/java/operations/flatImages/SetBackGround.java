@@ -195,7 +195,7 @@ public class SetBackGround implements Operation {
 	}
 
 	public static void main(String[] args) {
-		DatabaseModel model = TreeGenerator.generate("e:/test", "e:/test", 1);
+		DatabaseModel model = TreeGenerator.generate("e:/test", "e:/test", 2);
 		SetBackgroundGui dialog = new SetBackgroundGui(model.getRoot());
 
 		System.out.println(dialog.getChannel());
