@@ -37,10 +37,6 @@ import java.util.List;
 
 import javax.swing.JCheckBox;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class DiffusionOperationGUI.
- */
 public class DiffusionOperationGUI extends JDialog implements ActionListener {
 
 	private JButton btnCancel;
