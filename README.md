@@ -108,5 +108,3 @@ IN NO EVENT SHALL THE AUTHORS ARE LIABLE TO ANY PARTY FOR DIRECT, INDIRECT, SPEC
 [![Analytics](https://ga-beacon.appspot.com/UA-61088151-3/SingleMolecule/iSBatch?pixel)](https://github.com/SingleMlecule/iSBatch)
 
 
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/SingleMolecule/isbatch/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
