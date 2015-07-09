@@ -13,12 +13,15 @@
 package operations;
 
 import gui.ChannelsDialog;
-import ij.IJ;
+import ij.Prefs;
 
 import java.io.File;
 import java.util.HashMap;
 
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 import model.DatabaseModel;
 import model.Experiment;
@@ -31,24 +34,16 @@ import model.Root;
 import model.Sample;
 import model.parameters.ExperimentType;
 
-/**
- * The Class ImportOperation.
- */
 public class ImportOperation implements Operation {
 	private Importer importer;
 	private File file;
-	
-	/**
-	 * Instantiates a new import operation.
-	 *
-	 * @param model the model
-	 */
+
 	public ImportOperation(DatabaseModel model) {
 		importer = new Importer(model);
 	}
-	
+
 	public String[] getContext() {
-		return new String[]{ "All" };
+		return new String[] { "All" };
 	}
 
 	public String getName() {
@@ -56,12 +51,38 @@ public class ImportOperation implements Operation {
 	}
 
 	public boolean setup(Node node) {
-		
-		String directory = IJ.getDirectory("Choose directory to import from");
-		if (directory == null) return false;
-		file = new File(directory);
+
+		file = getDirectory();
+
+		if (file == null)
+			return false;
+
 		ChannelsDialog dialog = new ChannelsDialog(null, file);
 		return !dialog.isCanceled();
+	}
+
+	private File getDirectory() {
+		JFrame frame = new JFrame();
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setCurrentDirectory(getStoredDirectory());
+		int result = fileChooser.showOpenDialog(frame);
+		if (result == JFileChooser.APPROVE_OPTION) {
+			File selectedFile = fileChooser.getSelectedFile();
+			Prefs.set("isbatch.lastSelectet.ImportDir",
+					selectedFile.getAbsolutePath());
+			System.out.println("Selected file: "
+					+ selectedFile.getAbsolutePath());
+			return selectedFile;
+		}
+		return null;
+	}
+
+	private File getStoredDirectory() {
+		JTextField jtf = new JTextField(Prefs.get(
+				"isbatch.lastSelectet.ImportDir",
+				System.getProperty("user.home") + File.separator + "database"),
+				20);
+		return new File(jtf.getText());
 	}
 
 	public void finalize(Node node) {
@@ -76,10 +97,14 @@ public class ImportOperation implements Operation {
 	}
 
 	public void visit(Root root) {
-		
-		String[] options = new String[]{ExperimentType.RAPID_ACQUISITION.toString() , ExperimentType.TIME_LAPSE.toString()};
-		int option = JOptionPane.showOptionDialog(null, "Experiment type", "Import Experiment", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-		
+
+		String[] options = new String[] {
+				ExperimentType.RAPID_ACQUISITION.toString(),
+				ExperimentType.TIME_LAPSE.toString() };
+		int option = JOptionPane.showOptionDialog(null, "Experiment type",
+				"Import Experiment", JOptionPane.OK_CANCEL_OPTION,
+				JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+
 		if (option == JOptionPane.CANCEL_OPTION)
 			return;
 		else
