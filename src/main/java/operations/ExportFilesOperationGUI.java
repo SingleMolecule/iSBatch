@@ -15,6 +15,7 @@ package operations;
 import ij.IJ;
 
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
 import java.awt.GridBagLayout;
@@ -32,15 +33,20 @@ import javax.swing.SwingConstants;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.File;
 
 import model.Node;
+
+
 
 
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import javax.swing.JRadioButton;
+import javax.swing.ButtonGroup;
 
 public class ExportFilesOperationGUI extends JDialog implements ActionListener {
 
@@ -51,7 +57,6 @@ public class ExportFilesOperationGUI extends JDialog implements ActionListener {
 	private boolean canceled = false;
 	static JFrame frame;
 	private Node node;
-	private String channel, method, imagePath;
 
 	public ExportFilesOperationGUI(Node node) {
 		setModal(true);
@@ -109,6 +114,7 @@ public class ExportFilesOperationGUI extends JDialog implements ActionListener {
 		getContentPane().add(lblFileType, gbc_lblFileType);
 		
 		rdbtnImage = new JRadioButton("Image");
+		buttonGroup.add(rdbtnImage);
 		GridBagConstraints gbc_rdbtnImage = new GridBagConstraints();
 		gbc_rdbtnImage.insets = new Insets(0, 0, 5, 5);
 		gbc_rdbtnImage.gridx = 3;
@@ -116,6 +122,7 @@ public class ExportFilesOperationGUI extends JDialog implements ActionListener {
 		getContentPane().add(rdbtnImage, gbc_rdbtnImage);
 		
 		rdbtnTable = new JRadioButton("Table");
+		buttonGroup.add(rdbtnTable);
 		GridBagConstraints gbc_rdbtnTable = new GridBagConstraints();
 		gbc_rdbtnTable.insets = new Insets(0, 0, 5, 5);
 		gbc_rdbtnTable.gridx = 4;
@@ -123,6 +130,7 @@ public class ExportFilesOperationGUI extends JDialog implements ActionListener {
 		getContentPane().add(rdbtnTable, gbc_rdbtnTable);
 		
 		btnExportToFolder = new JButton("Export to folder");
+		btnExportToFolder.addActionListener(this);
 		GridBagConstraints gbc_btnExportToFolder = new GridBagConstraints();
 		gbc_btnExportToFolder.gridwidth = 2;
 		gbc_btnExportToFolder.insets = new Insets(0, 0, 5, 5);
@@ -130,15 +138,15 @@ public class ExportFilesOperationGUI extends JDialog implements ActionListener {
 		gbc_btnExportToFolder.gridy = 2;
 		getContentPane().add(btnExportToFolder, gbc_btnExportToFolder);
 		
-		textField = new JTextField();
-		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.gridwidth = 3;
-		gbc_textField.insets = new Insets(0, 0, 5, 5);
-		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField.gridx = 3;
-		gbc_textField.gridy = 2;
-		getContentPane().add(textField, gbc_textField);
-		textField.setColumns(10);
+		tfOutput = new JTextField();
+		GridBagConstraints gbc_tfOutput = new GridBagConstraints();
+		gbc_tfOutput.gridwidth = 3;
+		gbc_tfOutput.insets = new Insets(0, 0, 5, 5);
+		gbc_tfOutput.fill = GridBagConstraints.HORIZONTAL;
+		gbc_tfOutput.gridx = 3;
+		gbc_tfOutput.gridy = 2;
+		getContentPane().add(tfOutput, gbc_tfOutput);
+		tfOutput.setColumns(10);
 
 		btnProcess = new JButton("Process");
 		btnProcess.addActionListener(this);
@@ -152,6 +160,7 @@ public class ExportFilesOperationGUI extends JDialog implements ActionListener {
 		getContentPane().add(lblSaveAs, gbc_lblSaveAs);
 		
 		rdbtnSequential = new JRadioButton("Sequential");
+		buttonGroup_1.add(rdbtnSequential);
 		GridBagConstraints gbc_rdbtnSequential = new GridBagConstraints();
 		gbc_rdbtnSequential.insets = new Insets(0, 0, 5, 5);
 		gbc_rdbtnSequential.gridx = 3;
@@ -159,6 +168,7 @@ public class ExportFilesOperationGUI extends JDialog implements ActionListener {
 		getContentPane().add(rdbtnSequential, gbc_rdbtnSequential);
 		
 		rdbtnSingle = new JRadioButton("Single");
+		buttonGroup_1.add(rdbtnSingle);
 		rdbtnSingle.setToolTipText("This option may create huge files.");
 		GridBagConstraints gbc_rdbtnSingle = new GridBagConstraints();
 		gbc_rdbtnSingle.insets = new Insets(0, 0, 5, 5);
@@ -205,14 +215,8 @@ public class ExportFilesOperationGUI extends JDialog implements ActionListener {
 	}
 
 	private void run() {
-		//
-		// // get array of Images
-		// ArrayList<Node> images = node.getDescendents(imageFileNodeFilter);
-
-		System.out.println("Parameters will be: " + channel + " , " + imageType
-				+ " , " + method);
 	}
-
+	
 	public static void main(String[] args) {
 		frame = new JFrame();
 
@@ -232,41 +236,59 @@ public class ExportFilesOperationGUI extends JDialog implements ActionListener {
 	private JLabel lblFileType;
 	private JRadioButton rdbtnImage;
 	private JRadioButton rdbtnTable;
-	private JTextField textField;
+	private JTextField tfOutput;
 	private JLabel lblSaveAs;
 	private JButton btnExportToFolder;
 	private JRadioButton rdbtnSequential;
 	private JRadioButton rdbtnSingle;
 	private JLabel lblWithName;
 	private JTextField textField_1;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private final ButtonGroup buttonGroup_1 = new ButtonGroup();
 
+	public File OUTPUT_FOLDER;
+	public String outFolderPath;
+	public String method;
+	public String fileType;
+	public String matchingString;
+	
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnCancel) {
 			canceled = true;
 			dispose();
 		} else if (e.getSource() == btnProcess) {
+			
+			outFolderPath = tfOutput.getText();
+			method = buttonGroup_1.getSelection().toString();
+			fileType = buttonGroup.getSelection().toString();
+			matchingString= textField_1.getText();
+			
+			
+			
+			
+			
+			
 			run();
 			dispose();
 		}
+		else if(e.getSource() == btnExportToFolder){
+			JFileChooser chooser = new JFileChooser();
+			chooser.setDialogTitle("Select output folder");
+			  chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			  //
+			    // disable the "All files" option.
+			    //
+			    chooser.setAcceptAllFileFilterUsed(false);
+			    //    
+			    if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) { 
+			    	OUTPUT_FOLDER = chooser.getSelectedFile();
+			    	tfOutput.setText(OUTPUT_FOLDER.getAbsolutePath());
+			      }
+		}
 	}
 
-	/**
-	 * Gets the channel.
-	 *
-	 * @return the channel
-	 */
-	public String getChannel() {
-		return channel;
-	}
-
-	public String getMethod() {
-		return method;
-	}
-
-	public String getImagePath() {
-		return imagePath;
-	}
 
 	public ArrayList<String> getImageTag() {
 		ArrayList<String> temp = new ArrayList<String>();
