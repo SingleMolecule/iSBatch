@@ -213,10 +213,10 @@ public class DiffusioOperation implements Operation, PlugIn {
 				
 			}
 			
-			IJUtils.emptyAll();
+//			IJUtils.emptyAll();
 			
 			
-		}
+//		}
 
 	
 	public static void main(String[] args) {
