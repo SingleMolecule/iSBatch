@@ -15,7 +15,7 @@
 
 ## Release and Night Build
 
-iSBatch development is happening quick! Check out the last release or try the very last version downloading the **Nightly build**
+iSBatch development is in constant and active develpment! Your feedback is important! Check out the last release or try the very last version downloading the **Nightly build**
 
 [Last Release](https://github.com/SingleMolecule/iSBatch/releases)
 
@@ -107,6 +107,4 @@ IN NO EVENT SHALL THE AUTHORS ARE LIABLE TO ANY PARTY FOR DIRECT, INDIRECT, SPEC
 
 [![Analytics](https://ga-beacon.appspot.com/UA-61088151-3/SingleMolecule/iSBatch?pixel)](https://github.com/SingleMlecule/iSBatch)
 
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/SingleMolecule/isbatch/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 

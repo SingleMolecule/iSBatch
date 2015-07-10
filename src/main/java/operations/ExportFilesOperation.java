@@ -25,8 +25,7 @@ public class ExportFilesOperation implements Operation {
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Export files";
 	}
 
 	@Override

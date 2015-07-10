@@ -54,6 +54,7 @@ import model.Node;
 import model.PropertiesTableGui;
 import model.parameters.NodeType;
 import context.ContextHandler;
+import data.stepFitter.StepFitterOperation;
 import operations.AddNodeOperation;
 import operations.ExportFilesOperation;
 import operations.ImportOperation;
@@ -488,7 +489,8 @@ public class ISBatch_ implements TreeSelectionListener, ActionListener {
 				new CellIntensity(treeModel), new FocusLifetimes(treeModel),
 				new Tracking(treeModel), new LocationMaps(treeModel),
 				new ChangePoint(treeModel),
-				new ExportFilesOperation(treeModel),};
+				new ExportFilesOperation(treeModel),
+				new StepFitterOperation(treeModel)};
 	}
 
 	public void valueChanged(TreeSelectionEvent e) {
