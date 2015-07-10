@@ -86,11 +86,11 @@ public class DiffusionOperationGUI extends JDialog implements ActionListener {
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 0, 60, 60, 60, 60, 60, 0, 0 };
-		gridBagLayout.rowHeights = new int[] { 14, 23, 0, 23, 0, 0, 0, 0, 0, 0,
+		gridBagLayout.rowHeights = new int[] { 14, 23, 0, 23, 0, 0, 0, 0, 0, 0, 0, 0,
 				0 };
 		gridBagLayout.columnWeights = new double[] { 0.0, 1.0, 0.0, 1.0, 1.0,
 				0.0, 0.0, Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
 				0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		getContentPane().setLayout(gridBagLayout);
 
@@ -190,6 +190,56 @@ public class DiffusionOperationGUI extends JDialog implements ActionListener {
 		gbc_customSearchTxtField.gridy = 3;
 		getContentPane().add(customSearchTxtField, gbc_customSearchTxtField);
 		customSearchTxtField.setColumns(1);
+		
+		lblLookAheadframes = new JLabel("Look ahead:");
+		GridBagConstraints gbc_lblLookAheadframes = new GridBagConstraints();
+		gbc_lblLookAheadframes.anchor = GridBagConstraints.EAST;
+		gbc_lblLookAheadframes.insets = new Insets(0, 0, 5, 5);
+		gbc_lblLookAheadframes.gridx = 2;
+		gbc_lblLookAheadframes.gridy = 4;
+		getContentPane().add(lblLookAheadframes, gbc_lblLookAheadframes);
+		
+		lookAheadTF = new JTextField();
+		lookAheadTF.setText("1");
+		GridBagConstraints gbc_lookAheadTF = new GridBagConstraints();
+		gbc_lookAheadTF.insets = new Insets(0, 0, 5, 5);
+		gbc_lookAheadTF.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lookAheadTF.gridx = 3;
+		gbc_lookAheadTF.gridy = 4;
+		getContentPane().add(lookAheadTF, gbc_lookAheadTF);
+		lookAheadTF.setColumns(10);
+		
+		lblFrames = new JLabel("frames");
+		GridBagConstraints gbc_lblFrames = new GridBagConstraints();
+		gbc_lblFrames.insets = new Insets(0, 0, 5, 5);
+		gbc_lblFrames.gridx = 4;
+		gbc_lblFrames.gridy = 4;
+		getContentPane().add(lblFrames, gbc_lblFrames);
+		
+		lblNewLabel = new JLabel("Max step size");
+		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
+		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel.anchor = GridBagConstraints.EAST;
+		gbc_lblNewLabel.gridx = 2;
+		gbc_lblNewLabel.gridy = 5;
+		getContentPane().add(lblNewLabel, gbc_lblNewLabel);
+		
+		maxStepSizeTF = new JTextField();
+		maxStepSizeTF.setText("6");
+		GridBagConstraints gbc_maxStepSizeTF = new GridBagConstraints();
+		gbc_maxStepSizeTF.insets = new Insets(0, 0, 5, 5);
+		gbc_maxStepSizeTF.fill = GridBagConstraints.HORIZONTAL;
+		gbc_maxStepSizeTF.gridx = 3;
+		gbc_maxStepSizeTF.gridy = 5;
+		getContentPane().add(maxStepSizeTF, gbc_maxStepSizeTF);
+		maxStepSizeTF.setColumns(10);
+		
+		lblPx = new JLabel("px");
+		GridBagConstraints gbc_lblPx = new GridBagConstraints();
+		gbc_lblPx.insets = new Insets(0, 0, 5, 5);
+		gbc_lblPx.gridx = 4;
+		gbc_lblPx.gridy = 5;
+		getContentPane().add(lblPx, gbc_lblPx);
 
 		lblLookAhead = new JLabel("Time interval:");
 		GridBagConstraints gbc_lblLookAhead = new GridBagConstraints();
@@ -197,15 +247,16 @@ public class DiffusionOperationGUI extends JDialog implements ActionListener {
 		gbc_lblLookAhead.anchor = GridBagConstraints.EAST;
 		gbc_lblLookAhead.insets = new Insets(0, 0, 5, 5);
 		gbc_lblLookAhead.gridx = 1;
-		gbc_lblLookAhead.gridy = 4;
+		gbc_lblLookAhead.gridy = 6;
 		getContentPane().add(lblLookAhead, gbc_lblLookAhead);
 
 		timeIntervaltextField = new JTextField();
+		timeIntervaltextField.setText("0.034");
 		GridBagConstraints gbc_timeIntervaltextField = new GridBagConstraints();
 		gbc_timeIntervaltextField.insets = new Insets(0, 0, 5, 5);
 		gbc_timeIntervaltextField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_timeIntervaltextField.gridx = 3;
-		gbc_timeIntervaltextField.gridy = 4;
+		gbc_timeIntervaltextField.gridy = 6;
 		getContentPane().add(timeIntervaltextField, gbc_timeIntervaltextField);
 		timeIntervaltextField.setColumns(10);
 		timeIntervaltextField.addKeyListener(new KeyAdapter() {
@@ -220,7 +271,7 @@ public class DiffusionOperationGUI extends JDialog implements ActionListener {
 		GridBagConstraints gbc_lblSlices = new GridBagConstraints();
 		gbc_lblSlices.insets = new Insets(0, 0, 5, 5);
 		gbc_lblSlices.gridx = 4;
-		gbc_lblSlices.gridy = 4;
+		gbc_lblSlices.gridy = 6;
 		getContentPane().add(lblSlices, gbc_lblSlices);
 
 		lblMaxStepSize = new JLabel("Pixel size:");
@@ -228,15 +279,16 @@ public class DiffusionOperationGUI extends JDialog implements ActionListener {
 		gbc_lblMaxStepSize.anchor = GridBagConstraints.EAST;
 		gbc_lblMaxStepSize.insets = new Insets(0, 0, 5, 5);
 		gbc_lblMaxStepSize.gridx = 2;
-		gbc_lblMaxStepSize.gridy = 5;
+		gbc_lblMaxStepSize.gridy = 7;
 		getContentPane().add(lblMaxStepSize, gbc_lblMaxStepSize);
 
 		PixelSizeTextField = new JTextField();
+		PixelSizeTextField.setText("100");
 		GridBagConstraints gbc_PixelSizeTextField = new GridBagConstraints();
 		gbc_PixelSizeTextField.insets = new Insets(0, 0, 5, 5);
 		gbc_PixelSizeTextField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_PixelSizeTextField.gridx = 3;
-		gbc_PixelSizeTextField.gridy = 5;
+		gbc_PixelSizeTextField.gridy = 7;
 		getContentPane().add(PixelSizeTextField, gbc_PixelSizeTextField);
 		PixelSizeTextField.setColumns(10);
 		PixelSizeTextField.addKeyListener(new KeyAdapter() {
@@ -251,7 +303,7 @@ public class DiffusionOperationGUI extends JDialog implements ActionListener {
 		GridBagConstraints gbc_lblPixels = new GridBagConstraints();
 		gbc_lblPixels.insets = new Insets(0, 0, 5, 5);
 		gbc_lblPixels.gridx = 4;
-		gbc_lblPixels.gridy = 5;
+		gbc_lblPixels.gridy = 7;
 		getContentPane().add(lblPixels, gbc_lblPixels);
 
 		lblMinimumNumberOf = new JLabel("Minimum number of points:");
@@ -259,7 +311,7 @@ public class DiffusionOperationGUI extends JDialog implements ActionListener {
 		gbc_lblMinimumNumberOf.gridwidth = 2;
 		gbc_lblMinimumNumberOf.insets = new Insets(0, 0, 5, 5);
 		gbc_lblMinimumNumberOf.gridx = 1;
-		gbc_lblMinimumNumberOf.gridy = 6;
+		gbc_lblMinimumNumberOf.gridy = 8;
 		getContentPane().add(lblMinimumNumberOf, gbc_lblMinimumNumberOf);
 
 		NumberOfPointstextField = new JTextField();
@@ -275,7 +327,7 @@ public class DiffusionOperationGUI extends JDialog implements ActionListener {
 		gbc_NumberOfPointstextField.insets = new Insets(0, 0, 5, 5);
 		gbc_NumberOfPointstextField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_NumberOfPointstextField.gridx = 3;
-		gbc_NumberOfPointstextField.gridy = 6;
+		gbc_NumberOfPointstextField.gridy = 8;
 		getContentPane().add(NumberOfPointstextField,
 				gbc_NumberOfPointstextField);
 		NumberOfPointstextField.setColumns(10);
@@ -285,7 +337,7 @@ public class DiffusionOperationGUI extends JDialog implements ActionListener {
 		gbc_lblFitUntilall.insets = new Insets(0, 0, 5, 5);
 		gbc_lblFitUntilall.anchor = GridBagConstraints.EAST;
 		gbc_lblFitUntilall.gridx = 2;
-		gbc_lblFitUntilall.gridy = 7;
+		gbc_lblFitUntilall.gridy = 9;
 		getContentPane().add(lblFitUntilall, gbc_lblFitUntilall);
 
 		FItLimittextField_1 = new JTextField();
@@ -302,7 +354,7 @@ public class DiffusionOperationGUI extends JDialog implements ActionListener {
 		gbc_FItLimittextField_1.insets = new Insets(0, 0, 5, 5);
 		gbc_FItLimittextField_1.fill = GridBagConstraints.HORIZONTAL;
 		gbc_FItLimittextField_1.gridx = 3;
-		gbc_FItLimittextField_1.gridy = 7;
+		gbc_FItLimittextField_1.gridy = 9;
 		getContentPane().add(FItLimittextField_1, gbc_FItLimittextField_1);
 		FItLimittextField_1.setColumns(10);
 
@@ -310,7 +362,7 @@ public class DiffusionOperationGUI extends JDialog implements ActionListener {
 		GridBagConstraints gbc_lblS = new GridBagConstraints();
 		gbc_lblS.insets = new Insets(0, 0, 5, 5);
 		gbc_lblS.gridx = 4;
-		gbc_lblS.gridy = 7;
+		gbc_lblS.gridy = 9;
 		getContentPane().add(lblS, gbc_lblS);
 
 		lblDiffusionDimensionality = new JLabel("Diffusion dimensionality");
@@ -318,7 +370,7 @@ public class DiffusionOperationGUI extends JDialog implements ActionListener {
 		gbc_lblDiffusionDimensionality.insets = new Insets(0, 0, 5, 5);
 		gbc_lblDiffusionDimensionality.anchor = GridBagConstraints.EAST;
 		gbc_lblDiffusionDimensionality.gridx = 2;
-		gbc_lblDiffusionDimensionality.gridy = 8;
+		gbc_lblDiffusionDimensionality.gridy = 10;
 		getContentPane().add(lblDiffusionDimensionality,
 				gbc_lblDiffusionDimensionality);
 
@@ -330,7 +382,7 @@ public class DiffusionOperationGUI extends JDialog implements ActionListener {
 		gbc_dimensionComboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_dimensionComboBox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_dimensionComboBox.gridx = 3;
-		gbc_dimensionComboBox.gridy = 8;
+		gbc_dimensionComboBox.gridy = 10;
 		getContentPane().add(dimensionComboBox, gbc_dimensionComboBox);
 
 		chckbxAverageAllTrajectories = new JCheckBox("Average all trajectories");
@@ -339,13 +391,13 @@ public class DiffusionOperationGUI extends JDialog implements ActionListener {
 		gbc_chckbxAverageAllTrajectories.gridwidth = 2;
 		gbc_chckbxAverageAllTrajectories.insets = new Insets(0, 0, 0, 5);
 		gbc_chckbxAverageAllTrajectories.gridx = 2;
-		gbc_chckbxAverageAllTrajectories.gridy = 9;
+		gbc_chckbxAverageAllTrajectories.gridy = 11;
 		getContentPane().add(chckbxAverageAllTrajectories,
 				gbc_chckbxAverageAllTrajectories);
 		GridBagConstraints gbc_btnProcess = new GridBagConstraints();
 		gbc_btnProcess.insets = new Insets(0, 0, 0, 5);
 		gbc_btnProcess.gridx = 4;
-		gbc_btnProcess.gridy = 9;
+		gbc_btnProcess.gridy = 11;
 		getContentPane().add(btnProcess, gbc_btnProcess);
 
 		btnCancel = new JButton("Cancel");
@@ -354,7 +406,7 @@ public class DiffusionOperationGUI extends JDialog implements ActionListener {
 		GridBagConstraints gbc_btnCancel = new GridBagConstraints();
 		gbc_btnCancel.insets = new Insets(0, 0, 0, 5);
 		gbc_btnCancel.gridx = 5;
-		gbc_btnCancel.gridy = 9;
+		gbc_btnCancel.gridy = 11;
 		getContentPane().add(btnCancel, gbc_btnCancel);
 
 		pack();
@@ -403,7 +455,15 @@ public class DiffusionOperationGUI extends JDialog implements ActionListener {
 	private JComboBox<String> dimensionComboBox;
 	private JCheckBox chckbxAverageAllTrajectories;
 	private boolean doAverage;
+	private JLabel lblLookAheadframes;
+	private JTextField lookAheadTF;
+	private JLabel lblFrames;
+	private JTextField maxStepSizeTF;
+	private JLabel lblNewLabel;
+	private JLabel lblPx;
 
+	public String lookAhead;
+	public String maxStepSize;
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnCancel) {
@@ -411,6 +471,8 @@ public class DiffusionOperationGUI extends JDialog implements ActionListener {
 			dispose();
 		} else if (e.getSource() == btnProcess) {
 			String foo = (String) fileTypeComboBox.getSelectedItem();
+			lookAhead = lookAheadTF.getText();
+			maxStepSize = maxStepSizeTF.getText();
 			if (foo.equalsIgnoreCase("[File Type]")) {
 				this.imageType = null;
 			} else {
