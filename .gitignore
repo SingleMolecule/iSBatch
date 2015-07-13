@@ -1,10 +1,17 @@
 # Eclipse #
-/.classpath
-/.project
-/.settings/
+*.class
+.project
+.settings
+.classpath
+
+*/.classpath
+*/.project
+*/.settings
+
 /doc
 /bin/
 /.externalToolBuilders/
 
 # Maven #
-/target/
+*/target
+
