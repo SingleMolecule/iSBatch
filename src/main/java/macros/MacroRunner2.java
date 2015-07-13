@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import org.tmatesoft.sqljet.core.SqlJetException;
 
+import gui.LogPanel;
 import utils.ModelUtils;
 import model.Database;
 import model.DatabaseModel;
@@ -22,6 +23,7 @@ public class MacroRunner2 implements Runnable {
 	private String contains = "";
 	private String filename = "";
 	private String macro = "";
+	private File outputFolder;
 	private Node node;
 	private Thread thread;
 	private boolean shouldRun = false;
@@ -70,6 +72,14 @@ public class MacroRunner2 implements Runnable {
 	public void setMacro(String macro) {
 		this.macro = macro;
 	}
+	
+	public File getOutputFolder() {
+		return outputFolder;
+	}
+
+	public void setOutputFolder(File outputFolder) {
+		this.outputFolder = outputFolder;
+	}
 
 	public Node getNode() {
 		return node;
@@ -117,14 +127,36 @@ public class MacroRunner2 implements Runnable {
 			
 			String path = fileNode.getProperty("path");
 
-			System.out.println("running macro on " + path);
+			LogPanel.log("running macro on " + path);
 
 			String outputDirectory = fileNode.getOutputFolder();
 			String outputPath = outputDirectory + File.separator + filename;
 	
 			if (overrideOriginal)
 				outputPath = fileNode.getProperty("path");
+			
+			if (outputFolder != null && outputFolder.exists()) {
+				outputPath = outputFolder.getPath() + File.separator + filename;
 	
+				int number = 0;
+				
+				while (new File(outputPath).exists()) {
+					
+					String name = filename;
+					String extension = "";
+					
+					if (name.contains(".")) {
+						name = name.substring(0, name.lastIndexOf("."));
+						extension = name.substring(name.lastIndexOf("."));
+					}
+					
+					number++;
+					outputPath = outputFolder.getPath() + File.separator + name + "-" + number + extension;
+					
+				}
+				
+			}
+			
 			// escape characters
 			path = path.replace("\\", "\\\\");
 			outputPath = outputPath.replace("\\", "\\\\");

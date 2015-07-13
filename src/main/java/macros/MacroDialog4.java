@@ -34,10 +34,12 @@ public class MacroDialog4 extends JDialog implements ActionListener {
 	
 	private JCheckBox replaceCheckBox = new JCheckBox("Replace original file", false);
 	private JTextField filenameTextField = new JTextField(20);
+	private JTextField outputFolderTextField = new JTextField(20);
 	
 	private JTextArea macroTextPane = new JTextArea(20, 80);
 	
-	private JButton chooseButton = new JButton("Choose Macro file");
+	private JButton chooseButton = new JButton("Choose Macro File");
+	private JButton chooseOutputFolderButton = new JButton("Choose Output Folder");
 	private JButton runButton = new JButton("Run");
 	private JButton stopButton = new JButton("Stop");
 	
@@ -83,6 +85,23 @@ public class MacroDialog4 extends JDialog implements ActionListener {
 		gbc.gridx++;
 		add(filenameTextField, gbc);
 		
+		
+		gbc.gridx = 0;
+		gbc.gridy++;
+		add(new JLabel("Output folder"), gbc);
+		gbc.gridx++;
+		add(outputFolderTextField, gbc);
+		gbc.gridx++;		
+		add(chooseOutputFolderButton, gbc);
+		
+		gbc.gridx = 0;
+		gbc.gridy++;
+		gbc.gridwidth = 3;
+		add(new JLabel("When an output folder is specified the output files will be stored in that folder."), gbc);
+		gbc.gridy++;
+		add(new JLabel("The output files will not be added to the database tree!"), gbc);
+		gbc.gridwidth = 1;
+		
 		gbc.gridx = 0;
 		gbc.gridy++;
 		gbc.gridwidth = 3;
@@ -106,6 +125,7 @@ public class MacroDialog4 extends JDialog implements ActionListener {
 		chooseButton.addActionListener(this);
 		runButton.addActionListener(this);
 		stopButton.addActionListener(this);
+		chooseOutputFolderButton.addActionListener(this);
 		
 		ArrayList<Node> fileNodes = ModelUtils.getAllFileNodes(node);
 		channelComboBox.setModel((ModelUtils.getUniqueChannels(fileNodes)));
@@ -154,7 +174,21 @@ public class MacroDialog4 extends JDialog implements ActionListener {
 		else if (e.getSource() == channelComboBox) {
 			setAllFields();
 		}
-		
+		else if (e.getSource() == chooseOutputFolderButton) {
+			
+			// open file
+			JFileChooser fileChooser = new JFileChooser();
+			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			int option = fileChooser.showOpenDialog(null);
+			
+			if (option == JFileChooser.APPROVE_OPTION) {
+				
+				File file = fileChooser.getSelectedFile();
+				outputFolderTextField.setText(file.getPath());
+				
+			}
+			
+		}
 	}
 	
 }
