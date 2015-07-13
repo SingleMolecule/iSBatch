@@ -59,6 +59,7 @@ import operations.AddNodeOperation;
 import operations.ExportFilesOperation;
 import operations.ImportOperation;
 import operations.Operation;
+import operations.RemoveNodeOperation;
 import operations.cellIntensity.CellIntensity;
 import operations.changePoint.ChangePoint;
 import operations.focusLifetime.FocusLifetimes;
@@ -475,7 +476,9 @@ public class ISBatch_ implements TreeSelectionListener, ActionListener {
 
 	public Operation[] getTreeOperations() {
 		return new Operation[] { new AddNodeOperation(frame, treeModel),
-				new ImportOperation(treeModel) };
+				new ImportOperation(treeModel),
+				new RemoveNodeOperation(treeModel),
+			};
 	}
 
 	public Operation[] getOperations() {
