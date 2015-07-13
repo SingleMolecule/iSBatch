@@ -166,6 +166,7 @@ public class MacroDialog4 extends JDialog implements ActionListener {
 			runner.setChannel((String)channelComboBox.getSelectedItem());
 			runner.setContains(containsTextField.getText());
 			runner.setMacro(macroTextPane.getText());
+			runner.setOutputFolder(new File(outputFolderTextField.getText()));
 			runner.start();
 		}
 		else if (e.getSource() == stopButton) {

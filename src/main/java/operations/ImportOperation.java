@@ -19,7 +19,6 @@ import java.io.File;
 import java.util.HashMap;
 
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -62,10 +61,12 @@ public class ImportOperation implements Operation {
 	}
 
 	private File getDirectory() {
-		JFrame frame = new JFrame();
+		
 		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		fileChooser.setCurrentDirectory(getStoredDirectory());
-		int result = fileChooser.showOpenDialog(frame);
+		int result = fileChooser.showOpenDialog(null);
+		
 		if (result == JFileChooser.APPROVE_OPTION) {
 			File selectedFile = fileChooser.getSelectedFile();
 			Prefs.set("isbatch.lastSelectet.ImportDir",
