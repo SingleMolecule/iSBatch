@@ -58,6 +58,7 @@ import data.stepFitter.StepFitterOperation;
 import operations.AddNodeOperation;
 import operations.ExportFilesOperation;
 import operations.ImportOperation;
+import operations.MaintenanceOperation;
 import operations.Operation;
 import operations.RemoveNodeOperation;
 import operations.cellIntensity.CellIntensity;
@@ -493,7 +494,9 @@ public class ISBatch_ implements TreeSelectionListener, ActionListener {
 				new Tracking(treeModel), new LocationMaps(treeModel),
 				new ChangePoint(treeModel),
 				new ExportFilesOperation(treeModel),
-				new StepFitterOperation(treeModel)};
+				new StepFitterOperation(treeModel),
+				new MaintenanceOperation(treeModel),
+				};
 	}
 
 	public void valueChanged(TreeSelectionEvent e) {
