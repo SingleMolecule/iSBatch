@@ -87,14 +87,15 @@ public class DatabaseModel implements TreeModel {
 	}
 
 	public void removeNode(Node parent, Node child) {
-		parent.getChildren().remove(child);
+		
 
 		for (TreeModelListener l : listeners) {
 			l.treeNodesRemoved(new TreeModelEvent(this, getPathToRoot(parent),
 					new int[] { getIndexOfChild(parent, child) },
 					new Object[] { child }));
 		}
-
+		
+		parent.getChildren().remove(child);
 	}
 
 	public Object[] getPathToRoot(Node aNode) {
