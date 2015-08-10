@@ -13,7 +13,7 @@
 
 	<groupId>sc.fiji</groupId>
 	<artifactId>iSBatch_</artifactId>
-	<version>0.3.5-SNAPSHOT</version>
+	<version>SNAPSHOT</version>
 	<inceptionYear>2015</inceptionYear>
 
 	<name>plugins/iSBatch.jar</name>
