@@ -1,6 +1,7 @@
 package operations.microbeTrackerIO;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -355,8 +356,13 @@ public class Lineage {
 			this.lineageTable = new ResultsTable();
 			LogPanel.log("Table is empty");
 		}
-		lineageTable.save(OUTPUT_FOLDER + File.separator
-				+ "CellMeasurements.csv");
+		try {
+			lineageTable.saveAs(OUTPUT_FOLDER + File.separator
+					+ "CellMeasurements.csv");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private void createLineageTable() {
@@ -426,6 +432,7 @@ public class Lineage {
 			rm.addRoi(otherRoi);
 			rm.addRoi(roi);
 			rm.setSelectedIndexes(new int[] { 1, 2 });
+			
 			rm.runCommand(imp, "AND");
 			rm.select(3);
 			rm.getRoi(3);

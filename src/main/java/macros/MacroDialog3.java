@@ -13,6 +13,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -269,7 +270,12 @@ public class MacroDialog3 extends JDialog implements ActionListener, Runnable {
 				
 				if (table.getCounter() > 0) {
 					String csvFile = csvOutputFilename.getText();
-					table.save(csvFile);
+					try {
+						table.saveAs(csvFile);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					File file = new File(csvFile);
 					importer.importFile(node, file, node.getChannel(), file.getName());
 				}

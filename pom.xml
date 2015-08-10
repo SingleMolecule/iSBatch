@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-		http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>net.imagej</groupId>
-		<artifactId>pom-imagej</artifactId>
-		<version>7.0.0</version>
+		<groupId>sc.fiji</groupId>
+		<artifactId>pom-fiji</artifactId>
+		<version>7.1.0</version>
 		<relativePath />
 	</parent>
 
-	<groupId>sc.fiji</groupId>
 	<artifactId>iSBatch_</artifactId>
 	<version>SNAPSHOT</version>
 	<inceptionYear>2015</inceptionYear>
 
-	<name>plugins/iSBatch.jar</name>
+	<name>plugins/iSBatch_.jar</name>
 	<description>Plugin for batch analysis in imageJ.</description>
 
 
@@ -66,13 +63,44 @@
 		<main-class>src.main.java.iSBatch.ISBatch_</main-class>
 	</properties>
 
+	<repositories>
+		<!-- NB: for project parent -->
+		<repository>
+			<id>imagej.public</id>
+			<url>http://maven.imagej.net/content/groups/public</url>
+		</repository>
+	</repositories>
+
 
 	<dependencies>
+		<!-- Fiji dependencies -->
+		<dependency>
+			<groupId>sc.fiji</groupId>
+			<artifactId>fiji-lib</artifactId>
+		</dependency>
+
+		<!-- ImageJ dependencies -->
 		<dependency>
 			<groupId>net.imagej</groupId>
 			<artifactId>ij</artifactId>
+			<version>1.50a</version>
 		</dependency>
-		<!-- iSBatch Dependencies -->
+
+		<!-- ImgLib2 dependencies -->
+		<dependency>
+			<groupId>net.imglib2</groupId>
+			<artifactId>imglib2</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.imglib2</groupId>
+			<artifactId>imglib2-algorithm</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.imglib2</groupId>
+			<artifactId>imglib2-ij</artifactId>
+		</dependency>
+
+		<!-- Third party dependencies -->
 		<dependency>
 			<groupId>org.tmatesoft.sqljet</groupId>
 			<artifactId>sqljet</artifactId>
@@ -85,6 +113,7 @@
 			<version>1.0</version>
 			<scope>provided</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>net.sf.opencsv</groupId>
 			<type>jar</type>
@@ -92,7 +121,14 @@
 			<version>2.3</version>
 		</dependency>
 
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
+	
 	<profiles>
 		<profile>
 			<id>default-tools.jar</id>

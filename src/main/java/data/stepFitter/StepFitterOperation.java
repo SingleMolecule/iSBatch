@@ -1,6 +1,7 @@
 package data.stepFitter;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 
 import ij.IJ;
@@ -56,7 +57,12 @@ public class StepFitterOperation implements Operation {
 		table = Analyzer.getResultsTable();
 		
 		File outputFile = new File(f.getAbsolutePath() + "["+channel+"]Steps.csv"); 
-		table.save(outputFile.getPath());
+		try {
+			table.saveAs(outputFile.getPath());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		importer.importFile(node, outputFile);
 		

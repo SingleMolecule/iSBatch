@@ -22,11 +22,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="var" path="M2_REPO/net/imagej/ij/1.49p/ij-1.49p.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/tmatesoft/sqljet/sqljet/1.1.10/sqljet-1.1.10.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/antlr/antlr-runtime/3.4/antlr-runtime-3.4.jar"/>
-	<classpathentry kind="var" path="M2_REPO/net/sourceforge/jmatio/jmatio/1.0/jmatio-1.0.jar"/>
-	<classpathentry kind="var" path="M2_REPO/net/sf/opencsv/opencsv/2.3/opencsv-2.3.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>

@@ -3,6 +3,7 @@ package macros;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import filters.NodeFilterInterface;
@@ -145,18 +146,17 @@ public class MacroRunner implements Runnable {
 			String filename = new File(node.getOutputFolder(), basename).getPath();
 			
 			// save generated or changed images
-			for (String title : WindowManager.getImageTitles()) {
-			    
-				ImagePlus imp = WindowManager.getImage(title);
-			    
-			    if (imp.changes) {
-			    	String tifFile = getUniquePath(filename, ".tif");
-			    	IJ.saveAsTiff(imp, tifFile);
-			    	File file = new File(tifFile);
-			    	importer.importFile(node, file, node.getChannel(), file.getName());
-			    	
-			    }
-			    
+			
+			for(int imagesCount =0; imagesCount<=WindowManager.getImageCount(); imagesCount++){
+				ImagePlus imp = WindowManager.getImage(imagesCount);
+				 if (imp.changes) {
+				    	String tifFile = getUniquePath(filename, ".tif");
+				    	IJ.saveAsTiff(imp, tifFile);
+				    	File file = new File(tifFile);
+				    	importer.importFile(node, file, node.getChannel(), file.getName());
+				    	
+				    }
+				
 			}
 			
 			// save roi's in the roimanager
@@ -178,7 +178,12 @@ public class MacroRunner implements Runnable {
 			
 			if (table.getCounter() > 0) {
 				String csvFile = getUniquePath(filename, ".csv");
-				table.save(csvFile);
+				try {
+					table.saveAs(csvFile);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				File file = new File(csvFile);
 				importer.importFile(node.getParent(), file, node.getChannel(), file.getName());
 			}
