@@ -32,7 +32,7 @@ import model.OperationNode;
 import model.Root;
 import model.Sample;
 import operations.Operation;
-import test.TreeGenerator;
+import utils.TreeGenerator;
 
 public class SetBackGround implements Operation {
 	SetBackgroundGui dialog;

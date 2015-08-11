@@ -22,6 +22,7 @@ public abstract class MultiFilter {
 	
 	
 	int CELL_ROI_INDEX;
+	@SuppressWarnings("resource")
 	public static File getTableRowsInsideCells(Node currentNode,
 			String path) throws IOException {
 		//load cell Rois

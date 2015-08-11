@@ -13,10 +13,10 @@
 
 	<groupId>sc.fiji</groupId>
 	<artifactId>iSBatch_</artifactId>
-	<version>0.3.5-SNAPSHOT</version>
+	<version>SNAPSHOT</version>
 	<inceptionYear>2015</inceptionYear>
 
-	<name>plugins/iSBatch.jar</name>
+	<name>plugins/iSBatch_.jar</name>
 	<description>Plugin for batch analysis in imageJ.</description>
 
 
@@ -113,64 +113,21 @@
 			</dependencies>
 		</profile>
 	</profiles>
+	
 	<build>
-		<finalName>iSBatch_SNAPSHOT</finalName>
 		<plugins>
-			<!-- download source code in Eclipse, best practice -->
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-eclipse-plugin</artifactId>
-				<version>2.9</version>
+				<artifactId>maven-jar-plugin</artifactId>
 				<configuration>
-					<downloadSources>true</downloadSources>
-					<downloadJavadocs>false</downloadJavadocs>
-				</configuration>
-			</plugin>
-
-			<!-- Set a compiler level -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.3</version>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-				</configuration>
-			</plugin>
-
-			<!-- Maven Assembly Plugin -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<version>2.4.1</version>
-				<configuration>
-					<!-- get all project dependencies -->
-					<descriptorRefs>
-						<descriptorRef>jar-with-dependencies</descriptorRef>
-					</descriptorRefs>
-					<!-- MainClass in mainfest make a executable jar -->
 					<archive>
 						<manifest>
 							<mainClass>${main-class}</mainClass>
 						</manifest>
 					</archive>
-
 				</configuration>
-				<executions>
-					<execution>
-						<id>make-assembly</id>
-						<!-- bind to the packaging phase -->
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
-
 		</plugins>
 	</build>
-
 
 
 </project>

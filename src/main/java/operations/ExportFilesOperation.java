@@ -33,7 +33,7 @@ import model.OperationNode;
 import model.Root;
 import model.Sample;
 import operations.Operation;
-import test.TreeGenerator;
+import utils.TreeGenerator;
 
 public class ExportFilesOperation implements Operation {
 	ExportFilesOperationGUI dialog;
