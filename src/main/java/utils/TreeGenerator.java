@@ -1,7 +1,7 @@
 /*
  * 
  */
-package test;
+package utils;
 
 import java.awt.BorderLayout;
 import java.io.File;

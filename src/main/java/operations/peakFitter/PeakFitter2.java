@@ -28,10 +28,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import operations.Operation;
-import test.TreeGenerator;
 import utils.IJUtils;
 import utils.MultiFilter;
 import utils.StringOperations;
+import utils.TreeGenerator;
 import model.DatabaseModel;
 import model.Experiment;
 import model.FieldOfView;

@@ -39,10 +39,10 @@ import model.Sample;
 import model.parameters.Channel;
 import model.parameters.NodeType;
 import operations.Operation;
-import test.TreeGenerator;
 import utils.EnumUtils;
 import utils.ImageStackUtils;
 import utils.StringUtils;
+import utils.TreeGenerator;
 
 public class MicrobeTrackerIO implements Operation {
 	private MicrobeTrackerIOGui dialog;

@@ -26,7 +26,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import test.TreeGenerator;
 import model.DatabaseModel;
 import model.Experiment;
 import model.FieldOfView;
@@ -34,6 +33,7 @@ import model.FileNode;
 import model.Node;
 import model.Root;
 import model.Sample;
+import utils.TreeGenerator;
 
 // TODO: Auto-generated Javadoc
 /**
