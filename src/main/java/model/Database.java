@@ -15,36 +15,26 @@ package model;
 import java.io.File;
 import java.util.Map.Entry;
 
-
 import org.tmatesoft.sqljet.core.SqlJetException;
 import org.tmatesoft.sqljet.core.SqlJetTransactionMode;
 import org.tmatesoft.sqljet.core.table.ISqlJetCursor;
 import org.tmatesoft.sqljet.core.table.ISqlJetTable;
 import org.tmatesoft.sqljet.core.table.SqlJetDb;
 
+import gui.LogPanel;
 
 public class Database {
 
-	/** The database. */
 	private SqlJetDb database;
 	private File file;
 
-	// private static File defaultdb = new File("src//model//template.db");
-	/**
-	 * Instantiates a new database.
-	 *
-	 * @param file
-	 *            the file
-	 * @throws SqlJetException
-	 *             the sql jet exception
-	 */
 	public Database(File file) throws SqlJetException {
 		this.file = file;
 
 		if (!file.exists()) {
 			database = SqlJetDb.open(file, true);
-//			createTablesFromFile();
-			 createTables();
+			// createTablesFromFile();
+			createTables();
 
 		}
 
@@ -58,61 +48,48 @@ public class Database {
 	 * @throws SqlJetException
 	 *             the sql jet exception
 	 */
-//	private void createTablesFromFile() throws SqlJetException {
-//
-//		database.getOptions().setAutovacuum(true);
-//		database.beginTransaction(SqlJetTransactionMode.WRITE);
-//		database.getOptions().setUserVersion(1);
-//		File test = new File("src//model//template");
-//
-//		SQLReader reader = new SQLReader();
-//		ArrayList<String> listOfQueries = reader.createQueries(test
-//				.getAbsolutePath());
-//
-//		for (String string : listOfQueries) {
-//
-//			if (string.contains("CREATE TABLE")) {
-//				System.out.println("Creating table");
-//				database.createTable(string);
-//
-//			}
-//			if (string.contains("CREATE INDEX")) {
-//				System.out.println("Creating index");
-//				database.createIndex(string);
-//
-//			} else {
-//				System.out.println(string);
-//			}
-//
-//		}
-//		database.commit();
-//
-//	}
+	// private void createTablesFromFile() throws SqlJetException {
+	//
+	// database.getOptions().setAutovacuum(true);
+	// database.beginTransaction(SqlJetTransactionMode.WRITE);
+	// database.getOptions().setUserVersion(1);
+	// File test = new File("src//model//template");
+	//
+	// SQLReader reader = new SQLReader();
+	// ArrayList<String> listOfQueries = reader.createQueries(test
+	// .getAbsolutePath());
+	//
+	// for (String string : listOfQueries) {
+	//
+	// if (string.contains("CREATE TABLE")) {
+	// System.out.println("Creating table");
+	// database.createTable(string);
+	//
+	// }
+	// if (string.contains("CREATE INDEX")) {
+	// System.out.println("Creating index");
+	// database.createIndex(string);
+	//
+	// } else {
+	// System.out.println(string);
+	// }
+	//
+	// }
+	// database.commit();
+	//
+	// }
 
-	/**
-	 * The main method.
-	 *
-	 * @param args
-	 *            the arguments
-	 */
 	public static void main(String[] args) {
 
 	}
 
-	/**
-	 * Creates the tables.
-	 *
-	 * @throws SqlJetException
-	 *             the sql jet exception
-	 */
 	public void createTables() throws SqlJetException {
 
 		database.getOptions().setAutovacuum(true);
 		database.beginTransaction(SqlJetTransactionMode.WRITE);
 		database.getOptions().setUserVersion(1);
 
-		String sql = "create table nodes ( " + "parent integer, "
-				+ "type text)";
+		String sql = "create table nodes ( " + "parent integer, " + "type text)";
 
 		database.createTable(sql);
 
@@ -120,8 +97,7 @@ public class Database {
 
 		database.createIndex(sql);
 
-		sql = "create table node_properties ( " + "node integer, "
-				+ "name text, " + "value text)";
+		sql = "create table node_properties ( " + "node integer, " + "name text, " + "value text)";
 
 		database.createTable(sql);
 
@@ -132,35 +108,16 @@ public class Database {
 
 	}
 
-	/**
-	 * Write.
-	 *
-	 * @param root
-	 *            the root
-	 * @throws SqlJetException
-	 *             the sql jet exception
-	 */
 	public void write(Node root) throws SqlJetException {
 		database.beginTransaction(SqlJetTransactionMode.WRITE);
 
 		database.getTable("nodes").clear();
 		database.getTable("node_properties").clear();
-
 		write(root, -1);
-
 		database.commit();
+		LogPanel.log("Database saved.");
 	}
 
-	/**
-	 * Write.
-	 *
-	 * @param node
-	 *            the node
-	 * @param parentId
-	 *            the parent id
-	 * @throws SqlJetException
-	 *             the sql jet exception
-	 */
 	public void write(Node node, long parentId) throws SqlJetException {
 
 		ISqlJetTable table = database.getTable("nodes");
@@ -178,13 +135,6 @@ public class Database {
 
 	}
 
-	/**
-	 * Read.
-	 *
-	 * @return the node
-	 * @throws SqlJetException
-	 *             the sql jet exception
-	 */
 	public Node getRoot() throws SqlJetException {
 
 		database.beginTransaction(SqlJetTransactionMode.READ_ONLY);
@@ -204,16 +154,6 @@ public class Database {
 		return node;
 	}
 
-	/**
-	 * Read.
-	 *
-	 * @param parentNode
-	 *            the parent node
-	 * @param parentId
-	 *            the parent id
-	 * @throws SqlJetException
-	 *             the sql jet exception
-	 */
 	public void read(Node parentNode, long parentId) throws SqlJetException {
 
 		ISqlJetTable table = database.getTable("nodes");
@@ -247,15 +187,6 @@ public class Database {
 
 	}
 
-	/**
-	 * Creates the node.
-	 *
-	 * @param parent
-	 *            the parent
-	 * @param type
-	 *            the type
-	 * @return the node
-	 */
 	// Java 1.7+ version
 	// public Node createNode(Node parent, String type) {
 	//
@@ -299,30 +230,28 @@ public class Database {
 
 		return null;
 	}
-	
-//	public Node createNode(Node parent, NodeType nodeType) {
-//		if(nodeType == NodeType.ROOT) {
-//			return new Root(database.getFile().getParent(),file.getName());}
-//		
-//		else if(nodeType == NodeType.EXPERIMENT) {
-//			return new Experiment((Root) parent);}
-//		
-//		else if(nodeType == NodeType.SAMPLE) {
-//			return new Sample((Experiment) parent);}
-//		
-//		else if(nodeType == NodeType.FOV)	{
-//			return new FieldOfView((Sample) parent);}
-//		else if(nodeType == NodeType.FILE)	{
-//			return new FileNode(parent);
-//		}
-////		else if (nodeType == OperationNode.type) {
-////			return new OperationNode(parent);
-////		}
-//		
-//
-//		return null;
-//	}
 
-	
+	// public Node createNode(Node parent, NodeType nodeType) {
+	// if(nodeType == NodeType.ROOT) {
+	// return new Root(database.getFile().getParent(),file.getName());}
+	//
+	// else if(nodeType == NodeType.EXPERIMENT) {
+	// return new Experiment((Root) parent);}
+	//
+	// else if(nodeType == NodeType.SAMPLE) {
+	// return new Sample((Experiment) parent);}
+	//
+	// else if(nodeType == NodeType.FOV) {
+	// return new FieldOfView((Sample) parent);}
+	// else if(nodeType == NodeType.FILE) {
+	// return new FileNode(parent);
+	// }
+	//// else if (nodeType == OperationNode.type) {
+	//// return new OperationNode(parent);
+	//// }
+	//
+	//
+	// return null;
+	// }
 
 }
