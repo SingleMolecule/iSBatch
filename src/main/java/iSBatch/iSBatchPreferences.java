@@ -126,13 +126,7 @@ public class iSBatchPreferences  {
 		}
 		
 	}
-
-	// some test code
-	/**
-	 * The main method.
-	 *
-	 * @param args the arguments
-	 */
+	
 	public static void main(String[] args) {
 		Node testNode = new Node(null, Root.type) {
 			@Override

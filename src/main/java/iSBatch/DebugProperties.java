@@ -14,10 +14,8 @@ package iSBatch;
 
 import gui.LogPanel;
 import ij.IJ;
-import ij.WindowManager;
 import ij.measure.ResultsTable;
 import ij.plugin.PlugIn;
-import ij.plugin.filter.Analyzer;
 
 
 
