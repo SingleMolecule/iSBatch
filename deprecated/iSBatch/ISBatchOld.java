@@ -72,9 +72,9 @@ import operations.microbeTrackerIO.MicrobeTrackerIO;
 import operations.peakFinder.FindPeaksOperation;
 import operations.peakFitter.PeakFitter2;
 
-public class ISBatch_ implements TreeSelectionListener, ActionListener {
+public class ISBatchOld implements TreeSelectionListener, ActionListener {
 	String version = "v0.3.5";
-	private static ISBatch_ instance;
+	private static ISBatchOld instance;
 
 	/** Links to Websites */
 
@@ -100,7 +100,7 @@ public class ISBatch_ implements TreeSelectionListener, ActionListener {
 
 	public static void main(String[] args) {
 		try {
-			instance  = new ISBatch_(fileDebug);
+			instance  = new ISBatchOld(fileDebug);
 		} catch (SqlJetException e) {
 			e.printStackTrace();
 		}
@@ -110,7 +110,7 @@ public class ISBatch_ implements TreeSelectionListener, ActionListener {
 	
 	
 	
-	public ISBatch_(File file) throws SqlJetException {
+	public ISBatchOld(File file) throws SqlJetException {
 		DatabaseDialog dialog = new DatabaseDialog(frame, file.getAbsolutePath());
 		database = dialog.getDatabase();
 		if (database == null)
@@ -119,7 +119,7 @@ public class ISBatch_ implements TreeSelectionListener, ActionListener {
 	}
 	
 
-	public ISBatch_() throws SqlJetException {
+	public ISBatchOld() throws SqlJetException {
 		DatabaseDialog dialog = new DatabaseDialog(frame);
 		database = dialog.getDatabase();
 		if (database == null)
@@ -145,11 +145,11 @@ public class ISBatch_ implements TreeSelectionListener, ActionListener {
 		iSBatchPreferences.loadPreferences(treeModel.getRoot());
 	}
 
-	public static ISBatch_ getInstance() {
+	public static ISBatchOld getInstance() {
 
 		if (instance == null) {
 			try {
-				instance = new ISBatch_();
+				instance = new ISBatchOld();
 			} catch (SqlJetException e) {
 				JOptionPane.showMessageDialog(null,
 						"Could not open database : " + e.getMessage(),

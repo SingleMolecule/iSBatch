@@ -2,7 +2,7 @@ package components;
 
 import gui.AboutPanel;
 import gui.LogPanel;
-import iSBatch.ISBatch_;
+import iSBatch.ISBatchOld;
 
 import java.awt.Desktop;
 import java.awt.event.ActionEvent;
@@ -43,9 +43,9 @@ public class iSBatchMenu implements ActionListener {
 
 	private String version;
 
-	private ISBatch_ isbatch;
+	private ISBatchOld isbatch;
 
-	public iSBatchMenu(ISBatch_ instance) {
+	public iSBatchMenu(ISBatchOld instance) {
 		this.isbatch = instance;
 		NewtMenuItem.addActionListener(this);
 		LoadMenuItem.addActionListener(this);
