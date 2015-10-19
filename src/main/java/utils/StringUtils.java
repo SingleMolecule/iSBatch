@@ -73,7 +73,7 @@ public class StringUtils {
 		stackCounter = stackCounter.replace(")", "");
 		
 		String[] parts = stackCounter.split("\\|");
-		
+		System.out.println(currentStacklabel);
 		return Integer.parseInt(parts[0]);
 	}
 

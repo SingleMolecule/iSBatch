@@ -60,7 +60,7 @@ public class MatlabMeshes {
 			
 		// each slice has a cell list
 		for (int slice = 0; slice < cellList.getSize(); slice++) {
-			
+			System.out.println(slice);
 			//check size of cellList
 			//Empty causes errors
 		if (cellList.get(slice) instanceof MLEmptyArray == false){
