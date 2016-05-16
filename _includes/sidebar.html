@@ -1,0 +1,16 @@
+<div class="sidebar well">
+{{ site.description }}
+</div>
+<a href="https://sourceforge.net/projects/isbatch/files/latest/download" rel="nofollow"><img alt="Download iSBatch" src="https://img.shields.io/sourceforge/dt/isbatch.svg">
+<a href="https://sourceforge.net/p/isbatch/" rel="nofollow"><img alt="Download iSBatch" src="https://sourceforge.net/sflogo.php?type=16&group_id=2465718"></a>
+<div class="sidebar well">
+    <h1>Recent Posts</h1>
+    <ul>
+        {% for post in site.posts limit:5 %}
+          <li><a href="{{ site.baseurl}}{{ post.url }}">{{ post.title }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+<div class="sidebar well">
+{% include links-list.html %}
+</div>
