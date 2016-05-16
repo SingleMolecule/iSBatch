@@ -5,8 +5,8 @@ require "jekyll"
 
 # Change your GitHub reponame - Basic configurations.
 # Note I deploy to master. Travis deploys to gh-pages!
-GITHUB_REPONAME = "vcaldas/vcaldas.github.io"
-GITHUB_REPO_BRANCH = "website"
+GITHUB_REPONAME = "SingleMolecule/iSBatch"
+GITHUB_REPO_BRANCH = "gh-pages"
 
 
 task default: %w[deploy]
@@ -44,7 +44,7 @@ task :deploy => [:build] do
   system "git commit -m #{message.inspect}"
   puts "\n## Pushing commits to remote"
   #system "git remote add origin git@github.com:#{GITHUB_REPONAME}.git"
-  system "git push origin #{GITHUB_REPO_BRANCH} --force"
+  system "git push origin #{GITHUB_REPO_BRANCH}:#{GITHUB_REPO_BRANCH}  --force"
   puts status ? "Success" : "Failed"
   puts "Website deployed! Now Travis will work."
 end
